@@ -1,0 +1,18 @@
+auto-reload yes
+reload-time 10
+
+unbind-key o
+bind-key o open-in-browser
+
+unbind-key n
+unbind-key p
+bind-key n next
+bind-key p prev
+
+color listnormal_unread yellow default
+color listfocus blue default reverse bold
+color listfocus_unread blue default reverse bold
+
+browser "firefox-bin -new-tab %u"
+player vlc
+
