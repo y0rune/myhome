@@ -1,0 +1,1 @@
+java -Xmx1024M -Xms1024M -jar /home/yorune/Linux/apps/TLauncher-MCL.jar

@@ -1,0 +1,11 @@
+#!/bin/bash
+rm -rf /tmp/steven /tmp/luke /tmp/hosts 
+wget -O /tmp/steven https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn/hosts
+
+wget -O /tmp/luke https://raw.githubusercontent.com/LukeSmithxyz/etc/master/ips
+
+cat /tmp/luke >> /tmp/steven
+
+cat /tmp/steven | sort | uniq -d | sed '/^#/d' >> /tmp/hosts
+
+sudo mv /tmp/hosts /etc/hosts

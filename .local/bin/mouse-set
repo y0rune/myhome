@@ -1,0 +1,10 @@
+#!/bin/bash
+choices="Off\nCycle"
+chosen=$(echo -e "$choices" | dmenu -i)
+
+mouse=$(sudo ratbag-command list | awk '{print $1}' | sed 's/://')
+
+case "$chosen" in
+    Off) sudo ratbag-command led 0 set mode off $mouse ;;
+    Cycle) sudo ratbag-command led 0 set mode cycle $mouse && sudo ratbag-command led 0 set rate 25000 $mouse ;;
+esac

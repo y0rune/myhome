@@ -1,0 +1,12 @@
+#!/bin/bash
+choices="Left\nRight\nDuplicated\nHDMI\nMonitor\n"
+
+chosen=$(echo -e "$choices" | dmenu -i)
+
+case "$chosen" in
+	Monitor) mons -o ;;
+	Duplicated) mons -d ;;
+	Left) mons -e left ;;
+	Right) mons -e right ;;
+	HDMI) mons -s
+esac

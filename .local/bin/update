@@ -1,0 +1,2 @@
+#!/bin/bash
+sudo eix-repos-sync; sudo emerge-webrsync; sudo emerge --sync; sudo eix-sync -a; sudo eix-update; sudo emaint sync -a; sudo emerge -auDN @world

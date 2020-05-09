@@ -1,0 +1,1 @@
+sudo mkdir -p /mnt/backup/mcserver/$(/bin/date +%Y-%m-%d); sudo chown yorune:yorune -R /mnt/backup/mcserver/$(/bin/date +%Y-%m-%d); sudo cp -rv /home/yorune/mcserver/* /mnt/backup/mcserver/$(/bin/date +%Y-%m-%d)

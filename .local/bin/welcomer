@@ -1,0 +1,54 @@
+#!/bin/bash
+
+MEMTOTAL=`awk '$3=="kB"{$2=$2/1024**2;$3="GB";} 1' /proc/meminfo | column -t | grep "MemTotal" | awk '{print $2}'`
+MEMFREE=`awk '$3=="kB"{$2=$2/1024**2;$3="GB";} 1' /proc/meminfo | column -t | grep "MemAvailable" | awk '{print $2}'` 
+NETE=`ip a | awk {'print $2'} | grep -i en | sed 's/://g'`
+NETW=`ip a | awk {'print $2'} | grep -i wl | sed 's/://g'`
+BACKUP_SDA8=`df -h | grep -i sda8 | awk '{print $5", " $2 " (Total), " $3" (Usage)"}'`
+BACKUP_EL=`df -h | grep /run/media/jaqu3/ELEMENTS | awk '{print $5", " $2 " (Total), " $3" (Usage)"}'`
+BACKUP_EV=`df -h | grep /run/media/jaqu3/BACKUP_EVERYTHING | awk '{print $5", " $2 " (Total), " $3" (Usage)"}'`
+
+
+if [ -z "$NETW" ]; then
+    NETD=$NETE
+else
+    NETD=$NETW
+fi
+
+if [ -z "$BACKUP_SDA8" ]; then
+    BACKUPSDA8=`echo NOT MOUNTED`
+else
+    BACKUPSDA8=$BACKUP_SDA8
+fi
+
+if [ -z "$BACKUP_EL" ]; then
+    BACKUPEL=`echo NOT MOUNTED`
+else
+    BACKUPEL=$BACKUP_EL
+fi
+
+if [ -z "$BACKUP_EV" ]; then
+    BACKUPEV=`echo NOT MOUNTED`
+else
+    BACKUPEV=$BACKUP_EV
+fi
+
+   echo -e "
+   \033[0;35m+++++++++++++++++++: \033[0;37mInfo\033[0;35m :+++++++++++++++++++++++++++++++++++++++++++++++++++++
+   +
+   +  \033[0;37mHostname  \033[0;35m= \033[1;32m `hostname`
+   \033[0;35m+  \033[0;37mAddress   \033[0;35m= \033[1;32m `/sbin/ip addr show $NETD | grep "inet " | awk '{print $2}' | cut -d'/' -f1`
+   \033[0;35m+  \033[0;37mKernel    \033[0;35m= \033[1;32m `uname -r`
+   \033[0;35m+  \033[0;37mUptime    \033[0;35m= \033[1;32m`uptime | sed 's/.*up ([^,]*), .*/1/'`
+   \033[0;35m+  \033[0;37mMemory    \033[0;35m= \033[1;32m $MEMTOTAL GB (free $MEMFREE GB)\033[0;35m
+   \033[0;35m+  \033[0;37mUsername  \033[0;35m= \033[1;32m `whoami`\033[0;35m
+   +
+   \033[0;35m++++++++++++++++++: \033[0;37mStorage\033[0;35m :+++++++++++++++++++++++++++++++++++++++++++++++++++
+   +
+   +  \033[0;37m/                  \033[0;35m= \033[1;32m `df -h / | sed '1,1d'  | awk '{print $5\", \"$2\" (Total), \"$3\" (Usage)\"}'`\033[0;35m
+   +  \033[0;37mSDA8               \033[0;35m= \033[1;32m $BACKUPSDA8 \033[0;35m
+   +  \033[0;37mELEMENTS           \033[0;35m= \033[1;32m $BACKUPEL \033[0;35m
+   +  \033[0;37mBACKUP_EVERYTHING  \033[0;35m= \033[1;32m $BACKUPEV \033[0;35m
+   +
+   \033[0;35m++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ \033[0m"
+   echo ""

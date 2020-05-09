@@ -1,0 +1,13 @@
+#!/bin/bash
+choices="Lock\nSuspend\nReboot\nShutdown"
+
+chosen=$(echo -e "$choices" | dmenu -i)
+
+case "$chosen" in
+	Lock) slock ;;
+	Suspend) sudo pm-suspend && slock ;;
+	#Suspend) sudo systemctl suspend && slock ;;
+	#Suspend) sudo systemctl suspend && locki3 ;; 
+	Reboot) sudo reboot ;;
+	Shutdown) sudo shutdown -h now ;;
+esac
