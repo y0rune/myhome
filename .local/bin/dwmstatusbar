@@ -1,0 +1,78 @@
+#!/bin/bash
+testweather() { 
+[ "$(stat -c %y "/home/yorune/.config/weatherreport" 2>/dev/null | cut -d' ' -f1)" != "$(date '+%Y-%m-%d')" ] && curl -s "wttr.in/$location" > "/home/yorune/.config/weatherreport" 
+
+printf "%s " "$(sed '16q;d' "/home/yorune/.config/weatherreport" | grep -wo "[0-9]*%" | sort -n | sed -e '$!d' | sed -e "s/^/ /g" | tr -d '\n')" &&  sed '13q;d' "/home/yorune/.config/weatherreport" | grep -o "m\\(-\\)*[0-9]\\+" | sort -n -t 'm' -k 2n | sed -e 1b -e '$!d' | tr '\n|m' ' ' | awk '{print " ",$1 "°","",$2 "°"}'
+}
+
+
+print_volume() {
+[ "$(pulsemixer --get-mute)" = "1" ] && printf "" && exit
+vol=$(pulsemixer --get-volume | awk '{print $1}')
+printf "%s%%\\n" " $vol"
+}
+
+print_wifi(){	
+[ "$(stat -c %y "/home/yorune/.config/vpn" 3>/dev/null | egrep -o '[0-9]+\-[0-9]+\-[0-9]+ [0-9]+')" != "$(date '+%Y-%m-%d %H')" ] && sudo /root/.local/bin/protonvpn status | grep -i Status | awk {'print $2'} > "/home/yorune/.config/vpn"
+
+
+echo -e "$(cat /sys/class/net/w*/operstate | sed "s/down//;s/up//") $(cat /sys/class/net/e*/operstate | sed "s/down//;s/up//") $(cat /home/yorune/.config/vpn | sed 's/Connected//g;s/Disconnected//g')"
+
+}
+
+print_temp(){
+    echo -e " $(sensors | awk '/Core 0/ {print $3}') +$(sudo nvidia-smi -q -d temperature | grep --color=no -i "GPU Current" |egrep --color=no -o '[0-9]*').0°C"
+}
+
+print_date(){
+	echo -e " $(date +"%d/%m %H:%M:%S")"
+}
+
+print_mem(){
+	memfree=$(($(grep -m1 'MemAvailable:' /proc/meminfo | awk '{print $2}') / 1024))
+	echo -e " $memfree"
+}
+
+batLevel() {
+	# Find the battery level
+	hash acpi || return 0
+	onl="$(acpi -V | grep "on-line")"
+	charge="$(cat /sys/class/power_supply/BAT*/capacity)"
+    time="$(awk '{print $5}' <(acpi))"
+
+	# Determine battery glyph by percentage range
+	if [[ -z $onl && ${charge} -gt 80 ]]; then
+		echo -e " ${charge}% ${time}"
+	elif [[ -z $onl && ${charge} -le 80 && ${charge} -gt 60 ]]; then
+		echo -e " ${charge}% ${time}"
+	elif [[ -z $onl && ${charge} -le 60 && ${charge} -gt 40 ]]; then
+		echo -e " ${charge}% ${time}"
+	elif [[ -z $onl && ${charge} -le 40 && ${charge} -gt 20 ]]; then
+		echo -e " ${charge}% ${time}"
+	elif [[ -z $onl && ${charge} -le 20 ]]; then
+		echo -e " ${charge}% ${time}"
+	# If charging, use animated glyph
+	else
+		echo -e ""
+	fi
+}
+
+usageData() {
+	read cpu a b c pi rest < /proc/stat
+	pt=$((a+b+c+pi))
+	sleep 0.1
+	read cpu a b c i rest < /proc/stat
+	t=$((a+b+c+i))
+	cpuUse=$((100*( (t-pt) - (i-pi) ) / (t-pt) ))
+
+	ramUseA=$(free -m -h | grep Mem | awk '{print $3"/"$2}')
+	ramPer=$(free -m | grep Mem | awk '{print 100*($3/$2)}')
+	ramUseB="${ramPer%.*}"
+	
+    echo -e " $cpuUse%  $ramUseB%"
+}
+
+while true
+do
+    xsetroot -name "$(print_temp) | $(print_mem) | $(print_wifi) | $(testweather) | $(batLevel) | $(print_volume) | $(print_date)"
+done
