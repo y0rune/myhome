@@ -55,3 +55,6 @@ git/
 ittv-credentials
 mcserver/
 www
+.wget-hsts
+.icons/
+.gtkrc-2.0

@@ -1,5 +1,7 @@
 auto-reload yes
-reload-time 10
+reload-time 900 
+notify-program "/usr/bin/notify-send"
+notify-always yes 
 
 unbind-key o
 bind-key o open-in-browser

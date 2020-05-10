@@ -1,5 +1,5 @@
 [global]
-    font = Mono 14
+    font = Mono 16 
 
     # Allow a small subset of html markup:
     #   <b>bold</b>
@@ -191,7 +191,6 @@
     #foreground = ${xrdb:color6}
     foreground = "#dfdfdf"
     timeout = 5
-
 
 # Every section that isn't one of the above is interpreted as a rules to
 # override settings for certain messages.
