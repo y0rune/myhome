@@ -39,7 +39,7 @@ export CCACHE_DIR="/mnt/backup/ccache"
 export LC_ALL="en_US.UTF-8"
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-export BROWSER=/usr/bin/firefox-bin
+export BROWSER=/usr/bin/firefox
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse'
 export EIX_LIMIT_COMPACT=0 
 export TERMINAL="st"

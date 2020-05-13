@@ -1,2 +1,0 @@
-#!/bin/bash
-GDK_DPI_SCALE="1.3" firefox-bin
