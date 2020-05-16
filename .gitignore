@@ -43,6 +43,13 @@
 .w3m/
 .wine/
 .zcompdump-Gentoo-5.8
+.bitcoin
+.local/lib/
+.mbsyncrc
+.notmuch-config
+.password-store/
+.vnc/
+go/
 Documents
 Downloads
 Linux
