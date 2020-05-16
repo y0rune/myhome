@@ -44,6 +44,8 @@
 .wine/
 .zcompdump-Gentoo-5.8
 .bitcoin
+.gkrellm2/data/
+.wmWeatherReports/
 .local/lib/
 .mbsyncrc
 .notmuch-config
