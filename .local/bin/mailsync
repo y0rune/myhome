@@ -1,25 +1,37 @@
 #!/bin/sh
-set -x 
+
+# Sync mail and give notification if there is new mail.
+
+# Run only if user logged in (prevent cron errors)
 pgrep -u "${USER:=$LOGNAME}" >/dev/null || { echo "$USER not logged in; sync will not run."; exit ;}
+# Run only if not already running in other instance
 pgrep -x mbsync >/dev/null && { echo "mbsync is already running." ; exit ;}
 
+# Checks for internet connection and set notification script.
 ping -q -c 1 1.1.1.1 > /dev/null || { echo "No internet connection detected."; exit ;}
 command -v notify-send >/dev/null || echo "Note that \`libnotify\` or \`libnotify-send\` should be installed for pop-up mail notifications with this script."
 
+# Required to display notifications if run as a cronjob:
 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus
 
+# For individual configurations:
 [ -d "$HOME/.local/share/password-store" ] && export PASSWORD_STORE_DIR="$HOME/.local/share/password-store"
 
-notify() { notify-send --app-name="mutt-wizard" "mutt-wizard" "📬 $2 new mail(s) in \`$1\` account." ;}
-messageinfo() { notify-send --app-name="mutt-wizard" "📧$from:" "$subject" ;}
+# Settings are different for MacOS (Darwin) systems.
+if [ "$(uname)" = "Darwin" ]; then
+    notify() { osascript -e "display notification \"$2 in $1\" with title \"You've got Mail\" subtitle \"Account: $account\"" && sleep 2 ;}
+    messageinfo() { osascript "display notification with title \"📧 $from\" subtitle \"$subject\"" ;}
+else
+    notify() { notify-send --app-name="mutt-wizard" "mutt-wizard" "📬 $2 new mail(s) in \`$1\` account." ;}
+    messageinfo() { notify-send --app-name="mutt-wizard" "📧$from:" "$subject" ;}
+fi
 
+# Check account for new mail. Notify if there is new content.
 syncandnotify() {
     acc="$(echo "$account" | sed "s/.*\///")"
     mbsync $opts "$acc"
     new=$(find $(ls $HOME/.local/share/mail/$acc/* | grep -i inbox | sed 's/\://')/new -type f -newer "$HOME/.config/mutt/.mailsynclastrun" 2> /dev/null) 
     newcount=$(echo "$new" | sed '/^\s*$/d' | wc -l)
-    echo $acc
-    echo $newcount
     if [ "$newcount" -gt "0" ]; then
         notify "$acc" "$newcount" &
         for file in $new; do
@@ -31,6 +43,7 @@ syncandnotify() {
     fi
 }
 
+# Sync accounts passed as argument or all.
 if [ "$#" -eq "0" ]; then
     accounts="$(awk '/^Channel/ {print $2}' "$HOME/.mbsyncrc")"
 else
@@ -43,6 +56,7 @@ fi
 echo " 🔃" > /tmp/imapsyncicon_"$USER"
 ( pkill -RTMIN+12 "${STATUSBAR:-blocks}" >/dev/null 2>&1 ) 2>/dev/null
 
+# Parallelize multiple accounts
 for account in $accounts
 do
     syncandnotify &

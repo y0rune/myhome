@@ -9,7 +9,8 @@ compton&
 feh --bg-fill $HOME/.wall.jpg &
 redshift -l 53.2327:18.3036 -t 6500:3200&
 nm-applet --sm-disable&
-/usr/local/bin/st -e /bin/sh -c "tmux new-session -s BASE -n HOME '/bin/zsh'\; split-window 'htop'\; new-window -n NEWSBOAT 'newsboat'\; new-window -n MUSIC 'cmus'"&
+/usr/local/bin/st -e /bin/sh -c "tmux new-session -s BASE -n HOME '/bin/zsh'\; split-window 'htop'\; new-window -n MAIL 'neomutt'\; new-window -n DISCORD 'sh /home/yorune/git/cordless/cordless'\; new-window -n IRC 'irssi'\; new-window -n NEWSBOAT 'newsboat'\; new-window -n MUSIC 'cmus'"&
+DISPLAY=:0 gkrellm&
 sudo /root/.local/bin/protonvpn c -f&
 browser-x&
 password-manager&

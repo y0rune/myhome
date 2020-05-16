@@ -74,5 +74,5 @@ usageData() {
 
 while true
 do
-    xsetroot -name "$(print_temp) | $(print_mem) | $(print_wifi) | $(testweather) | $(batLevel) | $(print_volume) | $(print_date)"
+    xsetroot -name "$(print_temp) | $(print_mem) | $(print_wifi) | $(batLevel) | $(print_volume) | $(print_date)"
 done

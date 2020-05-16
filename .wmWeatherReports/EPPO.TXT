@@ -1,0 +1,10 @@
+Poznan, Poland (EPPO) 52-25N 016-50E 92M
+May 16, 2020 - 10:00 AM EDT / 2020.05.16 1400 UTC
+Wind: from the W (280 degrees) at 15 MPH (13 KT):0
+Visibility: greater than 7 mile(s):0
+Temperature: 57 F (14 C)
+Dew Point: 33 F (1 C)
+Relative Humidity: 41%
+Pressure (altimeter): 30.09 in. Hg (1019 hPa)
+ob: EPPO 161400Z 28013KT CAVOK 14/01 Q1019 
+cycle: 14

@@ -77,7 +77,7 @@ alias code="vscodium"
 alias vpn="sudo /root/.local/bin/protonvpn c -f"
 alias vpnch="sudo /root/.local/bin/protonvpn c --cc CH"
 alias vpnd="sudo /root/.local/bin/protonvpn d"
-alias vpnstatus="sudo /root/.local/bin/protonvpn status"
+alias vpns="sudo /root/.local/bin/protonvpn status"
 alias prolog="swipl"
 
 # Cleaning-up
