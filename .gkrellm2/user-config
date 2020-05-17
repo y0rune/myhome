@@ -14,8 +14,8 @@ below 1
 track_gtk_theme_name 0
 default_track_theme "Default"
 save_position 1
-chart_width 135
-update_HZ 9
+chart_width 145
+update_HZ 10
 allow_multiple_instances 1
 float_factor 1000
 hostname sysname_mode 1
@@ -53,7 +53,7 @@ cpu enabled cpu1 1
 cpu extra_info cpu1 1
 cpu chart_config cpu1 40 20 0 0 0 0 : 0 0 0 0 500 : 0 0 0 0 500 : 0 0 0 0 500
 cpu enabled cpu2 1
-cpu extra_info cpu2 0
+cpu extra_info cpu2 1
 cpu chart_config cpu2 40 20 0 0 0 0 : 0 0 0 0 500 : 0 0 0 0 500 : 0 0 0 0 500
 cpu enabled cpu3 1
 cpu extra_info cpu3 1
@@ -83,7 +83,7 @@ proc text_format \w88\a$p\f procs\n\e$u\f users
 proc chart_config 40 100 0 0 0 0 : 1 0 0 0 500 : 0 0 0 0 500
 disk assign_method 2
 disk device Disk 0 0 0 1 1 0 0 Disk
-disk chart_config Disk 40 2000000 0 1 0 0 : 0 0 0 0 500 : 0 0 0 0 500
+disk chart_config Disk 40 7000000 0 1 0 0 : 0 0 0 0 500 : 0 0 0 0 500
 disk device sda 0 0 45 0 1 -1 0 sda
 disk device sda1 0 0 45 0 1 1 0 sda1
 disk device sda2 0 0 45 0 1 2 0 sda2
@@ -99,10 +99,10 @@ disk text_format $T
 inet text_format all \t$a\f $l\N$A\f $L
 inet update_interval all 1
 net enables eth0 1 1 0
-net chart_config eth0 40 150000 0 1 0 0 : 0 0 0 0 500 : 0 0 0 0 500
+net chart_config eth0 40 1000000 0 1 0 0 : 0 0 0 0 500 : 0 0 0 0 500
 net enables lo 0 1 0
 net enables proton0 1 1 0
-net chart_config proton0 40 150000 0 1 0 0 : 0 0 0 0 500 : 0 0 0 0 500
+net chart_config proton0 40 1000000 0 1 0 0 : 0 0 0 0 500 : 0 0 0 0 500
 net enables wlan0 1 1 0
 net chart_config wlan0 40 5 0 1 0 0 : 0 0 0 0 500 : 0 0 0 0 500
 net timer_enabled 1
