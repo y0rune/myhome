@@ -5,6 +5,7 @@ parse_git_branch() {
 
 [ -f /etc/gentoo-release ] && export ZSH="/usr/share/zsh/site-contrib/oh-my-zsh"
 [ -f /etc/centos-release ] && export ZSH="$HOME/.oh-my-zsh"
+[ -f /etc/debian_version ] && export ZSH="$HOME/.oh-my-zsh"
 
 HISTFILE=$HOME/.history_zsh
 HISTSIZE=10000
