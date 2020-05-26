@@ -29,10 +29,10 @@ print_date(){
 }
 
 print_mem(){
-	free --mebi | sed -n '2{p;q}' | awk '{printf ("🧠 %2.2fGiB/%2.2fGiB", ( $3 / 1024), ($2 / 1024))}'
+	free --mebi | sed -n '2{p;q}' | awk '{printf ("🧠 %2.2fGiB", ( $3 / 1024) )}'
 }
 
-batLevel() {
+print_battery() {
 	# Find the battery level
 	hash acpi || return 0
 	onl="$(acpi -V | grep "on-line")"
@@ -69,6 +69,6 @@ print_cpu() {
 
 while true
 do
-    xsetroot -name "$(print_temp) | $(print_mail) | $(print_cpu) | $(print_mem) | $(print_weather) | $(print_wifi) | $(batLevel) | $(print_volume) | $(print_date)"
+    xsetroot -name "$(print_temp) $(print_mail) $(print_cpu) $(print_mem) $(print_weather) $(print_wifi) $(print_battery) $(print_volume) $(print_date)"
 	sleep 5
 done
