@@ -96,30 +96,3 @@ autocmd BufWritePost *.tex silent! execute "!pdflatex --shell-escape -synctex=1 
 autocmd BufWritePost *.tex silent! execute "!latexmk -pdf -silent % > /dev/null" | redraw!
 autocmd BufWritePost *.tex silent! execute "!sudo rm -rf *.fls *.ilg *.nav *.snm *.toc *.idx *.lof *.lot *.synctex.gz *.aux *.fdb_latexmk *.fls *.log *.out > /dev/null" | redraw!
 autocmd BufWritePost *.tex silent! execute "!sudo pkill -HUP mupdf > /dev/null" | redraw!
-autocmd FileType tex inoremap ,fr \begin{frame}<Enter>\frametitle{}<Enter><Enter><++><Enter><Enter>\end{frame}<Enter><Enter><++><Esc>6kf}i
-autocmd FileType tex inoremap ,fi \begin{fitch}<Enter><Enter>\end{fitch}<Enter><Enter><++><Esc>3kA
-autocmd FileType tex inoremap ,exe \begin{exe}<Enter>\ex<Space><Enter>\end{exe}<Enter><Enter><++><Esc>3kA
-autocmd FileType tex inoremap ,bf \textbf{}<Esc>T{i
-autocmd FileType tex inoremap ,co \coun{}\\<Esc>T{i
-autocmd FileType tex inoremap ,nbf \noindent\textbf{}\\<Esc>T{i
-autocmd FileType tex inoremap ,noi \noindent<Esc>T{i
-autocmd FileType tex inoremap ,ln \par\noindent \line(1,0){400}\<Esc>T{i
-autocmd FileType tex vnoremap , <ESC>`<i\{<ESC>`>2la}<ESC>?\\{<Enter>a
-autocmd FileType tex inoremap ,it \textit{}<++><Esc>T{i
-autocmd FileType tex inoremap ,ct \textcite{}<++><Esc>T{i
-autocmd FileType tex inoremap ,glos {\gll<Space><++><Space>\\<Enter><++><Space>\\<Enter>\trans{``<++>''}}<Esc>2k2bcw
-autocmd FileType tex inoremap ,x \begin{xlist}<Enter>\ex<Space><Enter>\end{xlist}<Esc>kA<Space>
-autocmd FileType tex inoremap ,ol \begin{enumerate}<Enter><Enter>\end{enumerate}<Enter><Enter><++><Esc>3kA\item<Space>
-autocmd FileType tex inoremap ,ul \begin{itemize}<Enter><Enter>\end{itemize}<Enter><Enter><++><Esc>3kA\item<Space>
-autocmd FileType tex inoremap ,li <Enter>\item<Space>
-autocmd FileType tex inoremap ,ref \ref{}<Space><++><Esc>T{i
-autocmd FileType tex inoremap ,tab \begin{tabular}<Enter><++><Enter>\end{tabular}<Enter><Enter><++><Esc>4kA{}<Esc>i
-autocmd FileType tex inoremap ,a \href{}{<++>}<Space><++><Esc>2T{i
-autocmd FileType tex inoremap ,chap \chapter{}<Enter><Enter><++><Esc>2kf}i
-autocmd FileType tex inoremap ,sec \section{}<Enter><Enter><++><Esc>2kf}i
-autocmd FileType tex inoremap ,ssec \subsection{}<Enter><Enter><++><Esc>2kf}i
-autocmd FileType tex inoremap ,sssec \subsubsection{}<Enter><Enter><++><Esc>2kf}i
-autocmd FileType tex inoremap ,st <Esc>F{i*<Esc>f}i
-autocmd FileType tex inoremap ,tt \texttt{}<Space><++><Esc>T{i
-autocmd FileType tex inoremap ,bt {\blindtext}
-autocmd FileType tex inoremap ,rn (\ref{})<++><Esc>F}i
