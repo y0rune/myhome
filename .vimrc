@@ -1,4 +1,10 @@
 " settings
+if ! filereadable(system('echo -n "$HOME/.vim/autoload/plug.vim"'))
+	silent !mkdir -p $HOME/.vim/autoload/
+	silent !curl --silent "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > $HOME/.vim/autoload/plug.vim
+	autocmd VimEnter * PlugInstall
+endif
+
 set laststatus=2
 set shiftwidth=4
 set softtabstop=4
@@ -70,12 +76,12 @@ hi CursorLine cterm=NONE term=NONE ctermbg=NONE guibg=NONE
 hi CursorLine ctermbg=235
 
 " map
+nnoremap S :%s//g<Left><Left>
 nnoremap ee :!mupdf $(echo % \| sed 's/tex$/pdf/') & disown<CR><CR>
 map <C-n> :NERDTreeToggle<CR>
 nnoremap <silent> <C-t> :tabnew <CR>
 nnoremap <F11> :Goyo <CR>
 nnoremap <F7> :tabprevious<CR>
-nnoremap ww :w!<CR><CR>
 nnoremap <F8> :tabnext<CR>
 nnoremap <F2> :GoRun<CR>
 
