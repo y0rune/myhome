@@ -1,0 +1,83 @@
+" settings
+if ! filereadable(system('echo -n "$HOME/.vim/autoload/plug.vim"'))
+	silent !mkdir -p $HOME/.vim/autoload/
+	silent !curl --silent "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > $HOME/.vim/autoload/plug.vim
+	autocmd VimEnter * PlugInstall
+endif
+
+set laststatus=2
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+au BufWritePre * let &bex = '@' . strftime("%F.%H:%M")
+
+" plugins
+call plug#begin('~/.vim/plugged')
+Plug 'scrooloose/nerdtree', "{ 'on':  'NERDTreeToggle' }
+call plug#end()
+
+" Status-line
+set statusline=
+set statusline+=%#IncSearch#
+set statusline+=\ %y
+set statusline+=\ %r
+set statusline+=%#CursorLineNr#
+set statusline+=\ %F
+set statusline+=%= 
+set statusline+=%#Search#
+set statusline+=\ %l/%L
+set statusline+=\ [%c]
+
+set nocompatible
+set hlsearch
+set incsearch
+set noshowmode
+set cursorline
+set cmdheight=1
+syntax on
+filetype plugin indent on
+
+set encoding=utf-8
+
+" line numbers
+set number
+set ruler
+set title
+
+" indent
+set backspace=indent,eol,start
+set shiftwidth=4
+set expandtab
+
+" editing
+runtime! macros/matchit.vim
+set backspace=indent,eol,start
+
+" visual feedback
+set laststatus=2
+set showmode
+set showcmd
+
+" disable pcspkr beep
+set visualbell
+set t_vb=
+
+" searching
+set incsearch
+set smartcase
+
+" cursor
+let &t_SI = "\<esc>[6 q"
+let &t_EI = "\<esc>[2 q"
+
+" colors
+colorscheme desert
+hi CursorLine cterm=NONE term=NONE ctermbg=NONE guibg=NONE
+hi CursorLine ctermbg=235
+
+" map
+nnoremap S :%s//g<Left><Left>
+map <C-n> :NERDTreeToggle<CR>
+nnoremap <silent> <C-t> :tabnew <CR>
+nnoremap <F7> :tabprevious<CR>
+nnoremap <F8> :tabnext<CR>
