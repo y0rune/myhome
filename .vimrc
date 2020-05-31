@@ -70,6 +70,11 @@ set t_vb=
 set incsearch
 set smartcase
 
+" cursor
+let &t_SI = "\<esc>[5 q"
+let &t_SR = "\<esc>[5 q"
+let &t_EI = "\<esc>[2 q"
+
 " colors
 colorscheme desert
 hi CursorLine cterm=NONE term=NONE ctermbg=NONE guibg=NONE
