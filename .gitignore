@@ -37,6 +37,7 @@
 .tlauncher/
 .ts3client/
 .var/
+.vim/
 .viminfo
 .vscode-oss/
 .vscode-server/
