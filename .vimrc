@@ -62,6 +62,9 @@ set laststatus=2
 set showmode
 set showcmd
 
+" off mouse
+set mouse-=a
+
 " disable pcspkr beep
 set visualbell
 set t_vb=
