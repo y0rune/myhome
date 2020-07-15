@@ -11,10 +11,12 @@ unbind-key p
 bind-key n next
 bind-key p prev
 
-color listnormal_unread yellow default
-color listfocus blue default reverse bold
-color listfocus_unread blue default reverse bold
+color listnormal cyan default
+color listfocus black yellow standout bold
+color listnormal_unread blue default
+color listfocus_unread yellow default bold
+color info red black bold
+color article white default bold
 
-browser "firefox-bin -new-tab %u"
-player vlc
-
+browser "firefox -new-tab %u"
+player mpv
