@@ -1,6 +1,7 @@
 auto-reload yes
-reload-time 900 
-notify-program "/usr/bin/notify-send"
+refresh-on-startup yes
+reload-time 1 
+notify-program "$HOME/.local/bin/notify-program"
 notify-always yes 
 
 unbind-key o
@@ -18,5 +19,5 @@ color listfocus_unread yellow default bold
 color info red black bold
 color article white default bold
 
-browser "firefox -new-tab %u"
+browser "$HOME/.local/bin/browser-x -new-tab %u"
 player mpv

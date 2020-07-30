@@ -83,6 +83,7 @@ alias vpnch="sudo /root/.local/bin/protonvpn c --cc CH"
 alias vpnd="sudo /root/.local/bin/protonvpn d"
 alias prolog="swipl"
 alias tv="~/MEGA/tv/tv.sh"
+alias newswork="newsboat --url=$HOME/.config/newsboat/urlswork"
 
 # Cleaning-up
 export KODI_DATA="$HOME/.config/kodi"
