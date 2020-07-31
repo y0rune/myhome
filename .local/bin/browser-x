@@ -1,5 +1,4 @@
 #!/bin/bash
-set -x
 #GDK_DPI_SCALE="1.3" firefox
 KERNEL=$(uname -sr)
 [[ $KERNEL =~ "Microsoft" ]] && $HOME/.brave.exe "$@"
