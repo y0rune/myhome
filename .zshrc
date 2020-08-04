@@ -85,6 +85,8 @@ alias prolog="swipl"
 alias tv="~/MEGA/tv/tv.sh"
 alias newswork="newsboat --url=$HOME/.config/newsboat/urlswork"
 alias vim="vim -u $HOME/.vimrc-gentoo"
+alias denpl="trans en:pl"
+alias dplen="trans pl:en"
 
 # Cleaning-up
 export KODI_DATA="$HOME/.config/kodi"
