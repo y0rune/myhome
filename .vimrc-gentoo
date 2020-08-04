@@ -14,6 +14,9 @@ au BufWritePre * let &bex = '@' . strftime("%F.%H:%M")
 " plugins
 call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree', "{ 'on':  'NERDTreeToggle' }
+Plug 'nmante/vim-latex-live-preview'
+Plug 'lervag/vimtex'
+Plug 'junegunn/goyo.vim'
 call plug#end()
 
 " Status-line
@@ -34,6 +37,7 @@ set incsearch
 set noshowmode
 set cursorline
 set cmdheight=1
+let g:livepreview_previewer = 'mupdf'
 syntax on
 filetype plugin indent on
 
@@ -80,9 +84,18 @@ hi CursorLine ctermbg=235
 
 " map
 nnoremap S :%s//g<Left><Left>
+nnoremap ee :!mupdf $(echo % \| sed 's/tex$/pdf/') & disown<CR><CR>
 map <C-n> :NERDTreeToggle<CR>
 nnoremap <silent> <C-t> :tabnew <CR>
+nnoremap <F11> :Goyo <CR>
 nnoremap <F7> :tabprevious<CR>
 nnoremap <F8> :tabnext<CR>
+nnoremap <F2> :GoRun<CR>
 
 command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
+
+" latex
+autocmd BufWritePost *.tex silent! execute "!pdflatex --shell-escape -synctex=1 -interaction=nonstopmode % > /dev/null " | redraw!
+autocmd BufWritePost *.tex silent! execute "!latexmk -pdf -silent % > /dev/null" | redraw!
+autocmd BufWritePost *.tex silent! execute "!sudo rm -rf *.fls *.ilg *.nav *.snm *.toc *.idx *.lof *.lot *.synctex.gz *.aux *.fdb_latexmk *.fls *.log *.out > /dev/null" | redraw!
+autocmd BufWritePost *.tex silent! execute "!sudo pkill -HUP mupdf > /dev/null" | redraw!

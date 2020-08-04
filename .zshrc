@@ -84,6 +84,7 @@ alias vpnd="sudo /root/.local/bin/protonvpn d"
 alias prolog="swipl"
 alias tv="~/MEGA/tv/tv.sh"
 alias newswork="newsboat --url=$HOME/.config/newsboat/urlswork"
+alias vim="vim -u $HOME/.vimrc-gentoo"
 
 # Cleaning-up
 export KODI_DATA="$HOME/.config/kodi"
