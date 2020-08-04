@@ -32,7 +32,6 @@ set nocompatible
 set hlsearch
 set incsearch
 set noshowmode
-set cursorline
 set cmdheight=1
 syntax on
 filetype plugin indent on
@@ -51,7 +50,6 @@ set expandtab
 
 " editing
 runtime! macros/matchit.vim
-set backspace=indent,eol,start
 
 " visual feedback
 set laststatus=2
@@ -74,9 +72,8 @@ let &t_SI = "\<esc>[6 q"
 let &t_EI = "\<esc>[2 q"
 
 " colors
+set bg=dark
 colorscheme desert
-hi CursorLine cterm=NONE term=NONE ctermbg=NONE guibg=NONE
-hi CursorLine ctermbg=235
 
 " map
 nnoremap S :%s//g<Left><Left>
