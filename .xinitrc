@@ -7,17 +7,19 @@ xset s off&
 xset -dpms&
 compton&
 feh --bg-fill $HOME/.wall.jpg &
-redshift -l 53.2327:18.3036 -t 6500:3200&
+#redshift -l 53.2327:18.3036 -t 6500:3200&
 nm-applet --sm-disable&
 sudo /root/.local/bin/protonvpn c -f&
-#DISPLAY=:0 gkrellm&
 dunst -config&
 browser-x&
 password-manager&
 transmission-daemon&
-/usr/local/bin/st -e /bin/sh -c "tmux new-session -s BASE -n HOME '/bin/zsh'\; split-window 'htop'\; new-window -n MAIL 'neomutt'\; new-window -n IRC 'irssi'\; new-window -n NEWSBOAT 'newsboat'\; new-window -n MUSIC 'cmus'"&
+/usr/local/bin/st -e /bin/sh -c "tmux new-session -s BASE -n HOME '/bin/zsh'\; split-window 'htop'\; new-window -n MAIL 'neomutt'\; new-window -n NEWSBOAT 'newsboat -r '\; new-window -n MUSIC 'cmus'"&
+#/usr/local/bin/st -e /bin/sh -c "tmux new-session -s BASE -n HOME '/bin/zsh'\; split-window 'htop'\; new-window -n MAIL 'neomutt'\; new-window -n IRC 'irssi'\; new-window -n NEWSBOAT 'newsboat'\; new-window -n MUSIC 'cmus'"&
 (sleep 30 && getforecast)&
-sudo /usr/bin/rdate -s -l ntp.task.gda.pl && sudo /sbin/hwclock --systohc
+sudo /usr/bin/rdate -s ntp.task.gda.pl && sudo /sbin/hwclock --systohc
 /opt/MEGAcmd/mega-cmd-server --debug-full > /var/log/megacmd/megacmd.log&
 dwmstatusbar&
 exec dbus-launch dwm 
+
+

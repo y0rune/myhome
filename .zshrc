@@ -22,7 +22,6 @@ source $HOME/Linux/configs/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh &>
 source $HOME/Linux/configs/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh &>> /dev/null
 [ ! -d $HOME/.config/fzf ] && git clone https://github.com/junegunn/fzf.git $HOME/.config/fzf
 [ -f $HOME/.config/fzf/shell/key-bindings.zsh ] && source $HOME/.config/fzf/shell/key-bindings.zsh
-[ -f /etc/issue.logo ] && cat /etc/issue.logo
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 FPATH=/usr/local/share/zsh/site-functions:$FPATH 
 xset s off -dpms &>> /dev/null

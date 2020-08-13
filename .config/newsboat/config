@@ -1,7 +1,7 @@
 auto-reload yes
 refresh-on-startup yes
-reload-time 1 
-notify-program "$HOME/.local/bin/notify-program"
+reload-time 10 
+notify-program "/home/yorune/.local/bin/notify-program"
 notify-always yes 
 
 unbind-key o
@@ -19,5 +19,5 @@ color listfocus_unread yellow default bold
 color info red black bold
 color article white default bold
 
-browser "$HOME/.local/bin/browser-x -new-tab %u"
+browser "/home/yorune/.local/bin/browser-x -new-tab %u"
 player mpv
