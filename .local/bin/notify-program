@@ -1,4 +1,4 @@
 #!/bin/bash
 KERNEL=$(uname -sr)
 [[ $KERNEL =~ "Microsoft" ]] && $HOME/.local/bin/wsl-notify "$@" 
-[[ $KERNEL =~ "gentoo" ]] && echo "cos"> ~/coscso; /usr/bin/notify-send "$@" 
+[[ $KERNEL =~ "gentoo" ]] && /usr/bin/notify-send "$@" 
