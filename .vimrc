@@ -82,4 +82,4 @@ nnoremap <silent> <C-t> :tabnew <CR>
 nnoremap <F7> :tabprevious<CR>
 nnoremap <F8> :tabnext<CR>
 
-command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
+cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!

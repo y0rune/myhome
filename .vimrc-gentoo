@@ -97,7 +97,7 @@ nnoremap <F7> :tabprevious<CR>
 nnoremap <F8> :tabnext<CR>
 nnoremap <F2> :GoRun<CR>
 
-command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
+cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
 " latex
 autocmd BufWritePost *.tex silent! execute "!pdflatex --shell-escape -synctex=1 -interaction=nonstopmode % > /dev/null " | redraw!
