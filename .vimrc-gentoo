@@ -17,6 +17,7 @@ Plug 'scrooloose/nerdtree', "{ 'on':  'NERDTreeToggle' }
 Plug 'nmante/vim-latex-live-preview'
 "Plug 'lervag/vimtex'
 Plug 'junegunn/goyo.vim'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 call plug#end()
 
@@ -112,4 +113,5 @@ autocmd BufRead,BufNewFile /tmp/neomutt* map ZZ :Goyo\|x!<CR>
 autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<CR>
 
 " Auto add notes git
-autocmd BufWritePost *.md execute '!git add % && git commit -m "Auto-commit: saved %" && git push' | redraw! 
+autocmd BufWritePost *.md :Prettier <CR>  
+autocmd BufWritePost *.md silent! execute '!git add % && git commit -m "Auto-commit: saved %" && git push' | redraw! 
