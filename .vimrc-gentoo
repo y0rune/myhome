@@ -14,11 +14,11 @@ au BufWritePre * let &bex = '@' . strftime("%F.%H:%M")
 " plugins
 call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree', "{ 'on':  'NERDTreeToggle' }
-Plug 'nmante/vim-latex-live-preview'
-"Plug 'lervag/vimtex'
+"Plug 'nmante/vim-latex-live-preview'
+Plug 'lervag/vimtex'
 Plug 'junegunn/goyo.vim'
-Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'prettier/vim-prettier', { 'do': 'npm install --force' }
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'npm install --force' }
 call plug#end()
 
 " Status-line
@@ -101,6 +101,7 @@ nnoremap <F2> :GoRun<CR>
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
 " latex
+let g:tex_flavor = "latex"
 autocmd BufWritePost *.tex silent! execute "!pdflatex --shell-escape -synctex=1 -interaction=nonstopmode % > /dev/null " | redraw!
 autocmd BufWritePost *.tex silent! execute "!latexmk -pdf -silent % > /dev/null" | redraw!
 autocmd BufWritePost *.tex silent! execute "!sudo rm -rf *.fls *.ilg *.nav *.snm *.toc *.idx *.lof *.lot *.synctex.gz *.aux *.fdb_latexmk *.fls *.log *.out > /dev/null" | redraw!
@@ -115,3 +116,4 @@ autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<CR>
 " Auto add notes git
 autocmd BufWritePost *.md :Prettier <CR>  
 autocmd BufWritePost *.md silent! execute '!git add % && git commit -m "Auto-commit: saved %" && git push' | redraw! 
+
