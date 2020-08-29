@@ -33,6 +33,10 @@
   (awesome-tab-mode t))
 (awesome-tab-mode t)
 
+;;awesome-tab-backward j-down, k-up, l-left, h-right
+(global-set-key (kbd "C-x k") 'awesome-tab-backward-tab)
+(global-set-key (kbd "C-x h") 'awesome-tab-forward-tab)
+
 ;; Theme
 (use-package dracula-theme
   :ensure t
@@ -47,51 +51,15 @@
 
 (global-set-key (kbd "C-x g") 'magit-status)
 
-;; Auto enable markdown into html previewOB
-;(use-package auto-package-update
-;  :ensure t
-;  :config
-;  (setq auto-package-update-interval 5
-;        auto-package-update-delete-old-verions t)
-;  (auto-package-update-maybe)
-;  )
+;; Markdown-mode
+(use-package markdown-mode
+  :ensure t
+  :config
+  )
 
-
-;(use-package impatient-mode
-;  :ensure t
-;  :mode
-;  (
-;   ("\\.md\\'" . impatient-mode)
-;   )
-;  :hook
-;  (
-;   (impatient-mode . html-mode)
-;   )
-;  :config
-;  (add-hook 'html-mode-hook
-;	    (lambda ()
-;              (unless (get-process "httpd")
-;                (markdown-mode)
-;                (message "starting httpd server...")
-;                (httpd-start)
-;                )  
-;            (impatient-mode)         
-;	    (imp-set-user-filter 'markdown-html)
-;	    (imp-visit-buffer)
-;            )
-;       )
-;  )
-
-
-;(defun markdown-html (buffer)
-;  (princ (with-current-buffer buffer
-;    (format "<!DOCTYPE html><html><title>Impatient Markdown</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://strapdownjs.com/v/0.2/strapdown.j;s\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
-;  (current-buffer)))
-
-; Livedown
-; git clone https://github.com/shime/emacs-livedown.git ~/.emacs.d/emacs-livedown
-; sudo npm install -g livedown
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/emacs-livedown"))
+;; Livedown
+;;; sudo npm install -g livedown
+;;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/emacs-livedown"))
 (require 'livedown)
 
 (custom-set-variables
@@ -118,7 +86,6 @@
        'mew-draft-send-message
        'mew-draft-kill
        'mew-send-hook))
-
 
 ;;; --- Look & Feel ---
 
