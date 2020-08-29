@@ -36,6 +36,35 @@
 (global-set-key (kbd "C-x j") 'awesome-tab-backward-tab)
 (global-set-key (kbd "C-x k") 'awesome-tab-forward-tab)
 
+;; Switch-window
+(use-package switch-window
+  :ensure t
+  :config
+  (setq
+   switch-window-increase 4
+   switch-window-input-style 'minibuffer
+   switch-window-shortcut-style 'qwerty
+   switch-window-threshold 2
+   )
+  (setq
+   switch-window-qwerty-shortcuts
+   '( "a" "s" "d" "f" "g" "h" "j" "k" "l")
+   )
+  :bind
+  ([remap other-window] . switch-window)
+  )
+
+;; reveal dependency
+(use-package htmlize
+  :ensure t
+  )
+(use-package ox-reveal
+  :ensure t
+  :config
+  ;; maybe add auto-installer in the future
+  (setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js")
+)
+
 ;; Theme
 (use-package dracula-theme
   :ensure t
