@@ -1,4 +1,3 @@
-cd $HOME
 parse_git_branch() {
     git symbolic-ref --short HEAD 2> /dev/null
 }
@@ -83,9 +82,10 @@ alias vpnd="sudo /root/.local/bin/protonvpn d"
 alias prolog="swipl"
 alias tv="~/MEGA/tv/tv.sh"
 alias newswork="newsboat --url=$HOME/.config/newsboat/urlswork"
-alias vim="vim -u $HOME/.vimrc-gentoo"
+alias vim="vim -u $HOME/.vimrc-gentoo -p"
 alias denpl="trans en:pl"
 alias dplen="trans pl:en"
+alias notes="vim $HOME/git/notes/index.md"
 
 # Cleaning-up
 export KODI_DATA="$HOME/.config/kodi"

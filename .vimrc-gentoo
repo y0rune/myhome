@@ -13,8 +13,9 @@ au BufWritePre * let &bex = '@' . strftime("%F.%H:%M")
 
 " plugins
 call plug#begin('~/.vim/plugged')
-Plug 'scrooloose/nerdtree', "{ 'on':  'NERDTreeToggle' }
-"Plug 'nmante/vim-latex-live-preview'
+Plug 'scrooloose/nerdtree' 
+Plug 'vimwiki/vimwiki'
+Plug 'nmante/vim-latex-live-preview'
 Plug 'lervag/vimtex'
 Plug 'junegunn/goyo.vim'
 Plug 'prettier/vim-prettier', { 'do': 'npm install --force' }
@@ -24,6 +25,9 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'npm install --force' }
 " git checkout -b test origin/feature/issue-232-add-support-for-prettier-2.x; 
 " npm install --force 
 call plug#end()
+
+" Vim wiki
+let g:vimwiki_list = [{'path': '~/git/notes', 'syntax': 'markdown', 'ext': '.md'}]
 
 " Status-line
 set statusline=
@@ -43,11 +47,12 @@ set incsearch
 set noshowmode
 set cursorline
 set cmdheight=1
-let g:livepreview_previewer = 'mupdf'
 syntax on
 filetype plugin indent on
-
 set encoding=utf-8
+
+" livepreviewer
+let g:livepreview_previewer = 'mupdf'
 
 " line numbers
 set number
@@ -100,7 +105,6 @@ nnoremap <silent> <C-t> :tabnew <CR>
 nnoremap <F11> :Goyo <CR>
 nnoremap <F7> :tabprevious<CR>
 nnoremap <F8> :tabnext<CR>
-nnoremap <F2> :GoRun<CR>
 
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
@@ -118,6 +122,7 @@ autocmd BufRead,BufNewFile /tmp/neomutt* map ZZ :Goyo\|x!<CR>
 autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<CR>
 
 " Auto add notes git
-autocmd BufWritePost *.md :Prettier 
-autocmd BufWritePost *.md execute '!git add % && git commit -m "Auto-commit: saved %" && git push' | redraw! 
+au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
+"autocmd BufWritePost *.md :Prettier 
+"autocmd BufWritePost *.md execute '!git add % && git commit -m "Auto-commit: saved %" && git push' | redraw! 
 
