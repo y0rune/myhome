@@ -19,6 +19,10 @@ Plug 'lervag/vimtex'
 Plug 'junegunn/goyo.vim'
 Plug 'prettier/vim-prettier', { 'do': 'npm install --force' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'npm install --force' }
+" Problem with vim-prettier
+" 
+" git checkout -b test origin/feature/issue-232-add-support-for-prettier-2.x; 
+" npm install --force 
 call plug#end()
 
 " Status-line
@@ -114,6 +118,6 @@ autocmd BufRead,BufNewFile /tmp/neomutt* map ZZ :Goyo\|x!<CR>
 autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<CR>
 
 " Auto add notes git
-autocmd BufWritePost *.md :Prettier <CR>  
-autocmd BufWritePost *.md silent! execute '!git add % && git commit -m "Auto-commit: saved %" && git push' | redraw! 
+autocmd BufWritePost *.md :Prettier 
+autocmd BufWritePost *.md execute '!git add % && git commit -m "Auto-commit: saved %" && git push' | redraw! 
 
