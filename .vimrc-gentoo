@@ -27,7 +27,10 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'npm install --force' }
 call plug#end()
 
 " Vim wiki
-let g:vimwiki_list = [{'path': '~/git/notes', 'syntax': 'markdown', 'ext': '.md'}]
+"let g:vimwiki_list = [{'path': '~/git/notes', 'syntax': 'markdown', 'ext': '.md'}]
+let vimwiki_path=$HOME.'/git/notes/'
+let vimwiki_html_path=$HOME.'/vimwiki_html/'
+let g:vimwiki_list = [{'path_html':vimwiki_html_path, 'syntax':'markdown', 'ext':'.md', 'custom_wiki2html':$HOME.'/.vim/plugged/vimwiki/autoload/vimwiki/customwiki2html.sh'}]
 
 " Status-line
 set statusline=
