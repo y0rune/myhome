@@ -7,7 +7,7 @@ DEFAULT_KERNEL="/usr/src/linux/.config"
 
 function starting() {
 echo -e "\e[93m----------------------COMPILING------------------------------\e[0m"
-sudo cp -rv $DEFAULT_KERNEL $TMP_KERNEL 
+sudo cp -rv $DEFAULT_KERNEL $TMP_KERNEL
 cp -r $TMP_KERNEL $BACKUP
 cp -r /etc/portage/* $BACKUP
 qlist -I | sort | uniq | tr '\n' ' ' > $BACKUP/list-of-programs-"$(date +"%d-%m-%Y")"
@@ -16,28 +16,27 @@ qlist -I | sort | uniq | tr '\n' ' ' > $BACKUP/list-of-programs-"$(date +"%d-%m-
 function selection() {
 echo -e "\e[93m----------------------SELECTION-----------------------------\e[0m"
 sudo eselect kernel list
-echo 
+echo
 echo
 read -p "New kernel is: " KERVER
 echo
 echo -e "Your kernel now is \e[91m$(uname -sr)\e[0m"
 echo -e "Your selected kernel is \e[91m"$KERVER"\e[0m"
 sudo eselect kernel set $KERVER
-sudo eselect kernel list | grep "*" 
-echo 
+sudo eselect kernel list | grep "*"
+echo
 }
 
 function compilation() {
-read -p "Do you want to accept and compile (Y/N): " agreed 
+read -p "Do you want to accept and compile (Y/N): " agreed
 echo
 if [ "$agreed" == "y" ] || [ "$agreed" == "Y" ]
-	then 
-		echo -e "\e[91m----------------------\e[5mSTARTING\e[0m\e[91m------------------------------\e[0m" && sleep 10 
+	then
+		echo -e "\e[91m----------------------\e[5mSTARTING\e[0m\e[91m------------------------------\e[0m" && sleep 10
         $NOW > /tmp/compiling-starting
         NEW_KERNEL="/tmp/new-kernel-config"
         sudo cp -r $TMP_KERNEL $DEFAULT_KERNEL
-        #cd /usr/src/linux; sudo make menuconfig; sleep 2; sudo cp -r $DEFAULT_KERNEL $NEW_KERNEL
-        sleep 2; sudo cp -r $DEFAULT_KERNEL $NEW_KERNEL
+        cd /usr/src/linux; sudo make menuconfig; sleep 2; sudo cp -r $DEFAULT_KERNEL $NEW_KERNEL
         sudo genkernel all --makeopts=-j$(nproc --all) --kernel-config=$NEW_KERNEL --callback="emerge nvidia-drivers::gentoo"
     elif [ "$agreed" == "N" ] || [ "$agreed" == "n" ]
 	then
@@ -49,7 +48,7 @@ function ending() {
 echo
 echo
 echo -e "\e[93m----------------------CHECKING-----------------------------\e[0m"
-checking	
+checking
 echo
 echo
 echo -e "\e[93m----------------------REMEMBER-----------------------------\e[0m"
@@ -60,7 +59,7 @@ echo "* /boot/vmlinuz-OLD_KERNEL"
 echo "* /boot/System.map-OLD_KERNEL"
 echo "* /boot/initramfs-OLD_KERNEL"
 echo "* /usr/src/linux-OLD_KERNEL"
-echo 
+echo
 echo -e "AFTER EVERYTHING YOU MUST WRITE COMMAND \e[91m"sudo grub-mkconfig -o /boot/grub/grub.cfg"\e[0m"
 }
 
@@ -80,7 +79,7 @@ function ifchecking () {
 FILE=/boot/$1
 if test -f "$FILE"; then
     echo "$FILE exist in the /boot folder ;)"
-else  
+else
     echo "$FILE NOT exist in the /boot folder ;)"
 fi
 }
@@ -94,16 +93,16 @@ starting
 selection
 compilation
 
-echo -e  "\e[31mI am leaving! Thank You!\e[0m" && sleep 3  
+echo -e  "\e[31mI am leaving! Thank You!\e[0m" && sleep 3
 
 TERMIN=$(date +"%s")
 DIFFTLPS=$(($TERMIN-$BEGIN))
 
 echo -e "\e[93m------------------TIME COMPILATION-------------------------\e[0m"
 echo -e "\e[93m$(($DIFFTLPS / 60)) minutes and $(($DIFFTLPS % 60)) seconds \e[0m elapsed for Script Execution." && sleep 3
-ending 
+ending
 
 exit
 }
 
-main 
+main
