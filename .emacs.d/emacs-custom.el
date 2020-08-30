@@ -7,7 +7,9 @@
  '(livedown-browser nil)
  '(livedown-open t)
  '(livedown-port 1337)
- '(package-selected-packages (quote (markdown-mode magit dracula-theme use-package))))
+ '(package-selected-packages
+   (quote
+    (ox-jira use-package switch-window ox-reveal markdown-mode magit htmlize dracula-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

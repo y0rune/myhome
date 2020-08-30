@@ -1,4 +1,4 @@
-; Packages
+;Packages
 
 ;; package archives
 (require 'package)
@@ -35,6 +35,13 @@
 
 (global-set-key (kbd "C-x j") 'awesome-tab-backward-tab)
 (global-set-key (kbd "C-x k") 'awesome-tab-forward-tab)
+
+;; 80-charaters mode 
+(add-hook 'text-mode-hook 'auto-fill-mode)
+(setq-default fill-column 80)
+
+(add-hook 'org-mode-hook '(lambda () (setq fill-column 80)))
+(add-hook 'org-mode-hook 'auto-fill-mode)
 
 ;; Switch-window
 (use-package switch-window
