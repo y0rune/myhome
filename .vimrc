@@ -13,7 +13,7 @@ au BufWritePre * let &bex = '@' . strftime("%F.%H:%M")
 
 " plugins
 call plug#begin('~/.vim/plugged')
-Plug 'scrooloose/nerdtree', "{ 'on':  'NERDTreeToggle' }
+Plug 'preservim/nerdtree', "{ 'on':  'NERDTreeToggle' }
 call plug#end()
 
 " Status-line
@@ -83,3 +83,7 @@ nnoremap <F7> :tabprevious<CR>
 nnoremap <F8> :tabnext<CR>
 
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
+
+" Automatically deletes all trailing whitespace and newlines at end of file on save.
+autocmd BufWritePre * %s/\s\+$//e
+autocmd BufWritepre * %s/\n\+\%$//e

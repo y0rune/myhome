@@ -13,7 +13,7 @@ au BufWritePre * let &bex = '@' . strftime("%F.%H:%M")
 
 " plugins
 call plug#begin('~/.vim/plugged')
-Plug 'scrooloose/nerdtree' 
+Plug 'preservim/nerdtree' 
 Plug 'vimwiki/vimwiki'
 Plug 'nmante/vim-latex-live-preview'
 Plug 'lervag/vimtex'
@@ -128,8 +128,11 @@ autocmd BufRead,BufNewFile /tmp/neomutt* :Goyo | set bg=light
 autocmd BufRead,BufNewFile /tmp/neomutt* map ZZ :Goyo\|x!<CR>
 autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<CR>
 
+" Automatically deletes all trailing whitespace and newlines at end of file on save.
+autocmd BufWritePre * %s/\s\+$//e
+autocmd BufWritepre * %s/\n\+\%$//e
+
 " Auto add notes git
-au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
-"autocmd BufWritePost *.md :Prettier 
+autocmd BufWritePost *.md :Prettier 
 "autocmd BufWritePost *.md execute '!git add % && git commit -m "Auto-commit: saved %" && git push' | redraw! 
 
