@@ -13,7 +13,7 @@ au BufWritePre * let &bex = '@' . strftime("%F.%H:%M")
 
 " plugins
 call plug#begin('~/.vim/plugged')
-Plug 'preservim/nerdtree' 
+Plug 'preservim/nerdtree'
 Plug 'vimwiki/vimwiki'
 Plug 'nmante/vim-latex-live-preview'
 Plug 'lervag/vimtex'
@@ -22,9 +22,9 @@ Plug 'jceb/vim-orgmode'
 Plug 'prettier/vim-prettier', { 'do': 'npm install --force' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'npm install --force' }
 " Problem with vim-prettier
-" 
-" git checkout -b test origin/feature/issue-232-add-support-for-prettier-2.x; 
-" npm install --force 
+"
+" git checkout -b test origin/feature/issue-232-add-support-for-prettier-2.x;
+" npm install --force
 call plug#end()
 
 " Vim wiki
@@ -33,7 +33,9 @@ let wiki.path = '~/git/notes/'
 let wiki.path_html = '~/vimwiki_html/'
 let wiki.syntax = 'default'
 let wiki.ext = '.wiki'
+let wiki.text_ignore_newline = 0
 let g:vimwiki_list = [wiki]
+let g:vimwiki_list_ignore_newline = 1
 let g:vimwiki_table_mappings = 0
 
 " Status-line
@@ -132,7 +134,10 @@ autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<CR>
 autocmd BufWritePre * %s/\s\+$//e
 autocmd BufWritepre * %s/\n\+\%$//e
 
-" Auto add notes git
-autocmd BufWritePost *.md :Prettier 
-"autocmd BufWritePost *.md execute '!git add % && git commit -m "Auto-commit: saved %" && git push' | redraw! 
+" Autoformating markdown
+autocmd BufWritePost *.md :Prettier
+au BufRead,BufNewFile *.md setlocal textwidth=80
 
+" Auto add notes git
+au BufRead,BufNewFile *.wiki setlocal textwidth=80
+autocmd BufWritePost *.wiki execute '!git add % && git commit -m "Auto-commit: saved %" && git push' | redraw!
