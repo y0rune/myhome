@@ -1,3 +1,7 @@
+.emacs.d/elpa/
+.fltk/
+.local/bin/vpnst
+.npm/
 .Xauthority
 .anthy/
 .bash_history
