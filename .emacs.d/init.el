@@ -78,6 +78,14 @@
   :config
   (load-theme 'dracula t))
 
+;; Sitebar dirred
+(use-package dired-sidebar
+  :ensure t
+  :commands (dired-sidebar-toggle-sidebar))
+
+(require 'dired-sidebar)
+(global-set-key (kbd "C-x d") 'dired-sidebar-toggle-sidebar)
+
 ;; Magit
 (use-package magit
   :ensure t
