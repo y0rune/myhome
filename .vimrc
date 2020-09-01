@@ -13,8 +13,31 @@ au BufWritePre * let &bex = '@' . strftime("%F.%H:%M")
 
 " plugins
 call plug#begin('~/.vim/plugged')
-Plug 'preservim/nerdtree', "{ 'on':  'NERDTreeToggle' }
+Plug 'preservim/nerdtree'
+Plug 'y0rune/vimwiki'
+Plug 'nmante/vim-latex-live-preview'
+Plug 'lervag/vimtex'
+Plug 'junegunn/goyo.vim'
+Plug 'jceb/vim-orgmode'
+Plug 'tpope/vim-speeddating'
+Plug 'prettier/vim-prettier', { 'do': 'npm install --force' }
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'npm install --force' }
+" Problem with vim-prettier
+"
+" git checkout -b test origin/feature/issue-232-add-support-for-prettier-2.x;
+" npm install --force
 call plug#end()
+
+" Vim wiki
+let wiki = {}
+let wiki.path = '~/git/notes/'
+let wiki.path_html = '~/git/notes/www/'
+let wiki.syntax = 'default'
+let wiki.ext = '.wiki'
+let text_ignore_newline = 0
+let g:vimwiki_list = [wiki]
+let g:vimwiki_list_ignore_newline = 1
+let g:vimwiki_table_mappings = 0
 
 " Status-line
 set statusline=
@@ -32,11 +55,14 @@ set nocompatible
 set hlsearch
 set incsearch
 set noshowmode
+set cursorline
 set cmdheight=1
 syntax on
 filetype plugin indent on
-
 set encoding=utf-8
+
+" livepreviewer
+let g:livepreview_previewer = 'mupdf'
 
 " line numbers
 set number
@@ -50,6 +76,7 @@ set expandtab
 
 " editing
 runtime! macros/matchit.vim
+set backspace=indent,eol,start
 
 " visual feedback
 set laststatus=2
@@ -72,18 +99,43 @@ let &t_SI = "\<esc>[6 q"
 let &t_EI = "\<esc>[2 q"
 
 " colors
-set bg=dark
 colorscheme desert
+hi CursorLine cterm=NONE term=NONE ctermbg=NONE guibg=NONE
+hi CursorLine ctermbg=235
 
 " map
 nnoremap S :%s//g<Left><Left>
+nnoremap ee :!mupdf $(echo % \| sed 's/tex$/pdf/') & disown<CR><CR>
 map <C-n> :NERDTreeToggle<CR>
 nnoremap <silent> <C-t> :tabnew <CR>
+nnoremap <F11> :Goyo <CR>
 nnoremap <F7> :tabprevious<CR>
 nnoremap <F8> :tabnext<CR>
 
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
+" latex
+let g:tex_flavor = "latex"
+autocmd BufWritePost *.tex silent! execute "!pdflatex --shell-escape -synctex=1 -interaction=nonstopmode % > /dev/null " | redraw!
+autocmd BufWritePost *.tex silent! execute "!latexmk -pdf -silent % > /dev/null" | redraw!
+autocmd BufWritePost *.tex silent! execute "!sudo rm -rf *.fls *.ilg *.nav *.snm *.toc *.idx *.lof *.lot *.synctex.gz *.aux *.fdb_latexmk *.fls *.log *.out > /dev/null" | redraw!
+autocmd BufWritePost *.tex silent! execute "!sudo pkill -HUP mupdf > /dev/null" | redraw!
+
+" mutt
+autocmd BufRead,BufNewFile /tmp/neomutt* let g:goyo_width=80
+autocmd BufRead,BufNewFile /tmp/neomutt* :Goyo | set bg=light
+autocmd BufRead,BufNewFile /tmp/neomutt* map ZZ :Goyo\|x!<CR>
+autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<CR>
+
 " Automatically deletes all trailing whitespace and newlines at end of file on save.
 autocmd BufWritePre * %s/\s\+$//e
 autocmd BufWritepre * %s/\n\+\%$//e
+
+" Autoformating markdown
+autocmd BufWritePost *.md :Prettier
+
+" Livedown
+let g:livedown_browser = "browser-x"
+let g:livedown_autorun = 0
+let g:livedown_open = 1
+let g:livedown_port = 4242

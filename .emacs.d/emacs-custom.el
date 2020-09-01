@@ -9,7 +9,7 @@
  '(livedown-port 1337)
  '(package-selected-packages
    (quote
-    (dired-sidebar use-package switch-window ox-reveal ox-jira markdown-mode magit htmlize dracula-theme confluence))))
+    (org-jira use-package switch-window ox-reveal ox-jira markdown-mode magit htmlize dracula-theme dired-sidebar confluence))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

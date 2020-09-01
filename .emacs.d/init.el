@@ -43,6 +43,11 @@
 (add-hook 'org-mode-hook '(lambda () (setq fill-column 80)))
 (add-hook 'org-mode-hook 'auto-fill-mode)
 
+;; Broswer
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "browser-x")
+
+
 ;; Switch-window
 (use-package switch-window
   :ensure t
@@ -71,6 +76,12 @@
   ;; maybe add auto-installer in the future
   (setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js")
 )
+
+;; Org-Jira
+;(use-package org-jira
+;  :ensure t
+;  )
+;(setq jiralib-url "https://localhost/")
 
 ;; Theme
 (use-package dracula-theme
