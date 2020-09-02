@@ -83,6 +83,12 @@
 ;  )
 ;(setq jiralib-url "https://localhost/")
 
+;; AutoComlete
+(use-package auto-complete 
+  :ensure t
+  )
+(ac-config-default)
+
 ;; Theme
 (use-package dracula-theme
   :ensure t

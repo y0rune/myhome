@@ -138,4 +138,3 @@ autocmd BufWritePost *.md :Prettier
 let g:livedown_browser = "browser-x"
 let g:livedown_autorun = 0
 let g:livedown_open = 1
-let g:livedown_port = 4242
