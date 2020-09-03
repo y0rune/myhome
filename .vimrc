@@ -14,7 +14,6 @@ au BufWritePre * let &bex = '@' . strftime("%F.%H:%M")
 " plugins
 call plug#begin('~/.vim/plugged')
 Plug 'preservim/nerdtree'
-Plug 'y0rune/vimwiki'
 Plug 'nmante/vim-latex-live-preview'
 Plug 'lervag/vimtex'
 Plug 'junegunn/goyo.vim'
@@ -28,17 +27,6 @@ Plug 'ycm-core/YouCompleteMe', { 'do': 'python3 install.py --clangd-completer --
 " git checkout -b test origin/feature/issue-232-add-support-for-prettier-2.x;
 " npm install --force
 call plug#end()
-
-" Vim wiki
-let wiki = {}
-let wiki.path = '~/git/notes/'
-let wiki.path_html = '~/git/notes/www/'
-let wiki.syntax = 'default'
-let wiki.ext = '.wiki'
-let text_ignore_newline = 0
-let g:vimwiki_list = [wiki]
-let g:vimwiki_list_ignore_newline = 1
-let g:vimwiki_table_mappings = 0
 
 " Status-line
 set statusline=
