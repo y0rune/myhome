@@ -22,6 +22,9 @@ Plug 'tpope/vim-speeddating'
 Plug 'prettier/vim-prettier', { 'do': 'npm install --force' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'npm install --force' }
 Plug 'ycm-core/YouCompleteMe', { 'do': 'python3 install.py --clangd-completer --java-completer'}
+Plug 'hashivim/vim-terraform'
+Plug 'vim-syntastic/syntastic'
+Plug 'juliosueiras/vim-terraform-completion'
 " Problem with vim-prettier
 " git checkout -b test origin/feature/issue-232-add-support-for-prettier-2.x;
 " npm install --force
