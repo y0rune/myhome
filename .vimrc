@@ -23,7 +23,6 @@ Plug 'prettier/vim-prettier', { 'do': 'npm install --force' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'npm install --force' }
 Plug 'ycm-core/YouCompleteMe', { 'do': 'python3 install.py --clangd-completer --java-completer'}
 " Problem with vim-prettier
-"
 " git checkout -b test origin/feature/issue-232-add-support-for-prettier-2.x;
 " npm install --force
 call plug#end()
@@ -52,6 +51,10 @@ set encoding=utf-8
 
 " livepreviewer
 let g:livepreview_previewer = 'mupdf'
+
+" markdown preview
+let g:mkdp_browser = '/home/yorune/.local/bin/browser-x'
+let g:mkdp_echo_preview_url = 1
 
 " line numbers
 set number
@@ -121,9 +124,4 @@ autocmd BufWritePre * %s/\s\+$//e
 autocmd BufWritepre * %s/\n\+\%$//e
 
 " Autoformating markdown
-autocmd BufWritePost *.md :Prettier
-
-" Livedown
-let g:livedown_browser = "browser-x"
-let g:livedown_autorun = 0
-let g:livedown_open = 1
+"autocmd BufWritePost *.md :Prettier
