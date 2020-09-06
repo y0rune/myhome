@@ -1,6 +1,6 @@
 #!/bin/bash
-print_weather() { 
-[ "$(stat -c %y "/home/yorune/.config/weatherreport" 2>/dev/null | cut -d' ' -f1)" != "$(date '+%Y-%m-%d')" ] && curl -s "wttr.in/$location" > "/home/yorune/.config/weatherreport" 
+print_weather() {
+[ "$(stat -c %y "/home/yorune/.config/weatherreport" 2>/dev/null | cut -d' ' -f1)" != "$(date '+%Y-%m-%d')" ] && curl -s "wttr.in/$location" > "/home/yorune/.config/weatherreport"
 
 printf "%s " "$(sed '16q;d' "/home/yorune/.config/weatherreport" | grep -wo "[0-9]*%" | sort -n | sed -e '$!d' | sed -e "s/^/☔ /g" | tr -d '\n')" &&  sed '13q;d' "/home/yorune/.config/weatherreport" | grep -o "m\\(-\\)*[0-9]\\+" | sort -n -t 'm' -k 2n | sed -e 1b -e '$!d' | tr '\n|m' ' ' | awk '{print " ❄",$1 "°","☀",$2 "°"}'
 }
@@ -12,7 +12,7 @@ vol=$(pulsemixer --get-volume | awk '{print $1}')
 printf "%s%%\\n" "🔊 $vol"
 }
 
-print_wifi(){	
+print_wifi(){
 [ "$(stat -c %y "/home/yorune/.config/vpn" 3>/dev/null | egrep -o '[0-9]+\-[0-9]+\-[0-9]+ [0-9]+')" != "$(date '+%Y-%m-%d %H')" ] && sudo /root/.local/bin/protonvpn status | grep -i Status | awk {'print $2'} > "/home/yorune/.config/vpn"
 
 
@@ -63,12 +63,12 @@ print_mail(){
 }
 
 print_cpu() {
-	cpuUse=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1"%"}')	
+	cpuUse=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1"%"}')
     echo -e "💻 $cpuUse"
 }
 
 while true
 do
-    xsetroot -name "$(print_temp) $(print_mail) $(print_cpu) $(print_mem) $(print_weather) $(print_wifi) $(print_battery) $(print_volume) $(print_date)"
+    xsetroot -name "$(print_temp) $(print_mail) $(print_cpu) $(print_mem) $(print_wifi) $(print_battery) $(print_volume) $(print_date)"
 	sleep 5
 done
