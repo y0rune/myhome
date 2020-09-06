@@ -14,7 +14,6 @@ au BufWritePre * let &bex = '@' . strftime("%F.%H:%M")
 " plugins
 call plug#begin('~/.vim/plugged')
 Plug 'preservim/nerdtree'
-Plug 'y0rune/vimwiki'
 Plug 'nmante/vim-latex-live-preview'
 Plug 'lervag/vimtex'
 Plug 'junegunn/goyo.vim'
@@ -22,22 +21,14 @@ Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-speeddating'
 Plug 'prettier/vim-prettier', { 'do': 'npm install --force' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'npm install --force' }
+Plug 'ycm-core/YouCompleteMe', { 'do': 'python3 install.py --clangd-completer --java-completer'}
+Plug 'hashivim/vim-terraform'
+Plug 'vim-syntastic/syntastic'
+Plug 'juliosueiras/vim-terraform-completion'
 " Problem with vim-prettier
-"
 " git checkout -b test origin/feature/issue-232-add-support-for-prettier-2.x;
 " npm install --force
 call plug#end()
-
-" Vim wiki
-let wiki = {}
-let wiki.path = '~/git/notes/'
-let wiki.path_html = '~/git/notes/www/'
-let wiki.syntax = 'default'
-let wiki.ext = '.wiki'
-let text_ignore_newline = 0
-let g:vimwiki_list = [wiki]
-let g:vimwiki_list_ignore_newline = 1
-let g:vimwiki_table_mappings = 0
 
 " Status-line
 set statusline=
@@ -63,6 +54,10 @@ set encoding=utf-8
 
 " livepreviewer
 let g:livepreview_previewer = 'mupdf'
+
+" markdown preview
+let g:mkdp_browser = '/home/yorune/.local/bin/browser-x'
+let g:mkdp_echo_preview_url = 1
 
 " line numbers
 set number
@@ -132,10 +127,4 @@ autocmd BufWritePre * %s/\s\+$//e
 autocmd BufWritepre * %s/\n\+\%$//e
 
 " Autoformating markdown
-autocmd BufWritePost *.md :Prettier
-
-" Livedown
-let g:livedown_browser = "browser-x"
-let g:livedown_autorun = 0
-let g:livedown_open = 1
-let g:livedown_port = 4242
+"autocmd BufWritePost *.md :Prettier
