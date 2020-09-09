@@ -15,9 +15,8 @@ printf "%s%%\\n" "🔊 $vol"
 print_wifi(){
 [ "$(stat -c %y "/home/yorune/.config/vpn" 3>/dev/null | egrep -o '[0-9]+\-[0-9]+\-[0-9]+ [0-9]+')" != "$(date '+%Y-%m-%d %H')" ] && sudo /root/.local/bin/protonvpn status | grep -i Status | awk {'print $2'} > "/home/yorune/.config/vpn"
 
-
-echo -e "$(cat /sys/class/net/w*/operstate | sed "s/down/❌/;s/up/📶/") $(cat /sys/class/net/e*/operstate | sed "s/down/❌/;s/up/🌐/") $(cat /home/yorune/.config/vpn | sed 's/Connected/🌐/g;s/Disconnected/❌/g')"
-
+echo -e "$(cat /sys/class/net/w*/operstate | sed "s/down/❌/;s/up/📶/") $(cat /sys/class/net/e*/operstate | sed "s/down/❌/;s/up/🌐/")"
+#echo -e "$(cat /sys/class/net/w*/operstate | sed "s/down/❌/;s/up/📶/") $(cat /sys/class/net/e*/operstate | sed "s/down/❌/;s/up/🌐/") $(cat /home/yorune/.config/vpn | sed 's/Connected/🌐/g;s/Disconnected/❌/g')"
 }
 
 print_temp(){

@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo eix-repos-sync
+sudo /home/yorune/.local/bin/eix-repos-sync
 sudo eix-sync -a
 sudo eix-update
 #sudo emerge-webrsync

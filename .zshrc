@@ -11,18 +11,18 @@ HISTSIZE=10000
 SAVEHIST=10000000
 autoload -U colors && colors
 setopt PROMPT_SUBST
-PS1='%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%m %{$fg[magenta]%}%~%{$fg[red]%} $(parse_git_branch)]%{$reset_color%}$%b ' 
+PS1='%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%m %{$fg[magenta]%}%~%{$fg[red]%} $(parse_git_branch)]%{$reset_color%}$%b '
 plugins=(rake ruby vagrant knife knife_ssh kitchen )
 
 ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
-source $HOME/.sshservers 
+source $HOME/.sshservers
 source $HOME/Linux/configs/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh &>> /dev/null
 source $HOME/Linux/configs/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh &>> /dev/null
 [ ! -d $HOME/.config/fzf ] && git clone https://github.com/junegunn/fzf.git $HOME/.config/fzf
 [ -f $HOME/.config/fzf/shell/key-bindings.zsh ] && source $HOME/.config/fzf/shell/key-bindings.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-FPATH=/usr/local/share/zsh/site-functions:$FPATH 
+FPATH=/usr/local/share/zsh/site-functions:$FPATH
 xset s off -dpms &>> /dev/null
 xset b off &>> /dev/null
 xset s off &>> /dev/null
@@ -37,13 +37,13 @@ export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
 export _JAVA_AWT_WM_NONREPARENTING=1
-export CCACHE_DIR="/mnt/backup/ccache"
+export CCACHE_DIR="/usr/ccache"
 export LC_ALL="en_US.UTF-8"
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-export BROWSER=/usr/bin/firefox
+export BROWSER=/usr/bin/firefox-bin
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse'
-export EIX_LIMIT_COMPACT=0 
+export EIX_LIMIT_COMPACT=0
 export TERMINAL="st"
 export QT_SCALE_FACTOR=1.5
 export VISUAL='vim'
@@ -73,7 +73,7 @@ alias gadd="git add"
 alias gpush="git push"
 alias gpull="git pull"
 alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches"
-alias gfg="git checkout master && git fetch upstream && git pull upstream master" 
+alias gfg="git checkout master && git fetch upstream && git pull upstream master"
 alias cal="cal -3"
 alias code="vscodium"
 alias vpn="sudo /root/.local/bin/protonvpn c -f"
@@ -88,6 +88,5 @@ alias dplen="trans pl:en"
 alias notes="vim $HOME/git/notes/index.md"
 
 # Cleaning-up
-export KODI_DATA="$HOME/.config/kodi"
 export PATH=$HOME/.local/bin:$PATH
 XDG_DATA_DIRS="$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:$XDG_DATA_DIRS"
