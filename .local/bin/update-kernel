@@ -37,7 +37,7 @@ if [ "$agreed" == "y" ] || [ "$agreed" == "Y" ]
         NEW_KERNEL="/tmp/new-kernel-config"
         sudo cp -r $TMP_KERNEL $DEFAULT_KERNEL
         cd /usr/src/linux; sudo make menuconfig; sleep 2; sudo cp -r $DEFAULT_KERNEL $NEW_KERNEL
-        sudo genkernel all --makeopts=-j$(nproc --all) --kernel-config=$NEW_KERNEL --callback="emerge nvidia-drivers::gentoo"
+        sudo genkernel all --makeopts=-j$(nproc --all) --kernel-config=$NEW_KERNEL --callback="emerge nvidia-drivers::gentoo" --lvm --btrfs --luks
     elif [ "$agreed" == "N" ] || [ "$agreed" == "n" ]
 	then
 	exit

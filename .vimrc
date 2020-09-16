@@ -46,7 +46,6 @@ set nocompatible
 set hlsearch
 set incsearch
 set noshowmode
-set cursorline
 set cmdheight=1
 syntax on
 filetype plugin indent on
@@ -118,7 +117,7 @@ autocmd BufWritePost *.tex silent! execute "!sudo pkill -HUP mupdf > /dev/null" 
 
 " mutt
 autocmd BufRead,BufNewFile /tmp/neomutt* let g:goyo_width=80
-autocmd BufRead,BufNewFile /tmp/neomutt* :Goyo | set bg=light
+autocmd BufRead,BufNewFile /tmp/neomutt* :Goyo
 autocmd BufRead,BufNewFile /tmp/neomutt* map ZZ :Goyo\|x!<CR>
 autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<CR>
 

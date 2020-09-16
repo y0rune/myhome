@@ -65,6 +65,10 @@
   ([remap other-window] . switch-window)
   )
 
+;; Enable japanese
+(require 'mozc)
+(setq default-input-method "japanese-mozc")
+
 ;; reveal dependency
 (use-package htmlize
   :ensure t
