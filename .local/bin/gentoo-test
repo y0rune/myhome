@@ -18,8 +18,8 @@ then
     sudo mount --types proc /proc /mnt/gentoo/gentoo/proc
     sudo mount --rbind /sys /mnt/gentoo/gentoo/sys
     sudo mount --make-rslave /mnt/gentoo/gentoo/sys
-    sudo mount --rbind /dev /mnt/gentoo/gentoo/dev
-    sudo mount --make-rslave /mnt/gentoo/gentoo/dev
+    #sudo mount --rbind /dev /mnt/gentoo/gentoo/dev
+    #sudo mount --make-rslave /mnt/gentoo/gentoo/dev
     sleep 5
     sudo chroot /mnt/gentoo/gentoo /bin/bash
     # echo "Europe/Warsaw" > /etc/timezone

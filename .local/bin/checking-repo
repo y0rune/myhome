@@ -20,7 +20,7 @@ function scanning(){
 }
 
 function folder(){
-    cd "$1" || exit
+    cd "$1"; git pull || exit
 
     PACKAGES=()
 
