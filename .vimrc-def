@@ -73,7 +73,6 @@ let &t_EI = "\<esc>[2 q"
 
 " colors
 set bg=dark
-colorscheme desert
 
 " map
 nnoremap S :%s//g<Left><Left>

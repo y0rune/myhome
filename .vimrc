@@ -93,7 +93,7 @@ let &t_SI = "\<esc>[6 q"
 let &t_EI = "\<esc>[2 q"
 
 " colors
-colorscheme desert
+set bg=dark
 hi CursorLine cterm=NONE term=NONE ctermbg=NONE guibg=NONE
 hi CursorLine ctermbg=235
 
