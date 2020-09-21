@@ -126,4 +126,4 @@ autocmd BufWritePre * %s/\s\+$//e
 autocmd BufWritepre * %s/\n\+\%$//e
 
 " Autoformating markdown
-"autocmd BufWritePost *.md :Prettier
+autocmd BufWritePost *.md :Prettier
