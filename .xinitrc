@@ -1,14 +1,20 @@
 #!/bin/sh
 export PATH=$HOME/.local/bin:$PATH
 
+# NVDIA
 xrandr --setprovideroutputsource modesetting NVIDIA-0
 xrandr --auto
-xset s off -dpms&
+
+# Turn off beep
 xset b off&
-xset s off&
-xset -dpms&
+
+# Lock screen
+xset s 300
+xautolock -time 5 -locker slock&
+
+# Programs
 compton&
-feh --bg-fill $HOME/.wall.jpg &
+feh --bg-fill "$HOME/.wall.jpg" &
 nm-applet --sm-disable&
 #sudo /root/.local/bin/protonvpn c -f&
 dunst -config&
@@ -19,4 +25,18 @@ password-manager&
 sudo /usr/bin/rdate -s ntp.task.gda.pl && sudo /sbin/hwclock --systohc
 mega-cmd-server --debug-full > /var/log/megacmd/megacmd.log&
 dwmstatusbar&
+
+# Seetings of LID
+while true
+do
+	if [[ $(< /proc/acpi/button/lid/LID0/state ) = *closed ]]
+	then
+		case $(< /sys/class/power_supply/ADP0/online) in
+			1) ( [[ ! "$(pidof slock)" ]] && slock ) ;;
+			0) sudo pm-suspend && slock  ;;
+		esac
+	fi
+	sleep 2
+done &
+
 exec dbus-launch dwm
