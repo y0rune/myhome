@@ -64,8 +64,8 @@ set visualbell
 set t_vb=
 
 " searching
-set incsearch
 set smartcase
+set ic
 
 " cursor
 let &t_SI = "\<esc>[6 q"
