@@ -2,6 +2,10 @@ parse_git_branch() {
     git symbolic-ref --short HEAD 2> /dev/null
 }
 
+gbranch() {
+    echo -e "$(git branch "$@")"
+}
+
 [ -f /etc/gentoo-release ] && export ZSH="/usr/share/zsh/site-contrib/oh-my-zsh"
 [ -f /etc/centos-release ] && export ZSH="$HOME/.oh-my-zsh"
 [ -f /etc/debian_version ] && export ZSH="$HOME/.oh-my-zsh"
@@ -67,11 +71,13 @@ alias feh="feh --scale-down"
 alias changefont="figlet"
 alias gmaster="git checkout master"
 alias gcommit="git commit --author='Marcin Woźniak <y0rune@aol.com>' -s"
-alias gcommitwork="git commit --author='Marcin Woźniak <marcin.wozniak@cognifide.com>'"
+alias gcommitw="git commit --author='Marcin Woźniak <marcin.wozniak@cognifide.com>'"
 alias gadd="git add"
 alias gpush="git push"
 alias gpull="git pull"
-alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches"
+alias gstatus="git status"
+alias gst="git status"
+alias Log="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches"
 alias gfg="git checkout master && git fetch upstream && git pull upstream master"
 alias cal="cal -3"
 alias code="vscodium"

@@ -14,7 +14,7 @@
 function scanning(){
     EUSCAN=$(euscan --nocolor --quiet "$1")
     if [ -n "$EUSCAN" ]; then
-        echo "=============== NOW: $(find ./* -mindepth 2 -maxdepth 2  -name ''"$1"'*.ebuild' | tail -1) =================
+        echo "=============== NOW: $(find ./* -mindepth 2 -maxdepth 2  -name ''"$1"'*.ebuild' | sort | tail -1) =================
         $(echo -e "$EUSCAN" | tail -1)"
     fi
 }

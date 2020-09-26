@@ -10,4 +10,4 @@ done
 echo
 read -p 'Select number to show logs: ' NUMBER
 
-sudo tail -f ${LOGS[$NUMBER]} | ccze -A
+sudo tail -f ${LOGS[$NUMBER]}
