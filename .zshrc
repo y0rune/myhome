@@ -92,6 +92,7 @@ alias vim="vim -p"
 alias denpl="trans en:pl"
 alias dplen="trans pl:en"
 alias notes="vim $HOME/git/notes/index.md"
+alias mpv="mpv --ytdl-format='bestvideo[ext=mp4][height<=?1080]+bestaudio[ext=m4a]'"
 
 # Cleaning-up
 export PATH=$HOME/.local/bin:$PATH
