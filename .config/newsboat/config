@@ -8,7 +8,7 @@ unbind-key o
 bind-key o open-in-browser
 
 macro , open-in-browser
-macro p set browser "mpv" ; open-in-browser ; set browser "/home/yorune/.local/bin/browser-x -new-tab %u"
+macro p set browser "mpv --ytdl-format='bestvideo[ext=mp4][height<=?1080]+bestaudio[ext=m4a]' --no-resume-playback" ; open-in-browser ; set browser "/home/yorune/.local/bin/browser-x -new-tab %u"
 
 unbind-key n
 unbind-key p
