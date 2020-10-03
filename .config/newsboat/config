@@ -1,11 +1,14 @@
 auto-reload yes
 refresh-on-startup yes
-reload-time 10 
+reload-time 10
 notify-program "/home/yorune/.local/bin/notify-program"
-notify-always yes 
+notify-always yes
 
 unbind-key o
 bind-key o open-in-browser
+
+macro , open-in-browser
+macro p set browser "mpv" ; open-in-browser ; set browser "/home/yorune/.local/bin/browser-x -new-tab %u"
 
 unbind-key n
 unbind-key p
