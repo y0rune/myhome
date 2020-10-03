@@ -1,0 +1,13 @@
+#!/bin/bash
+LOGS=( $(sudo find /var/tmp/portage/  -mindepth 3 -name "build.log") )
+LEN=${#LOGS[@]}
+
+for (( i=0; i<$LEN; i++ ));
+do
+    echo "$i - ${LOGS[$i]}"
+done
+
+echo
+read -p 'Select number to show logs: ' NUMBER
+
+sudo tail -f ${LOGS[$NUMBER]}
