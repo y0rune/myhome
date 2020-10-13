@@ -26,10 +26,8 @@ source $HOME/Linux/configs/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh &
 [ -f $HOME/.config/fzf/shell/key-bindings.zsh ] && source $HOME/.config/fzf/shell/key-bindings.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 FPATH=/usr/local/share/zsh/site-functions:$FPATH
-xset s off -dpms &>> /dev/null
+
 xset b off &>> /dev/null
-xset s off &>> /dev/null
-xset -dpms &>> /dev/null
 set bell-style none &>> /dev/null
 setxkbmap pl &>> /dev/null
 
@@ -54,6 +52,7 @@ export EDITOR='vim'
 alias svm="sudo vim /etc/portage/make.conf"
 alias svr="sudo vim /etc/portage/repos.conf"
 alias svp="sudo vim /etc/portage/package.use"
+alias sva="sudo vim /etc/portage/package.accept_keywords"
 alias emerge="sudo emerge"
 alias channel-check='sudo iwlist wlan0 scan | egrep -i "essid|frequency"'
 alias grep="grep --color=always"
@@ -92,7 +91,7 @@ alias vim="vim -p"
 alias denpl="trans en:pl"
 alias dplen="trans pl:en"
 alias notes="vim $HOME/git/notes/index.md"
-alias mpv="mpv --ytdl-format='bestvideo[ext=mp4][height<=?1080]+bestaudio[ext=m4a]' --no-resume-playback"
+alias mpv="mpv --vo=x11 --hwdec=no --ytdl-format='bestvideo[ext=mp4][height<=?1080]+bestaudio[ext=m4a]' --no-resume-playback"
 
 # Cleaning-up
 export PATH=$HOME/.local/bin:$PATH

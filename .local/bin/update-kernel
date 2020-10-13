@@ -8,9 +8,9 @@ DEFAULT_KERNEL="/usr/src/linux/.config"
 function starting() {
 echo -e "\e[93m----------------------COMPILING------------------------------\e[0m"
 sudo cp -rv $DEFAULT_KERNEL $TMP_KERNEL
-cp -r $TMP_KERNEL $BACKUP
+cp -r $TMP_KERNEL $BACKUP/kernel-config
 cp -r /etc/portage/* $BACKUP
-qlist -I | sort | uniq | tr '\n' ' ' > $BACKUP/list-of-programs-"$(date +"%d-%m-%Y")"
+qlist -I | sort | uniq | tr '\n' ' ' > $BACKUP/list-of-programs
 }
 
 function selection() {
@@ -84,12 +84,21 @@ else
 fi
 }
 
+function addgit() {
+    cd ~/Linux/portage || exit
+    git add .
+    git commit -m "Updated: $(date)"
+    git push
+    cd ~ || exit
+}
+
 function main() {
 clear
 
 BEGIN=$(date +"%s")
 
 starting
+addgit
 selection
 compilation
 

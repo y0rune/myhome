@@ -1,5 +1,9 @@
 #!/bin/bash
 KERNEL=$(uname -sr)
 [[ $KERNEL =~ "icrosoft" ]] && "/mnt/c/Program Files/Mozilla Firefox/firefox.exe" "$@"
-[[ $KERNEL =~ "gentoo" ]] && GDK_DPI_SCALE="1.2" firefox-bin "$@"
-    #brave-bin --force-device-scale-factor=1.2 "$@"&
+[[ $KERNEL =~ "gentoo" ]] && MOZ_X11_EGL=1 GDK_DPI_SCALE="1.35" firefox "$@"
+#[[ $KERNEL =~ "gentoo" ]] && brave-bin --force-device-scale-factor=1.2 "$@"
+
+
+# Firefox
+# media.ffmpeg.vaapi.enabled -> true

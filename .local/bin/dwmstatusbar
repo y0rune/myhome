@@ -20,11 +20,11 @@ echo -e "$(cat /sys/class/net/w*/operstate | sed "s/down/❌/;s/up/📶/") $(cat
 }
 
 print_temp(){
-    echo -e "🔥 $(sensors | awk '/Core 0/ {print $3}') +$(sudo nvidia-smi -q -d temperature | grep --color=no -i "GPU Current" |egrep --color=no -o '[0-9]*').0°C"
+    echo -e "🔥 $(sensors | awk '/Core 0/ {print int($3)"°C"}') +$(sudo nvidia-smi -q -d temperature | grep --color=no -i "GPU Current" |egrep --color=no -o '[0-9]*')°C"
 }
 
 print_date(){
-	echo -e "🕛 $(date +"%d/%m %H:%M")"
+	echo -e "🕛 $(date +"%d/%m %H:%M:%S")"
 }
 
 print_mem(){
@@ -62,12 +62,11 @@ print_mail(){
 }
 
 print_cpu() {
-	cpuUse=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1"%"}')
+    cpuUse=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print int(100 - $1)"%"}')
     echo -e "💻 $cpuUse"
 }
 
 while true
 do
     xsetroot -name "$(print_temp) $(print_mail) $(print_cpu) $(print_mem) $(print_wifi) $(print_battery) $(print_volume) $(print_date)"
-	sleep 5
 done

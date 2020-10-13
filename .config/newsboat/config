@@ -1,6 +1,6 @@
 auto-reload yes
 refresh-on-startup yes
-reload-time 10
+reload-time 3600
 notify-program "/home/yorune/.local/bin/notify-program"
 notify-always yes
 
