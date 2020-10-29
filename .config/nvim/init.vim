@@ -1,7 +1,7 @@
 " settings
-if ! filereadable(system('echo -n "$HOME/.vim/autoload/plug.vim"'))
-	silent !mkdir -p $HOME/.vim/autoload/
-	silent !curl --silent "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > $HOME/.vim/autoload/plug.vim
+if ! filereadable(system('echo -n "$HOME/.config/nvim/autoload/plug.vim"'))
+	silent !mkdir -p $HOME/.config/nvim/autoload/
+	silent !curl --silent "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > $HOME/.config/nvim/autoload/plug.vim
 	autocmd VimEnter * PlugInstall
 endif
 
@@ -12,29 +12,40 @@ set tabstop=4
 au BufWritePre * let &bex = '@' . strftime("%F.%H:%M")
 
 " plugins
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 Plug 'preservim/nerdtree'
 Plug 'nmante/vim-latex-live-preview'
 Plug 'lervag/vimtex'
 Plug 'junegunn/goyo.vim'
 Plug 'jceb/vim-orgmode'
-Plug 'tpope/vim-speeddating'
 Plug 'prettier/vim-prettier', { 'do': 'npm install --force' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'npm install --force' }
-Plug 'vim-ruby/vim-ruby'
+" Autocomplete
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'vim-syntastic/syntastic'
-Plug 'Shougo/deoplete.nvim'
-Plug 'takkii/Bignyanco'
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
+" Ruby
+Plug 'takkii/Bignyanco'
+Plug 'vim-ruby/vim-ruby'
+"
 " Problem with vim-prettier
 " git checkout -b test origin/feature/issue-232-add-support-for-prettier-2.x;
 " npm install --force
+"
+" Problem autocomplete
+" pip3 install --user pynvim
+" pip install msgpack --user
 call plug#end()
 
-let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_rails = 1
+let g:deoplete#enable_at_startup = 1
 
+" Pass a dictionary to set multiple options
+call deoplete#custom#option({
+    \ 'auto_complete_delay': 200,
+    \ 'smart_case': v:true,
+    \ 'max_list' : 10,
+    \ })
 
 " Status-line
 set statusline=
