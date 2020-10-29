@@ -1,7 +1,7 @@
 #!/bin/bash
 KERNEL=$(uname -sr)
 [[ $KERNEL =~ "icrosoft" ]] && "/mnt/c/Program Files/Mozilla Firefox/firefox.exe" "$@"
-[[ $KERNEL =~ "gentoo" ]] && MOZ_X11_EGL=1 GDK_DPI_SCALE="1.35" firefox "$@"
+[[ $KERNEL =~ "gentoo" ]] && MOZ_X11_EGL=1 GDK_DPI_SCALE="1.35" firefox-bin "$@"
 #[[ $KERNEL =~ "gentoo" ]] && brave-bin --force-device-scale-factor=1.2 "$@"
 
 
