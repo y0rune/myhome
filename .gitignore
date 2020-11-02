@@ -95,3 +95,8 @@ www
 .wget-hsts
 .icons/
 .gtkrc-2.0
+.mozc/
+.emacs.d/ac-comphist.dat
+.local/bin/chardetect
+.local/bin/flask
+.local/include/
