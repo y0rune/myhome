@@ -2,21 +2,21 @@
 ### Version 2.3.11 ###
 enable_hostname 1
 hostname_short 0
-enable_sysname 1
+enable_sysname 0
 mbmon_port 0
-sticky_state 0
+sticky_state 1
 dock_type 0
-decorated 1
-skip_taskbar 1
-skip_pager 1
-above 0
-below 1
+decorated 0
+skip_taskbar 0
+skip_pager 0
+above 1
+below 0
 track_gtk_theme_name 0
 default_track_theme "Default"
 save_position 1
-chart_width 145
+chart_width 95
 update_HZ 10
-allow_multiple_instances 1
+allow_multiple_instances 0
 float_factor 1000
 hostname sysname_mode 1
 clock_cal clock_launch 
@@ -29,25 +29,14 @@ clock_cal loop_chime_enable 0
 clock_cal clock_options 1
 clock_cal cal_options 1
 clock_cal cal_format %a <span foreground="$A"><big><big>%e</big></big></span> %b
-clock_cal clock_format %l:%M <span foreground="$A"><small>%S</small></span>
-gkrellweather chart_visible 0
-gkrellweather panel_visible 1
-gkrellweather metric 1
-gkrellweather update_interval 15
-gkrellweather switch_interval 0
-gkrellweather wind_chill 0
-gkrellweather windspeed_unit 1
-gkrellweather pressure_unit 3
-gkrellweather station EPPO
-gkrellweather command /usr/libexec/gkrellweather/GrabWeather EPPO
-gkrellweather filename /home/yorune/.wmWeatherReports/EPPO.dat
+clock_cal clock_format %H:%M <span foreground="$A"><small>%S</small></span>
 cpu enable 0
 cpu smp_mode 0
 cpu enabled cpu 0
 cpu extra_info cpu 1
 cpu chart_config cpu 40 20 0 0 0 0 : 0 0 0 0 500 : 0 0 0 0 500 : 0 0 0 0 500
 cpu enabled cpu0 1
-cpu extra_info cpu0 0
+cpu extra_info cpu0 1
 cpu chart_config cpu0 40 20 0 0 0 0 : 0 0 0 0 500 : 0 0 0 0 500 : 0 0 0 0 500
 cpu enabled cpu1 1
 cpu extra_info cpu1 1
@@ -83,28 +72,21 @@ proc text_format \w88\a$p\f procs\n\e$u\f users
 proc chart_config 40 100 0 0 0 0 : 1 0 0 0 500 : 0 0 0 0 500
 disk assign_method 2
 disk device Disk 0 0 0 1 1 0 0 Disk
-disk chart_config Disk 40 7000000 0 1 0 0 : 0 0 0 0 500 : 0 0 0 0 500
+disk chart_config Disk 40 15000000 0 1 0 0 : 0 0 0 0 500 : 0 0 0 0 500
 disk device sda 0 0 45 0 1 -1 0 sda
 disk device sda1 0 0 45 0 1 1 0 sda1
 disk device sda2 0 0 45 0 1 2 0 sda2
 disk device sda3 0 0 45 0 1 3 0 sda3
-disk device sda4 0 0 45 0 1 4 0 sda4
-disk device sda5 0 0 45 0 1 5 0 sda5
-disk device sda6 0 0 45 0 1 6 0 sda6
-disk device sda7 0 0 45 0 1 7 0 sda7
-disk device sda8 0 0 45 0 1 8 0 sda8
-disk device sda9 0 0 45 0 1 9 0 sda9
 disk device sr0 0 0 96 0 1 -1 0 sr0
+disk device dm-0 0 0 555 0 1 -1 0 dm-0
+disk device dm-1 0 0 556 0 1 -1 0 dm-1
 disk text_format $T
 inet text_format all \t$a\f $l\N$A\f $L
 inet update_interval all 1
 net enables eth0 1 1 0
-net chart_config eth0 40 1000000 0 1 0 0 : 0 0 0 0 500 : 0 0 0 0 500
+net chart_config eth0 40 300000 0 1 0 0 : 0 0 0 0 500 : 0 0 0 0 500
 net enables lo 0 1 0
-net enables proton0 1 1 0
-net chart_config proton0 40 1000000 0 1 0 0 : 0 0 0 0 500 : 0 0 0 0 500
-net enables wlan0 1 1 0
-net chart_config wlan0 40 5 0 1 0 0 : 0 0 0 0 500 : 0 0 0 0 500
+net enables wlan0 0 1 0
 net timer_enabled 1
 net timer_seconds 1
 net timer_iface none
@@ -117,8 +99,7 @@ net net_stats_window_height 200
 meminfo mem_meter 1 0 0
 meminfo swap_meter 0 0
 meminfo swap_chart 0 1
-meminfo chart_config 20 20 0 1 0 0 : 0 0 0 0 500 : 0 0 0 0 500
-meminfo mem_launch $T
+meminfo mem_launch 
 meminfo mem_tooltip 
 meminfo mem_data_format $t - $f free
 meminfo swap_launch 
@@ -138,7 +119,7 @@ mail remote_check_timeout 5
 mail local_check_timeout 4
 mail fetch_check_is_local 0
 mail msg_count_mode 0
-mail animation_select_mode 3
+mail animation_select_mode 0
 mail fetch_check_only_mode 0
 mail reset_remote_mode 0
 mail unseen_is_new 0

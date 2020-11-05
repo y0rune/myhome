@@ -24,7 +24,7 @@ print_temp(){
 }
 
 print_date(){
-	echo -e "🕛 $(date +"%d/%m %H:%M:%S")"
+	echo -e "🕛 $(date +"%d/%m %H:%M")"
 }
 
 print_mem(){
@@ -69,4 +69,5 @@ print_cpu() {
 while true
 do
     xsetroot -name "$(print_temp) $(print_mail) $(print_cpu) $(print_mem) $(print_wifi) $(print_battery) $(print_volume) $(print_date)"
+    sleep 2
 done

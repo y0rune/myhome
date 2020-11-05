@@ -47,8 +47,8 @@ export FZF_DEFAULT_OPTS='--height 40% --layout=reverse'
 export EIX_LIMIT_COMPACT=0
 export TERMINAL="st"
 export QT_SCALE_FACTOR=1.5
-export VISUAL='vim'
-export EDITOR='vim'
+export VISUAL='nvim'
+export EDITOR='nvim'
 alias svm="sudo vim /etc/portage/make.conf"
 alias svr="sudo vim /etc/portage/repos.conf"
 alias svp="sudo vim /etc/portage/package.use"
@@ -75,8 +75,8 @@ alias gdel="git push origin --delete"
 alias gadd="git add"
 alias gpush="git push"
 alias gpull="git pull"
-alias gstatus="git status"
-alias gst="git status"
+alias gstatus="git status -s"
+alias gst="git status -s"
 alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches"
 alias gfg="git checkout master && git fetch upstream && git pull upstream master"
 alias cal="cal -3"
@@ -95,4 +95,3 @@ alias mpv="mpv --vo=x11 --hwdec=no --ytdl-format='bestvideo[ext=mp4][height<=?10
 
 # Cleaning-up
 export PATH=$HOME/.local/bin:$PATH
-XDG_DATA_DIRS="$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:$XDG_DATA_DIRS"

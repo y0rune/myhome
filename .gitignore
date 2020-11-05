@@ -100,3 +100,4 @@ www
 .local/bin/chardetect
 .local/bin/flask
 .local/include/
+.config/neofetch/
