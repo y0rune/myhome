@@ -101,3 +101,15 @@ www
 .local/bin/flask
 .local/include/
 .config/neofetch/
+.vimspector.log
+.tig_history
+.tooling/
+.sts4/
+.solargraph/
+.screenlayout/
+.pylint.d/
+.nvidia-settings-rc
+.m2/
+.config/mpv/watch_later/
+.gem/
+.config/Postman/

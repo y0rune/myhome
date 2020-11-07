@@ -9,25 +9,29 @@ set laststatus=2
 set shiftwidth=4
 set softtabstop=4
 set tabstop=4
+set splitbelow splitright
 au BufWritePre * let &bex = '@' . strftime("%F.%H:%M")
-
+""
 " plugins
 call plug#begin('~/.config/nvim/plugged')
 Plug 'preservim/nerdtree'
 Plug 'nmante/vim-latex-live-preview'
 Plug 'lervag/vimtex'
 Plug 'junegunn/goyo.vim'
-Plug 'jceb/vim-orgmode'
 Plug 'prettier/vim-prettier', { 'do': 'npm install --force' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'npm install --force' }
-" Autocomplete
+" Bash
+Plug 'vim-scripts/bash-support.vim'
+" Complete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'vim-syntastic/syntastic'
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
 " Ruby
 Plug 'takkii/Bignyanco'
+Plug 'deoplete-plugins/deoplete-jedi'
 Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-rails'
 "
 " Problem with vim-prettier
 " git checkout -b test origin/feature/issue-232-add-support-for-prettier-2.x;
@@ -40,7 +44,7 @@ call plug#end()
 
 let g:deoplete#enable_at_startup = 1
 
-" Pass a dictionary to set multiple options
+"Pass a dictionary to set multiple options
 call deoplete#custom#option({
     \ 'auto_complete_delay': 200,
     \ 'smart_case': v:true,
@@ -115,8 +119,8 @@ hi CursorLine cterm=NONE term=NONE ctermbg=NONE guibg=NONE
 hi CursorLine ctermbg=235
 
 " map
-nnoremap NN :set nu! <CR>
-nnoremap nn :set nu <CR>
+nnoremap ,nn :set nu! <CR>
+nnoremap ,NN :set nu <CR>
 nnoremap S :%s//g<Left><Left>
 nnoremap ee :!mupdf $(echo % \| sed 's/tex$/pdf/') & disown<CR><CR>
 map <C-n> :NERDTreeToggle<CR>
