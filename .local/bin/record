@@ -1,5 +1,5 @@
 #!/bin/bash
-AUDIO=$(pactl list sources | awk '/Name: alsa_out/{print $2}')
+AUDIO=$(pactl list sources | awk '/Name: alsa_out/{print $2}' | tail -n1)
 
 ffmpeg \
 -f pulse \
