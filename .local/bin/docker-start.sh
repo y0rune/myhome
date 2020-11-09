@@ -1,0 +1,17 @@
+#!/bin/bash -
+#===============================================================================
+#
+#          FILE: docker-start.sh
+#
+#         USAGE: ./docker-start.sh
+#
+#       OPTIONS: ---
+#  REQUIREMENTS: openrc system
+#        AUTHOR: Marcin Woźniak, y0rune@aol.com
+#       CREATED: 11/08/2020 11:21
+#      REVISION:  ---
+#===============================================================================
+
+sudo rc-service docker start
+sleep 10
+sudo docker ps

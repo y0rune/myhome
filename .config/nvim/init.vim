@@ -121,6 +121,7 @@ hi CursorLine ctermbg=235
 " map
 nnoremap ,nn :set nu! <CR>
 nnoremap ,NN :set nu <CR>
+inoremap <silent> ,f <Esc>i--<CR>Regards,<CR>Marcin Woźniak<CR>https://yorune.pl<Esc>
 nnoremap S :%s//g<Left><Left>
 nnoremap ee :!mupdf $(echo % \| sed 's/tex$/pdf/') & disown<CR><CR>
 map <C-n> :NERDTreeToggle<CR>

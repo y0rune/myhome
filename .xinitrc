@@ -9,7 +9,7 @@ xrandr --auto
 xset b off&
 
 # Lock screen
-xset s 300
+xset s 600&
 xautolock -time 15 -locker slock&
 
 # Programs
