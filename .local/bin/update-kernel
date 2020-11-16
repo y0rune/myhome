@@ -73,6 +73,7 @@ VMLINUZ="vmlinuz-$KERNEL-gentoo-x86_64"
 ifchecking $INITRANFS
 ifchecking $SYSTEMMAP
 ifchecking $VMLINUZ
+sudo grub-mkconfig -o /boot/grub/grub.cfg
 }
 
 function ifchecking () {
