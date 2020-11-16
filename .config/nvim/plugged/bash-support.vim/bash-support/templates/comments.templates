@@ -1,0 +1,142 @@
+§ =============================================================
+§  Comments
+§ =============================================================
+
+== Comments.end-of-line comment == nomenu, append ==
+# <CURSOR>
+== Comments.frame == map:cfr, sc:r ==
+#-------------------------------------------------------------------------------
+# <CURSOR>
+#-------------------------------------------------------------------------------
+== Comments.function == map:cfu, sc:f ==
+#---  FUNCTION  ----------------------------------------------------------------
+#          NAME:  |?FUNCTION_NAME|
+#   DESCRIPTION:  <CURSOR>
+#    PARAMETERS:
+#       RETURNS:
+#-------------------------------------------------------------------------------
+== Comments.file header == start, map:ch ==
+#!/bin/bash -
+#===============================================================================
+#
+#          FILE: |FILENAME|
+#
+#         USAGE: ./|FILENAME|
+#
+#   DESCRIPTION:
+#
+#       OPTIONS: ---
+#  REQUIREMENTS: ---
+#          BUGS: ---
+#         NOTES: ---
+#        AUTHOR: |AUTHOR| , |EMAIL|
+#       COMPANY: |COMPANY|
+#       CREATED: |DATE| |TIME|
+#      REVISION:  ---
+#===============================================================================
+
+set -o nounset                              # Treat unset variables as an error
+
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}" )" && pwd)/"
+#source $DIR/settings.sh
+
+#####################
+# SETTINGS FILE
+EMAILSERVER=""
+EMAILFROM=""
+EMAILADMIN=""
+ERRORTITLE=Error-$TITLE
+#
+#####################
+
+LOG="$DIR/log"
+LOG_FILE="$LOG/log-$(date -I).log"
+
+function timestamp(){
+    echo "[+] "$(date +'%F %T')" [INFO] $@"
+}
+
+function err() {
+    echo "[-] "$(date +'%F %T')" [ERROR] $@" >&2
+}
+
+function command_start(){
+    timestamp "Command $1 has been started."
+    if ! $1 ; then
+        err "Command $1 went wrong."
+        sendmailerr
+        exit
+    fi
+}
+
+function removelogs(){
+    find $LOG -mindepth 1 -mtime +365 -delete
+}
+
+function sendmailerr (){
+    echo -e "SERVER-IP: :$(ifconfig | awk '/inet /{print $2}' | sed '/127.0.0.1/d'| tr '\n' ' ')\nSCRIPTNAME: $(basename "$0")" | mailx -v -S smtp=$EMAILSERVER -r $EMAILFROM -s "$ERRORTITLE" -a $LOG_FILE $EMAILADMIN
+}
+
+function main(){
+    timestamp "Script has been started"
+    timestamp "Everything looks OK ;-)"
+}
+
+main >>$LOG_FILE 2>&1
+
+
+<CURSOR>
+== ENDTEMPLATE ==
+
+§ -------------------------------------------------------------
+
+== Comments.date == insert, map:cd, sc:d ==
+|DATE|<CURSOR>
+== Comments.date+time == insert, map:ct, sc:t ==
+|DATE| |TIME|<CURSOR>
+== ENDTEMPLATE ==
+
+§ -------------------------------------------------------------
+§  Keywords, Special and Macros
+§ -------------------------------------------------------------
+
+== LIST: comments_sections == hash ==
+	'GLOBAL DECLARATIONS'     : 'GLOBAL DECLARATIONS',
+	'COMMAND LINE PROCESSING' : 'COMMAND LINE PROCESSING',
+	'SANITY CHECKS'           : 'SANITY CHECKS',
+	'FUNCTION DEFINITIONS'    : 'FUNCTION DEFINITIONS',
+	'TRAPS'                   : 'TRAPS',
+	'MAIN SCRIPT'             : 'MAIN SCRIPT',
+	'STATISTICS AND CLEAN-UP' : 'STATISTICS AND CLEAN-UP',
+== LIST: comments_keywords == hash ==
+	'bug'         : ':BUG:|DATE| |TIME|:|AUTHORREF|: <CURSOR>',
+	'todo'        : ':TODO:|DATE| |TIME|:|AUTHORREF|: <CURSOR>',
+	'tricky'      : ':TRICKY:|DATE| |TIME|:|AUTHORREF|: <CURSOR>',
+	'warning'     : ':WARNING:|DATE| |TIME|:|AUTHORREF|: <CURSOR>',
+	'workaround'  : ':WORKAROUND:|DATE| |TIME|:|AUTHORREF|: <CURSOR>',
+	'new keyword' : ':<CURSOR>:|DATE| |TIME|:|AUTHORREF|: {+COMMENT+}',
+== LIST: comments_macros == hash ==
+	'AUTHOR'       : '|AUTHOR|',
+	'AUTHORREF'    : '|AUTHORREF|',
+	'COMPANY'      : '|COMPANY|',
+	'COPYRIGHT'    : '|COPYRIGHT|',
+	'EMAIL'        : '|EMAIL|',
+	'ORGANIZATION' : '|ORGANIZATION|',
+== ENDLIST ==
+
+§ -------------------------------------------------------------
+
+== Comments.script sections == expandmenu, map:css, sc:s ==
+|PickList( 'script sections', 'comments_sections' )|
+#===============================================================================
+#  |PICK|
+#===============================================================================
+== Comments.keyword comments == expandmenu, append, map:ckc, sc:k ==
+|PickList( 'keyword comment', 'comments_keywords' )|
+ # |PICK|
+== Comments.macros == expandmenu, insert, map:cma, sc:m ==
+|PickList( 'macro', 'comments_macros' )|
+|PICK|
+== ENDTEMPLATE ==
+
+== SEP: Comments.sep1 ==
