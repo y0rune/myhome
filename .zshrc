@@ -1,5 +1,6 @@
 parse_git_branch() {
-    git symbolic-ref --short HEAD 2> /dev/null
+    command=$(git symbolic-ref --short HEAD 2> /dev/null)
+    [ -z $command ] && echo -e "$ " || echo -e "$(git symbolic-ref --short HEAD 2> /dev/null) $ "
 }
 
 gbranch() {
@@ -15,7 +16,8 @@ HISTSIZE=10000
 SAVEHIST=10000000
 autoload -U colors && colors
 setopt PROMPT_SUBST
-PS1='%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%m %{$fg[magenta]%}%~%{$fg[red]%} $(parse_git_branch)]%{$reset_color%}$%b '
+PS1='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%}%n@)%m %{$fg_bold[blue]%}%(!.%1~.%~) $(parse_git_branch)%{$reset_color%}'
+#PS1='%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%m %{$fg[magenta]%}%~%{$fg[red]%} $(parse_git_branch)]%{$reset_color%}$%b '
 plugins=(rake ruby vagrant knife knife_ssh kitchen )
 
 ZSH_DISABLE_COMPFIX=true
@@ -27,9 +29,9 @@ source $HOME/Linux/configs/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh &
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 FPATH=/usr/local/share/zsh/site-functions:$FPATH
 
-xset b off &>> /dev/null
-set bell-style none &>> /dev/null
-setxkbmap pl &>> /dev/null
+#xset b off &>> /dev/null
+#set bell-style none &>> /dev/null
+#setxkbmap pl &>> /dev/null
 
 export GPG_TTY=$(tty)
 export TERM=xterm-256color

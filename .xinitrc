@@ -13,18 +13,18 @@ xset s 600&
 xautolock -time 15 -locker slock&
 
 # Programs
-compton&
-feh --bg-fill "$HOME/.wall.jpg" &
+#compton&
+#feh --bg-fill "$HOME/.wall.jpg" &
 nm-applet --sm-disable&
 #sudo /root/.local/bin/protonvpn c -f&
 dunst -config&
 browser-x&
-password-manager&
+QT_SCALE_FACTOR=1.5 keepassxc &
 /usr/local/bin/st -e /bin/sh -c "tmux new-session -s BASE -n HOME '/bin/zsh'\; split-window 'htop'\; new-window -n MAIL 'neomutt'\; new-window -n NEWSBOAT 'newsboat -r '\; new-window -n MUSIC 'cmus'"&
 #(sleep 30 && getforecast)&
 sudo /usr/bin/rdate -s ntp.task.gda.pl && sudo /sbin/hwclock --systohc
+megasync &
 #mega-cmd-server --debug-full > /var/log/megacmd/megacmd.log&
-mega-cmd-server > /var/log/megacmd/megacmd.log&
 setxkbmap pl&
 dwmstatusbar&
 
