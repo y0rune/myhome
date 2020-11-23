@@ -2,9 +2,9 @@
 LOGS=( $(sudo find /var/tmp/portage/ -mindepth 1 -maxdepth 5 -name "build.log") )
 LEN=${#LOGS[@]}
 
-for (( i=1; i<$LEN; i++ ));
+for (( i=0; i<$LEN; i++ ));
 do
-    echo "$i - ${LOGS[$i-1]}"
+    echo "$(( $i + 1 )) - ${LOGS[$i]}"
 done
 
 echo
