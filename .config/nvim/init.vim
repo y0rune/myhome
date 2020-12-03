@@ -29,6 +29,7 @@ Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
 " Ruby
 Plug 'takkii/Bignyanco'
+Plug 'uplus/deoplete-solargraph'
 Plug 'deoplete-plugins/deoplete-jedi'
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
@@ -39,7 +40,7 @@ Plug 'tpope/vim-rails'
 "
 " Problem autocomplete
 " pip3 install --user pynvim
-" pip install msgpack --user
+" pip3 install msgpack --user
 call plug#end()
 
 let g:deoplete#enable_at_startup = 1
@@ -135,7 +136,7 @@ cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 " latex
 let g:tex_flavor = "latex"
 " autocmd BufWritePost *.tex silent! execute "!pdflatex --shell-escape -synctex=1 -interaction=nonstopmode % > /dev/null " | redraw!
-autocmd BufWritePost *.tex silent! execute "!pdflatex --shell-escape -interaction=nonstopmode % > /dev/null " | redraw!
+autocmd BufWritePost *.tex silent! execute "!pdflatex % > /dev/null " | redraw!
 autocmd BufWritePost *.tex silent! execute "!latexmk -pdf -silent % > /dev/null" | redraw!
 autocmd BufWritePost *.tex silent! execute "!sudo rm -rf *.fls *.ilg *.nav *.snm *.toc *.idx *.lof *.lot *.synctex.gz *.aux *.fdb_latexmk *.fls *.log *.out > /dev/null" | redraw!
 autocmd BufWritePost *.tex silent! execute "!sudo pkill -HUP mupdf > /dev/null" | redraw!
