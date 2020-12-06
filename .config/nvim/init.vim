@@ -43,11 +43,13 @@ Plug 'tpope/vim-rails'
 " pip3 install msgpack --user
 call plug#end()
 
-let g:deoplete#enable_at_startup = 1
+" NerdTree
+let NERDTreeShowHidden=1
 
-"Pass a dictionary to set multiple options
+" Deoplete
+let g:deoplete#enable_at_startup=1
 call deoplete#custom#option({
-    \ 'auto_complete_delay': 200,
+    \ 'auto_complete_delay': 500,
     \ 'smart_case': v:true,
     \ 'max_list' : 10,
     \ })
@@ -72,6 +74,7 @@ set cmdheight=1
 syntax on
 filetype plugin indent on
 set encoding=utf-8
+set nowrap
 
 " livepreviewer
 let g:livepreview_previewer = 'mupdf'
@@ -142,10 +145,10 @@ autocmd BufWritePost *.tex silent! execute "!sudo rm -rf *.fls *.ilg *.nav *.snm
 autocmd BufWritePost *.tex silent! execute "!sudo pkill -HUP mupdf > /dev/null" | redraw!
 
 " mutt
-autocmd BufRead,BufNewFile /tmp/neomutt* let g:goyo_width=80
-autocmd BufRead,BufNewFile /tmp/neomutt* :Goyo
-autocmd BufRead,BufNewFile /tmp/neomutt* map ZZ :Goyo\|x!<CR>
-autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<CR>
+"autocmd BufRead,BufNewFile /tmp/neomutt* let g:goyo_width=80
+"autocmd BufRead,BufNewFile /tmp/neomutt* :Goyo
+"autocmd BufRead,BufNewFile /tmp/neomutt* map ZZ :Goyo\|x!<CR>
+"autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<CR>
 
 " Automatically deletes all trailing whitespace and newlines at end of file on save.
 autocmd BufWritePre * %s/\s\+$//e
