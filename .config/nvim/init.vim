@@ -18,41 +18,13 @@ Plug 'preservim/nerdtree'
 Plug 'nmante/vim-latex-live-preview'
 Plug 'lervag/vimtex'
 Plug 'junegunn/goyo.vim'
-Plug 'prettier/vim-prettier', { 'do': 'npm install --force' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'npm install --force' }
-" Bash
 Plug 'vim-scripts/bash-support.vim'
-" Complete
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'vim-syntastic/syntastic'
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
-" Ruby
-Plug 'takkii/Bignyanco'
-Plug 'uplus/deoplete-solargraph'
-Plug 'deoplete-plugins/deoplete-jedi'
-Plug 'vim-ruby/vim-ruby'
-Plug 'tpope/vim-rails'
-"
-" Problem with vim-prettier
-" git checkout -b test origin/feature/issue-232-add-support-for-prettier-2.x;
-" npm install --force
-"
-" Problem autocomplete
-" pip3 install --user pynvim
-" pip3 install msgpack --user
 call plug#end()
 
 " NerdTree
 let NERDTreeShowHidden=1
-
-" Deoplete
-let g:deoplete#enable_at_startup=1
-call deoplete#custom#option({
-    \ 'auto_complete_delay': 500,
-    \ 'smart_case': v:true,
-    \ 'max_list' : 10,
-    \ })
 
 " Status-line
 set statusline=
@@ -65,6 +37,14 @@ set statusline+=%= "Right side settings
 set statusline+=%#Search#
 set statusline+=\ %l/%L
 set statusline+=\ [%c]
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 set nocompatible
 set hlsearch
@@ -153,6 +133,3 @@ autocmd BufWritePost *.tex silent! execute "!sudo pkill -HUP mupdf > /dev/null" 
 " Automatically deletes all trailing whitespace and newlines at end of file on save.
 autocmd BufWritePre * %s/\s\+$//e
 autocmd BufWritepre * %s/\n\+\%$//e
-
-" Autoformating markdown
-autocmd BufWritePost *.md :Prettier

@@ -33,6 +33,9 @@ FPATH=/usr/local/share/zsh/site-functions:$FPATH
 #set bell-style none &>> /dev/null
 #setxkbmap pl &>> /dev/null
 
+bindkey "^l" clear-screen
+bindkey "^?" backward-kill-word
+
 export GPG_TTY=$(tty)
 export TERM=xterm-256color
 export SHELL=/bin/bash
