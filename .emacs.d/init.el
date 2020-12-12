@@ -13,6 +13,10 @@
       )
 (package-initialize)
 
+;; Remove working cl
+(require 'cl-lib)
+(setq byte-compile-warnings '(cl-functions))
+
 ;; install use-package
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -36,7 +40,7 @@
 (global-set-key (kbd "C-x j") 'awesome-tab-backward-tab)
 (global-set-key (kbd "C-x k") 'awesome-tab-forward-tab)
 
-;; 80-charaters mode 
+;; 80-charaters mode
 (add-hook 'text-mode-hook 'auto-fill-mode)
 (setq-default fill-column 80)
 
@@ -80,20 +84,38 @@
   (setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js")
 )
 
-;; Org-Jira
-;(use-package org-jira
-;  :ensure t
-;  )
-;(setq jiralib-url "https://localhost/")
+;; moveline
+(use-package move-text
+  :ensure t
+  :config)
 
+(global-set-key (kbd "M-<up>") 'move-text-up)
+(global-set-key (kbd "M-<down>") 'move-text-down)
+  
 ;; AutoComlete
-(use-package auto-complete 
+(use-package auto-complete
   :ensure t
   )
 (ac-config-default)
 (global-auto-complete-mode t)
 
+;; Company
+(eval-after-load 'company
+  '(push 'company-robe company-backends))
+
+;; Ruby
+(eval-after-load 'auto-complete
+  '(add-to-list 'ac-modes 'inf-ruby-mode))
+(add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable)
+(eval-after-load 'inf-ruby '
+  '(define-key inf-ruby-mode-map (kbd "TAB") 'auto-complete))
+
 ;; Theme
+;(use-package gruber-darker-theme
+;  :ensure t
+;  :config
+;  (load-theme 'gruber-darker-theme t))
+
 (use-package dracula-theme
   :ensure t
   :config
@@ -113,6 +135,29 @@
   :config
   )
 
+;; ruby sorce code
+(use-package flymake-ruby
+  :ensure t
+  :config
+  )
+
+(use-package flymake-easy
+  :ensure t
+  :config
+  )
+
+;; Error list
+(define-key flymake-mode-map (kbd "M-n") 'flymake-goto-next-error)
+(define-key flymake-mode-map (kbd "M-p") 'flymake-goto-prev-error)
+
+(require 'robe)
+(add-hook 'ruby-mode-hook 'robe-mode)
+(add-hook 'robe-mode-hook 'ac-robe-setup)
+
+(require 'flymake-ruby)
+(add-hook 'ruby-mode-hook 'flymake-ruby-load)
+
+;; Git
 (global-set-key (kbd "C-x g") 'magit-status)
 
 ;; Markdown-mode
@@ -148,7 +193,7 @@
 (setq ring-bell-function 'ignore)
 
 ;; highlight:
-(global-hl-line-mode 1)
+;(global-hl-line-mode 1)
 
 ;; auto reloading (reverting) buffers
 (global-auto-revert-mode 1)
