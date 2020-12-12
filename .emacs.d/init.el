@@ -46,6 +46,7 @@
 
 (add-hook 'org-mode-hook '(lambda () (setq fill-column 80)))
 (add-hook 'org-mode-hook 'auto-fill-mode)
+(add-hook 'org-mode-hook 'turn-on-flyspell)
 
 ;; Broswer
 (setq browse-url-browser-function 'browse-url-generic
@@ -91,7 +92,7 @@
 
 (global-set-key (kbd "M-<up>") 'move-text-up)
 (global-set-key (kbd "M-<down>") 'move-text-down)
-  
+
 ;; AutoComlete
 (use-package auto-complete
   :ensure t
@@ -150,12 +151,22 @@
 (define-key flymake-mode-map (kbd "M-n") 'flymake-goto-next-error)
 (define-key flymake-mode-map (kbd "M-p") 'flymake-goto-prev-error)
 
+;; Ruby
 (require 'robe)
 (add-hook 'ruby-mode-hook 'robe-mode)
 (add-hook 'robe-mode-hook 'ac-robe-setup)
 
 (require 'flymake-ruby)
 (add-hook 'ruby-mode-hook 'flymake-ruby-load)
+
+;; Docker
+(use-package dockerfile-mode
+  :defer t)
+
+;; YAML
+(use-package yaml-mode
+  :mode "\\.yml\\'")
+(add-hook 'yaml-mode-hook 'flymake-yaml-load)
 
 ;; Git
 (global-set-key (kbd "C-x g") 'magit-status)
@@ -179,6 +190,10 @@
 (global-set-key (kbd "C-M-m") 'livedown-preview)
 
 ;;; --- Look & Feel ---
+
+;; Zoom in/out.
+(global-set-key (kbd "M-+") 'text-scale-increase)
+(global-set-key (kbd "M--") 'text-scale-decrease)
 
 ;; no toolbar:
 (tool-bar-mode -1)
