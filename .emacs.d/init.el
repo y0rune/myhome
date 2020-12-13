@@ -161,13 +161,21 @@
 
 ;; Docker
 (use-package dockerfile-mode
-  :defer t)
+   :ensure t
+   :defer t)
 
 ;; YAML
 (use-package yaml-mode
-  :mode "\\.yml\\'")
-(add-hook 'yaml-mode-hook 'flymake-yaml-load)
-
+  :ensure t
+  :mode
+  (
+   ("\\.yml\\'" . yaml-mode)
+   )
+  :hook
+  (
+   (yaml-mode-hook . flymake-yaml-load)
+    )
+ )
 ;; Git
 (global-set-key (kbd "C-x g") 'magit-status)
 
