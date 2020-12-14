@@ -13,6 +13,9 @@
       )
 (package-initialize)
 
+(setq package-check-signature nil)
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
 ;; Remove working cl
 (require 'cl-lib)
 (setq byte-compile-warnings '(cl-functions))
@@ -100,7 +103,12 @@
 (ac-config-default)
 (global-auto-complete-mode t)
 
-;; Company
+;; Company & robe
+(use-package robe
+  :ensure t
+  :config
+  )
+
 (eval-after-load 'company
   '(push 'company-robe company-backends))
 
@@ -112,15 +120,15 @@
   '(define-key inf-ruby-mode-map (kbd "TAB") 'auto-complete))
 
 ;; Theme
-;(use-package gruber-darker-theme
+;(use-package dracula-theme
 ;  :ensure t
 ;  :config
-;  (load-theme 'gruber-darker-theme t))
+;  (load-theme 'dracula t))
 
-(use-package dracula-theme
+(use-package nord-theme
   :ensure t
   :config
-  (load-theme 'dracula t))
+  (load-theme 'nord t))
 
 ;; Sitebar dirred
 (use-package dired-sidebar
@@ -211,6 +219,9 @@
 
 ;; scrolling:
 (setq scroll-conservatively 100)
+
+;; Whitespaces
+(global-whitespace-mode 1)
 
 ;; no "bell" (audible notification):
 (setq ring-bell-function 'ignore)
