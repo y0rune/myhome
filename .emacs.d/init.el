@@ -224,6 +224,8 @@
 (global-whitespace-mode 1)
 (setq whitespace-display-mappings '((space-mark 32 [?·])))
 (set-face-attribute 'whitespace-space nil :background nil :foreground "gray30")
+(setq whitespace-style (quote (face tabs spaces trailing space-before-tab newline indentation empty space-after-tab space-mark tab-mark)))
+(add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
 
 ;; no "bell" (audible notification):
 (setq ring-bell-function 'ignore)
