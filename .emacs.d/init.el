@@ -222,6 +222,8 @@
 
 ;; Whitespaces
 (global-whitespace-mode 1)
+(setq whitespace-display-mappings '((space-mark 32 [?·])))
+(set-face-attribute 'whitespace-space nil :background nil :foreground "gray30")
 
 ;; no "bell" (audible notification):
 (setq ring-bell-function 'ignore)
