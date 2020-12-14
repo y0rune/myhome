@@ -74,7 +74,10 @@
   )
 
 ;; Enable japanese
-(require 'mozc)
+(if (condition-case nil (require 'mozc)(error nil))
+  (setq ecb-be-more-like-better-yes-p t)
+  (message "Monz not available; not configuring") )
+;(require 'mozc)
 (setq default-input-method "japanese-mozc")
 
 ;; reveal dependency
