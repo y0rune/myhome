@@ -139,7 +139,7 @@
   :commands (dired-sidebar-toggle-sidebar))
 
 (require 'dired-sidebar)
-(global-set-key (kbd "C-x d") 'dired-sidebar-toggle-sidebar)
+(global-set-key (kbd "C-x C-n") 'dired-sidebar-toggle-sidebar)
 
 ;; Magit
 (use-package magit
