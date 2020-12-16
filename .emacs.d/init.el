@@ -16,6 +16,17 @@
 (setq package-check-signature nil)
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
+;; Remove welcome screen
+(setq inhibit-startup-screen t)
+
+;; Disable menu
+(menu-bar-mode 0)
+
+;; Enable IDO mode
+(ido-mode 1)
+
+;; Enable Smex
+
 ;; Remove working cl
 (require 'cl-lib)
 (setq byte-compile-warnings '(cl-functions))
@@ -112,8 +123,8 @@
   :config
   )
 
-(eval-after-load 'company
-  '(push 'company-robe company-backends))
+;(eval-after-load 'company
+;  '(push 'company-robe company-backends))
 
 ;; Ruby
 (eval-after-load 'auto-complete
@@ -139,7 +150,7 @@
   :commands (dired-sidebar-toggle-sidebar))
 
 (require 'dired-sidebar)
-(global-set-key (kbd "C-x C-n") 'dired-sidebar-toggle-sidebar)
+(global-set-key (kbd "C-x d") 'dired-sidebar-toggle-sidebar)
 
 ;; Magit
 (use-package magit
