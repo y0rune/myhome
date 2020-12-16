@@ -12,12 +12,10 @@
         )
       )
 (package-initialize)
-
-(setq package-check-signature nil)
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 ;; Remove welcome screen
-(setq inhibit-startup-screen t)
+;(setq inhibit-startup-screen t)
 
 ;; Disable menu
 (menu-bar-mode 0)
@@ -25,16 +23,6 @@
 ;; Enable IDO mode
 (ido-mode 1)
 (global-set-key (kbd "C-x b") 'ido-switch-buffer)
-
-
-;; Enable Smex
-(use-package smex
-  :ensure t
-  :init
-  (smex-initialize)
-  :bind
-  ("M-x" . smex)
-  )
 
 ;; Remove working cl
 (require 'cl-lib)
@@ -100,6 +88,15 @@
 ;(require 'mozc)
 (setq default-input-method "japanese-mozc")
 
+;; Enable Smex
+(use-package smex
+  :ensure t
+  :init
+  (smex-initialize)
+  :bind
+  ("M-x" . smex)
+  )
+
 ;; reveal dependency
 (use-package htmlize
   :ensure t
@@ -124,25 +121,27 @@
   :ensure t
   )
 (ac-config-default)
-(global-auto-complete-mode t)
+(global-auto-complete-mode 0)
 
-;; Company & robe
+;; Shell
+(add-hook 'sh-mode-hook 'company-mode)
+
+;;robe
 (use-package robe
   :ensure t
   :config
   )
 
 ;; Latex
-
 ;(eval-after-load 'company
 ;  '(push 'company-robe company-backends))
 
 ;; Ruby
-(eval-after-load 'auto-complete
-  '(add-to-list 'ac-modes 'inf-ruby-mode))
-(add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable)
-(eval-after-load 'inf-ruby '
-  '(define-key inf-ruby-mode-map (kbd "TAB") 'auto-complete))
+;(eval-after-load 'auto-complete
+;  '(add-to-list 'ac-modes 'inf-ruby-mode))
+;(add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable)
+;(eval-after-load 'inf-ruby '
+;  '(define-key inf-ruby-mode-map (kbd "TAB") 'auto-complete))
 
 ;; Theme
 ;(use-package dracula-theme
@@ -209,6 +208,7 @@
    (yaml-mode-hook . flymake-yaml-load)
     )
  )
+
 ;; Git
 (global-set-key (kbd "C-x g") 'magit-status)
 
@@ -229,6 +229,15 @@
  '(livedown-port 1337)     ; port for livedown server
  '(livedown-browser nil))  ; browser to use
 (global-set-key (kbd "C-M-m") 'livedown-preview)
+
+;; Latexmk
+(use-package auctex-latexmk
+  :ensure t
+  :config
+  )
+
+(require 'auctex-latexmk)
+(auctex-latexmk-setup)
 
 ;;; --- Look & Feel ---
 
