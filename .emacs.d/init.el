@@ -24,8 +24,17 @@
 
 ;; Enable IDO mode
 (ido-mode 1)
+(global-set-key (kbd "C-x b") 'ido-switch-buffer)
+
 
 ;; Enable Smex
+(use-package smex
+  :ensure t
+  :init
+  (smex-initialize)
+  :bind
+  ("M-x" . smex)
+  )
 
 ;; Remove working cl
 (require 'cl-lib)
@@ -122,6 +131,8 @@
   :ensure t
   :config
   )
+
+;; Latex
 
 ;(eval-after-load 'company
 ;  '(push 'company-robe company-backends))
