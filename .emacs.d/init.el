@@ -15,7 +15,7 @@
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 ;; Remove welcome screen
-;(setq inhibit-startup-screen t)
+(setq inhibit-startup-screen t)
 
 ;; Disable menu
 (menu-bar-mode 0)
