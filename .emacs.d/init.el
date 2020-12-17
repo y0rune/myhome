@@ -230,15 +230,6 @@
  '(livedown-browser nil))  ; browser to use
 (global-set-key (kbd "C-M-m") 'livedown-preview)
 
-;; Latexmk
-(use-package auctex-latexmk
-  :ensure t
-  :config
-  )
-
-(require 'auctex-latexmk)
-(auctex-latexmk-setup)
-
 ;;; --- Look & Feel ---
 
 ;; Zoom in/out.
