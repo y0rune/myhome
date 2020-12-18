@@ -116,13 +116,7 @@
 (global-set-key (kbd "M-<up>") 'move-text-up)
 (global-set-key (kbd "M-<down>") 'move-text-down)
 
-;;; AutoComlete
-;;;(use-package auto-complete
-;;;  :ensure t
-;;;  )
-;;;(ac-config-default)
-;;;(global-auto-complete-mode)
-
+;; company
 (use-package company
   :ensure t
   )
@@ -133,11 +127,6 @@
 ;; Shell
 (add-hook 'sh-mode-hook 'company-mode)
 
-;;robe
-(use-package robe
-  :ensure t
-  :config
-  )
 
 ;; Latex
 ;(eval-after-load 'company
@@ -182,12 +171,11 @@
   :config
   )
 
-(use-package company
+;;robe
+(use-package robe
   :ensure t
   :config
   )
-
-
 
 ;; Error list
 (define-key flymake-mode-map (kbd "M-n") 'flymake-goto-next-error)
