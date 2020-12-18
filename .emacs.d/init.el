@@ -167,6 +167,7 @@
   :ensure t
   :config
   )
+(global-set-key (kbd "C-x g") 'magit-status)
 
 ;; ruby sorce code
 (use-package flymake-ruby
@@ -197,6 +198,11 @@
    :defer t)
 
 ;; YAML
+(use-package flymake-yaml
+   :ensure t
+   :config
+   )
+
 (use-package yaml-mode
   :ensure t
   :mode
@@ -208,9 +214,6 @@
    (yaml-mode-hook . flymake-yaml-load)
     )
  )
-
-;; Git
-(global-set-key (kbd "C-x g") 'magit-status)
 
 ;; Markdown-mode
 (use-package markdown-mode
