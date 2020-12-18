@@ -205,14 +205,7 @@
 
 (use-package yaml-mode
   :ensure t
-  :mode
-  (
-   ("\\.yml\\'" . yaml-mode)
-   )
-  :hook
-  (
-   (yaml-mode-hook . flymake-yaml-load)
-    )
+  :config
  )
 
 ;; Markdown-mode
