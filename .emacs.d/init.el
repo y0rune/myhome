@@ -116,12 +116,19 @@
 (global-set-key (kbd "M-<up>") 'move-text-up)
 (global-set-key (kbd "M-<down>") 'move-text-down)
 
-;; AutoComlete
-(use-package auto-complete
+;;; AutoComlete
+;;;(use-package auto-complete
+;;;  :ensure t
+;;;  )
+;;;(ac-config-default)
+;;;(global-auto-complete-mode)
+
+(use-package company
   :ensure t
   )
-(ac-config-default)
-(global-auto-complete-mode 0)
+
+(require 'company)
+(global-company-mode)
 
 ;; Shell
 (add-hook 'sh-mode-hook 'company-mode)
@@ -144,15 +151,10 @@
 ;  '(define-key inf-ruby-mode-map (kbd "TAB") 'auto-complete))
 
 ;; Theme
-;(use-package dracula-theme
-;  :ensure t
-;  :config
-;  (load-theme 'dracula t))
-
-(use-package nord-theme
+(use-package dracula-theme
   :ensure t
   :config
-  (load-theme 'nord t))
+  (load-theme 'dracula t))
 
 ;; Sitebar dirred
 (use-package dired-sidebar
@@ -180,6 +182,13 @@
   :config
   )
 
+(use-package company
+  :ensure t
+  :config
+  )
+
+
+
 ;; Error list
 (define-key flymake-mode-map (kbd "M-n") 'flymake-goto-next-error)
 (define-key flymake-mode-map (kbd "M-p") 'flymake-goto-prev-error)
@@ -206,7 +215,7 @@
 (use-package yaml-mode
   :ensure t
   :config
- )
+  )
 
 ;; Markdown-mode
 (use-package markdown-mode
