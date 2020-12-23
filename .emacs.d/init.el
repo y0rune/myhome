@@ -5,11 +5,11 @@
 (setq package-enable-at-startup nil)
 (setq package-archives
       '(
-        ("ELPA"  . "http://tromey.com/elpa/")
-        ("gnu"   . "http://elpa.gnu.org/packages/")
-        ("melpa" . "https://melpa.org/packages/")
-        ("ORG"   . "https://orgmode.org/elpa/")
-        )
+	("ELPA"  . "http://tromey.com/elpa/")
+	("gnu"   . "http://elpa.gnu.org/packages/")
+	("melpa" . "https://melpa.org/packages/")
+	("ORG"   . "https://orgmode.org/elpa/")
+	)
       )
 (package-initialize)
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
@@ -27,6 +27,10 @@
 ;; Remove working cl
 (require 'cl-lib)
 (setq byte-compile-warnings '(cl-functions))
+(advice-add 'sh-set-shell :around
+	    (lambda (orig-fun &rest args)
+	      (cl-letf (((symbol-function 'message) #'ignore))
+		(apply orig-fun args))))
 
 ;; install use-package
 (unless (package-installed-p 'use-package)
@@ -55,9 +59,14 @@
 (add-hook 'text-mode-hook 'auto-fill-mode)
 (setq-default fill-column 80)
 
+; Global turn on flycheck
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+; Org Files
 (add-hook 'org-mode-hook '(lambda () (setq fill-column 80)))
 (add-hook 'org-mode-hook 'auto-fill-mode)
 (add-hook 'org-mode-hook 'turn-on-flyspell)
+
 
 ;; Broswer
 (setq browse-url-browser-function 'browse-url-generic
@@ -85,7 +94,6 @@
 (if (condition-case nil (require 'mozc)(error nil))
   (setq ecb-be-more-like-better-yes-p t)
   (message "Monz not available; not configuring") )
-;(require 'mozc)
 (setq default-input-method "japanese-mozc")
 
 ;; Enable Smex
@@ -120,24 +128,26 @@
 (use-package company
   :ensure t
   )
-
-(require 'company)
 (global-company-mode)
 
-;; Shell
-(add-hook 'sh-mode-hook 'company-mode)
+;; Shell - bash
+(use-package flymake-shellcheck
+  :ensure t
+  )
 
+(use-package flycheck-bashate
+  :ensure t
+  )
 
-;; Latex
-;(eval-after-load 'company
-;  '(push 'company-robe company-backends))
+(require 'bash-completion)
+(bash-completion-setup)
 
-;; Ruby
-;(eval-after-load 'auto-complete
-;  '(add-to-list 'ac-modes 'inf-ruby-mode))
-;(add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable)
-;(eval-after-load 'inf-ruby '
-;  '(define-key inf-ruby-mode-map (kbd "TAB") 'auto-complete))
+(use-package flymake-shell
+  :ensure t
+  )
+
+(require 'flymake-shell)
+(add-hook 'sh-set-shell-hook 'flymake-shell-load)
 
 ;; Theme
 (use-package dracula-theme
@@ -160,19 +170,8 @@
   )
 (global-set-key (kbd "C-x g") 'magit-status)
 
-;; ruby sorce code
-(use-package flymake-ruby
-  :ensure t
-  :config
-  )
-
+;; Helpers for easily building Emacs flymake checkers.
 (use-package flymake-easy
-  :ensure t
-  :config
-  )
-
-;;robe
-(use-package robe
   :ensure t
   :config
   )
@@ -182,12 +181,23 @@
 (define-key flymake-mode-map (kbd "M-p") 'flymake-goto-prev-error)
 
 ;; Ruby
+(use-package flymake-ruby
+  :ensure t
+  :config
+  )
+
 (require 'robe)
 (add-hook 'ruby-mode-hook 'robe-mode)
 (add-hook 'robe-mode-hook 'ac-robe-setup)
 
 (require 'flymake-ruby)
 (add-hook 'ruby-mode-hook 'flymake-ruby-load)
+
+;;robe
+(use-package robe
+  :ensure t
+  :config
+  )
 
 ;; Docker
 (use-package dockerfile-mode
@@ -205,8 +215,34 @@
   :config
   )
 
+;; Ansible
+(use-package ansible
+   :ensure t
+   :config
+   )
+
+(use-package ansible-doc
+   :ensure t
+   :config
+   )
+
+(use-package company-ansible
+  :ensure t
+  :config
+  )
+
+(add-to-list 'company-backends 'company-ansible)
+(add-hook 'yaml-mode-hook '(lambda () (ansible 1)))
+(add-hook 'yaml-mode-hook #'ansible-doc-mode)
+
 ;; Markdown-mode
 (use-package markdown-mode
+  :ensure t
+  :config
+  )
+
+;; Apache
+(use-package apache-mode
   :ensure t
   :config
   )
@@ -247,9 +283,6 @@
 
 ;; no "bell" (audible notification):
 (setq ring-bell-function 'ignore)
-
-;; highlight:
-;(global-hl-line-mode 1)
 
 ;; auto reloading (reverting) buffers
 (global-auto-revert-mode 1)
