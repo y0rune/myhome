@@ -67,6 +67,9 @@
 (add-hook 'org-mode-hook 'auto-fill-mode)
 (add-hook 'org-mode-hook 'turn-on-flyspell)
 
+;; Latex files
+(add-hook 'latex-mode-hook 'turn-on-flyspell)
+(setq ispell-dictionary "pl")
 
 ;; Broswer
 (setq browse-url-browser-function 'browse-url-generic
