@@ -5,9 +5,9 @@
 (setq package-enable-at-startup nil)
 (setq package-archives
       '(
+	("melpa" . "https://melpa.org/packages/")
 	("ELPA"  . "http://tromey.com/elpa/")
 	("gnu"   . "http://elpa.gnu.org/packages/")
-	("melpa" . "https://melpa.org/packages/")
 	("ORG"   . "https://orgmode.org/elpa/")
 	)
       )
@@ -189,18 +189,18 @@
   :config
   )
 
+;;robe
+(use-package robe
+  :ensure t
+  :config
+  )
+
 (require 'robe)
 (add-hook 'ruby-mode-hook 'robe-mode)
 (add-hook 'robe-mode-hook 'ac-robe-setup)
 
 (require 'flymake-ruby)
 (add-hook 'ruby-mode-hook 'flymake-ruby-load)
-
-;;robe
-(use-package robe
-  :ensure t
-  :config
-  )
 
 ;; Docker
 (use-package dockerfile-mode
@@ -239,7 +239,15 @@
 (add-hook 'yaml-mode-hook #'ansible-doc-mode)
 
 ;; Markdown-mode
+(custom-set-variables
+ '(markdown-command "/usr/bin/pandoc"))
 (use-package markdown-mode
+  :ensure t
+  :config
+  )
+
+;; C++ C
+(use-package auto-complete-clang
   :ensure t
   :config
   )
@@ -250,17 +258,18 @@
   :config
   )
 
-;; Livedown
-;;; sudo npm install -g livedown
-;;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/emacs-livedown"))
-(require 'livedown)
+;; Haskell
+(use-package haskell-mode
+  :ensure t
+  :config
+)
 
-(custom-set-variables
- '(livedown-autostart nil) ; automatically open preview when opening markdown files
- '(livedown-open t)        ; automatically open the browser window
- '(livedown-port 1337)     ; port for livedown server
- '(livedown-browser nil))  ; browser to use
-(global-set-key (kbd "C-M-m") 'livedown-preview)
+(use-package flycheck-haskell
+  :ensure t
+  :config
+  )
+(add-hook 'flycheck-mode-hook #'flycheck-haskell-setup)
+
 
 ;;; --- Look & Feel ---
 
