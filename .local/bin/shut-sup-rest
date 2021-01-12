@@ -5,7 +5,7 @@ chosen=$(echo -e "$choices" | dmenu -i)
 
 case "$chosen" in
 	Lock) slock ;;
-	Suspend) loginctl suspend && slock ;;
+	Suspend) sudo s2ram && slock ;;
 	Reboot) sudo reboot ;;
 	Shutdown) sudo shutdown -h now ;;
 esac
