@@ -154,6 +154,14 @@
 (require 'flymake-shell)
 (add-hook 'sh-set-shell-hook 'flymake-shell-load)
 
+;; Default font
+(defun rc/get-default-font ()
+  (cond
+   ((eq system-type 'windows-nt) "Consolas-13")
+   ((eq system-type 'gnu/linux) "xos4 Terminus Bold 16")))
+
+(add-to-list 'default-frame-alist `(font . ,(rc/get-default-font)))
+
 ;; Theme
 (use-package dracula-theme
   :ensure t
@@ -168,6 +176,11 @@
 (require 'dired-sidebar)
 (global-set-key (kbd "C-x d") 'dired-sidebar-toggle-sidebar)
 
+;; Smex
+(require 'smex)
+(smex-initialize)
+(global-set-key (kbd "M-x") 'smex)
+
 ;;buffer-move
 (require 'buffer-move)
 (global-set-key (kbd "<C-S-up>")     'buf-move-up)
@@ -175,6 +188,16 @@
 (global-set-key (kbd "<C-S-left>")   'buf-move-left)
 (global-set-key (kbd "<C-S-right>")  'buf-move-right)
 
+;; Multiple-cursors
+(use-package multiple-cursors
+    :ensure t
+    :config
+)
+
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 ;; Magit
 (use-package magit

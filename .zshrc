@@ -50,7 +50,7 @@ export FZF_DEFAULT_OPTS='--height 40% --layout=reverse'
 export EIX_LIMIT_COMPACT=0
 export TERMINAL="st"
 export QT_SCALE_FACTOR=1.5
-export VISUAL='emacs'
+export VISUAL='vim'
 export EDITOR='vim'
 alias svm="sudo vim /etc/portage/make.conf"
 alias svr="sudo vim /etc/portage/repos.conf"
