@@ -22,6 +22,7 @@ plugins=(rake ruby vagrant knife knife_ssh kitchen )
 
 ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
+source $HOME/.password
 source $HOME/Linux/configs/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh &>> /dev/null
 source $HOME/Linux/configs/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh &>> /dev/null
 source $HOME/.plannaplan &>> /dev/null

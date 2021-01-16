@@ -28,7 +28,8 @@ bitlbee -D&
 sudo /usr/bin/rdate -s ntp.task.gda.pl && sudo /sbin/hwclock --systohc
 megasync &
 #mega-cmd-server --debug-full > /var/log/megacmd/megacmd.log&
-setxkbmap pl&
+ibus-daemon&
+#setxkbmap pl&
 
 # Two monitors are enabled?
 

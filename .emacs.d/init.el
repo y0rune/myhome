@@ -243,10 +243,7 @@
    :defer t)
 
 ;; YAML
-(use-package flymake-yaml
-   :ensure t
-   :config
-   )
+(require 'flymake-yaml)
 
 (use-package yaml-mode
   :ensure t
@@ -307,6 +304,8 @@
 
 
 ;; Java
+;; lsp-install-server
+;; jdtls
 (use-package lsp-java
   :ensure t
   :config
