@@ -443,7 +443,11 @@
 (helm-mode 1)
 
 ;; Disable scroll bar
-(scroll-bar-mode -1)
+;; no toolbar:
+(if (display-graphic-p)
+    (progn
+      (tool-bar-mode -1)
+      (scroll-bar-mode -1)))
 
 ;; Copy
 (setq select-active-regions nil)
@@ -453,9 +457,6 @@
 ;; Zoom in/out.
 (global-set-key (kbd "M-+") 'text-scale-increase)
 (global-set-key (kbd "M--") 'text-scale-decrease)
-
-;; no toolbar:
-(tool-bar-mode -1)
 
 ;; line numbers:
 (global-display-line-numbers-mode 1)
