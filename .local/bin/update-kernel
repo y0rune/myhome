@@ -5,6 +5,8 @@ LOG_FILE="/tmp/update-kernel.log"
 TMP_KERNEL="/tmp/kernel-config-`uname -r`"
 DEFAULT_KERNEL="/usr/src/linux/.config"
 
+set -x
+
 function starting() {
 echo -e "\e[93m----------------------COMPILING------------------------------\e[0m"
 sudo cp -rv $DEFAULT_KERNEL $TMP_KERNEL
