@@ -1,0 +1,26 @@
+auto-reload yes
+refresh-on-startup yes
+reload-time 3600
+notify-program "/home/yorune/.local/bin/notify-program"
+notify-always yes
+
+unbind-key o
+bind-key o open-in-browser
+
+macro , open-in-browser
+macro p set browser "mpv --ytdl-format='bestvideo[ext=mp4][height<=?1080]+bestaudio[ext=m4a]' --no-resume-playback" ; open-in-browser ; set browser "/home/yorune/.local/bin/browser-x -new-tab %u"
+
+unbind-key n
+unbind-key p
+bind-key n next
+bind-key p prev
+
+color listnormal cyan default
+color listfocus black yellow standout bold
+color listnormal_unread blue default
+color listfocus_unread yellow default bold
+color info red black bold
+color article white default bold
+
+browser "/home/yorune/.local/bin/browser-x -new-tab %u"
+player mpv

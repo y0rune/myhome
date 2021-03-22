@@ -1,0 +1,2 @@
+#!/bin/bash
+for i in /usr/repos/*/.git; do ( echo $i; cd $i/..; sudo git pull; ); done

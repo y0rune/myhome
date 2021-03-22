@@ -1,0 +1,15 @@
+#!/bin/bash
+set -x
+sudo rm -rf /var/tmp/portage/*
+sudo rm -rf /var/tmp/binpkgs/*
+sudo rm -rf /var/tmp/genkernel/*
+sudo rm -rf /var/cache/genkernel/*
+sudo emerge -a --depclean
+sudo emerge -a @preserved-rebuild
+sudo eclean -C -q packages
+sudo eclean -C -q -d -t1w distfiles
+sudo revdep-rebuild
+sudo perl-cleaner --all
+sudo etc-update
+sudo env-update
+source /etc/profile

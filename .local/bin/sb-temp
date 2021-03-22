@@ -1,0 +1,5 @@
+#!/bin/bash
+print_temp(){
+    echo -e "🔥 $(sensors | awk '/Core 0/ {print int($3)"°C"}') $(sudo nvidia-smi -q -d temperature | grep --color=no -i "GPU Current" |egrep --color=no -o '[0-9]*')°C"
+}
+print_temp

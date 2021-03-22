@@ -1,0 +1,11 @@
+#!/bin/bash
+
+mkdir $1
+cd $1 
+git init
+touch README.md
+git add README.md
+git commit -m "first commit"
+curl -u 'linux923344' https://api.github.com/user/repos -d '{"name":"'$1'"}'
+git remote add origin git@github.com:linux923344/$1.git
+git push -u origin master

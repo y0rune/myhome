@@ -1,0 +1,42 @@
+#!/bin/bash
+TEMP=/tmp/iptablesTemp
+FINAL="/home/yorune/.config/iptables"
+LINK="https://www.ipdeny.com/ipblocks/data/countries/all-zones.tar.gz"
+#BLOCKEDCOUNTRIES=(ad ae af ag ai al am ao ap aq ar as at au aw ax az ba bb bd be bf bg bh bi bj bl bm bn bo bq br bs bt bw by bz ca cd cf cg ch ci ck cl cm cn co cr cu cv cw cy cz de dj dk dm do dz ec ee eg er es et eu fi fj fk fm fo fr ga gb gd ge gf gg gh gi gl gm gn gp gq gr gt gu gw gy hk hn hr ht hu id ie il im in io iq ir is it je jm jo jp ke kg kh ki km kn kp kr kw ky kz la lb lc li lk lr ls lt lu lv ly ma mc md me mf mg mh mk ml mm mn mo mp mq mr ms mt mu mv mw mx my mz na nc ne nf ng ni nl no np nr nu nz om pa pe pf pg ph pk pm pr ps pt pw py qa re ro rs ru rw sa sb sc sd se sg si sk sl sm sn so sr ss st sv sx sy sz tc td tg th tj tk tl tm tn to tr tt tv tw tz ua ug us uy uz va vc ve vg vivn vu wf ws ye yt za zm zw)
+BLOCKEDCOUNTRIES=(af ax al dz as ad ao ai aq ag ar am aw au az bs bh bd bb by bz bj bm bt bo ba bw br io bn bg bf bi kh cm cv cf td cl cn co km cg cd ck cr ci hr cu cy dj dm do ec sv gq er ee et fk fj gf ga gm ge gh gi gd gp gu gt gn gw ht hn hk hu is in id ir iq im il jm je jo kz ke ki kp kr kw kg la lv lb ls lr ly mo mk mg mw my mv ml mt mh mq mr mu yt fm md mc mn me ms ma mz mm na nr np nc nz ni ne ng nu nf mp om pk pw ps pa py pe pr qa re ro ru rw kn lc pm vc ws sm st sa sn rs sc sl sg sk si sb so za es lk sd sr sy tw tj tz th tl tg tk to tt tn tr tm tc ug ua ae uy uz vu ve vn vg vi ye zm zw)
+
+cd $HOME
+mkdir {blocked,allzones}
+
+curl -LO $LINK
+tar xzvf all-zones.tar.gz -C allzones
+rm all-zones.tar.gz
+
+sed -n '/# CONFIGURATION:/,/# END OF CONFIG/p' $FINAL > beggining.txt
+sed -n '/# END CONFIGURATION:/,/# END OF CONFIGURATION/p' $FINAL > end.txt
+
+for blockedCountries in "${BLOCKEDCOUNTRIES[@]}"
+do
+    mv allzones/$blockedCountries.zone blocked/
+done
+
+for f in blocked/*.zone;
+do
+    echo "Adding $f to iptables.."
+    echo "" >> $TEMP
+    echo "# Adding zone $f" >> $TEMP
+
+    while read line; do
+	    echo "iptables -A INPUT -s $line -j DROP" >> $TEMP
+	    #echo "-A INPUT -s $line -j DROP" >> $TEMP
+    done < $f
+done
+
+cat beggining.txt > $FINAL
+cat $TEMP >> $FINAL
+echo "" >> $FINAL
+cat end.txt >> $FINAL
+
+rm -rf blocked allzones $TEMP beggining.txt end.txt
+sh ~/.local/bin/iptables-restart
+#systemctl restart iptables

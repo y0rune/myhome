@@ -1,0 +1,3 @@
+#!/bin/bash
+FILE=$(echo $1 | cut -d. -f1)
+ffmpeg -i $1 -b:a 128k -codec:v libx265 -b:v 1500k -vf scale=1280:720 $FILE-convered.mp4

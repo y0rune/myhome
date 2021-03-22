@@ -1,0 +1,16 @@
+#!/bin/sh
+# Updates weather forecast
+
+FILE="$HOME/.config/.weatherreport.tmp"
+FILER="$HOME/.config/weatherreport"
+location="Kleczew"
+
+curl -s --max-time 10 "wttr.in/$location" > $FILE
+
+if [ -s "$FILE" ]
+then
+    mv $FILE $FILER
+#    notify-send " Weather" "The weather forecast has been updated."
+else
+    rm $FILE
+fi

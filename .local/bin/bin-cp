@@ -1,0 +1,8 @@
+#!/bin/bash
+chmod +x * 
+chown -R yorune: *
+sudo cp -pr * /bin/ 
+#sudo cp /etc/bash.bashrc ../configs
+#cp /home/yorune/Arch/configs/zshrc /home/yorune/.zshrc
+#cp /home/yorune/Arch/configs/vimrc /home/yorune/.vimrc
+echo DONE!!

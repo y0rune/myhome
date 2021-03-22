@@ -1,0 +1,6 @@
+#!/bin/bash
+sudo emerge -C "=sys-kernel/gentoo-sources-$1"
+sudo rm -rf /usr/src/linux-$1-gentoo
+sudo rm -rf /lib/modules/$1-gentoo-x86_64
+sudo rm -rf /boot/*$1*
+sudo grub-mkconfig -o /boot/grub/grub.cfg

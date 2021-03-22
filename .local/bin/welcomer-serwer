@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Copy this file to /bin/welcomer and change permisson +x 
+# sudo bash -c $'echo "/bin/welcomer" >> /etc/profile.d/mymotd.sh && chmod +x /etc/profile.d/mymotd.sh'
+
+
+MEMTOTAL=`awk '$3=="kB"{$2=$2/1024**2;$3="GB";} 1' /proc/meminfo | column -t | grep "MemTotal" | awk '{print $2}'`
+MEMFREE=`awk '$3=="kB"{$2=$2/1024**2;$3="GB";} 1' /proc/meminfo | column -t | grep "MemAvailable" | awk '{print $2}'` 
+NETE=`ip a | awk {'print $2'} | grep -i en | sed 's/://g'`
+NETW=`ip a | awk {'print $2'} | grep -i wl | sed 's/://g'`
+
+if [ -z "$NETW" ]; then
+    NETD=$NETE
+else
+    NETD=$NETW
+fi
+
+   echo -e "
+   \033[0;35m+++++++++++++++++++: \033[0;37mInfo\033[0;35m :+++++++++++++++++++++++++++++++++++++++++++++++++++++
+   +
+   +  \033[0;37mHostname  \033[0;35m= \033[1;32m `hostname`
+   \033[0;35m+  \033[0;37mAddress   \033[0;35m= \033[1;32m `/sbin/ip addr show $NETD | grep "inet " | awk '{print $2}' | cut -d'/' -f1`
+   \033[0;35m+  \033[0;37mKernel    \033[0;35m= \033[1;32m `uname -r`
+   \033[0;35m+  \033[0;37mUptime    \033[0;35m= \033[1;32m`uptime | sed 's/.*up ([^,]*), .*/1/'`
+   \033[0;35m+  \033[0;37mMemory    \033[0;35m= \033[1;32m $MEMTOTAL GB (free $MEMFREE GB)\033[0;35m
+   \033[0;35m+  \033[0;37mUsername  \033[0;35m= \033[1;32m `whoami`\033[0;35m
+   +
+   \033[0;35m++++++++++++++++++: \033[0;37mStorage\033[0;35m :+++++++++++++++++++++++++++++++++++++++++++++++++++
+   +
+   +  \033[0;37m/                  \033[0;35m= \033[1;32m `df -h / | sed '1,1d'  | awk '{print $5\", \"$2\" (Total), \"$3\" (Usage)\"}'`\033[0;35m
+   +
+   \033[0;35m++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ \033[0m"
+   echo ""

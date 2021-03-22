@@ -1,0 +1,3 @@
+#!/bin/bash
+xfreerdp /size:1920:1080 /u:s434812 /d:LABS /v:term.wmi.amu.edu.pl /cert:deny /sound  /dynamic-resolution
+#rdesktop -u "\LABS\s434812" -g 90% term.wmi.amu.edu.pl

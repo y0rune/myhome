@@ -1,0 +1,6 @@
+sudo rm -rf /var/tmp/portage/*
+sudo rm -rf /var/tmp/binpkgs/*
+sudo rm -rf /var/tmp/genkernel/*
+sudo rm -rf /var/cache/genkernel/*
+sudo eclean-dist -d
+sudo eclean-pkg -d

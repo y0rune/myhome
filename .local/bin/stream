@@ -1,0 +1,5 @@
+#!/bin/bash
+KERNEL=$(uname -sr)
+
+[[ $KERNEL =~ "icrosoft" ]] && nohup streamlink -p "https://www.twitch.tv/riotgames best" $1 best > /dev/null 2>&1 &
+[[ $KERNEL =~ "gentoo" ]] && nohup streamlink -p mpv $1 best > /dev/null 2>&1 &
