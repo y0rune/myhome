@@ -1,0 +1,13 @@
+#!/bin/bash
+choices="Left\nRight\nDuplicated\nHDMI\nMonitor\nTV\n"
+
+chosen=$(echo -e "$choices" | dmenu -i)
+
+case "$chosen" in
+	Monitor) mons -o ;;
+	Duplicated) mons -d ;;
+	Left) mons -e left ;;
+	Right) mons -e right ;;
+	HDMI) mons -s ;;
+    TV) xrandr --output HDMI-1 --left-of eDP-1 --mode 1366x768 --rate 60
+esac

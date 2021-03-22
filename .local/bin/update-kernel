@@ -1,0 +1,118 @@
+#!/bin/bash
+
+BACKUP="/home/yorune/Linux/portage"
+LOG_FILE="/tmp/update-kernel.log"
+TMP_KERNEL="/tmp/kernel-config-`uname -r`"
+DEFAULT_KERNEL="/usr/src/linux/.config"
+
+function starting() {
+echo -e "\e[93m----------------------COMPILING------------------------------\e[0m"
+sudo cp -rv $DEFAULT_KERNEL $TMP_KERNEL
+cp -r $TMP_KERNEL $BACKUP/kernel-config
+cp -r /etc/portage/* $BACKUP
+qlist -I | sort -u  > $BACKUP/list-of-programs
+}
+
+function selection() {
+echo -e "\e[93m----------------------SELECTION-----------------------------\e[0m"
+sudo eselect kernel list
+echo
+echo
+read -p "New kernel is: " KERVER
+echo
+echo -e "Your kernel now is \e[91m$(uname -sr)\e[0m"
+echo -e "Your selected kernel is \e[91m"$KERVER"\e[0m"
+sudo eselect kernel set $KERVER
+sudo eselect kernel list | grep "*"
+echo
+}
+
+function compilation() {
+read -p "Do you want to accept and compile (Y/N): " agreed
+echo
+if [ "$agreed" == "y" ] || [ "$agreed" == "Y" ]
+	then
+		echo -e "\e[91m----------------------\e[5mSTARTING\e[0m\e[91m------------------------------\e[0m" && sleep 10
+        $NOW > /tmp/compiling-starting
+        NEW_KERNEL="/tmp/new-kernel-config"
+        sudo cp -r $TMP_KERNEL $DEFAULT_KERNEL
+        cd /usr/src/linux; sudo make menuconfig; sleep 2; sudo cp -r $DEFAULT_KERNEL $NEW_KERNEL
+        sudo genkernel all --makeopts=-j$(nproc --all) --kernel-config=$NEW_KERNEL --callback="emerge nvidia-drivers::gentoo" --lvm --btrfs --luks
+    elif [ "$agreed" == "N" ] || [ "$agreed" == "n" ]
+	then
+	exit
+fi
+}
+
+function ending() {
+echo
+echo
+echo -e "\e[93m----------------------CHECKING-----------------------------\e[0m"
+checking
+echo
+echo
+echo -e "\e[93m----------------------REMEMBER-----------------------------\e[0m"
+echo "You can remove:"
+echo "* /lib/modules/OLD_KERNEL"
+echo "* /boot/initramfs-genkernel-OLD_KERNEL"
+echo "* /boot/vmlinuz-OLD_KERNEL"
+echo "* /boot/System.map-OLD_KERNEL"
+echo "* /boot/initramfs-OLD_KERNEL"
+echo "* /usr/src/linux-OLD_KERNEL"
+echo
+echo -e "AFTER EVERYTHING YOU MUST WRITE COMMAND \e[91m"sudo grub-mkconfig -o /boot/grub/grub.cfg"\e[0m"
+}
+
+function checking() {
+KERNEL=`eselect kernel list | awk '{print $2}' | egrep -o '[0-9]+.[0-9]+.[0-9]+' | tail -n1`
+
+INITRANFS="initramfs-$KERNEL-gentoo-x86_64.img"
+SYSTEMMAP="System.map-$KERNEL-gentoo-x86_64"
+VMLINUZ="vmlinuz-$KERNEL-gentoo-x86_64"
+
+ifchecking $INITRANFS
+ifchecking $SYSTEMMAP
+ifchecking $VMLINUZ
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+}
+
+function ifchecking () {
+FILE=/boot/$1
+if test -f "$FILE"; then
+    echo "$FILE exist in the /boot folder ;)"
+else
+    echo "$FILE NOT exist in the /boot folder ;)"
+fi
+}
+
+function addgit() {
+    cd ~/Linux/portage || exit
+    git add .
+    git commit -m "Updated: $(date)"
+    git push
+    cd ~ || exit
+}
+
+function main() {
+clear
+
+BEGIN=$(date +"%s")
+
+starting
+addgit
+selection
+compilation
+
+echo -e  "\e[31mI am leaving! Thank You!\e[0m" && sleep 3
+
+TERMIN=$(date +"%s")
+DIFFTLPS=$(($TERMIN-$BEGIN))
+
+echo -e "\e[93m------------------TIME COMPILATION-------------------------\e[0m"
+echo -e "\e[93m$(($DIFFTLPS / 60)) minutes and $(($DIFFTLPS % 60)) seconds \e[0m elapsed for Script Execution." && sleep 3
+ending
+
+exit
+}
+
+main

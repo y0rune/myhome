@@ -1,0 +1,28 @@
+#!/bin/bash
+
+sudo mount /dev/disk/by-uuid/c61f258f-5fd1-47f2-a270-bb8aa63b0020 /mnt/gentoo
+
+sleep 5
+sync
+
+if [ -e /dev/disk/by-uuid/c61f258f-5fd1-47f2-a270-bb8aa63b0020 ]
+then
+    sudo mkdir -p /mnt/gentoo/proc
+    sudo mkdir -p /mnt/gentoo/dev
+    sudo mkdir -p /mnt/gentoo/sys
+    sudo mkdir -p /mnt/gentoo/mnt/backup/ccache
+    sudo cp -r $CCACHE_DIR/ccache.conf /mnt/gentoo/mnt/backup/ccache
+    sudo rsync -az -H /etc/portage/ /mnt/gentoo/gentoo/etc/portage/
+    #sudo rsync -az -H /usr/portage/ /mnt/gentoo/gentoo/usr/portage/
+    #sudo rsync -az -H /usr/repos/ /mnt/gentoo/gentoo/usr/repos/
+    sudo mount --types proc /proc /mnt/gentoo/gentoo/proc
+    sudo mount --rbind /sys /mnt/gentoo/gentoo/sys
+    sudo mount --make-rslave /mnt/gentoo/gentoo/sys
+    sudo mount --rbind /dev /mnt/gentoo/gentoo/dev
+    sudo mount --make-rslave /mnt/gentoo/gentoo/dev
+    sleep 5
+    sudo chroot /mnt/gentoo/gentoo /bin/bash
+    # echo "Europe/Warsaw" > /etc/timezone
+    # emerge --config sys-libs/timezone-data
+    # emerge dev-util/ccache app-shells/oh-my-zsh app-admin/sudo app-editors/vim
+fi

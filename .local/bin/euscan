@@ -1,0 +1,4 @@
+#!/usr/lib/python-exec/python3.8/python
+# EASY-INSTALL-SCRIPT: 'euscan==9999','euscan'
+__requires__ = 'euscan==9999'
+__import__('pkg_resources').run_script('euscan==9999', 'euscan')

@@ -1,0 +1,5 @@
+#!/bin/bash
+pkill -RTMIN+11 dwmblocks
+[ "$1" = "play" ] && cmus-remote -u
+[ "$1" = "next" ] && cmus-remote -n
+[ "$1" = "prev" ] && cmus-remote -r

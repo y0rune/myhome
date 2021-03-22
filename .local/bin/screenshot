@@ -1,0 +1,7 @@
+FILE="/tmp/`date +%Y%m%d-%H.%M.%S.png`"
+NAME=$(date +%s | sha256sum | base64 | head -c 20 ; echo)
+
+gnome-screenshot -f "$FILE"
+rsync -avz --delete $FILE -e "ssh -p 22" root@209.250.255.224:/var/www/yorune.pl/u/$NAME.png &&
+
+echo -e "https://yorune.pl/u/$NAME.png" | xclip -selection clipboard && notify-send "Screenshot has been updated"

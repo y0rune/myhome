@@ -1,0 +1,25 @@
+#!/bin/bash
+print_battery() {
+	# Find the battery level
+	hash acpi || return 0
+	onl="$(acpi -V | grep "on-line")"
+	charge="$(cat /sys/class/power_supply/BAT*/capacity)"
+    time="$(awk '{print $5}' <(acpi))"
+
+	# Determine battery glyph by percentage range
+	if [[ -z $onl && ${charge} -gt 80 ]]; then
+		echo -e "🔋 ${charge}% ${time}"
+	elif [[ -z $onl && ${charge} -le 80 && ${charge} -gt 60 ]]; then
+		echo -e "🔋 ${charge}% ${time}"
+	elif [[ -z $onl && ${charge} -le 60 && ${charge} -gt 40 ]]; then
+		echo -e "🔋 ${charge}% ${time}"
+	elif [[ -z $onl && ${charge} -le 40 && ${charge} -gt 20 ]]; then
+		echo -e "🔋 ${charge}% ${time}"
+	elif [[ -z $onl && ${charge} -le 20 ]]; then
+		echo -e "❗🔋 ${charge}% ${time}"
+	# If charging, use animated glyph
+	else
+		echo -e "🔌"
+	fi
+}
+print_battery

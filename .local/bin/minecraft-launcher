@@ -1,0 +1,2 @@
+#!/bin/bash
+__NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0 __GLX_VENDOR_LIBRARY_NAME=nvidia __GL_SYNC_TO_VBLANK=0 java -jar ~/Downloads/TLauncher-2.75/TLauncher-2.75.jar

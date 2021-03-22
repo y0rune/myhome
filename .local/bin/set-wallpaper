@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cp $1 ~/.wall.jpg
+#feh --bg-scale /home/yorune/.wall.jpg
+feh --bg-fill /home/yorune/.wall.jpg
+#wal -i $1 -o wal-set
+notify-send "Wallpaper changed"

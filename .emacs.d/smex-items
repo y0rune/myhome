@@ -1,0 +1,42 @@
+
+;; ----- smex-history -----
+(
+ goto-line
+ overwrite-mode
+ shell
+ load-theme
+ treemacs
+ inf-ruby-console-auto
+ compile
+)
+
+;; ----- smex-data -----
+(
+ (lsp-install-server . 6)
+ (treemacs . 17)
+ (lsp-java-update-server . 1)
+ (set-frame-font . 1)
+ (lsp-jt-browser . 6)
+ (sort-lines . 5)
+ (lsp-jt-report-open . 17)
+ (treemacs-edit-workspaces . 2)
+ (treemacs-refresh . 1)
+ (treemacs-mode . 3)
+ (menu-set-font . 2)
+ (magit-commit . 1)
+ (column-number-mode . 1)
+ (set-fill-column . 3)
+ (dap-java-debug . 7)
+ (ruby-indent-exp . 1)
+ (ruby-indent-line . 1)
+ (ruby-mode-menu . 1)
+ (inf-ruby-console-auto . 8)
+ (shell . 4)
+ (package-install-selected-packages . 1)
+ (package-install . 1)
+ (compile . 2)
+ (lsp-mode . 2)
+ (load-theme . 14)
+ (overwrite-mode . 1)
+ (goto-line . 2)
+)

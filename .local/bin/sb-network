@@ -1,0 +1,5 @@
+#!/bin/bash
+print_wifi(){
+    echo -e "$(cat /sys/class/net/w*/operstate | sed "s/down/❌/;s/up/📶/") $(cat /sys/class/net/e*/operstate | sed "s/down/❌/;s/up/🌐/")"
+}
+print_wifi

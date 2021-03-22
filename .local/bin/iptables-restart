@@ -1,0 +1,6 @@
+#!/bin/bash
+sudo rc-service iptables stop
+sudo iptables -F
+sudo ~/.config/iptables
+sudo /etc/init.d/iptables save
+sudo rc-service iptables start

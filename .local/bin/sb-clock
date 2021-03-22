@@ -1,0 +1,5 @@
+#!/bin/bash
+print_date(){
+	echo -e "🕛 $(date +"%d/%m %H:%M")"
+}
+print_date

@@ -1,0 +1,4 @@
+#!/bin/bash
+KERNEL=$(uname -sr)
+[[ $KERNEL =~ "icrosoft" ]] && $HOME/.local/bin/wsl-notify "$@"
+[[ $KERNEL =~ "gentoo" ]] && /usr/bin/notify-send "$@"

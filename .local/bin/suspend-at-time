@@ -1,0 +1,15 @@
+#!/bin/bash
+#./suspend-at-time 0:00
+
+RUNAT="$1"
+
+while [ 1 ]
+do
+    DATE=`/bin/date +%H:%M`
+    if [ $DATE. = $RUNAT. ]
+    then
+        sudo systemctl suspend
+        echo ""DONE"      at     "$(date)"" 
+        pkill suspend-at-time
+	fi
+done

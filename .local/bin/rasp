@@ -1,0 +1,5 @@
+#!/bin/bash
+sudo chown yorune: /mnt/rasp
+sshfs root@192.168.0.222:/mnt/ /mnt/rasp/
+sleep 10
+cd /mnt/rasp
