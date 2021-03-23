@@ -1,5 +1,7 @@
 #!/bin/bash
+NOTIFY=no
 pkill -RTMIN+10 dwmblocks
-[ "$1" = "up" ] && ponymix increase 5 > /dev/null && notify-send "🔊 Volume $(ponymix get-volume)"
-[ "$1" = "down" ] && ponymix decrease 5 > /dev/null && notify-send "🔉 Volume $(ponymix get-volume)"
-[ "$1" = "toggle" ] && ponymix toggle> /dev/null && notify-send "🔇 Volume (un)mute "
+
+[ "$1" = "up" ] && ponymix increase 5 > /dev/null   && [ $NOTIFY == "yes" ] && notify-send "🔊 Volume $(ponymix get-volume)"
+[ "$1" = "down" ] && ponymix decrease 5 > /dev/null && [ $NOTIFY == "yes" ] && notify-send "🔉 Volume $(ponymix get-volume)"
+[ "$1" = "toggle" ] && ponymix toggle> /dev/null    && [ $NOTIFY == "no" ] && notify-send "🔇 Volume (un)mute "

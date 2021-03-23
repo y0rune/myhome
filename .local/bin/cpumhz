@@ -1,0 +1,2 @@
+#!/bin/bash
+watch "grep MHz /proc/cpuinfo | sort -n | tail -n 8 ; sensors"
