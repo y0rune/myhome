@@ -5,7 +5,7 @@ export QT_IM_MODULE=ibus
 
 KERNEL=$(uname -sr)
 [[ $KERNEL =~ "icrosoft" ]] && "/mnt/c/Program Files/Mozilla Firefox/firefox.exe" "$@"
-[[ $KERNEL =~ "gentoo" ]] && GDK_DPI_SCALE="1.2" firefox-bin "$@"
+[[ $KERNEL =~ "gentoo" ]] && GDK_DPI_SCALE="1.2" firefox "$@"
 #[[ $KERNEL =~ "gentoo" ]] && __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0 __GLX_VENDOR_LIBRARY_NAME=nvidia __GL_SYNC_TO_VBLANK=0 GDK_DPI_SCALE="1.2" firefox "$@"
 
 # Firefox
