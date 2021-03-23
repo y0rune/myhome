@@ -14,15 +14,12 @@ xset s 600&
 xautolock -time 15 -locker slock&
 
 # Programs
-#dwmstatusbar&
 dwmblocks&
-#feh --bg-fill "$HOME/.wall.jpg" &
 nm-applet --sm-disable&
-#sudo /root/.local/bin/protonvpn c -f&
 dunst -config&
 browser-x&
 QT_SCALE_FACTOR=1.5 keepassxc &
-/usr/local/bin/st -e /bin/sh -c "tmux new-session -s BASE -n HOME '/bin/zsh'\; split-window 'htop'\; new-window -n MAIL 'neomutt'\; new-window -n NEWSBOAT 'newsboat -r '\; new-window -n MUSIC 'cmus'"&
+/usr/local/bin/st -e /bin/sh -c "tmux new-session -s BASE -n HOME '/bin/zsh'\; split-window -h 'watch "grep MHz /proc/cpuinfo | sort -n | tail -n 8 ; sensors"'\; split-window 'htop'\; new-window -n MAIL 'neomutt'\; new-window -n NEWSBOAT 'newsboat -r '\; new-window -n MUSIC 'cmus'"&
 sudo /usr/bin/rdate -s ntp.task.gda.pl && sudo /sbin/hwclock --systohc
 megasync &
 ibus-daemon&
@@ -34,8 +31,8 @@ then
     #xrandr --output eDP-1 --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal
 fi
 
-compton&
-feh --bg-scale $HOME/.wall.jpg&
+#compton&
+#feh --bg-scale $HOME/.wall.jpg&
 
 # Seetings of LID
 #while true
