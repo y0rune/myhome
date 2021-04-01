@@ -1,3 +1,8 @@
+
+# ZSHRC
+
+CONFIG=$HOME/.config
+
 parse_git_branch() {
     command=$(git symbolic-ref --short HEAD 2> /dev/null)
     [ -z $command ] && echo -e "$ " || echo -e "$(git symbolic-ref --short HEAD 2> /dev/null) $ "
@@ -17,23 +22,19 @@ SAVEHIST=10000000
 autoload -U colors && colors
 setopt PROMPT_SUBST
 PS1='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%}%n@)%m %{$fg_bold[blue]%}%(!.%1~.%~) $(parse_git_branch)%{$reset_color%}'
-#PS1='%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%m %{$fg[magenta]%}%~%{$fg[red]%} $(parse_git_branch)]%{$reset_color%}$%b '
 plugins=(rake ruby vagrant knife knife_ssh kitchen )
 
 ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
-source $HOME/.password
-source $HOME/Linux/configs/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh &>> /dev/null
-source $HOME/Linux/configs/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh &>> /dev/null
-source $HOME/.plannaplan &>> /dev/null
-[ ! -d $HOME/.config/fzf ] && git clone https://github.com/junegunn/fzf.git $HOME/.config/fzf
-[ -f $HOME/.config/fzf/shell/key-bindings.zsh ] && source $HOME/.config/fzf/shell/key-bindings.zsh
+
+[ ! -d $CONFIG/zsh ] && { mkdir -p $CONFIG/zsh ; cd $CONFIG/zsh ; git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ; git clone https://github.com/zsh-users/zsh-autosuggestions.git }
+[ -d $CONFIG/zsh ] && source $CONFIG/zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh &>> /dev/null
+[ -d $CONFIG/zsh ] && source $CONFIG/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh &>> /dev/null
+[ ! -f $HOME/.password ] && source $HOME/.password
+[ ! -d $CONFIG/fzf ] && git clone https://github.com/junegunn/fzf.git $HOME/.config/fzf
+[ -f $CONFIG/fzf/shell/key-bindings.zsh ] && source $HOME/.config/fzf/shell/key-bindings.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 FPATH=/usr/local/share/zsh/site-functions:$FPATH
-
-#xset b off &>> /dev/null
-#set bell-style none &>> /dev/null
-#setxkbmap pl &>> /dev/null
 
 export GPG_TTY=$(tty)
 export TERM=xterm-256color
@@ -51,8 +52,8 @@ export FZF_DEFAULT_OPTS='--height 40% --layout=reverse'
 export EIX_LIMIT_COMPACT=0
 export TERMINAL="st"
 export QT_SCALE_FACTOR=1.5
-export VISUAL='vim'
-export EDITOR='vim'
+export VISUAL='emacs'
+export EDITOR='emacs -nw'
 alias svm="sudo vim /etc/portage/make.conf"
 alias svr="sudo vim /etc/portage/repos.conf"
 alias svp="sudo vim /etc/portage/package.use"
@@ -98,6 +99,7 @@ alias vim="vim -p"
 alias denpl="trans en:pl"
 alias dplen="trans pl:en"
 alias notes="vim $HOME/git/notes/index.md"
+alias mgr="cd $HOME/Documents/Collage/Magisterka-Marcin/Semestr1/"
 alias mpv="__NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0 __GLX_VENDOR_LIBRARY_NAME=nvidia __GL_SYNC_TO_VBLANK=0 mpv --vo=x11 --hwdec=no --ytdl-raw-options="yes-playlist=" --ytdl-format='bestvideo[ext=mp4][height<=?1080]+bestaudio[ext=m4a]' --no-resume-playback"
 alias aria2c="aria2c --seed-time=0 --disable-ipv6 --max-upload-limit=1k"
 

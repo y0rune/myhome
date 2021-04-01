@@ -10,8 +10,8 @@ xrandr --auto
 xset b off&
 
 # Lock screen
-xset s 600&
-xautolock -time 15 -locker slock&
+xset s 3600&
+xautolock -time 60 -locker slock&
 
 # Programs
 dwmblocks&
@@ -19,7 +19,7 @@ nm-applet --sm-disable&
 dunst -config&
 browser-x&
 QT_SCALE_FACTOR=1.5 keepassxc &
-/usr/local/bin/st -e /bin/sh -c "tmux new-session -s BASE -n HOME '/bin/zsh'\; split-window -h 'cpumhz'\; split-window 'htop'\; new-window -n MAIL 'neomutt'\; new-window -n NEWSBOAT 'newsboat -r '\; new-window -n MUSIC 'cmus'"&
+/usr/local/bin/st -e /bin/sh -c "tmux new-session -s BASE -n HOME '/bin/zsh'\; split-window -h 'cpumhz'\; split-window 'htop'\; new-window -n MAIL 'neomutt'\; new-window -n MUSIC 'cmus'"&
 sudo /usr/bin/rdate -s ntp.task.gda.pl && sudo /sbin/hwclock --systohc
 megasync &
 ibus-daemon&

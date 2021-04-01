@@ -1,13 +1,13 @@
 
 ;; ----- smex-history -----
 (
- goto-line
- overwrite-mode
- shell
+ table-insert
+ table-insert-row
  load-theme
+ disable-theme
+ shell
+ package-refresh-contents
  treemacs
- inf-ruby-console-auto
- compile
 )
 
 ;; ----- smex-data -----
@@ -31,12 +31,17 @@
  (ruby-indent-line . 1)
  (ruby-mode-menu . 1)
  (inf-ruby-console-auto . 8)
- (shell . 4)
+ (shell . 6)
  (package-install-selected-packages . 1)
  (package-install . 1)
  (compile . 2)
  (lsp-mode . 2)
- (load-theme . 14)
+ (load-theme . 15)
  (overwrite-mode . 1)
  (goto-line . 2)
+ (package-refresh-contents . 1)
+ (epc:pop-to-last-server-process-buffer . 3)
+ (disable-theme . 1)
+ (table-insert . 3)
+ (table-insert-row . 1)
 )
