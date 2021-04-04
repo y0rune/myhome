@@ -33,6 +33,7 @@ Plug 'fannheyward/coc-markdownlint', {'do': 'yarn install --frozen-lockfile; sud
 Plug 'josa42/coc-sh', {'do': 'yarn install --frozen-lockfile; sudo npm i -g bash-language-server'}
 Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
 Plug 'dracula/vim', { 'as': 'dracula'}
+Plug 'jnurmine/Zenburn', { 'as': 'zenburn'}
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 call plug#end()
@@ -114,7 +115,7 @@ hi PmenuSel ctermfg=NONE ctermbg=24 cterm=NONE guifg=NONE guibg=#204a87 gui=NONE
 set bg=dark
 hi CursorLine cterm=NONE term=NONE ctermbg=NONE guibg=NONE
 hi CursorLine ctermbg=235
-colorscheme dracula
+colorscheme zenburn
 
 " columne
 set textwidth=80
