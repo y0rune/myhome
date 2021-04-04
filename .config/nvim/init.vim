@@ -5,6 +5,7 @@ if ! filereadable(system('echo -n "$HOME/.config/nvim/autoload/plug.vim"'))
 	autocmd VimEnter * PlugInstall
 endif
 
+let mapleader = ","
 set laststatus=2
 set shiftwidth=4
 set softtabstop=4
@@ -14,21 +15,26 @@ let g:python3_host_prog = expand('/usr/src/python')
 
 " plugins
 call plug#begin('~/.config/nvim/plugged')
+Plug 'tpope/vim-markdown'
+Plug 'masukomi/vim-markdown-folding'
 Plug 'preservim/nerdtree'
 Plug 'nmante/vim-latex-live-preview'
 Plug 'lervag/vimtex'
 Plug 'junegunn/goyo.vim'
-Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-commentary'
 Plug 'ap/vim-css-color'
 Plug 'tpope/vim-surround'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile; sudo npm install -g npx-run; pip install --user jedi'}
+Plug 'neoclide/coc-solargraph', {'do': 'gem install solargraph'}
+Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile; sudo npm install -g npx-run; pip install --user jedi'}
 Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
 Plug 'fannheyward/coc-markdownlint', {'do': 'yarn install --frozen-lockfile; sudo npm install markdownlint --save-dev'}
 Plug 'josa42/coc-sh', {'do': 'yarn install --frozen-lockfile; sudo npm i -g bash-language-server'}
 Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
+Plug 'dracula/vim', { 'as': 'dracula'}
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " Status-line
@@ -52,12 +58,21 @@ syntax on
 filetype plugin indent on
 set encoding=utf-8
 
+" fzf
+" https://github.com/masukomi/masuconfigs/blob/master/.vimrc
+nmap <Leader>f :FZF<CR>
+nmap <Leader>b :Buffers<CR>
+nmap <Leader>/ :Rg<CR>
+
 " livepreviewer
 let g:livepreview_previewer = 'mupdf'
 
 " markdown preview
 let g:mkdp_browser = '/home/yorune/.local/bin/browser-x'
 let g:mkdp_echo_preview_url = 1
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
+let g:markdown_minlines = 1
+autocmd FileType markdown set foldexpr=NestedMarkdownFolds()
 
 " line numbers
 set number
@@ -99,6 +114,7 @@ hi PmenuSel ctermfg=NONE ctermbg=24 cterm=NONE guifg=NONE guibg=#204a87 gui=NONE
 set bg=dark
 hi CursorLine cterm=NONE term=NONE ctermbg=NONE guibg=NONE
 hi CursorLine ctermbg=235
+colorscheme dracula
 
 " columne
 set textwidth=80
@@ -113,6 +129,12 @@ nnoremap <silent> <C-t> :tabnew <CR>
 nnoremap <F11> :Goyo <CR>
 nnoremap <F7> :tabprevious<CR>
 nnoremap <F8> :tabnext<CR>
+
+"" Moving line up or down using alt
+nnoremap <A-Up> :m-2<CR>
+nnoremap <A-Down> :m+<CR>
+inoremap <A-Up> <Esc>:m-2<CR>
+inoremap <A-Down> <Esc>:m+<CR>
 
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 

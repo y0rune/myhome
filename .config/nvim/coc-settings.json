@@ -5,7 +5,8 @@
     "json",
     "python",
     "css",
-    "Markdown"
+    "Markdown",
+    "ruby"
   ],
   "languageserver": {
     "bash": {
@@ -14,5 +15,7 @@
       "filetypes": ["sh"],
       "ignoredRootPaths": ["~"]
     }
-  }
+  },
+  "solargraph.commandPath": "~/.gem/ruby/2.6.0/bin/solargraph",
+  "solargraph.formatting": true
 }
