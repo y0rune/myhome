@@ -61,6 +61,8 @@
 (add-hook 'text-mode-hook 'auto-fill-mode)
 (setq-default fill-column 80)
 
+(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
+
 ; Global turn on flycheck
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
@@ -138,6 +140,9 @@
   :ensure t
   )
 (global-company-mode)
+
+(setq company-dabbrev-downcase 0)
+(setq company-idle-delay 0)
 
 ;; Shell - bash
 (use-package flymake-shellcheck

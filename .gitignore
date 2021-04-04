@@ -35,6 +35,7 @@
 .cert/
 .swt/
 .smb
+.emacs.d/ido.last
 .recently-used
 .eclipse/
 .emacs.d/.dap-breakpoints

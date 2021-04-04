@@ -1,4 +1,4 @@
-#!/usr/lib/python-exec/python3.7/python
+#!/usr/lib/python-exec/python3.8/python
 # -*- coding: utf-8 -*-
 import re
 import sys
