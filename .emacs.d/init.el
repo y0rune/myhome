@@ -172,15 +172,15 @@
 (add-to-list 'default-frame-alist `(font . ,(rc/get-default-font)))
 
 ;; Theme
-;;(use-package dracula-theme
-;;  :ensure t
-;;  :config
-;;  (load-theme 'dracula t))
-
-(use-package zenburn-theme
+(use-package dracula-theme
   :ensure t
   :config
-  (load-theme 'zenburn t))
+  (load-theme 'dracula t))
+
+;;(use-package zenburn-theme
+;;  :ensure t
+;;  :config
+;;  (load-theme 'zenburn t))
 
 
 
