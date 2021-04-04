@@ -18,11 +18,12 @@ Plug 'preservim/nerdtree'
 Plug 'nmante/vim-latex-live-preview'
 Plug 'lervag/vimtex'
 Plug 'junegunn/goyo.vim'
+Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-commentary'
 Plug 'ap/vim-css-color'
 Plug 'tpope/vim-surround'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile; pip install --user jedi'}
+Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile; sudo npm install -g npx-run; pip install --user jedi'}
 Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
 Plug 'fannheyward/coc-markdownlint', {'do': 'yarn install --frozen-lockfile; sudo npm install markdownlint --save-dev'}

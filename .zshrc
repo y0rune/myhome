@@ -54,6 +54,7 @@ export TERMINAL="st"
 export QT_SCALE_FACTOR=1.5
 export VISUAL='nvim'
 export EDITOR='nvim'
+alias vimc="nvim $HOME/.vimrc"
 alias svm="sudo nvim /etc/portage/make.conf"
 alias svr="sudo nvim /etc/portage/repos.conf"
 alias svp="sudo nvim /etc/portage/package.use"
