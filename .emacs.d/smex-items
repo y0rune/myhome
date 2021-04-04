@@ -1,13 +1,13 @@
 
 ;; ----- smex-history -----
 (
+ display-fill-column-indicator-mode
+ run-python
+ whitespace-mode
+ shell
  package-install
- ido-mode
- customize-themes
- avy-isearch
+ treemacs
  load-theme
- delete-rectangle
- kill-rectangle
 )
 
 ;; ----- smex-data -----
@@ -31,7 +31,7 @@
  (ruby-indent-line . 1)
  (ruby-mode-menu . 1)
  (inf-ruby-console-auto . 8)
- (shell . 6)
+ (shell . 7)
  (package-install-selected-packages . 1)
  (package-install . 2)
  (compile . 2)
@@ -49,4 +49,9 @@
  (avy-isearch . 1)
  (customize-themes . 1)
  (ido-mode . 1)
+ (lsp-describe-session . 1)
+ (whitespace-mode . 2)
+ (python-shell-switch-to-shell . 1)
+ (run-python . 1)
+ (display-fill-column-indicator-mode . 3)
 )
