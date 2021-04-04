@@ -30,7 +30,7 @@ source $ZSH/oh-my-zsh.sh
 [ ! -d $CONFIG/zsh ] && { mkdir -p $CONFIG/zsh ; cd $CONFIG/zsh ; git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ; git clone https://github.com/zsh-users/zsh-autosuggestions.git }
 [ -d $CONFIG/zsh ] && source $CONFIG/zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh &>> /dev/null
 [ -d $CONFIG/zsh ] && source $CONFIG/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh &>> /dev/null
-[ ! -f $HOME/.password ] && source $HOME/.password
+[ -f $HOME/.password ] && source $HOME/.password
 [ ! -d $CONFIG/fzf ] && git clone https://github.com/junegunn/fzf.git $HOME/.config/fzf
 [ -f $CONFIG/fzf/shell/key-bindings.zsh ] && source $HOME/.config/fzf/shell/key-bindings.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -52,12 +52,12 @@ export FZF_DEFAULT_OPTS='--height 40% --layout=reverse'
 export EIX_LIMIT_COMPACT=0
 export TERMINAL="st"
 export QT_SCALE_FACTOR=1.5
-export VISUAL='emacs'
-export EDITOR='emacs -nw'
-alias svm="sudo vim /etc/portage/make.conf"
-alias svr="sudo vim /etc/portage/repos.conf"
-alias svp="sudo vim /etc/portage/package.use"
-alias sva="sudo vim /etc/portage/package.accept_keywords"
+export VISUAL='nvim'
+export EDITOR='nvim'
+alias svm="sudo nvim /etc/portage/make.conf"
+alias svr="sudo nvim /etc/portage/repos.conf"
+alias svp="sudo nvim /etc/portage/package.use"
+alias sva="sudo nvim /etc/portage/package.accept_keywords"
 alias emerge="sudo emerge"
 alias channel-check='sudo iwlist wlan0 scan | egrep -i "essid|frequency"'
 alias grep="grep --color=always"
@@ -72,7 +72,7 @@ alias pl="setxkbmap pl"
 alias graphic-card="glxinfo|egrep 'OpenGL vendor|OpenGL renderer'"
 alias mylaptop-components="inxi -Fxz"
 alias r="ranger"
-alias v="vim"
+alias v="nvim"
 alias feh="feh --scale-down"
 alias changefont="figlet"
 alias gmaster="git checkout master"
@@ -95,10 +95,10 @@ alias vpnch="sudo /root/.local/bin/protonvpn c --cc CH"
 alias vpnd="sudo /root/.local/bin/protonvpn d"
 alias tv="~/MEGA/tv/tv.sh"
 alias newswork="newsboat --url=$HOME/.config/newsboat/urlswork"
-alias vim="vim -p"
+alias vim="nvim -p"
 alias denpl="trans en:pl"
 alias dplen="trans pl:en"
-alias notes="vim $HOME/git/notes/index.md"
+alias notes="nvim $HOME/git/notes/index.md"
 alias mgr="cd $HOME/Documents/Collage/Magisterka-Marcin/Semestr1/"
 alias mpv="__NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0 __GLX_VENDOR_LIBRARY_NAME=nvidia __GL_SYNC_TO_VBLANK=0 mpv --vo=x11 --hwdec=no --ytdl-raw-options="yes-playlist=" --ytdl-format='bestvideo[ext=mp4][height<=?1080]+bestaudio[ext=m4a]' --no-resume-playback"
 alias aria2c="aria2c --seed-time=0 --disable-ipv6 --max-upload-limit=1k"
