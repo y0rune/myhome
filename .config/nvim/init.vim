@@ -75,6 +75,8 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
 let g:markdown_minlines = 1
 autocmd FileType markdown set foldexpr=NestedMarkdownFolds()
 
+au BufNewFile,BufRead *.conf setfiletype conf
+
 " line numbers
 set number
 set ruler
@@ -136,6 +138,8 @@ nnoremap <A-Up> :m-2<CR>
 nnoremap <A-Down> :m+<CR>
 inoremap <A-Up> <Esc>:m-2<CR>
 inoremap <A-Down> <Esc>:m+<CR>
+vnoremap <A-Down> :m '>+1<CR>gv=gv
+vnoremap <A-Up> :m '<-2<CR>gv=gv
 
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
