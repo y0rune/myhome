@@ -8,6 +8,9 @@
     "Markdown",
     "ruby"
   ],
+  "diagnostic.virtualText": true,
+  "diagnostic.virtualTextCurrentLineOnly": false,
+  "diagnostic.checkCurrentLine": false,
   "languageserver": {
     "bash": {
       "command": "bash-language-server",

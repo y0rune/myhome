@@ -182,8 +182,6 @@
   :config
   (load-theme 'zenburn t))
 
-
-
 ;; Sitebar dirred
 (use-package dired-sidebar
   :ensure t
@@ -471,6 +469,12 @@
 		(setq tab-width 4
 		      python-indent-offset 4))))
 (add-hook 'python-mode-hook 'infer-indentation-style)
+
+;; python-black
+(use-package python-black
+  :demand t
+  :after python)
+
 
 ;;; --- Look & Feel ---
 

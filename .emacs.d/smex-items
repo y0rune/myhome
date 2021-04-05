@@ -1,13 +1,13 @@
 
 ;; ----- smex-history -----
 (
- display-fill-column-indicator-mode
- run-python
- whitespace-mode
- shell
+ python-black
+ message-tab
+ python-black-on-save-mode
  package-install
- treemacs
- load-theme
+ prettier-prettify
+ prettier-prettify-region
+ prettier-mode
 )
 
 ;; ----- smex-data -----
@@ -31,12 +31,12 @@
  (ruby-indent-line . 1)
  (ruby-mode-menu . 1)
  (inf-ruby-console-auto . 8)
- (shell . 7)
+ (shell . 8)
  (package-install-selected-packages . 1)
- (package-install . 2)
+ (package-install . 3)
  (compile . 2)
  (lsp-mode . 2)
- (load-theme . 16)
+ (load-theme . 18)
  (overwrite-mode . 1)
  (goto-line . 2)
  (package-refresh-contents . 1)
@@ -52,6 +52,13 @@
  (lsp-describe-session . 1)
  (whitespace-mode . 2)
  (python-shell-switch-to-shell . 1)
- (run-python . 1)
+ (run-python . 2)
  (display-fill-column-indicator-mode . 3)
+ (prettier-restart . 1)
+ (prettier-prettify . 8)
+ (prettier-mode . 2)
+ (prettier-prettify-region . 2)
+ (python-black . 9)
+ (python-black-on-save-mode . 1)
+ (message-tab . 1)
 )
