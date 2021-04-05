@@ -36,6 +36,11 @@
 .swt/
 .smb
 .emacs.d/ido.last
+.local/bin/black*
+.config/zsh/
+.fzf.bash
+.fzf.zsh
+.fzf/
 .recently-used
 .eclipse/
 .emacs.d/.dap-breakpoints
