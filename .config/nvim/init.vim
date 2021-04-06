@@ -15,26 +15,53 @@ let g:python3_host_prog = expand('/usr/src/python')
 
 " plugins
 call plug#begin('~/.config/nvim/plugged')
-Plug 'tpope/vim-markdown'
-Plug 'masukomi/vim-markdown-folding'
-Plug 'preservim/nerdtree'
-Plug 'nmante/vim-latex-live-preview'
-Plug 'lervag/vimtex'
-Plug 'junegunn/goyo.vim'
-Plug 'tpope/vim-commentary'
-Plug 'ap/vim-css-color'
-Plug 'tpope/vim-surround'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc-solargraph', {'do': 'gem install solargraph'}
-Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile; npm i -D npx-run; pip install --user jedi'}
-Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'fannheyward/coc-markdownlint', {'do': 'yarn install --frozen-lockfile; npm i -D markdownlint --save-dev'}
-Plug 'josa42/coc-sh', {'do': 'yarn install --frozen-lockfile; npm i -D bash-language-server'}
-Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
-Plug 'dracula/vim', { 'as': 'dracula'}
-Plug 'jnurmine/Zenburn', { 'as': 'zenburn'}
-Plug 'junegunn/fzf.vim'
+    " Markdown
+    Plug 'tpope/vim-markdown'
+
+    " Nerd Tree
+    Plug 'preservim/nerdtree'
+    Plug 'nmante/vim-latex-live-preview'
+
+    " Goyo plugin for writing mutt mail
+    Plug 'junegunn/goyo.vim'
+
+    " Theme dracula and zenburn
+    Plug 'dracula/vim', { 'as': 'dracula'}
+    Plug 'jnurmine/Zenburn', { 'as': 'zenburn'}
+
+    " Fzf plugin
+    Plug 'junegunn/fzf.vim'
+    Plug 'junegunn/fzf'
+
+    " CSS
+    Plug 'ap/vim-css-color'
+
+    " coc
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+    " coc for ruby
+    Plug 'neoclide/coc-solargraph', {'do': 'gem install solargraph'}
+
+    " coc for python
+    Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile; npm i -D npx-run; pip install --user jedi'}
+
+    " coc for yaml
+    Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
+
+    " coc for json
+    Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+
+    " coc for markdownlint
+    Plug 'fannheyward/coc-markdownlint', {'do': 'yarn install --frozen-lockfile; npm i -D markdownlint --save-dev'}
+
+    " coc for bash
+    Plug 'josa42/coc-sh', {'do': 'yarn install --frozen-lockfile; npm i -D bash-language-server'}
+
+    " coc for prettier
+    Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
+
+    Plug 'tpope/vim-commentary'
+    Plug 'tpope/vim-surround'
 call plug#end()
 
 " Status-line
