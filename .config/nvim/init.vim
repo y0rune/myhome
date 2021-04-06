@@ -26,15 +26,14 @@ Plug 'ap/vim-css-color'
 Plug 'tpope/vim-surround'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neoclide/coc-solargraph', {'do': 'gem install solargraph'}
-Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile; sudo npm install -g npx-run; pip install --user jedi'}
+Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile; npm i -D npx-run; pip install --user jedi'}
 Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'fannheyward/coc-markdownlint', {'do': 'yarn install --frozen-lockfile; sudo npm install markdownlint --save-dev'}
-Plug 'josa42/coc-sh', {'do': 'yarn install --frozen-lockfile; sudo npm i -g bash-language-server'}
-Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
+Plug 'fannheyward/coc-markdownlint', {'do': 'yarn install --frozen-lockfile; npm i -D markdownlint --save-dev'}
+Plug 'josa42/coc-sh', {'do': 'yarn install --frozen-lockfile; npm i -D bash-language-server'}
+Plug 'prettier/vim-prettier', { 'do': 'yarn install; npm i -D prettier; npm i -D prettier-plugin-sh' }
 Plug 'dracula/vim', { 'as': 'dracula'}
 Plug 'jnurmine/Zenburn', { 'as': 'zenburn'}
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 call plug#end()
 
@@ -59,10 +58,18 @@ syntax on
 filetype plugin indent on
 set encoding=utf-8
 
+" Prettier
+noremap <leader>p :PrettierAsync<CR>
+let g:prettier#config#single_quote = 'true'
+let g:prettier#config#trailing_comma = 'all'
+
 " fzf
-" https://github.com/masukomi/masuconfigs/blob/master/.vimrc
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always" '.shellescape(<q-args>), 1, <bang>0)
+command! -bang -nargs=* FindCurrentWord call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always" '.shellescape(expand('<cword>')), 1, <bang>0)
+set grepprg=rg\ --vimgrep
 nmap <Leader>f :FZF<CR>
 nmap <Leader>b :Buffers<CR>
+nmap <Leader>s :Files<CR>
 nmap <Leader>/ :Rg<CR>
 
 " livepreviewer
