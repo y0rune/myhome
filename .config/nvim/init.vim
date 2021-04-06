@@ -145,6 +145,9 @@ vnoremap <A-Up> :m '<-2<CR>gv=gv
 
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
+map <F5> :setlocal spell! spelllang=en_gb<CR>
+map <F6> :setlocal spell! spelllang=pl<CR>
+
 " latex
 let g:tex_flavor = "latex"
 autocmd BufWritePost *.tex silent! execute "!pdflatex --shell-escape -synctex=1 -interaction=nonstopmode % > /dev/null " | redraw!
