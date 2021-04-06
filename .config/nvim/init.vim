@@ -88,6 +88,7 @@ set title
 set backspace=indent,eol,start
 set shiftwidth=4
 set expandtab
+set list listchars=nbsp:¬,tab:»·,trail:·,extends:>
 
 " editing
 runtime! macros/matchit.vim

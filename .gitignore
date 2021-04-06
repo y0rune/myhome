@@ -41,6 +41,7 @@
 .fzf.bash
 .fzf.zsh
 .fzf/
+.local/ansible*
 .recently-used
 .eclipse/
 .emacs.d/.dap-breakpoints
