@@ -31,11 +31,7 @@ Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
 Plug 'fannheyward/coc-markdownlint', {'do': 'yarn install --frozen-lockfile; npm i -D markdownlint --save-dev'}
 Plug 'josa42/coc-sh', {'do': 'yarn install --frozen-lockfile; npm i -D bash-language-server'}
-<<<<<<< HEAD
 Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
-=======
-Plug 'prettier/vim-prettier', { 'do': 'yarn install; npm i -D prettier; npm i -D prettier-plugin-sh' }
->>>>>>> 69c5868c40159e79a4f438f446687f7445a3e160
 Plug 'dracula/vim', { 'as': 'dracula'}
 Plug 'jnurmine/Zenburn', { 'as': 'zenburn'}
 Plug 'junegunn/fzf.vim'
@@ -61,11 +57,6 @@ set cmdheight=1
 syntax on
 filetype plugin indent on
 set encoding=utf-8
-
-" Prettier
-noremap <leader>p :PrettierAsync<CR>
-let g:prettier#config#single_quote = 'true'
-let g:prettier#config#trailing_comma = 'all'
 
 " fzf
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always" '.shellescape(<q-args>), 1, <bang>0)
