@@ -43,7 +43,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'neoclide/coc-solargraph', {'do': 'gem install solargraph'}
 
     " coc for python
-    Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile; npm i -D npx-run; pip install --user jedi'}
+    Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile; npm i -D npx-run; pip install --user jedi; pip install --user black'}
 
     " coc for yaml
     Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
