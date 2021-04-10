@@ -1,5 +1,5 @@
 #!/bin/bash
-source ~/.password
+source $HOME/.password
 mkdir -p ~/Movies/{Anime,Videos}
 mkdir -p ~/Music
 
@@ -12,6 +12,9 @@ mkdir -p ~/Music
 if [ -e /mnt/Synology/Systems ]
 then
     echo "Starting $(date)" > ~/.cache/.logSynology
-    sudo rsync -r --bwlimit=1024 --update --progress /usr/mega/ /mnt/Synology >> ~/.cache/.logSynology
+    sudo rsync -r --bwlimit=512 --update --progress /usr/mega/ /mnt/Synology >> ~/.cache/.logSynology
+    rsync -r --bwlimit=512 --update --progress \
+    /home/yorune/Documents/Mega-Documents/Magisterka-Marcin/ \
+    ~/Documents/Collage/Magisterka-Marcin
     echo "Ending $(date)" >> ~/.cache/.logSynology
 fi
