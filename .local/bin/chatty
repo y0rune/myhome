@@ -1,2 +1,2 @@
 #!/bin/bash
-java -jar $HOME/.local/bin/Chatty/Chatty.jar 2>/dev/null
+java -jar "$HOME"/.local/bin/Chatty/Chatty.jar 2>/dev/null
