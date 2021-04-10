@@ -100,8 +100,8 @@ alias vim="nvim -p"
 alias denpl="trans en:pl"
 alias dplen="trans pl:en"
 alias notes="nvim $HOME/git/notes/index.md"
-alias mgr="cd $HOME/Documents/Collage/Magisterka-Marcin/Semestr1/"
-alias mpv="__NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0 __GLX_VENDOR_LIBRARY_NAME=nvidia __GL_SYNC_TO_VBLANK=0 mpv --vo=x11 --hwdec=no --ytdl-raw-options="yes-playlist=" --ytdl-format='bestvideo[ext=mp4][height<=?1080]+bestaudio[ext=m4a]' --no-resume-playback"
+alias mgr="cd $HOME/Documents/Mega-Documents/Magisterka-Marcin/Semestr1/"
+alias mpv="__NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0 __GLX_VENDOR_LIBRARY_NAME=nvidia __GL_SYNC_TO_VBLANK=0 mpv --vo=x11 --hwdec=no --ytdl-raw-options="yes-playlist=" --no-resume-playback" # --ytdl-format='bestvideo[ext=mp4][height<=?1080]+bestaudio[ext=m4a]' --no-resume-playback"
 alias aria2c="aria2c --seed-time=0 --disable-ipv6 --max-upload-limit=1k"
 
 # Cleaning-up
