@@ -1,2 +1,9 @@
 #!/bin/bash
-for i in /usr/repos/*/.git; do ( echo $i; cd $i/..; sudo git pull; ); done
+
+if [ -e /etc/portage/make.conf ]; then
+    . /etc/portage/make.conf
+    if [ ! -d $PORTDIR/metadata/md5-cache -o -d $PORTDIR/.git ]; then
+        echo "updating metadata cache ..."
+        egencache --repo=gentoo --update
+    fi
+fi

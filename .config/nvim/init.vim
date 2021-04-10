@@ -5,13 +5,25 @@ if ! filereadable(system('echo -n "$HOME/.config/nvim/autoload/plug.vim"'))
 	autocmd VimEnter * PlugInstall
 endif
 
-let mapleader = ","
+let mapleader = " "
+let g:python3_host_prog = expand('/usr/src/python')
 set laststatus=2
 set shiftwidth=4
 set softtabstop=4
 set tabstop=4
+set nocompatible
+set nohlsearch
+set incsearch
+set noshowmode
+set cmdheight=1
+set encoding=utf-8
+set guicursor=
+set undofile
+set incsearch
+set scrolloff=8
 au BufWritePre * let &bex = '@' . strftime("%F.%H:%M")
-let g:python3_host_prog = expand('/usr/src/python')
+filetype plugin indent on
+syntax on
 
 " plugins
 call plug#begin('~/.config/nvim/plugged')
@@ -60,6 +72,8 @@ call plug#begin('~/.config/nvim/plugged')
     " coc for prettier
     Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
 
+    " Enable gentoo-syntax in vim
+    Plug 'gentoo/gentoo-syntax'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-surround'
 call plug#end()
@@ -76,23 +90,16 @@ set statusline+=%#Search#
 set statusline+=\ %l/%L
 set statusline+=\ [%c]
 
-set nocompatible
-set hlsearch
-set incsearch
-set noshowmode
-set cmdheight=1
-syntax on
-filetype plugin indent on
-set encoding=utf-8
-
 " fzf
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always" '.shellescape(<q-args>), 1, <bang>0)
 command! -bang -nargs=* FindCurrentWord call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always" '.shellescape(expand('<cword>')), 1, <bang>0)
 set grepprg=rg\ --vimgrep
-nmap <Leader>f :FZF<CR>
-nmap <Leader>b :Buffers<CR>
-nmap <Leader>s :Files<CR>
-nmap <Leader>/ :Rg<CR>
+nmap <Leader>a :Buffers<CR>
+nmap <Leader>s :Rg<CR>
+nmap <Leader>d :Files<CR>
+
+nnoremap <Leader>= :vertical resize +5<CR>
+nnoremap <Leader>- :vertical resize -5<CR>
 
 " livepreviewer
 let g:livepreview_previewer = 'mupdf'

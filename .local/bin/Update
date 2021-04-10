@@ -4,13 +4,10 @@ echo
 echo -e $(date)
 echo
 echo
+sudo emerge --sync
 sudo $HOME/.local/bin/eix-repos-sync
-sudo eix-sync -a
-sudo eix-update
-#sudo emerge-webrsync
-#sudo emerge --sync
-#sudo emaint sync -a
 sudo emerge -auDN @world
+#sudo eix-update
 echo
 echo
 echo -e $(date)

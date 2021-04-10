@@ -18,5 +18,5 @@ if [ -z "$1" ]; then
     '-> if is-empty(it) then "No one you are following is streaming right now." else it' \
     -o table
 else
-  streamlink -p mpv twitch.tv/$1 ${2:-best}
+  __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0 __GLX_VENDOR_LIBRARY_NAME=nvidia __GL_SYNC_TO_VBLANK=0 streamlink -p mpv twitch.tv/$1 ${2:-best}
 fi
