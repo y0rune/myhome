@@ -4,7 +4,7 @@ echo
 echo -e $(date)
 echo
 echo
-sudo /home/yorune/.local/bin/eix-repos-sync
+sudo $HOME/.local/bin/eix-repos-sync
 sudo eix-sync -a
 sudo eix-update
 #sudo emerge-webrsync
