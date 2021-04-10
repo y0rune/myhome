@@ -12,6 +12,10 @@
   "diagnostic.virtualText": true,
   "diagnostic.virtualTextCurrentLineOnly": false,
   "diagnostic.checkCurrentLine": false,
+  "diagnostic-languageserver.filetypes": {
+    "markdown": ["write-good", "markdownlint"],
+    "sh": "shellcheck"
+  },
   "languageserver": {
     "bash": {
       "command": "bash-language-server",
