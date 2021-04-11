@@ -98,8 +98,23 @@ nmap <Leader>a :Buffers<CR>
 nmap <Leader>s :Rg<CR>
 nmap <Leader>d :Files<CR>
 
-nnoremap <Leader>= :vertical resize +5<CR>
-nnoremap <Leader>- :vertical resize -5<CR>
+" Resize window
+nnoremap L :vertical resize +5<CR>
+nnoremap H :vertical resize -5<CR>
+nnoremap J :res +5<CR>
+nnoremap K :res -5<CR>
+
+" Split window
+nnoremap _ :vsp <CR>
+nnoremap - :split <CR>
+
+" Reload file
+nnoremap <F5> :edit <CR>
+nnoremap <Leader><F5> :edit! <CR>
+
+" Copy using <Leader> anc c
+nnoremap <Leader>c :w !xclip<CR><CR>
+vnoremap <Leader>c "*y
 
 " livepreviewer
 let g:livepreview_previewer = 'mupdf'
@@ -152,6 +167,7 @@ let &t_EI = "\<esc>[2 q"
 hi Pmenu ctermfg=NONE ctermbg=236 cterm=NONE guifg=NONE guibg=#64666d gui=NONE
 hi PmenuSel ctermfg=NONE ctermbg=24 cterm=NONE guifg=NONE guibg=#204a87 gui=NONE
 set bg=dark
+"hi Normal ctermbg=NONE
 hi CursorLine cterm=NONE term=NONE ctermbg=NONE guibg=NONE
 hi CursorLine ctermbg=235
 colorscheme zenburn
@@ -180,8 +196,8 @@ vnoremap <A-Up> :m '<-2<CR>gv=gv
 
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
-map <F5> :setlocal spell! spelllang=en_gb<CR>
-map <F6> :setlocal spell! spelllang=pl<CR>
+map <F3> :setlocal spell! spelllang=en_gb<CR>
+map <F4> :setlocal spell! spelllang=pl<CR>
 
 " latex
 let g:tex_flavor = "latex"
