@@ -67,10 +67,13 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'fannheyward/coc-markdownlint', {'do': 'yarn install --frozen-lockfile; npm i -D markdownlint --save-dev'}
 
     " coc for bash
-    Plug 'josa42/coc-sh', {'do': 'yarn install --frozen-lockfile; npm i -D bash-language-server'}
+    Plug 'josa42/coc-sh', {'do': 'yarn install --frozen-lockfile; npm i -D coc-sh; npm i -D bash-language-server'}
 
     " coc for prettier
     Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
+
+    " coc-diagnostic
+    Plug 'iamcco/coc-diagnostic'
 
     " Enable gentoo-syntax in vim
     Plug 'gentoo/gentoo-syntax'
