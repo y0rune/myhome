@@ -1,5 +1,5 @@
 #!/bin/bash
-LOGS=( $(sudo find /var/tmp/portage/ -mindepth 1 -maxdepth 5 -name "build.log") )
+LOGS=( $(sudo find /var/tmp/portage/ -mindepth 1 -maxdepth 5 -name "build.log")  $(sudo find /var/tmpnotmpfs/portage/ -mindepth 1 -maxdepth 5 -name "build.log") )
 LEN=${#LOGS[@]}
 
 for (( i=0; i<$LEN; i++ ));
