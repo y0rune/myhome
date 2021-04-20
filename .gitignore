@@ -5,6 +5,7 @@
 .config/google-chrome/
 .config/teamviewer/
 .ipython/
+.bugz_token
 .irbrc
 .jupyter/
 .local/bin/autopep8

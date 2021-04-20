@@ -1,9 +1,5 @@
 #!/bin/bash
-set -x
-sudo rm -rf /var/tmp/portage/*
-sudo rm -rf /var/tmp/binpkgs/*
-sudo rm -rf /var/tmp/genkernel/*
-sudo rm -rf /var/cache/genkernel/*
+"$HOME/.local/bin/cleanertmp"
 sudo emerge -a --depclean
 sudo emerge -a @preserved-rebuild
 sudo eclean -C -q packages

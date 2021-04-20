@@ -27,9 +27,10 @@ plugins=(rake ruby vagrant knife knife_ssh kitchen )
 ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
 
-[ ! -d $CONFIG/zsh ] && { mkdir -p $CONFIG/zsh ; cd $CONFIG/zsh ; git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ; git clone https://github.com/zsh-users/zsh-autosuggestions.git }
+[ ! -d $CONFIG/zsh/aws ] && { mkdir -p $CONFIG/zsh/aws ; cd $CONFIG/zsh ; git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ; git clone https://github.com/zsh-users/zsh-autosuggestions.git ; curl https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/aws/aws.plugin.zsh -o $CONFIG/zsh/aws/aws.plugin.zsh }
 [ -d $CONFIG/zsh ] && source $CONFIG/zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh &>> /dev/null
 [ -d $CONFIG/zsh ] && source $CONFIG/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh &>> /dev/null
+[ -d $CONFIG/zsh ] && source $CONFIG/zsh/aws/aws.plugin.zsh &>> /dev/null
 [ -f $HOME/.password ] && source $HOME/.password
 [ ! -d $CONFIG/fzf ] && git clone https://github.com/junegunn/fzf.git $HOME/.config/fzf
 [ -f $CONFIG/fzf/shell/key-bindings.zsh ] && source $HOME/.config/fzf/shell/key-bindings.zsh
