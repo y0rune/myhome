@@ -20,4 +20,4 @@ do
 done
 
 echo -e "\n\e[93m File: ${LOGS[$NUMBER-1]} \e[0m\n"
-sudo tail -f ${LOGS[$NUMBER-1]}
+sudo cat ${LOGS[$NUMBER-1]}
