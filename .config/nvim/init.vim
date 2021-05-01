@@ -75,6 +75,9 @@ call plug#begin('~/.config/nvim/plugged')
     " coc-diagnostic
     Plug 'iamcco/coc-diagnostic'
 
+    " coc-cpp coc-c
+    " emerge dev-util/ccls
+
     " Enable gentoo-syntax in vim
     Plug 'gentoo/gentoo-syntax'
     Plug 'tpope/vim-commentary'
