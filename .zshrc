@@ -107,5 +107,5 @@ alias aria2c="aria2c --seed-time=0 --disable-ipv6 --max-upload-limit=1k"
 
 # Cleaning-up
 export PATH=$HOME/.local/bin:$PATH
-[ -d $HOME/fortigate/bin ] && export PATH=$HOME/fortigate/bin:$PATH
+[ -d $HOME/repo/fortigate/bin ] && export PATH=$HOME/repo/fortigate/bin:$PATH
 export HISTTIMEFORMAT="%F %T "
