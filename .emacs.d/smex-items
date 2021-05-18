@@ -1,13 +1,13 @@
 
 ;; ----- smex-history -----
 (
- python-black
- message-tab
+ package-refresh-contents
+ read-only-mode
+ overwrite-mode
+ write-file
  python-black-on-save-mode
- package-install
- prettier-prettify
- prettier-prettify-region
- prettier-mode
+ python-black-buffer
+ ispell
 )
 
 ;; ----- smex-data -----
@@ -37,9 +37,9 @@
  (compile . 2)
  (lsp-mode . 2)
  (load-theme . 18)
- (overwrite-mode . 1)
+ (overwrite-mode . 2)
  (goto-line . 2)
- (package-refresh-contents . 1)
+ (package-refresh-contents . 2)
  (epc:pop-to-last-server-process-buffer . 3)
  (disable-theme . 1)
  (table-insert . 3)
@@ -50,7 +50,7 @@
  (customize-themes . 1)
  (ido-mode . 1)
  (lsp-describe-session . 1)
- (whitespace-mode . 2)
+ (whitespace-mode . 6)
  (python-shell-switch-to-shell . 1)
  (run-python . 2)
  (display-fill-column-indicator-mode . 3)
@@ -59,6 +59,12 @@
  (prettier-mode . 2)
  (prettier-prettify-region . 2)
  (python-black . 9)
- (python-black-on-save-mode . 1)
+ (python-black-on-save-mode . 2)
  (message-tab . 1)
+ (find-file . 1)
+ (replace-string . 3)
+ (ispell . 2)
+ (python-black-buffer . 1)
+ (write-file . 1)
+ (read-only-mode . 2)
 )
