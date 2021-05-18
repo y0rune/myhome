@@ -56,6 +56,7 @@ call plug#begin('~/.config/nvim/plugged')
 
     " coc for python
     Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile; npm i -D npx-run; pip install --user jedi; pip install --user black'}
+    Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
 
     " coc for yaml
     Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
