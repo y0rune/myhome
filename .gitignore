@@ -13,6 +13,14 @@
 .local/bin/pycodestyle
 .local/bin/surprise
 .local/bin/yamllint
+.config/Signal/
+.config/lazygit/
+.config/libreoffice/
+.config/quassel-irc.org/
+.local/bin/pytube
+.local/bin/spotify_dl
+.packer.d/
+.spotifydl/
 .netrc
 .nvimlog
 .python_history
