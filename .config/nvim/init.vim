@@ -206,6 +206,9 @@ cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 map <F3> :setlocal spell! spelllang=en_gb<CR>
 map <F4> :setlocal spell! spelllang=pl<CR>
 
+" debugger
+map <F12> :w<CR>:terminal ~/.local/bin/debugger '%:p'<CR>
+
 " latex
 let g:tex_flavor = "latex"
 autocmd BufWritePost *.tex silent! execute "!pdflatex --shell-escape -synctex=1 -interaction=nonstopmode % > /dev/null " | redraw!

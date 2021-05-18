@@ -1,0 +1,12 @@
+#!/bin/bash
+
+FILE="$(readlink -f "$(echo "$*" | cut -d' ' -f2)" 2>/dev/null)"
+
+if [ -f "$FILE" ] ; then
+    case "$FILE" in
+        *.py) python3 -m pdb "$FILE" ;;
+        *.sh) /bin/bash -ex "$FILE" ;;
+        *) printf "File \"%s\" not debugger found.\\n" "$FILE"
+    esac
+    printf "File \"%s\" not found.\\n" "$FILE"
+fi
