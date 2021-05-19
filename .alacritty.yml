@@ -18,6 +18,9 @@ key_bindings:
   - { key: F, mods: Control, action: SearchForward }
   - { key: V, mods: Control|Shift, action: Paste }
 
+selection:
+  save_to_clipboard: true
+
 colors:
   search:
     focused_match:
