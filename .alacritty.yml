@@ -1,0 +1,55 @@
+font:
+  bold:
+    family: Terminus (TTF)
+    style: Bold
+  bold_italic:
+    family: Terminus (TTF)
+    style: Bold Italic
+  italic:
+    family: Terminus (TTF)
+    style: Italic
+  normal:
+    family: Terminus (TTF)
+    style: Bold
+  size: 16
+
+key_bindings:
+  - { key: Return, mods: Control|Shift, action: SpawnNewInstance }
+  - { key: F, mods: Control, action: SearchForward }
+  - { key: V, mods: Control|Shift, action: Paste }
+
+colors:
+  search:
+    focused_match:
+      foreground: "#181818"
+      background: "#ab4642"
+    matches:
+      foreground: "#181818"
+      background: "#f4bf75"
+    bar:
+      foreground: "#d0d0d0"
+      background: "#262626"
+  # Default colors
+  primary:
+    background: "0x000000"
+    foreground: "0xffffff"
+  # Normal colors
+  normal:
+    black: "0x000000"
+    red: "0xcd0000"
+    green: "0x00cd00"
+    yellow: "0xcdcd00"
+    blue: "0x0000ee"
+    magenta: "0xcd00cd"
+    cyan: "0x00cdcd"
+    white: "0xe5e5e5"
+  # Bright colors:
+  bright:
+    black: "0x7f7f7f"
+    red: "0xff0000"
+    green: "0x00ff00"
+    yellow: "0xffff00"
+    blue: "0x5c5cff"
+    magenta: "0xff00ff"
+    cyan: "0x00ffff"
+    white: "0xffffff"
