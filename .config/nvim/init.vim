@@ -32,6 +32,7 @@ call plug#begin('~/.config/nvim/plugged')
 
     " Nerd Tree
     Plug 'preservim/nerdtree'
+    Plug 'ryanoasis/vim-devicons'
     Plug 'nmante/vim-latex-live-preview'
 
     " Goyo plugin for writing mutt mail
