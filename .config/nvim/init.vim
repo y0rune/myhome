@@ -80,6 +80,9 @@ call plug#begin('~/.config/nvim/plugged')
     " coc-cpp coc-c
     " emerge dev-util/ccls
 
+    " coc-perl
+    Plug 'ulwlu/coc-perl', {'do': 'yarn install && yarn build'}
+
     " Enable gentoo-syntax in vim
     Plug 'gentoo/gentoo-syntax'
     Plug 'tpope/vim-commentary'
@@ -172,13 +175,14 @@ let &t_SI = "\<esc>[6 q"
 let &t_EI = "\<esc>[2 q"
 
 " colors
-hi Pmenu ctermfg=NONE ctermbg=236 cterm=NONE guifg=NONE guibg=#64666d gui=NONE
-hi PmenuSel ctermfg=NONE ctermbg=24 cterm=NONE guifg=NONE guibg=#204a87 gui=NONE
+"colorscheme zenburn
+colorscheme desert
 set bg=dark
+hi Pmenu ctermfg=NONE ctermbg=236 cterm=NONE guifg=NONE guibg=#64666d gui=NONE
+hi PmenuSel ctermfg=NONE ctermbg=246 cterm=NONE guifg=NONE guibg=#204a87 gui=NONE
 "hi Normal ctermbg=NONE
 hi CursorLine cterm=NONE term=NONE ctermbg=NONE guibg=NONE
 hi CursorLine ctermbg=235
-colorscheme zenburn
 
 " columne
 set textwidth=80
