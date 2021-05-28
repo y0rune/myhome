@@ -178,11 +178,15 @@ let &t_EI = "\<esc>[2 q"
 "colorscheme zenburn
 colorscheme desert
 set bg=dark
-hi Pmenu ctermfg=NONE ctermbg=236 cterm=NONE guifg=NONE guibg=#64666d gui=NONE
-hi PmenuSel ctermfg=NONE ctermbg=246 cterm=NONE guifg=NONE guibg=#204a87 gui=NONE
 "hi Normal ctermbg=NONE
-hi CursorLine cterm=NONE term=NONE ctermbg=NONE guibg=NONE
+hi Pmenu      ctermfg=NONE ctermbg=236 cterm=NONE guifg=NONE guibg=#64666d gui=NONE
+hi PmenuSel   ctermfg=NONE ctermbg=246 cterm=NONE guifg=NONE guibg=#204a87 gui=NONE
+hi CursorLine cterm=NONE   term=NONE   ctermbg=NONE    guibg=NONE
 hi CursorLine ctermbg=235
+hi DiffAdd    cterm=BOLD ctermfg=NONE ctermbg=22
+hi DiffDelete cterm=BOLD ctermfg=NONE ctermbg=52
+hi DiffChange cterm=BOLD ctermfg=NONE ctermbg=23
+hi DiffText   cterm=BOLD ctermfg=NONE ctermbg=23
 
 " columne
 set textwidth=80
