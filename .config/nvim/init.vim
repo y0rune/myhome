@@ -190,7 +190,7 @@ hi DiffText   cterm=BOLD ctermfg=NONE ctermbg=23
 
 " columne
 set textwidth=80
-set colorcolumn=-3
+set colorcolumn=80
 highlight ColorColumn ctermbg=235
 
 " map
