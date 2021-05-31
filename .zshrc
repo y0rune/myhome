@@ -1,4 +1,3 @@
-
 # ZSHRC
 
 CONFIG=$HOME/.config
