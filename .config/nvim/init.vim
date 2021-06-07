@@ -74,6 +74,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
 
     " coc-diagnostic
+    " CocInstall coc-diagnostic
     Plug 'iamcco/coc-diagnostic'
 
     " coc-cpp coc-c
