@@ -5,7 +5,7 @@ if ! filereadable(system('echo -n "$HOME/.config/nvim/autoload/plug.vim"'))
 	autocmd VimEnter * PlugInstall
 endif
 
-let mapleader = " "
+let mapleader = "\<Space>"
 let g:python3_host_prog = expand('/usr/src/python')
 set laststatus=2
 set shiftwidth=4
@@ -93,6 +93,7 @@ call plug#end()
 set statusline=
 set statusline+=%#IncSearch#
 set statusline+=\ %y
+set statusline+=\ %m
 set statusline+=\ %r
 set statusline+=%#CursorLineNr#
 set statusline+=\ %F
@@ -105,9 +106,10 @@ set statusline+=\ [%c]
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always" '.shellescape(<q-args>), 1, <bang>0)
 command! -bang -nargs=* FindCurrentWord call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always" '.shellescape(expand('<cword>')), 1, <bang>0)
 set grepprg=rg\ --vimgrep
-nmap <Leader>a :Buffers<CR>
-nmap <Leader>s :Rg<CR>
-nmap <Leader>d :Files<CR>
+nmap <Leader>e :Buffers<CR>
+nmap <Leader>q :Rg<CR>
+nmap <Leader>w :Files<CR>
+nmap <C-p> :Files<CR>
 
 " Resize window
 nnoremap L :vertical resize +5<CR>
