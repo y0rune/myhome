@@ -478,6 +478,16 @@
 
 ;;; --- Look & Feel ---
 
+;; Org-bullets
+
+(use-package org-bullets
+  :ensure t
+  :config
+  :after org
+  :hook (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+
 ;; Helm
 (use-package helm
    :ensure t
