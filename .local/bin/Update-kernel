@@ -1,6 +1,5 @@
 #!/bin/bash
 
-LOG_FILE="/tmp/update-kernel.log"
 BACKUP="/home/yorune/MEGA/Systems/Linux/portage"
 TMP_KERNEL="/tmp/kernel-config-$(uname -r)"
 DEFAULT_KERNEL="/usr/src/linux/.config"
