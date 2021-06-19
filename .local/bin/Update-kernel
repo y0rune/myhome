@@ -36,9 +36,13 @@ if [ "$agreed" == "y" ] || [ "$agreed" == "Y" ]
 		echo -e "\e[91m----------------------\e[5mSTARTING\e[0m\e[91m------------------------------\e[0m" && sleep 10
         $NOW > /tmp/compiling-starting
         NEW_KERNEL="/tmp/new-kernel-config"
-        cd /usr/src/linux; sudo make menuconfig; sleep 2; sudo cp -r $DEFAULT_KERNEL $NEW_KERNEL
-        sudo genkernel all --makeopts=-j$(nproc --all) --kernel-config=$NEW_KERNEL --callback="emerge nvidia-drivers::gentoo" --lvm --btrfs --luks
         sudo cp -r "$TMP_KERNEL" "$DEFAULT_KERNEL"
+        cd /usr/src/linux || exit
+        sudo make menuconfig; sleep 2; sudo cp -r "$DEFAULT_KERNEL" "$NEW_KERNEL"
+        sudo genkernel all --makeopts=-j"$(nproc --all)" \
+            --kernel-config=$NEW_KERNEL \
+            --callback="emerge nvidia-drivers::gentoo" \
+            --zfs
     elif [ "$agreed" == "N" ] || [ "$agreed" == "n" ]
 	then
 	exit
