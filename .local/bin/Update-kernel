@@ -19,7 +19,7 @@ echo -e "\e[93m----------------------SELECTION-----------------------------\e[0m
 sudo eselect kernel list
 echo
 echo
-read -p "New kernel is: " KERVER
+read -rp "New kernel is: " KERVER
 echo
 echo -e "Your kernel now is \e[91m$(uname -sr)\e[0m"
 echo -e "Your selected kernel is \e[91m"$KERVER"\e[0m"
@@ -29,7 +29,7 @@ echo
 }
 
 function compilation() {
-read -p "Do you want to accept and compile (Y/N): " agreed
+read -rp "Do you want to accept and compile (Y/N): " agreed
 echo
 if [ "$agreed" == "y" ] || [ "$agreed" == "Y" ]
 	then
