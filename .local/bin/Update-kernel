@@ -4,6 +4,7 @@ LOG_FILE="/tmp/update-kernel.log"
 BACKUP="/home/yorune/MEGA/Systems/Linux/portage"
 TMP_KERNEL="/tmp/kernel-config-$(uname -r)"
 DEFAULT_KERNEL="/usr/src/linux/.config"
+GRUBRELOAD=1
 
 function starting() {
 echo -e "\e[93m----------------------COMPILING------------------------------\e[0m"
@@ -73,13 +74,11 @@ INITRANFS="initramfs-$KERNEL-gentoo-x86_64.img"
 SYSTEMMAP="System.map-$KERNEL-gentoo-x86_64"
 VMLINUZ="vmlinuz-$KERNEL-gentoo-x86_64"
 
-ifchecking $INITRANFS
-ifchecking $SYSTEMMAP
-ifchecking $VMLINUZ
-sudo grub-mkconfig -o /boot/grub/grub.cfg
 ifchecking "$INITRANFS"
 ifchecking "$SYSTEMMAP"
 ifchecking "$VMLINUZ"
+[ "$GRUBRELOAD" -eq "1" ] && sudo grub-mkconfig -o /boot/grub/grub.cfg \
+    || echo "Please check all files and regenerate grub again!"
 }
 
 function ifchecking () {
@@ -88,6 +87,7 @@ if test -f "$FILE"; then
     echo "$FILE exist in the /boot folder ;)"
 else
     echo "$FILE NOT exist in the /boot folder ;)"
+    GRUBRELOAD=0
 fi
 }
 
