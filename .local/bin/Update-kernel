@@ -7,8 +7,8 @@ GRUBRELOAD=1
 
 function starting() {
 echo -e "\e[93m----------------------COMPILING------------------------------\e[0m"
-sudo cp -rv $DEFAULT_KERNEL $TMP_KERNEL
-cp -r $TMP_KERNEL $BACKUP/kernel-config
+sudo cp -rv "$DEFAULT_KERNEL" "$TMP_KERNEL"
+cp -r "$TMP_KERNEL" "$BACKUP/kernel-config"
 cp -r /etc/portage/* $BACKUP
 qlist -I | sort -u  > $BACKUP/list-of-programs
 }
@@ -21,9 +21,8 @@ echo
 read -rp "New kernel is: " KERVER
 echo
 echo -e "Your kernel now is \e[91m$(uname -sr)\e[0m"
-echo -e "Your selected kernel is \e[91m"$KERVER"\e[0m"
-sudo eselect kernel set $KERVER
-sudo eselect kernel list | grep "*"
+echo -e "Your selected kernel is \e[91m$KERVER\e[0m"
+sudo eselect kernel set "$KERVER"
 echo
 }
 
