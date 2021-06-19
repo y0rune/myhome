@@ -2,7 +2,7 @@
 
 BACKUP="/home/yorune/Linux/portage"
 LOG_FILE="/tmp/update-kernel.log"
-TMP_KERNEL="/tmp/kernel-config-`uname -r`"
+TMP_KERNEL="/tmp/kernel-config-$(uname -r)"
 DEFAULT_KERNEL="/usr/src/linux/.config"
 
 function starting() {
@@ -64,7 +64,10 @@ echo -e "AFTER EVERYTHING YOU MUST WRITE COMMAND \e[91m"sudo grub-mkconfig -o /b
 }
 
 function checking() {
-KERNEL=`eselect kernel list | awk '{print $2}' | egrep -o '[0-9]+.[0-9]+.[0-9]+' | tail -n1`
+KERNEL=$(eselect kernel list \
+    | awk '{print $2}' \
+    | grep -Eo '[0-9]+.[0-9]+.[0-9]+' \
+    | tail -n1)
 
 INITRANFS="initramfs-$KERNEL-gentoo-x86_64.img"
 SYSTEMMAP="System.map-$KERNEL-gentoo-x86_64"
