@@ -23,6 +23,7 @@ echo
 echo -e "Your kernel now is \e[91m$(uname -sr)\e[0m"
 echo -e "Your selected kernel is \e[91m$KERVER\e[0m"
 sudo eselect kernel set "$KERVER"
+sudo eselect kernel list | grep -iE "\*"
 echo
 }
 
