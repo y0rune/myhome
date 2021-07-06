@@ -40,6 +40,7 @@ call plug#begin('~/.config/nvim/plugged')
     " Theme dracula and zenburn
     Plug 'dracula/vim', { 'as': 'dracula'}
     Plug 'jnurmine/Zenburn', { 'as': 'zenburn'}
+    Plug 'morhetz/gruvbox', { 'as': 'gruvbox'}
 
     " Fzf plugin
     Plug 'junegunn/fzf.vim'
@@ -178,7 +179,8 @@ let &t_EI = "\<esc>[2 q"
 
 " colors
 "colorscheme zenburn
-colorscheme desert
+"colorscheme desert
+colorscheme gruvbox
 set bg=dark
 "hi Normal ctermbg=NONE
 hi Pmenu      ctermfg=NONE ctermbg=236 cterm=NONE guifg=NONE guibg=#64666d gui=NONE
