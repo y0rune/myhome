@@ -84,6 +84,9 @@ call plug#begin('~/.config/nvim/plugged')
     " coc-perl
     Plug 'ulwlu/coc-perl', {'do': 'yarn install && yarn build'}
 
+    " Multiple cursors
+    Plug 'terryma/vim-multiple-cursors'
+
     " Enable gentoo-syntax in vim
     Plug 'gentoo/gentoo-syntax'
     Plug 'tpope/vim-commentary'
@@ -177,6 +180,16 @@ set ic
 let &t_SI = "\<esc>[6 q"
 let &t_EI = "\<esc>[2 q"
 
+" multiple cursors
+let g:multi_cursor_start_word_key      = '<C-n>'
+let g:multi_cursor_select_all_word_key = '<A-n>'
+let g:multi_cursor_start_key           = 'g<C-n>'
+let g:multi_cursor_select_all_key      = 'g<A-n>'
+let g:multi_cursor_next_key            = '<C-n>'
+let g:multi_cursor_prev_key            = '<C-p>'
+let g:multi_cursor_skip_key            = '<C-x>'
+let g:multi_cursor_quit_key            = '<Esc>'
+
 " colors
 "colorscheme zenburn
 "colorscheme desert
@@ -195,12 +208,13 @@ hi DiffText   cterm=BOLD ctermfg=NONE ctermbg=23
 " columne
 set textwidth=80
 set colorcolumn=80
-highlight ColorColumn ctermbg=235
+" highlight ColorColumn ctermbg=235
+highlight ColorColumn ctermbg=236
 
 " map
 nnoremap S :%s//g<Left><Left>
 nnoremap ee :!mupdf $(echo % \| sed 's/tex$/pdf/') & disown<CR><CR>
-map <C-n> :NERDTreeToggle<CR>
+map <C-d> :NERDTreeToggle<CR>
 nnoremap <silent> <C-t> :tabnew <CR>
 nnoremap <F11> :Goyo <CR>
 nnoremap <F7> :tabprevious<CR>
@@ -213,6 +227,13 @@ inoremap <A-Up> <Esc>:m-2<CR>
 inoremap <A-Down> <Esc>:m+<CR>
 vnoremap <A-Down> :m '>+1<CR>gv=gv
 vnoremap <A-Up> :m '<-2<CR>gv=gv
+
+nnoremap <A-k> :m-2<CR>
+nnoremap <A-j> :m+<CR>
+inoremap <A-k> <Esc>:m-2<CR>
+inoremap <A-j> <Esc>:m+<CR>
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
 
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
