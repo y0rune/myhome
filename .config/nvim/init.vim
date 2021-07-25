@@ -16,7 +16,6 @@ set incsearch
 set noshowmode
 set cmdheight=1
 set encoding=utf-8
-set guicursor=
 set undofile
 set incsearch
 set scrolloff=8
