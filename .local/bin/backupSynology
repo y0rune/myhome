@@ -3,18 +3,19 @@ source $HOME/.password
 mkdir -p ~/Movies/{Anime,Videos}
 mkdir -p ~/Music
 
-#sudo mount -t cifs //192.168.0.220/Mega -o username=${USERNAME},password=${PASSWORD},vers=2\.0 /mnt/Synology
+#sudo mount -t cifs //192.168.0.220/Mega -o username=${USERNAME},password=${PASSWORD},vers=2\.0 /mnt/synology
 #sudo mount -t cifs //192.168.0.220/music -o username=${USERNAME},password=${PASSWORD},vers=2\.0 ~/Music
 #sudo mount -t cifs //192.168.0.220/usbshare1/Video -o username=${USERNAME},password=${PASSWORD},vers=2\.0 ~/Movies/Videos
 #sudo mount -t cifs //192.168.0.220/usbshare1/Anime -o username=${USERNAME},password=${PASSWORD},vers=2\.0 ~/Movies/Anime
 #sudo mount -t cifs //192.168.0.220/Studia -o username=${USERNAME},password=${PASSWORD},vers=2\.0 ~/Collage
 
-if [ -e /mnt/Synology/Systems ]
+if [ -e /mnt/synology/Systems ]
 then
     echo "Starting $(date)" > ~/.cache/.logSynology
-    sudo rsync -r --bwlimit=512 --update --progress /usr/mega/ /mnt/Synology >> ~/.cache/.logSynology
+    sudo rsync -r --bwlimit=512 --update --progress /home/yorune/MEGA/ /mnt/synology >> ~/.cache/.logSynology
     rsync -r --bwlimit=512 --update --progress \
     /home/yorune/Documents/Mega-Documents/Magisterka-Marcin/ \
     ~/Documents/Collage/Magisterka-Marcin
+    cp -rv /home/yorune/git/{dwm,dwmblocks,st,dmenu,mons,slock} ~/MEGA/Systems/Linux/apps
     echo "Ending $(date)" >> ~/.cache/.logSynology
 fi
