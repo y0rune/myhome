@@ -106,6 +106,7 @@ set statusline+=\ %l/%L
 set statusline+=\ [%c]
 
 " fzf
+let $FZF_DEFAULT_COMMAND = 'find . -type f -not -path "*/\.git/*"'
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always" '.shellescape(<q-args>), 1, <bang>0)
 command! -bang -nargs=* FindCurrentWord call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always" '.shellescape(expand('<cword>')), 1, <bang>0)
 set grepprg=rg\ --vimgrep
