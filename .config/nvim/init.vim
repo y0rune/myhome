@@ -180,6 +180,9 @@ set ic
 let &t_SI = "\<esc>[6 q"
 let &t_EI = "\<esc>[2 q"
 
+" Enable show hidden in NerdTree
+let NERDTreeShowHidden=1
+
 " multiple cursors
 let g:multi_cursor_start_word_key      = '<C-n>'
 let g:multi_cursor_select_all_word_key = '<A-n>'
