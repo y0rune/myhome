@@ -17,6 +17,7 @@ key_bindings:
   - { key: Return, mods: Control|Shift, action: SpawnNewInstance }
   - { key: F, mods: Control, action: SearchForward }
   - { key: V, mods: Control|Shift, action: Paste }
+  - { key: Space, mods: Control, chars: "\x00" }
 
 selection:
   save_to_clipboard: true
