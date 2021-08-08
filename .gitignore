@@ -149,6 +149,8 @@
 .local/bin/tqdm
 .local/bin/f2py
 .local/bin/f2py3
+.keras/
+.config/menus
 .local/bin/wheel
 .local/include/
 .local/lib/
