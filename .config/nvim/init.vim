@@ -115,10 +115,10 @@ nmap <Leader>w :Files<CR>
 nmap <C-p> :Files<CR>
 
 " Resize window
-nnoremap L :vertical resize +5<CR>
-nnoremap H :vertical resize -5<CR>
-nnoremap J :res +5<CR>
-nnoremap K :res -5<CR>
+nnoremap <C-L> :vertical resize +5<CR>
+nnoremap <C-H> :vertical resize -5<CR>
+nnoremap <C-J> :res +5<CR>
+nnoremap <C-K> :res -5<CR>
 
 " Split window
 nnoremap _ :vsp <CR>
@@ -218,6 +218,8 @@ nnoremap <silent> <C-t> :tabnew <CR>
 nnoremap <F11> :Goyo <CR>
 nnoremap <F7> :tabprevious<CR>
 nnoremap <F8> :tabnext<CR>
+nnoremap K :tabprevious<CR>
+nnoremap J :tabnext<CR>
 
 "" Moving line up or down using alt
 nnoremap <A-Up> :m-2<CR>
