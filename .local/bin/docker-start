@@ -14,4 +14,4 @@
 
 sudo rc-service docker start
 sleep 10
-sudo docker ps
+sudo docker ps --all

@@ -9,7 +9,7 @@ function starting() {
 echo -e "\e[93m----------------------COMPILING------------------------------\e[0m"
 sudo cp -rv "$DEFAULT_KERNEL" "$TMP_KERNEL"
 cp -r "$TMP_KERNEL" "$BACKUP/kernel-config"
-cp -r /etc/portage/* $BACKUP
+sudo cp -r /etc/portage/* $BACKUP
 qlist -I | sort -u  > $BACKUP/list-of-programs
 }
 
@@ -96,6 +96,7 @@ fi
 
 function addgit() {
     cd "$BACKUP" || exit
+    sleep 20
     git add .
     git commit -m "Updated: $(date)"
     git push

@@ -24,7 +24,7 @@ QT_SCALE_FACTOR=1.5 keepassxc &
 sudo /usr/bin/rdate -s ntp.task.gda.pl && sudo /sbin/hwclock --systohc
 megasync &
 ibus-daemon&
-quasselclient&
+#quasselclient&
 
 # Two monitors are enabled?
 if [[ $(mons | awk '/Monitors/{print $2}') = 2 ]]
