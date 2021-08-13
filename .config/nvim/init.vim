@@ -60,6 +60,7 @@ call plug#begin('~/.config/nvim/plugged')
 
     " coc for yaml
     Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
+    Plug 'pearofducks/ansible-vim', { 'do': './UltiSnips/generate.sh' }
 
     " coc for json
     Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
@@ -104,6 +105,10 @@ set statusline+=%= "Right side settings
 set statusline+=%#Search#
 set statusline+=\ %l/%L
 set statusline+=\ [%c]
+
+" ansible
+let g:ansible_extra_keywords_highlight = 1
+au BufRead,BufNewFile *.yml set filetype=yaml.ansible
 
 " fzf
 let $FZF_DEFAULT_COMMAND = 'find . -type f -not -path "*/\.git/*"'
