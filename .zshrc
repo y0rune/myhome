@@ -14,6 +14,7 @@ gbranch() {
 [ -f /etc/gentoo-release ] && export ZSH="/usr/share/zsh/site-contrib/oh-my-zsh"
 [ -f /etc/centos-release ] && export ZSH="$HOME/.oh-my-zsh"
 [ -f /etc/debian_version ] && export ZSH="$HOME/.oh-my-zsh"
+[ $(uname)=="Darwin" ] && export ZSH="$HOME/.oh-my-zsh"
 
 HISTFILE=$HOME/.history_zsh
 HISTSIZE=10000
@@ -63,7 +64,7 @@ alias emerge="sudo emerge"
 alias channel-check='sudo iwlist wlan0 scan | egrep -i "essid|frequency"'
 alias grep="grep --color=always"
 alias egrep="egrep --color=always"
-alias ls='ls -h --color=auto'
+[ $(uname)=="Darwin" ] && alias ls='ls -h' || alias ls='ls -h --color=auto'
 alias ll='ls -lha'
 alias cp='cp -v'
 alias mv='mv -v'
@@ -78,7 +79,7 @@ alias feh="feh --edit --scale-down"
 alias changefont="figlet"
 alias gmaster="git checkout master"
 alias gcommit="git commit --author='Marcin Woźniak <y0rune@aol.com>' -s"
-alias gcommitw="git commit --author='Marcin Woźniak <marcin.wozniak@wundermanthompson.com>'"
+alias gcommitw="git commit --author='Marcin Wozniak <marcin.wozniak@wundermanthompson.com>'"
 alias gdel="git push origin --delete"
 alias gadd="git add"
 alias gpush="git push"
