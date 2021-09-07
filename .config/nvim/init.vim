@@ -238,6 +238,11 @@ inoremap <A-Down> <Esc>:m+<CR>
 vnoremap <A-Down> :m '>+1<CR>gv=gv
 vnoremap <A-Up> :m '<-2<CR>gv=gv
 
+nnoremap Ż :m-2<CR>
+nnoremap ∆ :m+<CR>
+vnoremap ∆ :m '>+1<CR>gv=gv
+vnoremap Ż :m '<-2<CR>gv=gv
+
 nnoremap <A-k> :m-2<CR>
 nnoremap <A-j> :m+<CR>
 inoremap <A-k> <Esc>:m-2<CR>
