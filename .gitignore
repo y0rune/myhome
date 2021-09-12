@@ -2,6 +2,7 @@
 .Trash
 .DS_Store
 .ansible
+.CFUserTextEncoding
 .cups/
 .docker/
 .oh-my-zsh/
