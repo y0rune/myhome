@@ -51,38 +51,14 @@ call plug#begin('~/.config/nvim/plugged')
     " coc
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-    " coc for ruby
-    Plug 'neoclide/coc-solargraph', {'do': 'gem install solargraph'}
-
-    " coc for python
-    Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile; npm i -D npx-run; pip install --user jedi; pip install --user black'}
+    " PyRight
     Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
 
-    " coc for yaml
-    Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
+    " Ansible yaml
     Plug 'pearofducks/ansible-vim', { 'do': './UltiSnips/generate.sh' }
-
-    " coc for json
-    Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-
-    " coc for markdownlint
-    Plug 'fannheyward/coc-markdownlint', {'do': 'yarn install --frozen-lockfile; npm i -D markdownlint --save-dev'}
-
-    " coc for bash
-    Plug 'josa42/coc-sh', {'do': 'yarn install --frozen-lockfile; npm i -D coc-sh; npm i -D bash-language-server'}
-
-    " coc for prettier
-    Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
-
-    " coc-diagnostic
-    " CocInstall coc-diagnostic
-    Plug 'iamcco/coc-diagnostic'
 
     " coc-cpp coc-c
     " emerge dev-util/ccls
-
-    " coc-perl
-    Plug 'ulwlu/coc-perl', {'do': 'yarn install && yarn build'}
 
     " Multiple cursors
     Plug 'terryma/vim-multiple-cursors'
@@ -92,6 +68,9 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-surround'
 call plug#end()
+
+" Instalation coc extentions
+let g:coc_global_extensions = ['coc-solargraph', 'coc-go', 'coc-yaml', 'coc-pyright', 'coc-json' , 'coc-markdownlint' , 'coc-sh', 'coc-prettier', 'coc-diagnostic', 'coc-perl']
 
 " Status-line
 set statusline=
