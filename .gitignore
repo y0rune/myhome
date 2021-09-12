@@ -1,4 +1,9 @@
 .Xauthority
+.oh-my-zsh/
+.shell.pre-oh-my-zsh
+.zcompdum*
+.zsh_history
+.zsh_sessions/
 .config/Element/
 .config/TabNine/
 .config/coc/
