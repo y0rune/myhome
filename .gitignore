@@ -9,6 +9,8 @@
 .zcompdum*
 .zsh_history
 .zsh_sessions/
+.emacs.d/emacs-custom.el
+.emacs.d/smex-items
 Applications/
 Desktop/
 Library/
