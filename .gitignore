@@ -12,12 +12,14 @@
 .zsh_sessions/
 .emacs.d/emacs-custom.el
 .emacs.d/smex-items
+notes
 Applications/
 Desktop/
 Library/
 Pictures/
 Public/
 VirtualBox*
+synergy.log
 .config/Element/
 .config/TabNine/
 .config/coc/
