@@ -1,5 +1,9 @@
 .Xauthority
 .Trash
+.DS_Store
+.ansible
+.cups/
+.docker/
 .oh-my-zsh/
 .shell.pre-oh-my-zsh
 .zcompdum*
