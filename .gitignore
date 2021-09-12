@@ -1,9 +1,16 @@
 .Xauthority
+.Trash
 .oh-my-zsh/
 .shell.pre-oh-my-zsh
 .zcompdum*
 .zsh_history
 .zsh_sessions/
+Applications/
+Desktop/
+Library/
+Pictures/
+Public/
+VirtualBox*
 .config/Element/
 .config/TabNine/
 .config/coc/
