@@ -14,6 +14,7 @@ gbranch() {
 [ -f /etc/gentoo-release ] && export ZSH="/usr/share/zsh/site-contrib/oh-my-zsh"
 [ -f /etc/centos-release ] && export ZSH="$HOME/.oh-my-zsh"
 [ -f /etc/debian_version ] && export ZSH="$HOME/.oh-my-zsh"
+[[ "$(uname)" == "Darwin" ]] && export ZSH="$HOME/.oh-my-zsh"
 
 HISTFILE=$HOME/.history_zsh
 HISTSIZE=10000
@@ -63,7 +64,7 @@ alias emerge="sudo emerge"
 alias channel-check='sudo iwlist wlan0 scan | egrep -i "essid|frequency"'
 alias grep="grep --color=always"
 alias egrep="egrep --color=always"
-alias ls='ls -h --color=auto'
+[[ "$(uname)" == "Darwin" ]] && alias ls="ls -h" || alias ls="ls -h --color=auto"
 alias ll='ls -lha'
 alias cp='cp -v'
 alias mv='mv -v'
@@ -78,7 +79,7 @@ alias feh="feh --edit --scale-down"
 alias changefont="figlet"
 alias gmaster="git checkout master"
 alias gcommit="git commit --author='Marcin Woźniak <y0rune@aol.com>' -s"
-alias gcommitw="git commit --author='Marcin Woźniak <marcin.wozniak@wundermanthompson.com>'"
+alias gcommitw="git commit --author='Marcin Wozniak <marcin.wozniak@wundermanthompson.com>'"
 alias gdel="git push origin --delete"
 alias gadd="git add"
 alias gpush="git push"
@@ -104,6 +105,7 @@ alias mgr="cd $HOME/Documents/Mega-Documents/Magisterka-Marcin/Semestr1/"
 alias mpv="__NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0 __GLX_VENDOR_LIBRARY_NAME=nvidia __GL_SYNC_TO_VBLANK=0 mpv --vo=x11 --hwdec=no --ytdl-raw-options="yes-playlist=" --no-resume-playback --ytdl-format='bestvideo[height<=?1080]+bestaudio/best'"
 alias aria2c="aria2c --seed-time=0 --disable-ipv6 --max-upload-limit=1k"
 alias lg="lazygit"
+alias update-brew="brew upgrade --cask"
 
 # Cleaning-up
 export PATH=$HOME/.local/bin:$PATH
