@@ -51,37 +51,14 @@ call plug#begin('~/.config/nvim/plugged')
     " coc
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-    " coc for ruby
-    Plug 'neoclide/coc-solargraph', {'do': 'gem install solargraph'}
-
-    " coc for python
-    Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile; npm i -D npx-run; pip install --user jedi; pip install --user black'}
+    " PyRight
     Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
 
-    " coc for yaml
-    Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
-
-    " coc for json
-    Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-
-    " coc for markdownlint
-    Plug 'fannheyward/coc-markdownlint', {'do': 'yarn install --frozen-lockfile; npm i -D markdownlint --save-dev'}
-
-    " coc for bash
-    Plug 'josa42/coc-sh', {'do': 'yarn install --frozen-lockfile; npm i -D coc-sh; npm i -D bash-language-server'}
-
-    " coc for prettier
-    Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
-
-    " coc-diagnostic
-    " CocInstall coc-diagnostic
-    Plug 'iamcco/coc-diagnostic'
+    " Ansible yaml
+    Plug 'pearofducks/ansible-vim', { 'do': './UltiSnips/generate.sh' }
 
     " coc-cpp coc-c
     " emerge dev-util/ccls
-
-    " coc-perl
-    Plug 'ulwlu/coc-perl', {'do': 'yarn install && yarn build'}
 
     " Multiple cursors
     Plug 'terryma/vim-multiple-cursors'
@@ -91,6 +68,9 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-surround'
 call plug#end()
+
+" Instalation coc extentions
+let g:coc_global_extensions = ['coc-solargraph', 'coc-go', 'coc-yaml', 'coc-pyright', 'coc-json' , 'coc-markdownlint' , 'coc-sh', 'coc-prettier', 'coc-diagnostic', 'coc-perl']
 
 " Status-line
 set statusline=
@@ -104,6 +84,10 @@ set statusline+=%= "Right side settings
 set statusline+=%#Search#
 set statusline+=\ %l/%L
 set statusline+=\ [%c]
+
+" ansible
+let g:ansible_extra_keywords_highlight = 1
+au BufRead,BufNewFile *.yml set filetype=yaml.ansible
 
 " fzf
 let $FZF_DEFAULT_COMMAND = 'find . -type f -not -path "*/\.git/*"'
@@ -232,6 +216,11 @@ inoremap <A-Up> <Esc>:m-2<CR>
 inoremap <A-Down> <Esc>:m+<CR>
 vnoremap <A-Down> :m '>+1<CR>gv=gv
 vnoremap <A-Up> :m '<-2<CR>gv=gv
+
+nnoremap Ż :m-2<CR>
+nnoremap ∆ :m+<CR>
+vnoremap ∆ :m '>+1<CR>gv=gv
+vnoremap Ż :m '<-2<CR>gv=gv
 
 nnoremap <A-k> :m-2<CR>
 nnoremap <A-j> :m+<CR>
