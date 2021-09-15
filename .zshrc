@@ -64,7 +64,7 @@ alias emerge="sudo emerge"
 alias channel-check='sudo iwlist wlan0 scan | egrep -i "essid|frequency"'
 alias grep="grep --color=always"
 alias egrep="egrep --color=always"
-[[ "$(uname)" == "Darwin" ]] && alias ls="ls -h" || alias ls="ls -h --color=auto"
+[[ "$(uname)" == "Darwin" ]] && alias ls="ls -Gh" || alias ls="ls -h --color=auto"
 alias ll='ls -lha'
 alias cp='cp -v'
 alias mv='mv -v'
