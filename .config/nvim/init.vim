@@ -19,6 +19,7 @@ set encoding=utf-8
 set undofile
 set incsearch
 set scrolloff=8
+set t_BE=
 au BufWritePre * let &bex = '@' . strftime("%F.%H:%M")
 filetype plugin indent on
 syntax on
@@ -36,10 +37,9 @@ call plug#begin('~/.config/nvim/plugged')
     " Goyo plugin for writing mutt mail
     Plug 'junegunn/goyo.vim'
 
-    " Theme dracula and zenburn
+    " Theme gruvbox
     Plug 'dracula/vim', { 'as': 'dracula'}
-    Plug 'jnurmine/Zenburn', { 'as': 'zenburn'}
-    Plug 'morhetz/gruvbox', { 'as': 'gruvbox'}
+    Plug 'gruvbox-community/gruvbox', { 'as': 'gruvbox'}
 
     " Fzf plugin
     Plug 'junegunn/fzf.vim'
@@ -67,6 +67,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'gentoo/gentoo-syntax'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-surround'
+    Plug 'junegunn/vim-easy-align'
 call plug#end()
 
 " Instalation coc extentions
@@ -178,10 +179,9 @@ let g:multi_cursor_skip_key            = '<C-x>'
 let g:multi_cursor_quit_key            = '<Esc>'
 
 " colors
-"colorscheme zenburn
-"colorscheme desert
 colorscheme gruvbox
-set bg=dark
+let g:gruvbox_invert_selection='0'
+set background=dark
 "hi Normal ctermbg=NONE
 hi Pmenu      ctermfg=NONE ctermbg=236 cterm=NONE guifg=NONE guibg=#64666d gui=NONE
 hi PmenuSel   ctermfg=NONE ctermbg=246 cterm=NONE guifg=NONE guibg=#204a87 gui=NONE
@@ -234,8 +234,11 @@ cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 map <F3> :setlocal spell! spelllang=en_gb<CR>
 map <F4> :setlocal spell! spelllang=pl<CR>
 
-" debugger
+" Code
 map <F12> :w<CR>:terminal ~/.local/bin/debugger '%:p'<CR>
+map <Leader>, :CocAction<CR>
+map <Leader><Tab> Vgaip= <CR>
+nnoremap <leader>x :!chmod +x %<CR>
 
 " latex
 let g:tex_flavor = "latex"
