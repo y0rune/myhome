@@ -110,5 +110,9 @@ alias update-brew="brew upgrade --cask"
 # Cleaning-up
 export PATH=$HOME/.local/bin:$PATH
 export PATH=/sbin:$PATH
+export GOPATH=$HOME/golang
+export GOROOT=/usr/local/opt/go/libexec
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin
 [ -d $HOME/repo/fortigate/bin ] && export PATH=$HOME/repo/fortigate/bin:$PATH
 export HISTTIMEFORMAT="%F %T "
