@@ -8,6 +8,8 @@ endif
 let mapleader = "\<Space>"
 let g:python3_host_prog = expand('/usr/src/python')
 set laststatus=2
+set autoindent
+set noexpandtab
 set shiftwidth=4
 set softtabstop=4
 set tabstop=4
@@ -138,7 +140,6 @@ set title
 " indent
 set backspace=indent,eol,start
 set shiftwidth=4
-set expandtab
 set list listchars=nbsp:¬,tab:»·,trail:·,extends:>
 
 " editing
