@@ -1,0 +1,34 @@
+#!/bin/bash
+
+MEGA_VOLUME="/Volumes/Mega"
+MEGA="$HOME/MEGA"
+STARTED="$HOME/.config/backup-started-$(date +%d-%m)"
+
+function main(){
+	if [[ ! -e "$STARTED" ]]
+	then
+		touch "$STARTED" && echo -e "[LOG] $(date) Created the file $STARTED"
+
+		echo -e "[LOG] $(date) Started $HOME/.ssh/ -> $MEGA/ssh"
+		rsync --bwlimit=1024 --update --progress -r "$HOME/.ssh/" "$MEGA/ssh/"
+		echo -e "[LOG] $(date) Finished $HOME/.ssh/ -> $MEGA/ssh"
+
+		echo -e "[LOG] $(date) Started $HOME/.gnupg/ -> $MEGA/gnupg"
+		rsync --bwlimit=1024 --update --progress -r "$HOME/.gnupg/" "$MEGA/gnupg/"
+		echo -e "[LOG] $(date) Finished $HOME/.gnupg/ -> $MEGA/gnupg"
+
+		if [[ -e "$MEGA_VOLUME" ]]
+		then
+			echo -e "[LOG] $(date) Started $MEGA -> $MEGA_VOLUME"
+			rsync --bwlimit=1024 --update --progress -r "$MEGA/" "$MEGA_VOLUME/"
+		else
+			echo -e "[ERROR] The folder $MEGA_VOLUME does NOT exist"
+		fi
+
+		echo -e "[LOG] $(date) Removed the files $STARTED and $STARTED *"
+		rm -rf "$STARTED"
+		rm -rf "$HOME/.config/backup-started-*"
+	fi
+}
+
+main > "$HOME/.config/backup.log"
