@@ -11,7 +11,7 @@ font:
   normal:
     family: Terminus (TTF)
     style: Bold
-  size: 16
+  size: 18
 
 key_bindings:
   - { key: Return, mods: Control|Shift, action: SpawnNewInstance }
