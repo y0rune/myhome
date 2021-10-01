@@ -7,6 +7,14 @@ if has('nvim')
 	endif
 endif
 
+if version >= 8.0
+	if ! filereadable(system('echo -n "$HOME/.vim/autoload/plug.vim"'))
+		silent !mkdir -p $HOME/.vim/autoload/
+		silent !curl --silent "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > $HOME/.vim/autoload/plug.vim
+		autocmd VimEnter * PlugInstall
+	endif
+endif
+
 let mapleader = "\<Space>"
 let g:python3_host_prog = expand('/usr/src/python')
 set laststatus=2
