@@ -22,5 +22,5 @@ color listfocus_unread yellow default bold
 color info red black bold
 color article white default bold
 
-browser "/home/yorune/.local/bin/browser-x -new-tab %u"
+browser "$HOME/.local/bin/browser-x -new-tab %u"
 player mpv

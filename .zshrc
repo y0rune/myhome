@@ -64,7 +64,7 @@ alias emerge="sudo emerge"
 alias channel-check='sudo iwlist wlan0 scan | egrep -i "essid|frequency"'
 alias grep="grep --color=always"
 alias egrep="egrep --color=always"
-[[ "$(uname)" == "Darwin" ]] && alias ls="ls -h" || alias ls="ls -h --color=auto"
+[[ "$(uname)" == "Darwin" ]] && alias ls="ls -Gh" || alias ls="ls -h --color=auto"
 alias ll='ls -lha'
 alias cp='cp -v'
 alias mv='mv -v'
@@ -102,7 +102,8 @@ alias denpl="trans en:pl"
 alias dplen="trans pl:en"
 alias notes="nvim $HOME/git/notes/index.md"
 alias mgr="cd $HOME/Documents/Mega-Documents/Magisterka-Marcin/Semestr1/"
-alias mpv="__NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0 __GLX_VENDOR_LIBRARY_NAME=nvidia __GL_SYNC_TO_VBLANK=0 mpv --vo=x11 --hwdec=no --ytdl-raw-options="yes-playlist=" --no-resume-playback --ytdl-format='bestvideo[height<=?1080]+bestaudio/best'"
+[[ "$(uname)" == "Darwin" ]] || alias mpv="__NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0 __GLX_VENDOR_LIBRARY_NAME=nvidia __GL_SYNC_TO_VBLANK=0 mpv --vo=x11 --hwdec=no --ytdl-raw-options="yes-playlist=" --no-resume-playback --ytdl-format='bestvideo[height<=?1080]+bestaudio/best'"
+[[ "$(uname)" == "Darwin" ]] && alias lsblk="diskutil list"
 alias aria2c="aria2c --seed-time=0 --disable-ipv6 --max-upload-limit=1k"
 alias lg="lazygit"
 alias update-brew="brew upgrade --cask"
@@ -110,5 +111,9 @@ alias update-brew="brew upgrade --cask"
 # Cleaning-up
 export PATH=$HOME/.local/bin:$PATH
 export PATH=/sbin:$PATH
+export GOPATH=$HOME/golang
+export GOROOT=/usr/local/opt/go/libexec
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin
 [ -d $HOME/repo/fortigate/bin ] && export PATH=$HOME/repo/fortigate/bin:$PATH
 export HISTTIMEFORMAT="%F %T "
