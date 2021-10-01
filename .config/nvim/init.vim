@@ -253,6 +253,11 @@ autocmd BufRead,BufNewFile /tmp/neomutt* :Goyo
 autocmd BufRead,BufNewFile /tmp/neomutt* map ZZ :Goyo\|x!<CR>
 autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<CR>
 
+" markdown-notes
+autocmd BufWritePost notes-all.md silent! :!git add notes-all.md
+autocmd BufWritePost notes-all.md silent! :!git commit --author='Marcin Woźniak <y0rune@aol.com>' -m "Autosaving - $(echo -e $(date))"
+autocmd BufWritePost notes-all.md silent! execute "!git push" | execute ':redraw!'
+
 " Automatically deletes all trailing whitespace and newlines at end of file on save.
 autocmd BufWritePre * %s/\s\+$//e
 autocmd BufWritepre * %s/\n\+\%$//e
