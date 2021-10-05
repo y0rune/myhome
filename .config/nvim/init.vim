@@ -245,6 +245,10 @@ cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 map <F3> :setlocal spell! spelllang=en_gb<CR>
 map <F4> :setlocal spell! spelllang=pl<CR>
 
+" Copy into system
+noremap <Leader>y "*y
+noremap <Leader>p "*p
+
 " Code
 map <F12> :w<CR>:terminal ~/.local/bin/debugger '%:p'<CR>
 map <Leader>, :CocAction<CR>
