@@ -10,7 +10,7 @@ font:
     style: Italic
   normal:
     family: Terminus (TTF)
-    style: Bold
+    style: Medium
   size: 18
 
 key_bindings:
