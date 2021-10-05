@@ -1,0 +1,11 @@
+#!/bin/bash
+
+sudo ebuildtester \
+	--threads 8 \
+	--pull \
+	--update \
+	--unstable \
+	--rm \
+	--portage-dir /home/yorune/git/dev/gentoo \
+	--overlay-dir /home/yorune/git/dev/guru
+	--atom "$@"
