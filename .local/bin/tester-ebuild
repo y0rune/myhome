@@ -6,6 +6,6 @@ sudo ebuildtester \
 	--update \
 	--unstable \
 	--rm \
-	--portage-dir /home/yorune/git/dev/gentoo \
-	--overlay-dir /home/yorune/git/dev/guru
+	--portage-dir "$HOME/git/dev/gentoo" \
+	--overlay-dir "$HOME/git/dev/guru" \
 	--atom "$@"
