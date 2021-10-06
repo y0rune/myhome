@@ -244,3 +244,6 @@ Music/
 notes.org
 
 .config/backup.log
+.config/gh/config.yml
+.config/gh/hosts.yml
+.local/state/gh/state.yml
