@@ -1,0 +1,17 @@
+#!/bin/bash
+docker stop "$(docker ps --all | grep -i ubuntu | awk '{print $1}')" > /dev/null
+docker rm "$(docker ps --all | grep -i ubuntu | awk '{print $1}')" > /dev/null
+docker pull jrei/systemd-ubuntu:latest
+docker run \
+	-d \
+	-v $HOME/git/dev:/opt \
+	--tmpfs /tmp \
+	--tmpfs /run \
+	--tmpfs /run/lock \
+	--privileged \
+	-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
+	jrei/systemd-ubuntu
+container="$(docker ps --all | grep -i ubuntu | awk '{print $1}')"
+sleep 15 && docker exec -it "$container" /bin/bash
+docker stop "$container"
+docker rm "$container"
