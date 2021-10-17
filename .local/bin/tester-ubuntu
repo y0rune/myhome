@@ -13,5 +13,5 @@ docker run \
 	jrei/systemd-ubuntu
 container="$(docker ps --all | grep -i ubuntu | awk '{print $1}')"
 sleep 15 && docker exec -it "$container" /bin/bash
-docker stop "$container"
-docker rm "$container"
+docker stop "$container" > /dev/null
+docker rm "$container" > /dev/null
