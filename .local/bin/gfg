@@ -1,0 +1,3 @@
+#!/bin/bash
+BRANCH_GIT=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+git checkout "$BRANCH_GIT" && git fetch upstream && git pull upstream "$BRANCH_GIT"
