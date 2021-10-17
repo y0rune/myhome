@@ -1,5 +1,6 @@
 {
   "python.formatting.provider": "black",
+  "python.pythonPath": "python3",
   "coc.preferences.formatOnSaveFiletypes": [
     "sh",
     "yaml",
