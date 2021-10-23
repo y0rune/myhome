@@ -106,6 +106,7 @@ alias mgr="cd $HOME/Documents/Mega-Documents/Magisterka-Marcin/Semestr1/"
 alias aria2c="aria2c --seed-time=0 --disable-ipv6 --max-upload-limit=1k"
 alias lg="lazygit"
 alias update-brew="brew upgrade --cask"
+alias cl="cd $HOME/Documents/Collage/Semestr2"
 
 # Cleaning-up
 export PATH=$HOME/.local/bin:$PATH
