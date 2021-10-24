@@ -1,4 +1,6 @@
+.config/backup-started*
 .Xauthority
+.matplotlib
 .Trash
 .DS_Store
 .ansible
@@ -247,3 +249,4 @@ notes.org
 .config/gh/config.yml
 .config/gh/hosts.yml
 .local/state/gh/state.yml
+.emacs.d/ido.last~
