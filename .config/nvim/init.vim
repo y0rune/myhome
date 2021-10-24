@@ -214,6 +214,8 @@ highlight ColorColumn ctermbg=236
 " map
 nnoremap S :%s//g<Left><Left>
 vnoremap S :s//g<Left><Left>
+vnoremap F <C-v>$A
+vnoremap f <C-v>0I
 nnoremap ee :!mupdf $(echo % \| sed 's/tex$/pdf/') & disown<CR><CR>
 map <C-d> :NERDTreeToggle<CR>
 nnoremap <silent> <C-t> :tabnew <CR>
