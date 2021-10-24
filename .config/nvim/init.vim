@@ -260,6 +260,10 @@ map <Leader>, :CocAction<CR>
 map <Leader><Tab> Vgaip= <CR>
 nnoremap <leader>x :!chmod +x %<CR>
 
+" Python
+autocmd BufRead,BufNewFile *.py set textwidth=0
+autocmd BufRead,BufNewFile *.py set fo-=t
+
 " latex
 let g:tex_flavor = "latex"
 autocmd BufWritePost *.tex silent! execute "!pdflatex --shell-escape -synctex=1 -interaction=nonstopmode % > /dev/null " | redraw!
