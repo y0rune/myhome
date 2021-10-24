@@ -1,6 +1,7 @@
 #!/bin/bash
 
 MEGA_VOLUME="/Volumes/MEGA"
+ELEMENTS="/Volumes/ELEMENTS"
 MEGA="$HOME/MEGA"
 STARTED="$HOME/.config/backup-started-$(date +%d-%m)"
 
@@ -15,6 +16,16 @@ $MEGA/Documents/Collage/Semestr2"
 			"$MEGA/Documents/Collage/Semestr2/"
 		echo -e "[LOG] $(date) Ended $HOME/Documents/Collage/Semestr2 ->\
 $MEGA/Documents/Collage/"
+
+		echo -e "[LOG] $(date) Started $HOME/Documents/Collage/Semestr2 ->\
+$ELEMENTS/Collage/Semestr2"
+		rsync --bwlimit=2048 --update --progress -r \
+			--exclude '*.mp4' --exclude '*.mkv'\
+			--exclude '.debris' \
+			"$HOME/Documents/Collage/Semestr2/"\
+			"$ELEMENTS/Collage/Semestr2/"
+		echo -e "[LOG] $(date) Ended $HOME/Documents/Collage/Semestr2 ->\
+$ELEMENTS/Documents/Collage/"
 
 		touch "$STARTED" && echo -e "[LOG] $(date) Created the file $STARTED"
 
