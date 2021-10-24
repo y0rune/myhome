@@ -12,6 +12,7 @@ function main(){
 $MEGA/Documents/Collage/Semestr2"
 		rsync --bwlimit=2048 --update --progress -r \
 			--exclude '*.mp4' --exclude '*.mkv'\
+			--exclude '.debris' \
 			"$HOME/Documents/Collage/Semestr2/"\
 			"$MEGA/Documents/Collage/Semestr2/"
 		echo -e "[LOG] $(date) Ended $HOME/Documents/Collage/Semestr2 ->\
@@ -41,6 +42,7 @@ $ELEMENTS/Documents/Collage/"
 		then
 			echo -e "[LOG] $(date) Started $MEGA -> $MEGA_VOLUME"
 			rsync --bwlimit=2048 --update --progress -r --exclude '.DS_Store' \
+				--exclude '.debris' \
 				--exclude 'Icon*' \
 				"$MEGA/" "$MEGA_VOLUME/"
 		else
