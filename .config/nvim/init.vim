@@ -58,6 +58,9 @@ call plug#begin('~/.config/nvim/plugged')
     " Fzf plugin
     Plug 'junegunn/fzf.vim'
     Plug 'junegunn/fzf'
+    " Telescope
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim'
 
     " CSS
     Plug 'ap/vim-css-color'
@@ -145,6 +148,10 @@ nmap <Leader>e :Buffers<CR>
 nmap <Leader>q :Rg<CR>
 nmap <Leader>w :Files<CR>
 nmap <C-p> :Files<CR>
+
+nmap <Leader>e :Telescope buffers<CR>
+nmap <Leader>q :Telescope live_grep<CR>
+nmap <Leader>w :Telescope find_files<CR>
 
 " Resize window
 nnoremap <C-L> :vertical resize +5<CR>
