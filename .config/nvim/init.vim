@@ -62,6 +62,7 @@ call plug#begin('~/.config/nvim/plugged')
 
     " Ansible yaml
     Plug 'pearofducks/ansible-vim', { 'do': './UltiSnips/generate.sh' }
+    Plug 'Yggdroot/indentLine'
 
     " coc-cpp coc-c
     " emerge dev-util/ccls
