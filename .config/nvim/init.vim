@@ -51,10 +51,6 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'junegunn/fzf.vim'
     Plug 'junegunn/fzf'
 
-    " Telescope
-    " Plug 'nvim-lua/plenary.nvim'
-    " Plug 'nvim-telescope/telescope.nvim'
-
     " CSS
     Plug 'ap/vim-css-color'
 
@@ -135,10 +131,6 @@ let $FZF_DEFAULT_COMMAND = 'find . -type f -not -path "*/\.git/*" -not -path "*/
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always" '.shellescape(<q-args>), 1, <bang>0)
 command! -bang -nargs=* FindCurrentWord call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always" '.shellescape(expand('<cword>')), 1, <bang>0)
 set grepprg=rg\ --vimgrep
-
-" nmap <Leader>e :Telescope buffers<CR>
-" nmap <Leader>q :Telescope live_grep<CR>
-" nmap <Leader>w :Telescope find_files<CR>
 
 nmap <Leader>e :Buffers<CR>
 nmap <Leader>q :Rg<CR>
