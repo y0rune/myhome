@@ -165,10 +165,6 @@ nnoremap - :split <CR>
 nnoremap <F5> :edit <CR>
 nnoremap <Leader><F5> :edit! <CR>
 
-" Copy using <Leader> anc c
-nnoremap <Leader>c :w !xclip<CR><CR>
-vnoremap <Leader>c "*y
-
 " livepreviewer
 let g:livepreview_previewer = 'mupdf'
 
