@@ -77,6 +77,13 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'junegunn/vim-easy-align'
 call plug#end()
 
+" Disable by default indent line
+" let g:indentLine_enabled = 0
+
+" Enable by default indent line in files
+autocmd BufRead,BufNewFile *.yaml let g:indentLine_enabled = 1
+autocmd BufRead,BufNewFile *.yaml let g:indentLine_char = '⦙'
+
 " Instalation coc extentions
 let g:coc_global_extensions = ['coc-solargraph', 'coc-go', 'coc-yaml', 'coc-pyright', 'coc-json' , 'coc-markdownlint' , 'coc-sh', 'coc-prettier', 'coc-diagnostic', 'coc-perl']
 
