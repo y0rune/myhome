@@ -1,10 +1,15 @@
 {
   "yaml.schemaStore.enable": true,
+  "yaml.format.enable": true,
+  "yaml.validate": true,
   "yaml.schemas": {
     "https://json.schemastore.org/ansible-role-2.9.json": "*.yaml",
     "https://json.schemastore.org/ansible-playbook.json": "*.yaml",
     "https://json.schemastore.org/ansible-inventory.json": "*yaml",
     "https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-galaxy.json": "*.yaml",
+    "https://raw.githubusercontent.com/docker/cli/master/cli/compose/schema/data/config_schema_v3.9.json": "*docker-compose.yml",
+    "https://json.schemastore.org/github-workflow.json": ".github/workflows/*",
+
     "https://json.schemastore.org/docker-compose.json": "*.yaml"
   },
   "python.formatting.provider": "black",
