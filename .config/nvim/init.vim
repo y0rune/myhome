@@ -87,6 +87,8 @@ autocmd BufRead,BufNewFile *.yaml let g:indentLine_char = '⦙'
 " Instalation coc extentions
 let g:coc_global_extensions = ['coc-solargraph', 'coc-go', 'coc-yaml', 'coc-pyright', 'coc-json' , 'coc-markdownlint' , 'coc-sh', 'coc-prettier', 'coc-diagnostic', 'coc-perl']
 
+inoremap <silent><expr> <Nul> coc#refresh()
+
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
