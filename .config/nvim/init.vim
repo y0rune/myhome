@@ -56,12 +56,12 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'gruvbox-community/gruvbox', { 'as': 'gruvbox'}
 
     " Fzf plugin
-    " Plug 'junegunn/fzf.vim'
-    " Plug 'junegunn/fzf'
+    Plug 'junegunn/fzf.vim'
+    Plug 'junegunn/fzf'
 
     " Telescope
-    Plug 'nvim-lua/plenary.nvim'
-    Plug 'nvim-telescope/telescope.nvim'
+    " Plug 'nvim-lua/plenary.nvim'
+    " Plug 'nvim-telescope/telescope.nvim'
 
     " CSS
     Plug 'ap/vim-css-color'
@@ -143,13 +143,13 @@ command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-h
 command! -bang -nargs=* FindCurrentWord call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always" '.shellescape(expand('<cword>')), 1, <bang>0)
 set grepprg=rg\ --vimgrep
 
-nmap <Leader>e :Telescope buffers<CR>
-nmap <Leader>q :Telescope live_grep<CR>
-nmap <Leader>w :Telescope find_files<CR>
+" nmap <Leader>e :Telescope buffers<CR>
+" nmap <Leader>q :Telescope live_grep<CR>
+" nmap <Leader>w :Telescope find_files<CR>
 
-"nmap <Leader>e :Buffers<CR>
-"nmap <Leader>q :Rg<CR>
-"nmap <Leader>w :Files<CR>
+nmap <Leader>e :Buffers<CR>
+nmap <Leader>q :Rg<CR>
+nmap <Leader>w :Files<CR>
 
 " Resize window
 nnoremap <C-L> :vertical resize +5<CR>
