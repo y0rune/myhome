@@ -43,8 +43,7 @@ call plug#begin('~/.config/nvim/plugged')
     " Goyo plugin for writing mutt mail
     Plug 'junegunn/goyo.vim'
 
-    " Theme gruvbox
-    Plug 'dracula/vim', { 'as': 'dracula'}
+    " Themes
     Plug 'gruvbox-community/gruvbox', { 'as': 'gruvbox'}
 
     " Fzf plugin
