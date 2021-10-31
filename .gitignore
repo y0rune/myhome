@@ -250,3 +250,6 @@ notes.org
 .config/gh/hosts.yml
 .local/state/gh/state.yml
 .emacs.d/ido.last~
+
+.config/karabiner/automatic_backups
+.config/qBittorrent
