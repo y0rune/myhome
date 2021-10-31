@@ -118,6 +118,10 @@ nmap <leader>c  <Plug>Commentary
 omap <leader>c  <Plug>Commentary
 nmap <leader>cc <Plug>CommentaryLine
 
+" Tab
+vnoremap <Tab> >
+vnoremap <S-Tab> <
+
 " Status-line
 set statusline=
 set statusline+=%#IncSearch#
