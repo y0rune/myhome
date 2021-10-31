@@ -17,6 +17,9 @@ set softtabstop=4
 set tabstop=4
 set nocompatible
 set noshowmode
+set noerrorbells
+set nowrap
+set hidden
 set cmdheight=1
 set encoding=utf-8
 set undofile
@@ -59,9 +62,6 @@ call plug#begin('~/.config/nvim/plugged')
     " Ansible yaml
     Plug 'pearofducks/ansible-vim', { 'do': './UltiSnips/generate.sh' }
     Plug 'Yggdroot/indentLine'
-
-    " coc-cpp coc-c
-    " emerge dev-util/ccls
 
     " Multiple cursors
     Plug 'terryma/vim-multiple-cursors'
@@ -115,7 +115,6 @@ nmap <leader>c  <Plug>Commentary
 omap <leader>c  <Plug>Commentary
 nmap <leader>cc <Plug>CommentaryLine
 
-" Tab
 vnoremap <Tab> >
 vnoremap <S-Tab> <
 
@@ -184,7 +183,9 @@ set list listchars=nbsp:¬,tab:»·,trail:·,extends:>
 
 " editing
 runtime! macros/matchit.vim
-set backspace=indent,eol,start
+
+" cursor
+set guicursor=
 
 " visual feedback
 set laststatus=2
@@ -222,6 +223,7 @@ let g:multi_cursor_quit_key            = '<Esc>'
 " colors
 colorscheme gruvbox
 let g:gruvbox_invert_selection='0'
+let g:gruvbox_contrast_dark = 'hard'
 set background=dark
 "hi Normal ctermbg=NONE
 hi Pmenu      ctermfg=NONE ctermbg=236 cterm=NONE guifg=NONE guibg=#64666d gui=NONE
