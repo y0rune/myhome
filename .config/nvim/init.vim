@@ -11,14 +11,11 @@ let mapleader = "\<Space>"
 let g:python3_host_prog = expand('/usr/bin/python3')
 let g:loaded_python_provider = 0
 let g:python_host_prog = ''
-set laststatus=2
 set autoindent
 set noexpandtab
-set shiftwidth=4
 set softtabstop=4
 set tabstop=4
 set nocompatible
-set incsearch
 set noshowmode
 set cmdheight=1
 set encoding=utf-8
