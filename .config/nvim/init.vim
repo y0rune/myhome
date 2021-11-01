@@ -255,6 +255,10 @@ vnoremap f <C-v>0I
 nnoremap <Leader>7 :tabprevious<CR>
 nnoremap <Leader>8 :tabnext<CR>
 
+" Better moving
+nnoremap J }
+nnoremap K {
+
 " Copy into system
 noremap <Leader>y "*y
 noremap <Leader>p "*p
