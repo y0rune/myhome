@@ -177,6 +177,7 @@ set statusline+=\ [%c]
 " Keyboard shortcuts
 """"""""""""""""""""""""""""""""
 let mapleader = "\<Space>"
+nmap <leader>2 :w!<cr>
 
 " Go to definition
 nmap <leader>gd <Plug>(coc-definition)
