@@ -252,8 +252,8 @@ vnoremap F <C-v>$A
 vnoremap f <C-v>0I
 
 " Better management of tabs
-nnoremap K :tabprevious<CR>
-nnoremap J :tabnext<CR>
+nnoremap <Leader>7 :tabprevious<CR>
+nnoremap <Leader>8 :tabnext<CR>
 
 " Copy into system
 noremap <Leader>y "*y
