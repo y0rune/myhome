@@ -14,17 +14,31 @@
 (package-initialize)
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
+;; UTF-8
+(set-language-environment "UTF-8")
+
+;; Packages list refresh
+(when (not package-archive-contents)
+	(package-refresh-contents))
+
+;; Auto Package Update
+(use-package auto-package-update
+	:ensure t
+	:config
+	(progn
+	(setq
+		auto-package-update-delete-old-verions t
+		auto-package-update-interval 5
+	)
+	(auto-package-update-maybe)
+	)
+)
+
 ;; Remove welcome screen
 (setq inhibit-startup-screen t)
 
 ;; Disable menu
 (menu-bar-mode 0)
-
-;; Enable IDO mode
-(setq ido-enable-flex-matching t)
-;;(setq ido-everywhere t)
-(ido-mode 1)
-(global-set-key (kbd "C-x b") 'ido-switch-buffer)
 
 ;; Remove working cl
 (require 'cl-lib)
@@ -78,6 +92,20 @@
 ;; Broswer
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "browser-x")
+
+;; Amx
+(use-package amx
+	:ensure t
+	:after ivy
+	:custom
+	(
+	(amx-backend 'ivy)
+	(amx-show-key-bindings t)
+	)
+	:config
+	(amx-mode t)
+	)
+
 
 ;; Custom theme
 (add-to-list 'custom-theme-load-path
@@ -172,15 +200,10 @@
 (add-to-list 'default-frame-alist `(font . ,(rc/get-default-font)))
 
 ;; Theme
-;;(use-package dracula-theme
-;;  :ensure t
-;;  :config
-;;  (load-theme 'dracula t))
-
-(use-package zenburn-theme
+(use-package gruvbox-theme
   :ensure t
   :config
-  (load-theme 'zenburn t))
+  (load-theme 'gruvbox-dark-hard t))
 
 ;; Sitebar dirred
 (use-package dired-sidebar
@@ -193,14 +216,18 @@
 ;; Smex
 (require 'smex)
 (smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-x") 'counsel-M-x)
 
 ;;buffer-move
 (require 'buffer-move)
+(global-set-key (kbd "C-x b") 'counsel-buffer-or-recentf)
 (global-set-key (kbd "<C-S-up>")     'buf-move-up)
 (global-set-key (kbd "<C-S-down>")   'buf-move-down)
 (global-set-key (kbd "<C-S-left>")   'buf-move-left)
 (global-set-key (kbd "<C-S-right>")  'buf-move-right)
+
+;; Files
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
 
 ;; Multiple-cursors
 (use-package multiple-cursors
@@ -588,3 +615,4 @@
   (other-window 1)
   )
 (global-set-key (kbd "C-x x") 'kill-and-remove-split)
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
