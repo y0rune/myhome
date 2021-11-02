@@ -105,7 +105,13 @@
 	)
 	:config
 	(amx-mode t)
-	)
+)
+
+;; Counsel
+(use-package counsel
+	:ensure t
+)
+
 
 
 ;; Custom theme
@@ -135,15 +141,6 @@
   (setq ecb-be-more-like-better-yes-p t)
   (message "Monz not available; not configuring") )
 (setq default-input-method "japanese-mozc")
-
-;; Enable Smex
-(use-package smex
-  :ensure t
-  :init
-  (smex-initialize)
-  :bind
-  ("M-x" . smex)
-  )
 
 ;; reveal dependency
 (use-package htmlize
@@ -196,7 +193,7 @@
 (defun rc/get-default-font ()
   (cond
    ((eq system-type 'windows-nt) "Consolas-13")
-   ((eq system-type 'gnu/linux) "xos4 Terminus Bold 16")))
+   ((eq system-type 'gnu/linux) "xos4 Terminus (TTF) Medium 16")))
 
 (add-to-list 'default-frame-alist `(font . ,(rc/get-default-font)))
 
