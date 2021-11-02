@@ -17,23 +17,6 @@
 ;; UTF-8
 (set-language-environment "UTF-8")
 
-;; Packages list refresh
-(when (not package-archive-contents)
-	(package-refresh-contents))
-
-;; Auto Package Update
-(use-package auto-package-update
-	:ensure t
-	:config
-	(progn
-	(setq
-		auto-package-update-delete-old-verions t
-		auto-package-update-interval 5
-	)
-	(auto-package-update-maybe)
-	)
-)
-
 ;; Remove welcome screen
 (setq inhibit-startup-screen t)
 
@@ -53,6 +36,24 @@
   (package-refresh-contents)
   (package-install 'use-package)
   )
+
+;; Packages list refresh
+(when (not package-archive-contents)
+	(package-refresh-contents))
+
+;; Auto Package Update
+(use-package auto-package-update
+	:ensure t
+	:config
+	(progn
+	(setq
+		auto-package-update-delete-old-verions t
+		auto-package-update-interval 5
+	)
+	(auto-package-update-maybe)
+	)
+)
+
 
 ;; Set path to store "custom-set"
 (setq custom-file "~/.emacs.d/emacs-custom.el")
@@ -472,6 +473,8 @@
   :config (treemacs-set-scope-type 'Perspectives))
 
 ;; Python
+(setq python-shell-interpreter "python3")
+(setq py-python-command "/usr/bin/python3")
 (use-package company-jedi
     :ensure t
     :config
