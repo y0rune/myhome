@@ -247,8 +247,8 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " Better replace
-nnoremap S :%s//g<Left><Left>
-vnoremap S :s//g<Left><Left>
+nnoremap s :%s//g<Left><Left>
+vnoremap s :s//g<Left><Left>
 
 " Better adding into begging and ending line
 vnoremap F <C-v>$A
