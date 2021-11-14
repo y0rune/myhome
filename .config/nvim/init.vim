@@ -138,7 +138,8 @@ let g:tex_flavor = "latex"
 """"""""""""""""""""""""""""""""
 " Theme
 """"""""""""""""""""""""""""""""
-colorscheme gruvbox
+"colorscheme gruvbox
+colorscheme default
 let g:gruvbox_invert_selection='0'
 let g:gruvbox_contrast_dark = 'hard'
 set background=dark
