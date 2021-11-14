@@ -211,6 +211,46 @@
                                     "key_code": "right_option"
                                 }
                             ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "up_arrow"
+                            },
+                            "to": [
+                                {
+                                    "pointing_button": "button32"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "down_arrow"
+                            },
+                            "to": [
+                                {
+                                    "pointing_button": "button32"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "left_arrow"
+                            },
+                            "to": [
+                                {
+                                    "pointing_button": "button32"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "right_arrow"
+                            },
+                            "to": [
+                                {
+                                    "pointing_button": "button32"
+                                }
+                            ]
                         }
                     ]
                 },
