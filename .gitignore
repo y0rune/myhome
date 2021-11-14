@@ -250,6 +250,12 @@ notes.org
 .config/gh/hosts.yml
 .local/state/gh/state.yml
 .emacs.d/ido.last~
-
 .config/karabiner/automatic_backups
 .config/qBittorrent
+.config/envman
+.emacs.d/.last-package-update-day
+.emacs.d/amx-items
+.local/bin/pathman
+.local/bin/webi
+.local/opt/pathman-v0.5.2/bin
+Musik/
