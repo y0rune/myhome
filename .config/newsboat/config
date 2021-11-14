@@ -16,7 +16,6 @@ bind-key n next
 bind-key p prev
 
 # unbind keys
-unbind-key ENTER
 unbind-key j
 unbind-key k
 unbind-key J
