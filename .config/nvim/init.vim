@@ -299,6 +299,9 @@ au BufRead,BufNewFile *.yml set filetype=yaml.ansible
 autocmd BufRead,BufNewFile *.py set textwidth=0
 autocmd BufRead,BufNewFile *.py set fo-=t
 
+" Newsboat
+autocmd BufRead,BufNewFile urls set textwidth=0
+
 " Latex
 autocmd BufWritePost *.tex silent! execute "!pdflatex --shell-escape -synctex=1 -interaction=nonstopmode % > /dev/null " | redraw!
 autocmd BufWritePost *.tex silent! execute "!latexmk -pdf -silent % > /dev/null" | redraw!
