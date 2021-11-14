@@ -56,6 +56,5 @@
       }
     }
   },
-  "solargraph.commandPath": "~/.gem/ruby/2.6.0/bin/solargraph",
   "solargraph.formatting": true
 }
