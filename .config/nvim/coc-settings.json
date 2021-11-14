@@ -13,6 +13,7 @@
     "https://json.schemastore.org/docker-compose.json": "*.yaml"
   },
   "python.formatting.provider": "black",
+  "python.formatting.blackArgs": ["--line-length", "80"],
   "python.pythonPath": "python3",
   "coc.preferences.formatOnSaveFiletypes": [
     "sh",
