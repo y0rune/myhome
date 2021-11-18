@@ -70,6 +70,7 @@ set smartcase
 set ic
 
 " cursor
+set guicursor=
 let &t_SI = "\<esc>[6 q"
 let &t_EI = "\<esc>[2 q"
 
