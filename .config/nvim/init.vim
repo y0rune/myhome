@@ -70,8 +70,10 @@ set ic
 
 " cursor
 set guicursor=
+set guicursor+=a:blinkon0
 let &t_SI = "\<esc>[6 q"
-let &t_EI = "\<esc>[2 q"
+let &t_SR = "\<esc>[6 q"
+let &t_EI = "\<esc>[6 q"
 
 """"""""""""""""""""""""""""""""
 " Plugins
@@ -133,7 +135,6 @@ let NERDTreeShowHidden=1
 
 " latex
 let g:tex_flavor = "latex"
-
 
 """"""""""""""""""""""""""""""""
 " Theme
