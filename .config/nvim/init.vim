@@ -190,6 +190,7 @@ set statusline+=\ [%c]
 """"""""""""""""""""""""""""""""
 let mapleader = "\<Space>"
 nmap <leader>a :CocAction<CR>
+nmap <leader>d :CocDiagnostics<CR>
 nmap <leader>2 :w!<cr>
 
 " Go to definition
