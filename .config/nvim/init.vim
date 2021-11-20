@@ -18,7 +18,7 @@ let g:python_host_prog = ''
 set autoindent
 set noexpandtab
 set softtabstop=4
-set tabstop=4
+set tabstop=4 shiftwidth=2 expandtab
 set nocompatible
 set noshowmode
 set noerrorbells
