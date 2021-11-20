@@ -27,7 +27,6 @@ set hidden
 set cmdheight=1
 set encoding=utf-8
 set undofile
-set incsearch
 set scrolloff=8
 set t_BE=
 au BufWritePre * let &bex = '@' . strftime("%F.%H:%M")
