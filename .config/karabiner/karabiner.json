@@ -251,16 +251,6 @@
                                     "pointing_button": "button32"
                                 }
                             ]
-                        },
-                        {
-                            "from": {
-                                "key_code": "escape"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "grave_accent_and_tilde"
-                                }
-                            ]
                         }
                     ]
                 },
