@@ -202,10 +202,17 @@ nmap <leader>rr <Plug>(coc-rename)
 nmap <silent> <leader>gp <Plug>(coc-diagnostic-prev)
 nmap <silent> <leader>gn <Plug>(coc-diagnostic-next)
 nnoremap <leader>cr :CocRestart
+
+" Adding commentary
 xmap <leader>c  <Plug>Commentary
 nmap <leader>c  <Plug>Commentary
 omap <leader>c  <Plug>Commentary
-nmap <leader>cc <Plug>CommentaryLine
+nmap <leader>c <Plug>CommentaryLine
+
+xmap <C-_> <Plug>Commentary
+nmap <C-_> <Plug>Commentary
+omap <C-_> <Plug>Commentary
+nmap <C-_> <Plug>CommentaryLine
 
 " Better tab
 vnoremap <Tab> >
