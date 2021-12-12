@@ -92,6 +92,7 @@ call plug#begin('~/.config/nvim/plugged')
 
     " Themes
     Plug 'gruvbox-community/gruvbox', { 'as': 'gruvbox'}
+    Plug 'Mofiqul/dracula.nvim'
 
     " Fzf plugin
     Plug 'junegunn/fzf.vim'
@@ -140,7 +141,8 @@ let g:tex_flavor = "latex"
 " Theme
 """"""""""""""""""""""""""""""""
 "colorscheme gruvbox
-colorscheme default
+" colorscheme default
+ colorscheme dracula
 let g:gruvbox_invert_selection='0'
 let g:gruvbox_contrast_dark = 'hard'
 set background=dark
