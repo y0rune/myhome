@@ -270,7 +270,6 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 " Better replace
 nnoremap <Leader>s :%s//g<Left><Left>
 vnoremap <Leader>s :s//g<Left><Left>
->>>>>>> 15f37be93fd5e33bc2274210627d19822ef6ea38
 
 " Better adding into begging and ending line
 vnoremap F <C-v>$A
