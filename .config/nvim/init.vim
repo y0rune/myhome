@@ -92,6 +92,7 @@ call plug#begin('~/.config/nvim/plugged')
 
     " Themes
     Plug 'gruvbox-community/gruvbox', { 'as': 'gruvbox'}
+    Plug 'Mofiqul/dracula.nvim'
 
     " Fzf plugin
     Plug 'junegunn/fzf.vim'
@@ -140,7 +141,8 @@ let g:tex_flavor = "latex"
 " Theme
 """"""""""""""""""""""""""""""""
 "colorscheme gruvbox
-colorscheme default
+" colorscheme default
+ colorscheme dracula
 let g:gruvbox_invert_selection='0'
 let g:gruvbox_contrast_dark = 'hard'
 set background=dark
@@ -266,8 +268,9 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " Better replace
-nnoremap <leader>s :%s//g<Left><Left>
-vnoremap <leader>s :s//g<Left><Left>
+nnoremap <Leader>s :%s//g<Left><Left>
+vnoremap <Leader>s :s//g<Left><Left>
+>>>>>>> 15f37be93fd5e33bc2274210627d19822ef6ea38
 
 " Better adding into begging and ending line
 vnoremap F <C-v>$A
