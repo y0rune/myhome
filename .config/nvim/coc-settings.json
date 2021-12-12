@@ -49,6 +49,7 @@
         ".git/",
         ".hg/"
       ],
+      "trace.server": "verbose",
       "initializationOptions": {
         "cache": {
           "directory": "/tmp/ccls"
