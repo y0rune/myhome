@@ -262,3 +262,8 @@ Musik/
 
 .config/ytmdl
 golang
+.virtualenvs/debugpy
+.local/bin/mgorny-dev-scripts
+.local/bin/serviceman
+.local/opt/serviceman-v0.8.0/bin
+.emacs.d/recentf
