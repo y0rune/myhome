@@ -39,6 +39,7 @@ FPATH=/usr/local/share/zsh/site-functions:$FPATH
 
 export GPG_TTY=$(tty)
 # export TERM=xterm-256color
+export TERM=screen-256color
 export SHELL=/bin/bash
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
