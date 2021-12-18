@@ -198,10 +198,15 @@
 (add-to-list 'default-frame-alist `(font . ,(rc/get-default-font)))
 
 ;; Theme
-(use-package gruvbox-theme
+;;(use-package gruvbox-theme
+;;  :ensure t
+;;  :config
+;;  (load-theme 'gruvbox-dark-hard t))
+
+(use-package dracula-theme
   :ensure t
   :config
-  (load-theme 'gruvbox-dark-hard t))
+  (load-theme 'dracula t))
 
 ;; Sitebar dirred
 (use-package dired-sidebar
@@ -483,6 +488,11 @@
 (add-hook 'python-mode-hook 'my/python-mode-hook)
 
 (setq-default ebuild-mode-update-copyright nil)
+
+(setq jedi:environment-root "jedi")  ; or any other name you like
+(setq jedi:environment-virtualenv
+      (append python-environment-virtualenv
+              '("--python" "/usr/local/bin/python3")))
 
 (defun infer-indentation-style () (interactive)
   (let ((space-count (how-many "^  " (point-min) (point-max)))
