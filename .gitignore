@@ -267,3 +267,7 @@ golang
 .local/bin/serviceman
 .local/opt/serviceman-v0.8.0/bin
 .emacs.d/recentf
+.config/filezilla
+.local/state/mume
+.putty
+.redhat
