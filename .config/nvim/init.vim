@@ -119,6 +119,12 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-surround'
     Plug 'junegunn/vim-easy-align'
+
+    " Git tool
+    Plug 'tpope/vim-fugitive'
+
+    " Preetier
+    Plug 'prettier/vim-prettier'
 call plug#end()
 
 " Coc
@@ -137,12 +143,16 @@ let NERDTreeShowHidden=1
 " latex
 let g:tex_flavor = "latex"
 
+" Preetier
+autocmd FileType sh
+    \ autocmd BufWritePre <buffer> :Prettier <CR>
+
 """"""""""""""""""""""""""""""""
 " Theme
 """"""""""""""""""""""""""""""""
 "colorscheme gruvbox
-" colorscheme default
- colorscheme dracula
+"colorscheme default
+colorscheme dracula
 let g:gruvbox_invert_selection='0'
 let g:gruvbox_contrast_dark = 'hard'
 set background=dark
