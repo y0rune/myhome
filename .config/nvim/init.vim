@@ -353,6 +353,7 @@ autocmd BufRead,BufNewFile *.yaml let g:indentLine_enabled = 1
 autocmd BufRead,BufNewFile *.yaml let g:indentLine_char = '⦙'
 
 " Go
+autocmd BufRead *.go set noexpandtab
 autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
 
 " Conf
