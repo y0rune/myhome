@@ -351,6 +351,9 @@ autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<CR>
 autocmd BufRead,BufNewFile *.yaml let g:indentLine_enabled = 1
 autocmd BufRead,BufNewFile *.yaml let g:indentLine_char = '⦙'
 
+" Go
+autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
+
 " Conf
 au BufNewFile,BufRead *.conf setfiletype conf
 
