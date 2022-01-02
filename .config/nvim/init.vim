@@ -2,11 +2,11 @@
 " Download vim-plug
 """"""""""""""""""""""""""""""""
 if has('nvim')
-	if ! filereadable(system('echo -n "$HOME/.config/nvim/autoload/plug.vim"'))
-		silent !mkdir -p $HOME/.config/nvim/autoload/
-		silent !curl --silent "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > $HOME/.config/nvim/autoload/plug.vim
-		autocmd VimEnter * PlugInstall
-	endif
+    if ! filereadable(system('echo -n "$HOME/.config/nvim/autoload/plug.vim"'))
+        silent !mkdir -p $HOME/.config/nvim/autoload/
+        silent !curl --silent "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > $HOME/.config/nvim/autoload/plug.vim
+        autocmd VimEnter * PlugInstall
+    endif
 endif
 
 """"""""""""""""""""""""""""""""
