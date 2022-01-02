@@ -145,9 +145,6 @@ let NERDTreeShowHidden=1
 " latex
 let g:tex_flavor = "latex"
 
-" Preetier
-autocmd FileType sh
-    \ autocmd BufWritePre <buffer> :Prettier <CR>
 
 """"""""""""""""""""""""""""""""
 " Theme
@@ -327,6 +324,10 @@ map <F4> :setlocal spell! spelllang=pl<CR>
 
 " Ansible
 au BufRead,BufNewFile *.yml set filetype=yaml.ansible
+
+" Bash
+autocmd FileType sh
+    \ autocmd BufWritePre <buffer> :Prettier <CR>
 
 " Python
 autocmd BufRead,BufNewFile *.py set textwidth=0
