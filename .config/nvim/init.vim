@@ -113,6 +113,9 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'pearofducks/ansible-vim', { 'do': './UltiSnips/generate.sh' }
     Plug 'Yggdroot/indentLine'
 
+    " GoLang
+    Plug 'fatih/vim-go'
+
     " Multiple cursors
     Plug 'terryma/vim-multiple-cursors'
 
@@ -195,6 +198,10 @@ set statusline+=%{StatuslineGit()}
 set statusline+=%#Search#
 set statusline+=\ %l/%L
 set statusline+=\ [%c]
+
+" Disable godoc keys
+let g:go_doc_keywordprg_enabled = 0
+set completeopt-=preview
 
 """"""""""""""""""""""""""""""""
 " Keyboard shortcuts
