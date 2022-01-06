@@ -16,11 +16,10 @@ let g:python3_host_prog = expand('/usr/bin/python3')
 let g:loaded_python_provider = 0
 let g:python_host_prog = ''
 set autoindent
-set noexpandtab
+set expandtab
 set softtabstop=4
 set shiftwidth=4
 set tabstop=4
-set expandtab
 set nocompatible
 set noshowmode
 set noerrorbells
