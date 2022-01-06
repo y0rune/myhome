@@ -103,7 +103,6 @@ alias dplen="trans pl:en"
 alias notes="nvim $HOME/git/notes/index.md"
 alias mgr="cd $HOME/Documents/Mega-Documents/Magisterka-Marcin/Semestr1/"
 [[ "$(uname)" == "Darwin" ]] && alias mpv="mpv --no-resume-playback" || alias mpv="__NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0 __GLX_VENDOR_LIBRARY_NAME=nvidia __GL_SYNC_TO_VBLANK=0 mpv --vo=x11 --hwdec=no --ytdl-raw-options="yes-playlist=" --no-resume-playback --ytdl-format='bestvideo[height<=?1080]+bestaudio/best'"
-[[ "$(uname)" == "Darwin" ]] && alias lsblk="diskutil list"
 alias aria2c="aria2c --seed-time=0 --disable-ipv6 --max-upload-limit=1k"
 alias lg="lazygit"
 alias update-brew="brew upgrade --cask"
@@ -119,3 +118,18 @@ export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
 [ -d $HOME/repo/fortigate/bin ] && export PATH=$HOME/repo/fortigate/bin:$PATH
 export HISTTIMEFORMAT="%F %T "
+
+# Export for Mac
+if [[ "$(uname)" == "Darwin" ]]; then
+    export PATH="/usr/local/opt/openssl@3/bin:$PATH"
+    export LDFLAGS="-L/usr/local/opt/openssl@3/lib"
+    export CPPFLAGS="-I/usr/local/opt/openssl@3/include"
+    export PKG_CONFIG_PATH="/usr/local/opt/openssl@3/lib/pkgconfig"
+
+    alias lsblk="diskutil list"
+    alias Update="brew update; brew upgrade"
+
+    # Resolve problem with GOPATH
+    # https://stackoverflow.com/questions/66284870/go-get-not-downloading-to-src-folder
+    export GO111MODULE=off
+fi
