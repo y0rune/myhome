@@ -47,7 +47,6 @@ set title
 
 " indent
 set backspace=indent,eol,start
-set shiftwidth=4
 set list listchars=nbsp:¬,tab:»·,trail:·,extends:>
 
 " editing
