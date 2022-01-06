@@ -271,3 +271,8 @@ golang
 .local/state/mume
 .putty
 .redhat
+.cpanm
+.node-gyp/14.16.0
+.packettracer
+.dlv
+Cisco Packet Tracer 8.0.0
