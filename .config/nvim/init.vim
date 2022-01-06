@@ -47,7 +47,9 @@ set title
 
 " indent
 set backspace=indent,eol,start
-set list listchars=nbsp:¬,tab:»·,trail:·,extends:>
+"set list listchars=nbsp:¬,tab:»·,trail:·,extends:>
+set list listchars=tab:\│\ ,trail:·
+let g:indentLine_char_list = ['│', '│', '│', '│']
 
 " editing
 runtime! macros/matchit.vim
