@@ -106,6 +106,9 @@ call plug#begin('~/.config/nvim/plugged')
     " coc
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+    " Copilot
+    Plug 'github/copilot.vim'
+
     " PyRight
     Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
 
@@ -130,6 +133,10 @@ call plug#begin('~/.config/nvim/plugged')
 
     " Preetier
     Plug 'prettier/vim-prettier'
+
+    " Debug
+    Plug 'puremourning/vimspector'
+    Plug 'mfussenegger/nvim-dap'
 call plug#end()
 
 " Coc
@@ -148,6 +155,9 @@ let NERDTreeShowHidden=1
 " latex
 let g:tex_flavor = "latex"
 
+" Debug
+let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
+let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-go', 'CodeLLDB', 'vscode-node-debug2' ]
 
 """"""""""""""""""""""""""""""""
 " Theme
