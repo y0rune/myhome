@@ -140,7 +140,7 @@ call plug#begin('~/.config/nvim/plugged')
 call plug#end()
 
 " Coc
-let g:coc_global_extensions = ['coc-solargraph', 'coc-go', 'coc-yaml', 'coc-pyright', 'coc-json' , 'coc-markdownlint' , 'coc-sh', 'coc-prettier', 'coc-diagnostic', 'coc-perl']
+let g:coc_global_extensions = ['@yaegassy/coc-ansible', 'coc-solargraph', 'coc-go', 'coc-yaml', 'coc-pyright', 'coc-json' , 'coc-markdownlint' , 'coc-sh', 'coc-prettier', 'coc-diagnostic', 'coc-perl']
 
 inoremap <silent><expr> <Nul> coc#refresh()
 
@@ -341,6 +341,10 @@ map <F4> :setlocal spell! spelllang=pl<CR>
 
 " Ansible
 au BufRead,BufNewFile *.yml set filetype=yaml.ansible
+autocmd BufWritePre *.yml :Prettier <CR>
+let g:coc_filetype_map = {
+  \ 'yaml.ansible': 'ansible',
+  \ }
 
 " Bash
 autocmd FileType sh
