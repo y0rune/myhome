@@ -1,8 +1,4 @@
 {
-  "diagnostic.errorSign": "❗",
-  "diagnostic.warningSign": "⚠️",
-  "diagnostic.infoSign": "ℹ️",
-  "diagnostic.hintSign": "💡",
   "yaml.schemaStore.enable": true,
   "yaml.format.enable": true,
   "yaml.validate": true,
