@@ -140,7 +140,7 @@ call plug#begin('~/.config/nvim/plugged')
 call plug#end()
 
 " Coc
-let g:coc_global_extensions = ['@yaegassy/coc-ansible', 'coc-solargraph', 'coc-go', 'coc-yaml', 'coc-pyright', 'coc-json' , 'coc-markdownlint' , 'coc-sh', 'coc-prettier', 'coc-diagnostic', 'coc-perl']
+let g:coc_global_extensions = ['coc-java', '@yaegassy/coc-ansible', 'coc-solargraph', 'coc-go', 'coc-yaml', 'coc-pyright', 'coc-json' , 'coc-markdownlint' , 'coc-sh', 'coc-prettier', 'coc-diagnostic', 'coc-perl']
 
 inoremap <silent><expr> <Nul> coc#refresh()
 
