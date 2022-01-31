@@ -164,7 +164,7 @@ let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-go', 'CodeLLDB', 'vscode
 """"""""""""""""""""""""""""""""
 "colorscheme gruvbox
 "colorscheme default
-" colorscheme dracula
+colorscheme dracula
 let g:gruvbox_invert_selection='0'
 let g:gruvbox_contrast_dark = 'hard'
 set background=dark
