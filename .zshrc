@@ -84,7 +84,7 @@ alias gcommitw="git commit --author='Marcin Wozniak <marcin.wozniak@wundermantho
 alias gdel="git push origin --delete"
 alias gadd="git add"
 alias gpush="git push"
-alias gpull="git pull"
+alias gpull="git pull; git pull --recurse-submodules"
 alias gstatus="git status -s"
 alias gst="git status -s"
 alias gdiff="git diff"
@@ -133,3 +133,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     # https://stackoverflow.com/questions/66284870/go-get-not-downloading-to-src-folder
     export GO111MODULE=off
 fi
+
+# Resolve problem with
+# zsh: no matches found
+setopt +o nomatch
