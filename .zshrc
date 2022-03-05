@@ -108,6 +108,7 @@ alias lg="lazygit"
 alias update-brew="brew upgrade --cask"
 alias cl="cd $HOME/Documents/Collage/Semestr2"
 alias irc="ssh mikrus -t 'screen -r'"
+alias rsync="rsync --progress"
 
 # Cleaning-up
 export PATH=$HOME/.local/bin:$PATH
