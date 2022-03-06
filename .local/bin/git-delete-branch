@@ -20,8 +20,8 @@ while true; do
     read -p "Remove locally / remote / both [L/R/B]: " CHOOSE
     case $CHOOSE in
         [Bb]* ) delete_local_branch "$BRANCH" && delete_remote_branch "$BRANCH" ;;
-        [Ll]* ) delete_local_BRANCH "$BRANCH";;
-        [Rr]* ) delete_remote_BRANCH "$BRANCH";;
+        [Ll]* ) delete_local_branch "$BRANCH";;
+        [Rr]* ) delete_remote_branch "$BRANCH";;
         * ) echo "Please write good answer";;
     esac
 done
