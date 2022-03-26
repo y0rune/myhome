@@ -302,8 +302,8 @@ vnoremap F <C-v>$A
 vnoremap f <C-v>0I
 
 " Better management of tabs
-nnoremap <Leader>9 :tabprevious<CR>
-nnoremap <Leader>0 :tabnext<CR>
+nnoremap <F7> :tabprevious<CR>
+nnoremap <F8> :tabnext<CR>
 
 " Better moving
 nnoremap J }
