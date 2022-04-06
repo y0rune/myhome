@@ -2,11 +2,11 @@
 
 # shellcheck disable=2162
 
-function delete_local_branch(){
+function delete_local_branch() {
     git branch -D "$1"
 }
 
-function delete_remote_branch(){
+function delete_remote_branch() {
     git push origin --delete "$1"
 }
 
@@ -19,9 +19,12 @@ while true; do
     read -p "Select branch to remove: " BRANCH
     read -p "Remove locally / remote / both [L/R/B]: " CHOOSE
     case $CHOOSE in
-        [Bb]* ) delete_local_branch "$BRANCH" && delete_remote_branch "$BRANCH" ;;
-        [Ll]* ) delete_local_branch "$BRANCH";;
-        [Rr]* ) delete_remote_branch "$BRANCH";;
-        * ) echo "Please write good answer";;
+    [Bb]*)
+        delete_local_branch "$BRANCH"
+        delete_remote_branch "$BRANCH"
+        ;;
+    [Ll]*) delete_local_branch "$BRANCH" ;;
+    [Rr]*) delete_remote_branch "$BRANCH" ;;
+    *) echo "Please write good answer" ;;
     esac
 done
