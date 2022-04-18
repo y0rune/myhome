@@ -163,7 +163,7 @@ let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-go', 'CodeLLDB', 'vscode
 " Theme
 """"""""""""""""""""""""""""""""
 "colorscheme gruvbox
-"colorscheme default
+" colorscheme default
 colorscheme dracula
 let g:gruvbox_invert_selection='0'
 let g:gruvbox_contrast_dark = 'hard'
@@ -195,6 +195,19 @@ function! StatuslineGit()
     return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
 endfunction
 
+function! StatusDiagnostic() abort
+  let info = get(b:, 'coc_diagnostic_info', {})
+  if empty(info) | return '' | endif
+  let msgs = []
+  if get(info, 'error', 0)
+    call add(msgs, 'E' . info['error'])
+  endif
+  if get(info, 'warning', 0)
+    call add(msgs, 'W' . info['warning'])
+  endif
+  return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
+endfunction
+
 set statusline=
 set statusline+=%#IncSearch#
 set statusline+=%{&filetype!=#''?'\ \ ['.&filetype.']\ ':'\ '}
@@ -202,6 +215,9 @@ set statusline+=%{&modified?'[+]\ ':''}
 set statusline+=%#CursorLineNr#
 set statusline+=\ %F
 set statusline+=%= "Right side settings
+set statusline+=%#warningmsg#
+set statusline+=%{StatusDiagnostic()!=#''?'\ '.StatusDiagnostic():''}
+set statusline+=%#CursorLineNr#
 set statusline+=%{StatuslineGit()}
 set statusline+=%#Search#
 set statusline+=\ %l/%L
