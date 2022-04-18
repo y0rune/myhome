@@ -198,9 +198,8 @@ endfunction
 
 set statusline=
 set statusline+=%#IncSearch#
-set statusline+=\ %y
-set statusline+=\ %m
-set statusline+=\ %r
+set statusline+=%{&filetype!=#''?'\ \ ['.&filetype.']\ ':'\ '}
+set statusline+=%{&modified?'[+]\ ':''}
 set statusline+=%#CursorLineNr#
 set statusline+=\ %F
 set statusline+=%= "Right side settings
