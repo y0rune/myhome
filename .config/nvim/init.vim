@@ -103,9 +103,6 @@ call plug#begin('~/.config/nvim/plugged')
     " CSS
     Plug 'ap/vim-css-color'
 
-    " coc
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
     " Copilot
     Plug 'github/copilot.vim'
 
@@ -137,12 +134,109 @@ call plug#begin('~/.config/nvim/plugged')
     " Debug
     Plug 'puremourning/vimspector'
     Plug 'mfussenegger/nvim-dap'
+
+    " LSP
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'hrsh7th/nvim-cmp'
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'saadparwaiz1/cmp_luasnip'
+    Plug 'L3MON4D3/LuaSnip'
+    Plug 'sbdchd/neoformat'
+
 call plug#end()
 
-" Coc
-let g:coc_global_extensions = ['coc-java', '@yaegassy/coc-ansible', 'coc-solargraph', 'coc-go', 'coc-yaml', 'coc-pyright', 'coc-json' , 'coc-markdownlint' , 'coc-sh', 'coc-prettier', 'coc-diagnostic', 'coc-perl']
+" LUA
+lua<<EOF
+local opts = { noremap=true, silent=true }
 
-inoremap <silent><expr> <Nul> coc#refresh()
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+local lspconfig = require('lspconfig')
+
+local on_attach = function(client, bufnr)
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  --vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  --vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  --vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  --vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  --vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+end
+
+-- Use a loop to conveniently call 'setup' on multiple servers and
+-- map buffer local keybindings when the language server attaches
+local servers = { 'pyright', 'bashls' }
+for _, lsp in pairs(servers) do
+  require('lspconfig')[lsp].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    flags = {
+      debounce_text_changes = 150,
+    }
+  }
+end
+
+-- luasnip setup
+local luasnip = require 'luasnip'
+
+-- nvim-cmp setup
+local cmp = require 'cmp'
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-a>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-s>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+  }),
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+  },
+}
+
+EOF
+
+" Neoformat
+let g:neoformat_try_formatprg = 1
+let g:neoformat_basic_format_trim = 1
+let g:neoformat_only_msg_on_error = 1
+autocmd BufWritePre * undojoin | Neoformat
+
+" Ebuild
+let g:shfmt_opt="-ci"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -195,19 +289,6 @@ function! StatuslineGit()
     return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
 endfunction
 
-function! StatusDiagnostic() abort
-  let info = get(b:, 'coc_diagnostic_info', {})
-  if empty(info) | return '' | endif
-  let msgs = []
-  if get(info, 'error', 0)
-    call add(msgs, 'E' . info['error'])
-  endif
-  if get(info, 'warning', 0)
-    call add(msgs, 'W' . info['warning'])
-  endif
-  return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
-endfunction
-
 set statusline=
 set statusline+=%#IncSearch#
 set statusline+=%{&filetype!=#''?'\ \ ['.&filetype.']\ ':'\ '}
@@ -215,8 +296,6 @@ set statusline+=%{&modified?'[+]\ ':''}
 set statusline+=%#CursorLineNr#
 set statusline+=\ %F
 set statusline+=%= "Right side settings
-set statusline+=%#warningmsg#
-set statusline+=%{StatusDiagnostic()!=#''?'\ '.StatusDiagnostic():''}
 set statusline+=%#CursorLineNr#
 set statusline+=%{StatuslineGit()}
 set statusline+=%#Search#
@@ -231,19 +310,7 @@ set completeopt-=preview
 " Keyboard shortcuts
 """"""""""""""""""""""""""""""""
 let mapleader = "\<Space>"
-nmap <leader>a :CocAction<CR>
-nmap <leader>d :CocDiagnostics<CR>
 nmap <leader>2 :w!<cr>
-
-" Go to definition
-nmap <leader>gd <Plug>(coc-definition)
-nmap <leader>gy <Plug>(coc-type-definition)
-nmap <leader>gi <Plug>(coc-implementation)
-nmap <leader>gr <Plug>(coc-references)
-nmap <leader>rr <Plug>(coc-rename)
-nmap <silent> <leader>gp <Plug>(coc-diagnostic-prev)
-nmap <silent> <leader>gn <Plug>(coc-diagnostic-next)
-nnoremap <leader>cr :CocRestart
 
 " Adding commentary
 xmap <leader>c  <Plug>Commentary
@@ -281,13 +348,7 @@ nnoremap <Leader><F5> :edit! <CR>
 
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-" Tab in the coc to help select right autocomplete
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-
-"" Moving line up or down using alt
+" Moving line up or down using alt
 nnoremap <A-Up> :m-2<CR>
 nnoremap <A-Down> :m+<CR>
 inoremap <A-Up> <Esc>:m-2<CR>
@@ -356,9 +417,6 @@ map <F4> :setlocal spell! spelllang=pl<CR>
 " Ansible
 au BufRead,BufNewFile *.yml set filetype=yaml.ansible
 autocmd BufWritePre *.yml :Prettier <CR>
-let g:coc_filetype_map = {
-  \ 'yaml.ansible': 'ansible',
-  \ }
 
 " Bash
 autocmd FileType sh
@@ -389,7 +447,6 @@ autocmd BufRead,BufNewFile *.yaml let g:indentLine_char = '⦙'
 
 " Go
 autocmd BufRead *.go set noexpandtab
-autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
 
 " Conf
 au BufNewFile,BufRead *.conf setfiletype conf
