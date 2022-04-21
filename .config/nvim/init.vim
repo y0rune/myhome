@@ -144,6 +144,9 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'L3MON4D3/LuaSnip'
     Plug 'sbdchd/neoformat'
 
+    " Telescope
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim'
 call plug#end()
 
 " LUA
@@ -327,10 +330,10 @@ nmap <C-_> <Plug>CommentaryLine
 vnoremap <Tab> >
 vnoremap <S-Tab> <
 
-" FZF
-nmap <Leader>e :Buffers<CR>
-nmap <Leader>q :Rg<CR>
-nmap <Leader>w :Files<CR>
+" Telescope
+nmap <Leader>e <cmd>Telescope buffers<cr>
+nmap <Leader>w <cmd>Telescope find_files<cr>
+nmap <Leader>q <cmd>Telescope live_grep<cr>
 
 " Resize window
 nnoremap <C-L> :vertical resize +5<CR>
