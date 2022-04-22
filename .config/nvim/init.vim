@@ -149,7 +149,6 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'hrsh7th/cmp-vsnip'
     Plug 'hrsh7th/nvim-vsnip'
 
-
     " Telescope
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
@@ -181,7 +180,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', 'bashls', 'yamlls', 'ansiblels' }
+local servers = { 'pyright', 'bashls', 'ansiblels' }
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup {
     on_attach = on_attach,
@@ -192,6 +191,17 @@ for _, lsp in pairs(servers) do
   }
 end
 
+require'lspconfig'.yamlls.setup{
+  settings = {
+    json = {
+      schemas = {
+          ansible = 'https://github.com/ansible/schemas/blob/main/f/ansible.json',
+          kubernetes =  'https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.22.1-standalone/all.json'
+      }
+    },
+  }
+}
+
 -- luasnip setup
 local luasnip = require 'luasnip'
 
@@ -201,7 +211,6 @@ cmp.setup {
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
-
     end,
   },
   mapping = cmp.mapping.preset.insert({
@@ -294,7 +303,7 @@ let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-go', 'CodeLLDB', 'vscode
 " Theme
 """"""""""""""""""""""""""""""""
 "colorscheme gruvbox
-" colorscheme default
+"colorscheme default
 colorscheme dracula
 let g:gruvbox_invert_selection='0'
 let g:gruvbox_contrast_dark = 'hard'
@@ -368,6 +377,7 @@ vnoremap <S-Tab> <
 nmap <Leader>e <cmd>Telescope buffers<cr>
 nmap <Leader>w <cmd>Telescope find_files<cr>
 nmap <Leader>q <cmd>Telescope live_grep<cr>
+nmap <Leader>g <cmd>Telescope git_branches<cr>
 
 " Resize window
 nnoremap <C-L> :vertical resize +5<CR>
@@ -452,8 +462,8 @@ map <F4> :setlocal spell! spelllang=pl<CR>
 """"""""""""""""""""""""""""""""
 
 " Ansible
-au BufRead,BufNewFile *.yml set filetype=yaml.ansible
-autocmd BufWritePre *.yml :Prettier <CR>
+au BufRead,BufNewFile *.yaml,*.yml if search('hosts:\|tasks:', 'nw') | set ft=yaml.ansible | endif
+autocmd BufWritePre *.yaml,*.yml :Prettier <CR>
 
 " Bash
 autocmd FileType sh
