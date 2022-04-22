@@ -137,12 +137,18 @@ call plug#begin('~/.config/nvim/plugged')
 
     " LSP
     Plug 'neovim/nvim-lspconfig'
-    Plug 'neovim/nvim-lspconfig'
     Plug 'hrsh7th/nvim-cmp'
+    Plug 'hrsh7th/cmp-buffer'
+    Plug 'hrsh7th/cmp-path'
+    Plug 'hrsh7th/cmp-cmdline'
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'saadparwaiz1/cmp_luasnip'
     Plug 'L3MON4D3/LuaSnip'
     Plug 'sbdchd/neoformat'
+
+    Plug 'hrsh7th/cmp-vsnip'
+    Plug 'hrsh7th/nvim-vsnip'
+
 
     " Telescope
     Plug 'nvim-lua/plenary.nvim'
@@ -175,7 +181,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', 'bashls' }
+local servers = { 'pyright', 'bashls', 'yamlls', 'ansiblels' }
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup {
     on_attach = on_attach,
@@ -195,6 +201,7 @@ cmp.setup {
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
+
     end,
   },
   mapping = cmp.mapping.preset.insert({
@@ -227,9 +234,30 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
+    { name = 'vsnip' },
+    { name = 'ultisnips' },
+    { name = 'snippy' },
+    { name = 'path' }
   },
 }
 
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
+
+cmp.setup.cmdline('/', {
+
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' }
+  }
+})
 EOF
 
 " Neoformat
@@ -237,6 +265,12 @@ let g:neoformat_try_formatprg = 1
 let g:neoformat_basic_format_trim = 1
 let g:neoformat_only_msg_on_error = 1
 autocmd BufWritePre * undojoin | Neoformat
+let g:neoformat_python_black = {
+    \ 'exe': 'black',
+    \ 'stdin': 1,
+    \ 'args': ['--line-length', '80', '-q', '-'],
+    \ }
+let g:neoformat_enabled_python = ['black']
 
 " Ebuild
 let g:shfmt_opt="-ci"
