@@ -354,8 +354,8 @@ map <F4> :setlocal spell! spelllang=pl<CR>
 """"""""""""""""""""""""""""""""
 
 " Ansible
-au BufRead,BufNewFile *.yml set filetype=yaml.ansible
-autocmd BufWritePre *.yml :Prettier <CR>
+au BufRead,BufNewFile *.yaml,*.yml if search('hosts:\|tasks:', 'nw') | set ft=yaml.ansible | endif
+au BufWritePre *.yaml,*.yml :Prettier <CR>
 let g:coc_filetype_map = {
   \ 'yaml.ansible': 'ansible',
   \ }
