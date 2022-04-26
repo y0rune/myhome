@@ -137,10 +137,13 @@ call plug#begin('~/.config/nvim/plugged')
     " Debug
     Plug 'puremourning/vimspector'
     Plug 'mfussenegger/nvim-dap'
+
+    " Git Blame
+    Plug 'zivyangll/git-blame.vim'
 call plug#end()
 
 " Coc
-let g:coc_global_extensions = ['coc-docker', 'coc-java', '@yaegassy/coc-ansible', 'coc-solargraph', 'coc-go', 'coc-yaml', 'coc-pyright', 'coc-json' , 'coc-markdownlint' , 'coc-sh', 'coc-prettier', 'coc-diagnostic', 'coc-perl']
+let g:coc_global_extensions = ['coc-pairs', 'coc-docker', 'coc-java', '@yaegassy/coc-ansible', 'coc-solargraph', 'coc-go', 'coc-yaml', 'coc-pyright', 'coc-json' , 'coc-markdownlint' , 'coc-sh', 'coc-prettier', 'coc-diagnostic', 'coc-perl']
 
 inoremap <silent><expr> <Nul> coc#refresh()
 
