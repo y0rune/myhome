@@ -194,10 +194,11 @@ end
 require'lspconfig'.yamlls.setup{
   settings = {
     json = {
-      schemas = {
-          ansible = 'https://github.com/ansible/schemas/blob/main/f/ansible.json',
-          kubernetes =  'https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.22.1-standalone/all.json'
-      }
+        schemas = {
+            ["https://raw.githubusercontent.com/quantumblacklabs/kedro/develop/static/jsonschema/kedro-catalog-0.17.json"]= "conf/**/*catalog*",
+            ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+            ["https://github.com/ansible/schemas/blob/main/f/ansible.json"] = "*.yaml,*.yml"
+        }
     },
   }
 }
