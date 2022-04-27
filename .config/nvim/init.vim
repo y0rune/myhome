@@ -247,7 +247,8 @@ cmp.setup {
     { name = 'vsnip' },
     { name = 'ultisnips' },
     { name = 'snippy' },
-    { name = 'path' }
+    { name = 'path' },
+    { name = 'buffer' }
   },
 }
 
