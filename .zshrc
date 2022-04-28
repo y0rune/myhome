@@ -138,3 +138,6 @@ fi
 # Resolve problem with
 # zsh: no matches found
 setopt +o nomatch
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
