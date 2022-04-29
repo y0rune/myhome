@@ -282,7 +282,12 @@ cmp.setup.cmdline('/', {
     { name = 'buffer' }
   }
 })
+
 EOF
+
+" Added popout window to see diagnostic
+set updatetime=250
+autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})
 
 " Neoformat
 let g:neoformat_try_formatprg = 1
