@@ -198,6 +198,11 @@ for _, lsp in pairs(servers) do
   }
 end
 
+-- Handlers when you are in the insert mode you see the errors
+vim.lsp.handlers["textDocument/publishDiagnostics"] =
+    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
+                 {update_in_insert = true})
+
 require'lspconfig'.yamlls.setup{
   settings = {
     json = {
