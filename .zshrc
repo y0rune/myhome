@@ -84,7 +84,7 @@ alias gcommitw="git commit --author='Marcin Wozniak <marcin.wozniak@wundermantho
 alias gdel="git push origin --delete"
 alias gadd="git add"
 alias gpush="git push"
-alias gpull="git pull; git submodule foreach git pull origin master; git submodule foreach git pull origin main"
+alias gpull="git pull; git submodule init; git submodule update; git submodule status"
 alias gstatus="git status -s"
 alias gst="git status -s"
 alias gdiff="git diff"

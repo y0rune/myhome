@@ -103,9 +103,6 @@ call plug#begin('~/.config/nvim/plugged')
     " CSS
     Plug 'ap/vim-css-color'
 
-    " coc
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
     " Copilot
     Plug 'github/copilot.vim'
 
@@ -138,14 +135,174 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'puremourning/vimspector'
     Plug 'mfussenegger/nvim-dap'
 
-    " Git Blame
-    Plug 'zivyangll/git-blame.vim'
+    " LSP
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'hrsh7th/nvim-cmp'
+    Plug 'hrsh7th/cmp-buffer'
+    Plug 'hrsh7th/cmp-path'
+    Plug 'hrsh7th/cmp-cmdline'
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'saadparwaiz1/cmp_luasnip'
+    Plug 'L3MON4D3/LuaSnip'
+    Plug 'sbdchd/neoformat'
+
+    Plug 'hrsh7th/cmp-vsnip'
+    Plug 'hrsh7th/nvim-vsnip'
+
+    " Telescope
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim'
 call plug#end()
 
-" Coc
-let g:coc_global_extensions = ['coc-pairs', 'coc-docker', 'coc-java', '@yaegassy/coc-ansible', 'coc-solargraph', 'coc-go', 'coc-yaml', 'coc-pyright', 'coc-json' , 'coc-markdownlint' , 'coc-sh', 'coc-prettier', 'coc-diagnostic', 'coc-perl']
+" LUA
+lua<<EOF
+local opts = { noremap=true, silent=true }
 
-inoremap <silent><expr> <Nul> coc#refresh()
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+local lspconfig = require('lspconfig')
+
+local on_attach = function(client, bufnr)
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  --vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  --vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  --vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  --vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  --vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+end
+
+-- LSP settings (for overriding per client)
+local handlers =  {
+  ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border}),
+  ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border }),
+}
+
+-- Use a loop to conveniently call 'setup' on multiple servers and
+-- map buffer local keybindings when the language server attaches
+local servers = { 'pyright', 'bashls', 'ansiblels' }
+for _, lsp in pairs(servers) do
+  require('lspconfig')[lsp].setup {
+    on_attach = on_attach,
+    handlers=handlers,
+    capabilities = capabilities,
+    flags = {
+      debounce_text_changes = 150,
+    }
+  }
+end
+
+-- Handlers when you are in the insert mode you see the errors
+vim.lsp.handlers["textDocument/publishDiagnostics"] =
+    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
+                 {update_in_insert = true})
+
+-- Setup a yamlls plugin
+require'lspconfig'.yamlls.setup{
+  settings = {
+    json = {
+        schemas = {
+            ["https://raw.githubusercontent.com/quantumblacklabs/kedro/develop/static/jsonschema/kedro-catalog-0.17.json"]= "conf/**/*catalog*",
+            ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+            ["https://github.com/ansible/schemas/blob/main/f/ansible.json"] = "*.yaml,*.yml"
+        }
+    },
+  }
+}
+
+-- luasnip setup
+local luasnip = require 'luasnip'
+
+-- nvim-cmp setup
+local cmp = require 'cmp'
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-a>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-s>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+  }),
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+    { name = 'vsnip' },
+    { name = 'ultisnips' },
+    { name = 'snippy' },
+    { name = 'path' },
+    { name = 'buffer' }
+  },
+}
+
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
+
+cmp.setup.cmdline('/', {
+
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+EOF
+
+" Added popout window to see diagnostic
+set updatetime=250
+autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})
+
+" Neoformat
+let g:neoformat_try_formatprg = 1
+let g:neoformat_basic_format_trim = 1
+let g:neoformat_only_msg_on_error = 1
+autocmd BufWritePre * undojoin | Neoformat
+let g:neoformat_python_black = {
+    \ 'exe': 'black',
+    \ 'stdin': 1,
+    \ 'args': ['--line-length', '80', '-q', '-'],
+    \ }
+let g:neoformat_enabled_python = ['black']
+
+" Ebuild
+let g:shfmt_opt="-ci"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -166,7 +323,7 @@ let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-go', 'CodeLLDB', 'vscode
 " Theme
 """"""""""""""""""""""""""""""""
 "colorscheme gruvbox
-" colorscheme default
+"colorscheme default
 colorscheme dracula
 let g:gruvbox_invert_selection='0'
 let g:gruvbox_contrast_dark = 'hard'
@@ -198,19 +355,6 @@ function! StatuslineGit()
     return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
 endfunction
 
-function! StatusDiagnostic() abort
-  let info = get(b:, 'coc_diagnostic_info', {})
-  if empty(info) | return '' | endif
-  let msgs = []
-  if get(info, 'error', 0)
-    call add(msgs, 'E' . info['error'])
-  endif
-  if get(info, 'warning', 0)
-    call add(msgs, 'W' . info['warning'])
-  endif
-  return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
-endfunction
-
 set statusline=
 set statusline+=%#IncSearch#
 set statusline+=%{&filetype!=#''?'\ \ ['.&filetype.']\ ':'\ '}
@@ -218,8 +362,6 @@ set statusline+=%{&modified?'[+]\ ':''}
 set statusline+=%#CursorLineNr#
 set statusline+=\ %F
 set statusline+=%= "Right side settings
-set statusline+=%#warningmsg#
-set statusline+=%{StatusDiagnostic()!=#''?'\ '.StatusDiagnostic():''}
 set statusline+=%#CursorLineNr#
 set statusline+=%{StatuslineGit()}
 set statusline+=%#Search#
@@ -234,19 +376,7 @@ set completeopt-=preview
 " Keyboard shortcuts
 """"""""""""""""""""""""""""""""
 let mapleader = "\<Space>"
-nmap <leader>a :CocAction<CR>
-nmap <leader>d :CocDiagnostics<CR>
 nmap <leader>2 :w!<cr>
-
-" Go to definition
-nmap <leader>gd <Plug>(coc-definition)
-nmap <leader>gy <Plug>(coc-type-definition)
-nmap <leader>gi <Plug>(coc-implementation)
-nmap <leader>gr <Plug>(coc-references)
-nmap <leader>rr <Plug>(coc-rename)
-nmap <silent> <leader>gp <Plug>(coc-diagnostic-prev)
-nmap <silent> <leader>gn <Plug>(coc-diagnostic-next)
-nnoremap <leader>cr :CocRestart
 
 " Adding commentary
 xmap <leader>c  <Plug>Commentary
@@ -263,10 +393,11 @@ nmap <C-_> <Plug>CommentaryLine
 vnoremap <Tab> >
 vnoremap <S-Tab> <
 
-" FZF
-nmap <Leader>e :Buffers<CR>
-nmap <Leader>q :Rg<CR>
-nmap <Leader>w :Files<CR>
+" Telescope
+nmap <Leader>e <cmd>Telescope buffers<cr>
+nmap <Leader>w <cmd>Telescope find_files<cr>
+nmap <Leader>q <cmd>Telescope live_grep<cr>
+nmap <Leader>g <cmd>Telescope git_branches<cr>
 
 " Resize window
 nnoremap <C-L> :vertical resize +5<CR>
@@ -284,13 +415,7 @@ nnoremap <Leader><F5> :edit! <CR>
 
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-" Tab in the coc to help select right autocomplete
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-
-"" Moving line up or down using alt
+" Moving line up or down using alt
 nnoremap <A-Up> :m-2<CR>
 nnoremap <A-Down> :m+<CR>
 inoremap <A-Up> <Esc>:m-2<CR>
@@ -358,10 +483,7 @@ map <F4> :setlocal spell! spelllang=pl<CR>
 
 " Ansible
 au BufRead,BufNewFile *.yaml,*.yml if search('hosts:\|tasks:', 'nw') | set ft=yaml.ansible | endif
-au BufWritePre *.yaml,*.yml :Prettier <CR>
-let g:coc_filetype_map = {
-  \ 'yaml.ansible': 'ansible',
-  \ }
+autocmd BufWritePre *.yaml,*.yml :Prettier <CR>
 
 " Bash
 autocmd FileType sh
@@ -392,7 +514,6 @@ autocmd BufRead,BufNewFile *.yaml let g:indentLine_char = '⦙'
 
 " Go
 autocmd BufRead *.go set noexpandtab
-autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
 
 " Conf
 au BufNewFile,BufRead *.conf setfiletype conf
