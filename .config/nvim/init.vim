@@ -113,9 +113,6 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'pearofducks/ansible-vim', { 'do': './UltiSnips/generate.sh' }
     Plug 'Yggdroot/indentLine'
 
-    " GoLang
-    Plug 'fatih/vim-go'
-
     " Multiple cursors
     Plug 'terryma/vim-multiple-cursors'
 
@@ -186,7 +183,7 @@ local handlers =  {
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', 'bashls', 'ansiblels' }
+local servers = { 'pyright', 'bashls', 'ansiblels', 'gopls' }
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup {
     on_attach = on_attach,
@@ -214,6 +211,33 @@ require'lspconfig'.yamlls.setup{
         }
     },
   }
+}
+
+-- Setup GoLang
+require'lspconfig'.gopls.setup {
+    cmd = {"gopls", "serve"},
+    filetypes = {"go", "gomod"},
+    on_attach = on_attach,
+    handlers=handlers,
+    capabilities = capabilities,
+    settings = {
+		gopls = {
+			analyses = {
+				unusedparams = true,
+			},
+			staticcheck = true,
+			linksInHover = false,
+			codelenses = {
+				generate = true,
+				gc_details = true,
+				regenerate_cgo = true,
+				tidy = true,
+				upgrade_depdendency = true,
+				vendor = true,
+			},
+			usePlaceholders = true,
+		},
+    },
 }
 
 -- luasnip setup
@@ -282,6 +306,9 @@ cmp.setup.cmdline('/', {
     { name = 'buffer' }
   }
 })
+
+require'nvim-tree'.setup {
+}
 
 EOF
 
