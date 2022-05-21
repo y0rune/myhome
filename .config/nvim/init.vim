@@ -84,9 +84,7 @@ call plug#begin('~/.config/nvim/plugged')
     " Markdown
     Plug 'tpope/vim-markdown'
 
-    " Nerd Tree
-    Plug 'preservim/nerdtree'
-    Plug 'ryanoasis/vim-devicons'
+    " Live-preview
     Plug 'nmante/vim-latex-live-preview'
 
     " Goyo plugin for writing mutt mail
@@ -149,6 +147,10 @@ call plug#begin('~/.config/nvim/plugged')
     " Telescope
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
+
+    " Tree
+    Plug 'kyazdani42/nvim-web-devicons'
+    Plug 'kyazdani42/nvim-tree.lua'
 call plug#end()
 
 " LUA
@@ -497,7 +499,9 @@ let g:multi_cursor_quit_key            = '<Esc>'
 
 " Others
 nnoremap ee :!mupdf $(echo % \| sed 's/tex$/pdf/') & disown<CR><CR>
-map <C-d> :NERDTreeToggle<CR>
+map <C-d> :NvimTreeToggle<CR>
+nnoremap <leader>r :NvimTreeRefresh<CR>
+nnoremap <leader>n :NvimTreeFindFile<CR>
 nnoremap <silent> <C-t> :tabnew <CR>
 nnoremap <F11> :Goyo <CR>
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
