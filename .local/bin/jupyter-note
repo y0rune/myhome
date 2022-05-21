@@ -1,0 +1,10 @@
+#!/bin/bash
+docker stop "$(docker ps --all | grep -i jupyter | awk '{print $1}')" >/dev/null
+docker rm "$(docker ps --all | grep -i jupyter | awk '{print $1}')" >/dev/null
+docker pull jupyter/scipy-notebook:latest
+docker run \
+    --rm \
+    -p 8888:8888 \
+    -e JUPYTER_ENABLE_LAB=yes \
+    -v "$HOME/MEGA/Documents/Collage/":/home/jovyan/ \
+    jupyter/scipy-notebook
