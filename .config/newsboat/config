@@ -29,9 +29,9 @@ bind-key h quit
 bind-key ESC quit
 
 highlight all "====.*====" yellow
-color listnormal cyan default
+color listnormal default default
 color listfocus black yellow standout bold
-color listnormal_unread blue default
+color listnormal_unread cyan default
 color listfocus_unread yellow default bold
 color info red black bold
 color article white default bold
