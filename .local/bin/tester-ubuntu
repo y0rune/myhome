@@ -1,17 +1,32 @@
 #!/bin/bash
-docker stop "$(docker ps --all | grep -i ubuntu | awk '{print $1}')" > /dev/null
-docker rm "$(docker ps --all | grep -i ubuntu | awk '{print $1}')" > /dev/null
-docker pull jrei/systemd-ubuntu:latest
+set -x
+
+# Resolving problem with systemd in mac
+# # Stop running Docker
+# test -z "$(docker ps -q 2>/dev/null)" && osascript -e 'quit app "Docker"'
+# # Install jq and moreutils so we can merge into the existing json file
+# brew install jq moreutils
+# # Add the needed cgroup config to docker settings.json
+# echo '{"deprecatedCgroupv1": true}' |
+#     jq -s '.[0] * .[1]' ~/Library/Group\ Containers/group.com.docker/settings.json - |
+#     sponge ~/Library/Group\ Containers/group.com.docker/settings.json
+# # Restart docker desktop
+# open --background -a Docker
+
+docker stop "$(docker ps --all | grep -i ubuntu | awk '{print $1}')" >/dev/null
+docker rm "$(docker ps --all | grep -i ubuntu | awk '{print $1}')" >/dev/null
+docker pull jrei/systemd-ubuntu:22.04
 docker run \
-	-d \
-	-v $HOME/git/dev:/opt \
-	--tmpfs /tmp \
-	--tmpfs /run \
-	--tmpfs /run/lock \
-	--privileged \
-	-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
-	jrei/systemd-ubuntu
-container="$(docker ps --all | grep -i ubuntu | awk '{print $1}')"
-sleep 15 && docker exec -it "$container" /bin/bash
-docker stop "$container" > /dev/null
-docker rm "$container" > /dev/null
+    -d \
+    --name systemd-ubuntu \
+    -v "$HOME/git/dev":/opt \
+    --tmpfs /tmp \
+    --tmpfs /run \
+    --tmpfs /run/lock \
+    --privileged \
+    -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
+    jrei/systemd-ubuntu:22.04
+# container="$(docker ps --all | grep -i ubuntu | awk '{print $1}')"
+# sleep 15 && docker exec -it "$container" /bin/bash
+# docker stop "$container" >/dev/null
+# docker rm "$container" >/dev/null
