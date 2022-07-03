@@ -124,6 +124,7 @@ export GOPATH=$HOME/golang
 export GOROOT=/usr/local/opt/go/libexec
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
+export PATH=$PATH:$HOME/.gem/ruby/2.6.0/bin
 [ -d $HOME/repo/fortigate/bin ] && export PATH=$HOME/repo/fortigate/bin:$PATH
 export HISTTIMEFORMAT="%F %T "
 
