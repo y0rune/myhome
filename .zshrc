@@ -77,7 +77,7 @@ alias emerge="sudo emerge"
 alias channel-check='sudo iwlist wlan0 scan | egrep -i "essid|frequency"'
 alias grep="grep"
 alias egrep="egrep"
-[[ "$(uname)" == "Darwin" ]] && alias ls="ls -Gh" || alias ls="ls -h --color=auto"
+alias ls="ls -h --color=auto"
 alias ll='ls -lha'
 alias cp='cp -v'
 alias mv='mv -v'
@@ -110,8 +110,7 @@ alias vim="nvim -p"
 alias denpl="trans en:pl"
 alias dplen="trans pl:en"
 alias notes="nvim $HOME/git/notes/index.md"
-alias mgr="cd $HOME/Documents/Mega-Documents/Magisterka-Marcin/Semestr1/"
-[[ "$(uname)" == "Darwin" ]] && alias mpv="mpv --no-resume-playback" || alias mpv="__NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0 __GLX_VENDOR_LIBRARY_NAME=nvidia __GL_SYNC_TO_VBLANK=0 mpv --vo=x11 --hwdec=no --ytdl-raw-options="yes-playlist=" --no-resume-playback --ytdl-format='bestvideo[height<=?1080]+bestaudio/best'"
+alias mpv="__NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0 __GLX_VENDOR_LIBRARY_NAME=nvidia __GL_SYNC_TO_VBLANK=0 mpv --vo=x11 --hwdec=no --ytdl-raw-options="yes-playlist=" --no-resume-playback --ytdl-format='bestvideo[height<=?1080]+bestaudio/best'"
 alias aria2c="aria2c --seed-time=0 --disable-ipv6 --max-upload-limit=1k"
 alias lg="lazygit"
 alias update-brew="brew upgrade --cask"
@@ -131,6 +130,11 @@ export HISTTIMEFORMAT="%F %T "
 
 # Export for Mac
 if [[ "$(uname)" == "Darwin" ]]; then
+    # Resolve problem with GOPATH
+    # https://stackoverflow.com/questions/66284870/go-get-not-downloading-to-src-folder
+    export GO111MODULE=off
+
+    # Other export
     export PATH="/usr/local/opt/openssl@3/bin:$PATH"
     export PATH=$PATH:$HOME/Library/Python/3.9/bin
     export LDFLAGS="-L/usr/local/opt/openssl@3/lib"
@@ -139,10 +143,8 @@ if [[ "$(uname)" == "Darwin" ]]; then
 
     alias lsblk="diskutil list"
     alias Update="brew update; brew upgrade"
-
-    # Resolve problem with GOPATH
-    # https://stackoverflow.com/questions/66284870/go-get-not-downloading-to-src-folder
-    export GO111MODULE=off
+    alias ls="ls -Gh"
+    alias mpv="mpv --no-resume-playback"
 fi
 
 # Resolve problem with
