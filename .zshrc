@@ -145,6 +145,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     alias Update="brew update; brew upgrade"
     alias ls="ls -Gh"
     alias mpv="mpv --no-resume-playback"
+    alias code="open -a 'Visual Studio Code'"
 fi
 
 # Resolve problem with
