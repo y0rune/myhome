@@ -104,9 +104,6 @@ alias gnew="git checkout -b"
 alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches"
 alias cal="cal -3"
 alias code="vscodium-bin"
-alias vpn="sudo /root/.local/bin/protonvpn c -f"
-alias vpnch="sudo /root/.local/bin/protonvpn c --cc CH"
-alias vpnd="sudo /root/.local/bin/protonvpn d"
 alias tv="~/MEGA/tv/tv.sh"
 alias newswork="newsboat --url=$HOME/.config/newsboat/urlswork"
 alias vim="nvim -p"
@@ -118,7 +115,6 @@ alias mgr="cd $HOME/Documents/Mega-Documents/Magisterka-Marcin/Semestr1/"
 alias aria2c="aria2c --seed-time=0 --disable-ipv6 --max-upload-limit=1k"
 alias lg="lazygit"
 alias update-brew="brew upgrade --cask"
-alias cl="cd $HOME/Documents/Collage/Semestr2"
 alias irc="ssh mikrus -t 'screen -r'"
 alias rsync="rsync --progress"
 
@@ -126,7 +122,7 @@ alias rsync="rsync --progress"
 export PATH=$HOME/.local/bin:$PATH
 export PATH=/sbin:$PATH
 export GOPATH=$HOME/golang
-export GOROOT=/usr/local/opt/go/libexec
+export GOROOT=/usr/lib/go
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:$HOME/.gem/ruby/2.6.0/bin
