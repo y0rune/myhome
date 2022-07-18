@@ -3,8 +3,13 @@
 CONFIG=$HOME/.config
 
 parse_git_branch() {
-    command=$(git symbolic-ref --short HEAD 2> /dev/null)
-    [ -z $command ] && echo -e "$ " || echo -e "$(git symbolic-ref --short HEAD 2> /dev/null) $ "
+    command=$(git branch \
+        2> /dev/null \
+        | sed -n -e 's/^\* \(.*\)/\1/p' \
+        | awk 'NF{print $NF}' \
+        | sed 's/)//g' \
+        2> /dev/null)
+    [ -z $command ] && echo -e "$ " || echo -e "$command $ "
 }
 
 gbranch() {
