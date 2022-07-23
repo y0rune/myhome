@@ -480,6 +480,11 @@ vnoremap f <C-v>0I
 nnoremap <F7> :tabprevious<CR>
 nnoremap <F8> :tabnext<CR>
 
+nnoremap <C-t> :tabnew<CR>
+inoremap <F7>  <Esc>:tabprevious<CR>i
+inoremap <F8>  <Esc>:tabnext<CR>i
+inoremap <C-t> <Esc>:tabnew<CR>
+
 " Better moving
 nnoremap J }
 nnoremap K {
@@ -506,7 +511,6 @@ nnoremap ee :!mupdf $(echo % \| sed 's/tex$/pdf/') & disown<CR><CR>
 map <C-d> :NvimTreeToggle<CR>
 nnoremap <leader>r :NvimTreeRefresh<CR>
 nnoremap <leader>n :NvimTreeFindFile<CR>
-nnoremap <silent> <C-t> :tabnew <CR>
 nnoremap <F11> :Goyo <CR>
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 map <F3> :setlocal spell! spelllang=en_gb<CR>
