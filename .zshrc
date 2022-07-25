@@ -137,6 +137,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     # Other export
     export PATH="/usr/local/opt/openssl@3/bin:$PATH"
     export PATH=$PATH:$HOME/Library/Python/3.9/bin
+    export PATH=$PATH:/usr/local/opt/python@3.9/Frameworks/Python.framework/Versions/3.9/bin
     export LDFLAGS="-L/usr/local/opt/openssl@3/lib"
     export CPPFLAGS="-I/usr/local/opt/openssl@3/include"
     export PKG_CONFIG_PATH="/usr/local/opt/openssl@3/lib/pkgconfig"
