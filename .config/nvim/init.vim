@@ -185,7 +185,7 @@ local handlers =  {
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', 'bashls', 'ansiblels', 'gopls', 'solargraph'}
+local servers = { 'pyright', 'bashls', 'ansiblels', 'gopls', 'solargraph', 'terraformls'}
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup {
     on_attach = on_attach,
@@ -322,7 +322,7 @@ autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=fals
 let g:neoformat_try_formatprg = 1
 let g:neoformat_basic_format_trim = 1
 let g:neoformat_only_msg_on_error = 1
-autocmd BufWritePre * undojoin | Neoformat
+autocmd BufWritePre * silent! undojoin | Neoformat
 let g:neoformat_python_black = {
     \ 'exe': 'black',
     \ 'stdin': 1,
@@ -407,6 +407,10 @@ set completeopt-=preview
 let mapleader = "\<Space>"
 nmap <leader>2 :w!<cr>
 
+" Adding print message
+autocmd FileType python nmap <leader>f i print(--------DEBUG--------)<CR>print()<CR>print(--------END DEBUG--------)<UP><LEFT>
+autocmd FileType sh nmap <leader>f i echo -e "--------DEBUG--------"<CR>echo -e ""<CR>echo -e "--------END DEBUG--------"<UP><LEFT>
+
 " Adding commentary
 xmap <leader>c  <Plug>Commentary
 nmap <leader>c  <Plug>Commentary
@@ -476,6 +480,11 @@ vnoremap f <C-v>0I
 nnoremap <F7> :tabprevious<CR>
 nnoremap <F8> :tabnext<CR>
 
+nnoremap <C-t> :tabnew<CR>
+inoremap <F7>  <Esc>:tabprevious<CR>i
+inoremap <F8>  <Esc>:tabnext<CR>i
+inoremap <C-t> <Esc>:tabnew<CR>
+
 " Better moving
 nnoremap J }
 nnoremap K {
@@ -502,7 +511,6 @@ nnoremap ee :!mupdf $(echo % \| sed 's/tex$/pdf/') & disown<CR><CR>
 map <C-d> :NvimTreeToggle<CR>
 nnoremap <leader>r :NvimTreeRefresh<CR>
 nnoremap <leader>n :NvimTreeFindFile<CR>
-nnoremap <silent> <C-t> :tabnew <CR>
 nnoremap <F11> :Goyo <CR>
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 map <F3> :setlocal spell! spelllang=en_gb<CR>
@@ -552,6 +560,10 @@ au BufNewFile,BufRead *.conf setfiletype conf
 " Automatically deletes all trailing whitespace and newlines at end of file on save.
 autocmd BufWritePre * %s/\s\+$//e
 autocmd BufWritepre * %s/\n\+\%$//e
+
+" Source: https://vi.stackexchange.com/questions/20077/automatically-highlight-all-occurrences-of-the-selected-text-in-visual-mode
+" highlight the visual selection after pressing enter.
+xnoremap <silent> <cr> "*y:silent! let searchTerm = '\V'.substitute(escape(@*, '\/'), "\n", '\\n', "g") <bar> let @/ = searchTerm <bar> echo '/'.@/ <bar> call histadd("search", searchTerm) <bar> set hls<cr>
 
 """"""""""""""""""""""""""""""""
 " FZF

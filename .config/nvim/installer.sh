@@ -1,10 +1,66 @@
 #!/bin/bash
 
-npm -g i pyright --force
-npm -g i bash-language-server --force
-npm -g i yaml-language-server --force
-npm -g i @ansible/ansible-language-server --force
-GO111MODULE=on go install mvdan.cc/sh/v3/cmd/shfmt@latest
-GO111MODULE=on go install golang.org/x/tools/gopls@latest
-pip install black
-pip3 install black
+function timestamp() {
+    echo "[+] $(date +'%F %T') [INFO] $*"
+}
+
+function err() {
+    echo "[-] $(date +'%F %T') [ERROR] $*" >&2
+}
+
+function command_start() {
+    timestamp "Command $* has been started."
+    if ! "$*"; then
+        err "Command $* went wrong."
+        exit
+    fi
+    timestamp "Command $* has been ended."
+}
+
+function install_pyright() {
+    # Install pyright
+    sudo npm -g i pyright --force
+}
+
+function install_bash-language-server() {
+    # Install bash-language-server
+    sudo npm -g i bash-language-server --force
+}
+
+function install_yaml-language-server() {
+    # Install yaml-language-server
+    sudo npm -g i yaml-language-server --force
+}
+
+function install_ansible-language-server() {
+    # Install ansible-language-server
+    sudo npm -g i @ansible/ansible-language-server --force
+}
+
+function install_shfmt() {
+    # Install shfmt
+    GO111MODULE=on go install mvdan.cc/sh/v3/cmd/shfmt@latest
+}
+
+function install_gopls() {
+    # Install gopls
+    GO111MODULE=on go install golang.org/x/tools/gopls@latest
+}
+
+function install_black() {
+    # Install black
+    pip install black
+    pip3 install black
+}
+
+function main() {
+    command_start install_pyright
+    command_start install_bash-language-server
+    command_start install_yaml-language-server
+    command_start install_ansible-language-server
+    command_start install_shfmt
+    command_start install_gopls
+    command_start install_black
+}
+
+main
