@@ -3,8 +3,13 @@
 CONFIG=$HOME/.config
 
 parse_git_branch() {
-    command=$(git symbolic-ref --short HEAD 2> /dev/null)
-    [ -z $command ] && echo -e "$ " || echo -e "$(git symbolic-ref --short HEAD 2> /dev/null) $ "
+    command=$(git branch \
+        2> /dev/null \
+        | sed -n -e 's/^\* \(.*\)/\1/p' \
+        | awk 'NF{print $NF}' \
+        | sed 's/)//g' \
+        2> /dev/null)
+    [ -z $command ] && echo -e "$ " || echo -e "$command $ "
 }
 
 gbranch() {
@@ -42,7 +47,7 @@ FPATH=/usr/local/share/zsh/site-functions:$FPATH
 # If command execution time above min. time, plugins will not output time.
 ZSH_COMMAND_TIME_MIN_SECONDS=10
 ZSH_COMMAND_TIME_MSG="Execution time: %s sec"
-ZSH_COMMAND_TIME_EXCLUDE=(ranger git nvim fzf vim mcedit v ssh)
+ZSH_COMMAND_TIME_EXCLUDE=(ranger git nvim fzf vim mcedit v ssh lg lazygit)
 
 export GPG_TTY=$(tty)
 # export TERM=xterm-256color
@@ -72,7 +77,7 @@ alias emerge="sudo emerge"
 alias channel-check='sudo iwlist wlan0 scan | egrep -i "essid|frequency"'
 alias grep="grep"
 alias egrep="egrep"
-[[ "$(uname)" == "Darwin" ]] && alias ls="ls -Gh" || alias ls="ls -h --color=auto"
+alias ls="ls -h --color=auto"
 alias ll='ls -lha'
 alias cp='cp -v'
 alias mv='mv -v'
@@ -99,21 +104,16 @@ alias gnew="git checkout -b"
 alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches"
 alias cal="cal -3"
 alias code="vscodium-bin"
-alias vpn="sudo /root/.local/bin/protonvpn c -f"
-alias vpnch="sudo /root/.local/bin/protonvpn c --cc CH"
-alias vpnd="sudo /root/.local/bin/protonvpn d"
 alias tv="~/MEGA/tv/tv.sh"
 alias newswork="newsboat --url=$HOME/.config/newsboat/urlswork"
 alias vim="nvim -p"
 alias denpl="trans en:pl"
 alias dplen="trans pl:en"
 alias notes="nvim $HOME/git/notes/index.md"
-alias mgr="cd $HOME/Documents/Mega-Documents/Magisterka-Marcin/Semestr1/"
-[[ "$(uname)" == "Darwin" ]] && alias mpv="mpv --no-resume-playback" || alias mpv="__NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0 __GLX_VENDOR_LIBRARY_NAME=nvidia __GL_SYNC_TO_VBLANK=0 mpv --vo=x11 --hwdec=no --ytdl-raw-options="yes-playlist=" --no-resume-playback --ytdl-format='bestvideo[height<=?1080]+bestaudio/best'"
+alias mpv="__NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0 __GLX_VENDOR_LIBRARY_NAME=nvidia __GL_SYNC_TO_VBLANK=0 mpv --vo=x11 --hwdec=no --ytdl-raw-options="yes-playlist=" --no-resume-playback --ytdl-format='bestvideo[height<=?1080]+bestaudio/best'"
 alias aria2c="aria2c --seed-time=0 --disable-ipv6 --max-upload-limit=1k"
 alias lg="lazygit"
 alias update-brew="brew upgrade --cask"
-alias cl="cd $HOME/Documents/Collage/Semestr2"
 alias irc="ssh mikrus -t 'screen -r'"
 alias rsync="rsync --progress"
 
@@ -121,7 +121,7 @@ alias rsync="rsync --progress"
 export PATH=$HOME/.local/bin:$PATH
 export PATH=/sbin:$PATH
 export GOPATH=$HOME/golang
-export GOROOT=/usr/local/opt/go/libexec
+export GOROOT=/usr/lib/go
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:$HOME/.gem/ruby/2.6.0/bin
@@ -135,18 +135,23 @@ fi
 
 # Export for Mac
 if [[ "$(uname)" == "Darwin" ]]; then
+    # Resolve problem with GOPATH
+    # https://stackoverflow.com/questions/66284870/go-get-not-downloading-to-src-folder
+    export GO111MODULE=off
+
+    # Other export
     export PATH="/usr/local/opt/openssl@3/bin:$PATH"
     export PATH=$PATH:$HOME/Library/Python/3.9/bin
+    export PATH=$PATH:/usr/local/opt/python@3.9/Frameworks/Python.framework/Versions/3.9/bin
     export LDFLAGS="-L/usr/local/opt/openssl@3/lib"
     export CPPFLAGS="-I/usr/local/opt/openssl@3/include"
     export PKG_CONFIG_PATH="/usr/local/opt/openssl@3/lib/pkgconfig"
 
     alias lsblk="diskutil list"
     alias Update="brew update; brew upgrade"
-
-    # Resolve problem with GOPATH
-    # https://stackoverflow.com/questions/66284870/go-get-not-downloading-to-src-folder
-    export GO111MODULE=off
+    alias ls="ls -Gh"
+    alias mpv="mpv --no-resume-playback"
+    alias code="open -a 'Visual Studio Code'"
 fi
 
 # Resolve problem with
