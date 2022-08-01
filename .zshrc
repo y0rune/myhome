@@ -128,6 +128,11 @@ export PATH=$PATH:$HOME/.gem/ruby/2.6.0/bin
 [ -d $HOME/repo/fortigate/bin ] && export PATH=$HOME/repo/fortigate/bin:$PATH
 export HISTTIMEFORMAT="%F %T "
 
+# Export for WSL
+if [[ "$(uname -sr)" =~ "Microsoft" ]]; then
+    export GOROOT=/usr/lib/go
+fi
+
 # Export for Mac
 if [[ "$(uname)" == "Darwin" ]]; then
     export PATH="/usr/local/opt/openssl@3/bin:$PATH"
