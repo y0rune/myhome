@@ -186,98 +186,11 @@
                             },
                             {
                                 "from": {
-                                    "key_code": "h",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "left_control",
-                                            "left_shift"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "mouse_key": {
-                                            "x": -16072
-                                        }
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "j",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "left_control",
-                                            "left_shift"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "mouse_key": {
-                                            "y": 16072
-                                        }
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "k",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "left_control",
-                                            "left_shift"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "mouse_key": {
-                                            "y": -16072
-                                        }
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "l",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "left_control",
-                                            "left_shift"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "mouse_key": {
-                                            "x": 16072
-                                        }
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
                                     "key_code": "u",
                                     "modifiers": {
                                         "mandatory": [
-                                            "left_control"
+                                            "left_control",
+                                            "left_shift"
                                         ],
                                         "optional": [
                                             "any"
@@ -296,7 +209,8 @@
                                     "key_code": "o",
                                     "modifiers": {
                                         "mandatory": [
-                                            "left_control"
+                                            "left_control",
+                                            "left_shift"
                                         ],
                                         "optional": [
                                             "any"
@@ -315,7 +229,8 @@
                                     "key_code": "h",
                                     "modifiers": {
                                         "mandatory": [
-                                            "left_control"
+                                            "left_control",
+                                            "left_shift"
                                         ],
                                         "optional": [
                                             "any"
@@ -336,7 +251,8 @@
                                     "key_code": "j",
                                     "modifiers": {
                                         "mandatory": [
-                                            "left_control"
+                                            "left_control",
+                                            "left_shift"
                                         ],
                                         "optional": [
                                             "any"
@@ -357,7 +273,8 @@
                                     "key_code": "k",
                                     "modifiers": {
                                         "mandatory": [
-                                            "left_control"
+                                            "left_control",
+                                            "left_shift"
                                         ],
                                         "optional": [
                                             "any"
@@ -378,7 +295,8 @@
                                     "key_code": "l",
                                     "modifiers": {
                                         "mandatory": [
-                                            "left_control"
+                                            "left_control",
+                                            "left_shift"
                                         ],
                                         "optional": [
                                             "any"
@@ -399,7 +317,8 @@
                                     "key_code": "q",
                                     "modifiers": {
                                         "mandatory": [
-                                            "left_control"
+                                            "left_control",
+                                            "left_shift"
                                         ],
                                         "optional": [
                                             "any"
@@ -418,7 +337,8 @@
                                     "key_code": "e",
                                     "modifiers": {
                                         "mandatory": [
-                                            "left_control"
+                                            "left_control",
+                                            "left_shift"
                                         ],
                                         "optional": [
                                             "any"
