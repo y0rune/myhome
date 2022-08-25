@@ -151,6 +151,8 @@ call plug#begin('~/.config/nvim/plugged')
     " Tree
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'kyazdani42/nvim-tree.lua'
+
+    Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
 call plug#end()
 
 " LUA
@@ -525,8 +527,12 @@ au BufRead,BufNewFile *.yaml,*.yml if search('hosts:\|tasks:', 'nw') | set ft=ya
 autocmd BufWritePre *.yaml,*.yml :Prettier <CR>
 
 " Bash
-autocmd FileType sh
-    \ autocmd BufWritePre <buffer> :Prettier <CR>
+if executable('shfmt')
+  let &l:formatprg='shfmt -i ' . &l:shiftwidth . ' -ln posix -sr -ci -s'
+endif
+
+let g:shfmt_extra_args = '-i 4 -ci -sr -s'
+let g:shfmt_fmt_on_save = 1
 
 " Python
 autocmd BufRead,BufNewFile *.py set textwidth=0
