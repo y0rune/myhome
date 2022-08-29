@@ -479,12 +479,16 @@ vnoremap F <C-v>$A
 vnoremap f <C-v>0I
 
 " Better management of tabs
+nnoremap <C-t> :tabnew<CR>
+
 nnoremap <F7> :tabprevious<CR>
 nnoremap <F8> :tabnext<CR>
-
-nnoremap <C-t> :tabnew<CR>
 inoremap <F7>  <Esc>:tabprevious<CR>i
 inoremap <F8>  <Esc>:tabnext<CR>i
+
+nnoremap <Leader>k :tabprevious<CR>
+nnoremap <Leader>j :tabnext<CR>
+
 inoremap <C-t> <Esc>:tabnew<CR>
 
 " Better moving
