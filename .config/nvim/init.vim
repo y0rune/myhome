@@ -332,8 +332,6 @@ let g:neoformat_python_black = {
     \ }
 let g:neoformat_enabled_python = ['black']
 
-" Ebuild
-let g:shfmt_opt="-ci"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -537,6 +535,7 @@ endif
 
 let g:shfmt_extra_args = '-i 4 -ci -sr -s'
 let g:shfmt_fmt_on_save = 1
+let g:shfmt_opt="-ci"
 
 " Python
 autocmd BufRead,BufNewFile *.py set textwidth=0
