@@ -1,0 +1,44 @@
+#!/bin/bash
+
+################################################################################
+#
+# Marcin Wozniak
+# y0rune@aol.com
+#
+# That script is for easier getting a Meraki network list
+#
+# shellcheck disable=1091,2048
+################################################################################
+
+set -e
+
+function timestamp() {
+    echo "[+] $(date +'%F %T') [INFO] $*"
+}
+
+function err() {
+    echo "[-] $(date +'%F %T') [ERROR] $*" >&2
+}
+
+function command_start() {
+    timestamp "Command $* has been started."
+    if ! $*; then
+        err "Command $* went wrong."
+        exit
+    fi
+    timestamp "Command $* has been ended."
+}
+
+function main() {
+    [ -z "$MERAKI_API_KEY" ] && err "Meraki Key is not set up. Please set it via export MERAKI_API_KEY=<XXXXX>"
+    [ -z "$MERAKI_ORG_ID" ] && err "Meraki Organization ID is not set up. Please set it via export MERAKI_ORG_ID=<XXXXX>"
+
+    timestamp "Getting a list of the network"
+    curl --silent \
+        -H 'Content-Type: application/json' \
+        -H 'X-Cisco-Meraki-API-Key: '"$MERAKI_API_KEY"'' \
+        https://api.meraki.com/api/v1/organizations/"$MERAKI_ORG_ID"/networks |
+        jq -M '.[] | .id + " " + .name'
+}
+
+main "$@"
