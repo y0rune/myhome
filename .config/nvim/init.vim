@@ -410,7 +410,7 @@ let mapleader = "\<Space>"
 nmap <leader>2 :w!<cr>
 
 " Adding print message
-autocmd FileType python nmap <leader>f i print(--------DEBUG--------)<CR>print()<CR>print(--------END DEBUG--------)<UP><LEFT>
+autocmd FileType python nmap <leader>f i print("--------DEBUG--------")<CR>print()<CR>print("--------END DEBUG--------")<UP><LEFT>
 autocmd FileType sh nmap <leader>f i echo -e "--------DEBUG--------"<CR>echo -e ""<CR>echo -e "--------END DEBUG--------"<UP><LEFT>
 
 " Adding commentary
