@@ -426,6 +426,8 @@ nmap <C-_> <Plug>CommentaryLine
 vnoremap <Tab> >
 vnoremap <S-Tab> <
 
+" Better word
+nmap yw vey
 " Telescope
 nmap <Leader>e <cmd>Telescope buffers<cr>
 nmap <Leader>w <cmd>Telescope find_files<cr>
