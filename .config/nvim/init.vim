@@ -428,6 +428,10 @@ vnoremap <S-Tab> <
 
 " Better word
 nmap yw vey
+
+" Select all text
+nmap <C-a> gg<S-v>G
+
 " Telescope
 nmap <Leader>e <cmd>Telescope buffers<cr>
 nmap <Leader>w <cmd>Telescope find_files<cr>
