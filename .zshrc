@@ -47,7 +47,7 @@ FPATH=/usr/local/share/zsh/site-functions:$FPATH
 # If command execution time above min. time, plugins will not output time.
 ZSH_COMMAND_TIME_MIN_SECONDS=10
 ZSH_COMMAND_TIME_MSG="Execution time: %s sec"
-ZSH_COMMAND_TIME_EXCLUDE=(ranger git nvim fzf vim mcedit v ssh lg lazygit)
+ZSH_COMMAND_TIME_EXCLUDE=(ranger git nvim fzf vim mcedit v ssh lg lazygit tmux)
 
 export GPG_TTY=$(tty)
 # export TERM=xterm-256color
