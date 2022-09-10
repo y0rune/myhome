@@ -499,6 +499,9 @@ inoremap <C-t> <Esc>:tabnew<CR>
 nnoremap J }
 nnoremap K {
 
+vnoremap J }
+vnoremap K {
+
 " Copy into system
 noremap <Leader>y "*y
 noremap <Leader>p "*p
