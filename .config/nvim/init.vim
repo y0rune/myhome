@@ -441,8 +441,8 @@ nmap <Leader>g <cmd>Telescope git_branches<cr>
 " Resize window
 nnoremap <C-L> :vertical resize +5<CR>
 nnoremap <C-H> :vertical resize -5<CR>
-nnoremap <C-J> :res +5<CR>
-nnoremap <C-K> :res -5<CR>
+nnoremap <C-J> :res -5<CR>
+nnoremap <C-K> :res +5<CR>
 
 " Split window
 nnoremap _ :vsp <CR>
@@ -498,7 +498,6 @@ inoremap <C-t> <Esc>:tabnew<CR>
 " Better moving
 nnoremap J }
 nnoremap K {
-
 vnoremap J }
 vnoremap K {
 
