@@ -324,7 +324,7 @@ autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=fals
 let g:neoformat_try_formatprg = 1
 let g:neoformat_basic_format_trim = 1
 let g:neoformat_only_msg_on_error = 1
-autocmd BufWritePre * silent! undojoin | Neoformat
+autocmd BufWritePre * silent! undojoin | Neoformat prettier
 let g:neoformat_python_black = {
     \ 'exe': 'black',
     \ 'stdin': 1,
@@ -557,9 +557,6 @@ EOF
 " Files
 """"""""""""""""""""""""""""""""
 
-" Ansible
-au BufRead,BufNewFile *.yaml,*.yml if search('hosts:\|tasks:', 'nw') | set ft=yaml.ansible | endif
-autocmd BufWritePre *.yaml,*.yml :Prettier <CR>
 
 " Bash
 if executable('shfmt')
@@ -592,6 +589,7 @@ autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<CR>
 " Yaml
 autocmd BufRead,BufNewFile *.yaml let g:indentLine_enabled = 1
 autocmd BufRead,BufNewFile *.yaml let g:indentLine_char = '⦙'
+au BufRead,BufNewFile *.yaml,*.yml if search('hosts:\|tasks:', 'nw') | set ft=yaml.ansible | endif
 
 " Go
 autocmd BufRead *.go set noexpandtab
