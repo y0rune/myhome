@@ -123,7 +123,7 @@ call plug#begin('~/.config/nvim/plugged')
     " Git tool
     Plug 'tpope/vim-fugitive'
 
-    " Preetier
+    " Prettier
     Plug 'prettier/vim-prettier'
 
     " Debug
