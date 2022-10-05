@@ -17,6 +17,10 @@ function command_start() {
     timestamp "Command $* has been ended."
 }
 
+function update_pip() {
+    python3 -m pip install --upgrade pip --user
+}
+
 function install_pyright() {
     # Install pyright
     sudo npm -g i pyright --force
@@ -51,9 +55,12 @@ function install_black() {
     # Install black
     pip install black
     pip3 install black
+function install_ansible() {
+    pip3 install --pre --user ansible ansible-lint ansible-core
 }
 
 function main() {
+    command_start update_pip
     command_start install_pyright
     command_start install_bash-language-server
     command_start install_yaml-language-server
@@ -61,6 +68,7 @@ function main() {
     command_start install_shfmt
     command_start install_gopls
     command_start install_black
+    command_start install_ansible
 }
 
 main
