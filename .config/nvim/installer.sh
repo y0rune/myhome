@@ -53,8 +53,10 @@ function install_gopls() {
 
 function install_black() {
     # Install black
-    pip install black
-    pip3 install black
+    pip install black --user
+    pip3 install black --user
+}
+
 function install_ansible() {
     pip3 install --pre --user ansible ansible-lint ansible-core
 }
