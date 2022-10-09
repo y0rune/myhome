@@ -36,11 +36,6 @@ function install_yaml-language-server() {
     sudo npm -g i yaml-language-server --force
 }
 
-function install_ansible-language-server() {
-    # Install ansible-language-server
-    sudo npm -g i @ansible/ansible-language-server --force
-}
-
 function install_shfmt() {
     # Install shfmt
     GO111MODULE=on go install mvdan.cc/sh/v3/cmd/shfmt@latest
@@ -59,6 +54,12 @@ function install_black() {
 
 function install_ansible() {
     pip3 install --pre --user ansible ansible-lint ansible-core
+}
+
+function install_ansible-language-server() {
+    # Install ansible-language-server
+    sudo npm -g i @ansible/ansible-language-server --force
+    sudo npm -g i yaml-language-server --force
 }
 
 function main() {
