@@ -153,6 +153,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'kyazdani42/nvim-tree.lua'
 
     Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
+    Plug 'zainin/vim-mikrotik'
 call plug#end()
 
 " LUA
@@ -599,6 +600,9 @@ autocmd BufWritePre *.go lua go_org_imports()
 
 " Conf
 au BufNewFile,BufRead *.conf setfiletype conf
+
+" Mikrotik
+au BufNewFile,BufRead *.mikrotik setfiletype routeros
 
 " Automatically deletes all trailing whitespace and newlines at end of file on save.
 autocmd BufWritePre * %s/\s\+$//e
