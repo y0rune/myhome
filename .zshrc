@@ -138,8 +138,8 @@ if [[ "$(uname)" == "Darwin" ]]; then
 
     # Other export
     export PATH="/usr/local/opt/openssl@3/bin:$PATH"
-    export PATH=$PATH:$HOME/Library/Python/3.9/bin
-    export PATH=$PATH:/usr/local/opt/python@3.9/Frameworks/Python.framework/Versions/3.9/bin
+    export PATH=$PATH:$HOME/Library/Python/3.10/bin
+    export PATH=$PATH:/usr/local/opt/python@3.10/Frameworks/Python.framework/Versions/3.10/bin
     export LDFLAGS="-L/usr/local/opt/openssl@3/lib"
     export CPPFLAGS="-I/usr/local/opt/openssl@3/include"
     export PKG_CONFIG_PATH="/usr/local/opt/openssl@3/lib/pkgconfig"
@@ -147,6 +147,8 @@ if [[ "$(uname)" == "Darwin" ]]; then
     export PATH=$PATH:$GOPATH/bin
     export PATH=$PATH:$GOROOT/bin
 
+    alias python3='/opt/homebrew/bin/python3.10'
+    alias pip3='/opt/homebrew/bin/pip3.10'
     alias lsblk="diskutil list"
     alias Update="brew update; brew upgrade"
     alias ls="ls -Gh"
