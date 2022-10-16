@@ -22,7 +22,7 @@ gbranch() {
 [[ "$(uname)" == "Darwin" ]] && export ZSH="$HOME/.oh-my-zsh"
 
 HISTFILE=$HOME/.history_zsh
-HISTSIZE=10000
+HISTSIZE=10000000
 SAVEHIST=10000000
 autoload -U colors && colors
 setopt PROMPT_SUBST
