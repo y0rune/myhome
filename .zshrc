@@ -150,8 +150,9 @@ if [[ "$(uname)" == "Darwin" ]]; then
 
     alias python3='/opt/homebrew/bin/python3.10'
     alias pip3='/opt/homebrew/bin/pip3.10'
+
     alias lsblk="diskutil list"
-    alias Update="brew update; brew upgrade"
+    alias Update="~/.config/nvim/installer.sh; brew update; brew upgrade"
     alias ls="ls -Gh"
     alias mpv="mpv --no-resume-playback"
     alias code="open -a 'Visual Studio Code'"
