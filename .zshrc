@@ -121,9 +121,6 @@ alias rsync="rsync --progress"
 export PATH=$HOME/.local/bin:$PATH
 export PATH=/sbin:$PATH
 export GOPATH=$HOME/golang
-export GOROOT=/usr/lib/go
-export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:$HOME/.gem/ruby/2.6.0/bin
 [ -d $HOME/repo/fortigate/bin ] && export PATH=$HOME/repo/fortigate/bin:$PATH
 export HISTTIMEFORMAT="%F %T "
@@ -146,6 +143,9 @@ if [[ "$(uname)" == "Darwin" ]]; then
     export LDFLAGS="-L/usr/local/opt/openssl@3/lib"
     export CPPFLAGS="-I/usr/local/opt/openssl@3/include"
     export PKG_CONFIG_PATH="/usr/local/opt/openssl@3/lib/pkgconfig"
+    export GOROOT="$(brew --prefix golang)/libexec"
+    export PATH=$PATH:$GOPATH/bin
+    export PATH=$PATH:$GOROOT/bin
 
     alias lsblk="diskutil list"
     alias Update="brew update; brew upgrade"
