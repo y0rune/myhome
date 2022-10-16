@@ -41,6 +41,12 @@ function install_shfmt() {
     GO111MODULE=on go install mvdan.cc/sh/v3/cmd/shfmt@latest
 }
 
+function install_shellcheck() {
+    # Install shellcheck
+    [[ "$(uname)" == "Darwin" ]] && brew install shellcheck
+    emerge shellcheck
+}
+
 function install_gopls() {
     # Install gopls
     GO111MODULE=on go install golang.org/x/tools/gopls@latest
@@ -69,6 +75,7 @@ function main() {
     command_start install_yaml-language-server
     command_start install_ansible-language-server
     command_start install_shfmt
+    command_start install_shellcheck
     command_start install_gopls
     command_start install_black
     command_start install_ansible
