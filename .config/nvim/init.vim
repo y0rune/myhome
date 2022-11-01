@@ -149,8 +149,8 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'nvim-telescope/telescope.nvim'
 
     " Tree
-    Plug 'kyazdani42/nvim-web-devicons'
-    Plug 'kyazdani42/nvim-tree.lua'
+    Plug 'nvim-tree/nvim-web-devicons'
+    Plug 'nvim-tree/nvim-tree.lua'
 
     Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
     Plug 'zainin/vim-mikrotik'
@@ -313,8 +313,8 @@ cmp.setup.cmdline('/', {
   }
 })
 
-require'nvim-tree'.setup {
-}
+require("nvim-tree").setup({
+})
 
 EOF
 
