@@ -12,7 +12,6 @@ function command_start() {
     timestamp "Command $* has been started."
     if ! "$*"; then
         err "Command $* went wrong."
-        exit
     fi
     timestamp "Command $* has been ended."
 }
@@ -44,7 +43,7 @@ function install_shfmt() {
 function install_shellcheck() {
     # Install shellcheck
     [[ "$(uname)" == "Darwin" ]] && brew install shellcheck
-    emerge shellcheck
+    sudo emerge shellcheck-bin
 }
 
 function install_gopls() {
@@ -55,11 +54,11 @@ function install_gopls() {
 function install_black() {
     # Install black
     pip install black --user
-    pip3 install black --user
+    pip3 install black --user --force
 }
 
 function install_ansible() {
-    pip3 install --pre --user ansible ansible-lint ansible-core
+    pip3 install --pre --user ansible ansible-lint ansible-core --force
 }
 
 function install_ansible-language-server() {
