@@ -118,8 +118,11 @@ alias irc="ssh mikrus -t 'screen -r'"
 alias rsync="rsync --progress"
 
 # Cleaning-up
-export PATH=$HOME/.local/bin:$PATH
+unset PATH
+export PATH=/bin:$PATH
+export PATH=/usr/bin:$PATH
 export PATH=/sbin:$PATH
+export PATH=$HOME/.local/bin:$PATH
 export GOPATH=$HOME/golang
 export PATH=$PATH:$HOME/.gem/ruby/2.6.0/bin
 [ -d $HOME/repo/fortigate/bin ] && export PATH=$HOME/repo/fortigate/bin:$PATH
@@ -139,8 +142,6 @@ if [[ "$(uname)" == "Darwin" ]]; then
     # Other export
     export PATH="/usr/local/opt/openssl@3/bin:$PATH"
     export PATH="/opt/homebrew/bin:$PATH"
-    export PATH=$PATH:$HOME/Library/Python/3.10/bin
-    export PATH=$PATH:/usr/local/opt/python@3.10/Frameworks/Python.framework/Versions/3.10/bin
     export LDFLAGS="-L/usr/local/opt/openssl@3/lib"
     export CPPFLAGS="-I/usr/local/opt/openssl@3/include"
     export PKG_CONFIG_PATH="/usr/local/opt/openssl@3/lib/pkgconfig"
@@ -148,14 +149,27 @@ if [[ "$(uname)" == "Darwin" ]]; then
     export PATH=$PATH:$GOPATH/bin
     export PATH=$PATH:$GOROOT/bin
 
-    alias python3='/opt/homebrew/bin/python3.10'
-    alias pip3='/opt/homebrew/bin/pip3.10'
+    export PYTHONVERSION=$(ls -la /opt/homebrew/opt/ |
+        grep -iEo 'python@.* ->' |
+        sed 's/ ->//g'|
+        sort |
+        tail -n1 |
+        sed 's/python@//g')
+
+    export PATH=$PATH:$HOME/Library/Python/$PYTHONVERSION/bin
+    export PATH=$PATH:/usr/local/opt/python@$PYTHONVERSION/Frameworks/Python.framework/Versions/$PYTHONVERSION/bin
+    export PATH="$(brew --prefix python@$PYTHONVERSION)/bin:$PATH"
+    alias python3='/opt/homebrew/bin/python$PYTHONVERSION'
+    alias pip3='/opt/homebrew/bin/pip$PYTHONVERSION'
 
     alias lsblk="diskutil list"
     alias Update="~/.config/nvim/installer.sh; brew update; brew upgrade"
     alias ls="ls -Gh"
     alias mpv="mpv --no-resume-playback"
     alias code="open -a 'Visual Studio Code'"
+
+    # Project
+    alias meraki="cd $HOME/git/ansible_collections/cisco/meraki/"
 fi
 
 # Resolve problem with
