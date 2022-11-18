@@ -128,7 +128,10 @@ export PATH=$HOME/.local/bin:$PATH
 export GOPATH=$HOME/golang
 export PATH=$PATH:$HOME/.gem/ruby/2.6.0/bin
 [ -d $HOME/repo/fortigate/bin ] && export PATH=$HOME/repo/fortigate/bin:$PATH
+
+# History
 export HISTTIMEFORMAT="%F %T "
+
 
 # Export for WSL
 if [[ "$(uname -sr)" =~ "Microsoft" ]]; then
@@ -177,6 +180,9 @@ fi
 # Resolve problem with
 # zsh: no matches found
 setopt +o nomatch
+
+# Error with icu
+export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
