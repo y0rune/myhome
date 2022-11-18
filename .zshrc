@@ -122,6 +122,8 @@ unset PATH
 export PATH=/bin:$PATH
 export PATH=/usr/bin:$PATH
 export PATH=/sbin:$PATH
+export PATH=$HOME/go/bin:$PATH
+export PATH=$HOME/golang/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
 export GOPATH=$HOME/golang
 export PATH=$PATH:$HOME/.gem/ruby/2.6.0/bin
