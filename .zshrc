@@ -121,6 +121,7 @@ alias rsync="rsync --progress"
 unset PATH
 export PATH=/bin:$PATH
 export PATH=/usr/bin:$PATH
+export PATH=/usr/sbin:$PATH
 export PATH=/sbin:$PATH
 export PATH=$HOME/go/bin:$PATH
 export PATH=$HOME/golang/bin:$PATH
