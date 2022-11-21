@@ -20,6 +20,10 @@ function update_pip() {
     python3 -m pip install --upgrade pip --user
 }
 
+function install_neovim_module_for_python() {
+    pip3 install neovim --pre --user --force
+}
+
 function install_pyright() {
     # Install pyright
     sudo npm -g i pyright --force
@@ -53,8 +57,8 @@ function install_gopls() {
 
 function install_black() {
     # Install black
-    pip install black --user
-    pip3 install black --user --force
+    pip install black --pre --user --force
+    pip3 install black --pre --user --force
 }
 
 function install_ansible() {
