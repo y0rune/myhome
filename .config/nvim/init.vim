@@ -142,7 +142,8 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'sbdchd/neoformat'
 
     Plug 'hrsh7th/cmp-vsnip'
-    Plug 'hrsh7th/nvim-vsnip'
+    Plug 'hrsh7th/vim-vsnip'
+    Plug 'hrsh7th/vim-vsnip-integ'
 
     " Telescope
     Plug 'nvim-lua/plenary.nvim'
