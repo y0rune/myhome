@@ -53,7 +53,6 @@ function install_gopls() {
 
 function install_black() {
     # Install black
-    pip install black --user
     pip3 install black --user --force
 }
 
@@ -67,6 +66,11 @@ function install_ansible-language-server() {
     sudo npm -g i yaml-language-server --force
 }
 
+function install_meraki_ansible() {
+    ansible-galaxy collection install cisco.meraki --force
+    pip3 install meraki --user --force
+}
+
 function main() {
     command_start update_pip
     command_start install_pyright
@@ -78,6 +82,7 @@ function main() {
     command_start install_gopls
     command_start install_black
     command_start install_ansible
+    command_start install_meraki_ansible
 }
 
 main
