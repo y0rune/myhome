@@ -605,6 +605,9 @@ au BufNewFile,BufRead *.conf setfiletype conf
 " Mikrotik
 au BufNewFile,BufRead *.mikrotik setfiletype routeros
 
+" Ebuild
+au BufNewFile,BufRead,BufWritePre *.ebuild let g:shfmt_extra_args = '-ci -sr -s'
+
 " Automatically deletes all trailing whitespace and newlines at end of file on save.
 autocmd BufWritePre * %s/\s\+$//e
 autocmd BufWritepre * %s/\n\+\%$//e
