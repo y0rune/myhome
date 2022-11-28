@@ -142,7 +142,8 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'sbdchd/neoformat'
 
     Plug 'hrsh7th/cmp-vsnip'
-    Plug 'hrsh7th/nvim-vsnip'
+    Plug 'hrsh7th/vim-vsnip'
+    Plug 'hrsh7th/vim-vsnip-integ'
 
     " Telescope
     Plug 'nvim-lua/plenary.nvim'
@@ -603,6 +604,9 @@ au BufNewFile,BufRead *.conf setfiletype conf
 
 " Mikrotik
 au BufNewFile,BufRead *.mikrotik setfiletype routeros
+
+" Ebuild
+au BufNewFile,BufRead,BufWritePre *.ebuild let g:shfmt_extra_args = '-ci -sr -s'
 
 " Automatically deletes all trailing whitespace and newlines at end of file on save.
 autocmd BufWritePre * %s/\s\+$//e
