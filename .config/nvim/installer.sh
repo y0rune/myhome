@@ -44,10 +44,24 @@ function install_shfmt() {
     GO111MODULE=on go install mvdan.cc/sh/v3/cmd/shfmt@latest
 }
 
+function install_terraform() {
+    # Install terraform and terraform-ls
+    GO111MODULE=on go install github.com/hashicorp/terraform@latest
+    GO111MODULE=on go install github.com/hashicorp/terraform-ls@latest
+    if [[ "$(uname)" == "Darwin" ]]; then
+        brew install tflint
+    else
+        curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+    fi
+}
+
 function install_shellcheck() {
     # Install shellcheck
-    [[ "$(uname)" == "Darwin" ]] && brew install shellcheck
-    sudo emerge shellcheck-bin
+    if [[ "$(uname)" == "Darwin" ]]; then
+        brew install shellcheck
+    else
+        curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+    fi
 }
 
 function install_gopls() {
@@ -84,6 +98,7 @@ function main() {
     command_start install_shfmt
     command_start install_shellcheck
     command_start install_gopls
+    command_start install_terraform
     command_start install_black
     command_start install_ansible
     command_start install_meraki_ansible
