@@ -24,6 +24,10 @@ function install_neovim_module_for_python() {
     pip3 install neovim --pre --user --force
 }
 
+function install_awscli() {
+    pip3 install awscli --pre --user --force
+}
+
 function install_pyright() {
     # Install pyright
     sudo npm -g i pyright --force
