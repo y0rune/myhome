@@ -127,7 +127,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'tpope/vim-fugitive'
 
     " Prettier
-    Plug 'prettier/vim-prettier'
+    Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
 
     " Debug
     Plug 'puremourning/vimspector'
@@ -156,8 +156,15 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'nvim-tree/nvim-web-devicons'
     Plug 'nvim-tree/nvim-tree.lua'
 
+    " SHFMT
     Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
+
+    " Mikrotik
     Plug 'zainin/vim-mikrotik'
+
+    Plug 'nvim-treesitter/nvim-treesitter'
+    Plug 'nvim-treesitter/nvim-treesitter-context'
+
 call plug#end()
 
 " LUA
@@ -320,6 +327,8 @@ cmp.setup.cmdline('/', {
 require("nvim-tree").setup({
 })
 
+
+require'treesitter-context'.setup{}
 EOF
 
 " Added popout window to see diagnostic
@@ -330,7 +339,7 @@ autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=fals
 let g:neoformat_try_formatprg = 1
 let g:neoformat_basic_format_trim = 1
 let g:neoformat_only_msg_on_error = 1
-autocmd BufWritePre * silent! undojoin | Neoformat prettier
+autocmd BufWritePre * silent! undojoin | Neoformat
 let g:neoformat_python_black = {
     \ 'exe': 'black',
     \ 'stdin': 1,
