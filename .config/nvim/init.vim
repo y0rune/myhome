@@ -111,6 +111,9 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'pearofducks/ansible-vim', { 'do': './UltiSnips/generate.sh' }
     Plug 'Yggdroot/indentLine'
 
+    " Terraform
+    Plug 'hashivim/vim-terraform'
+
     " Multiple cursors
     Plug 'terryma/vim-multiple-cursors'
 
@@ -190,7 +193,7 @@ local handlers =  {
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', 'bashls', 'yamlls', 'ansiblels', 'gopls', 'solargraph', 'terraformls'}
+local servers = { 'pyright', 'bashls', 'yamlls', 'ansiblels', 'gopls', 'solargraph', 'terraformls', 'tflint' }
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup {
     on_attach = on_attach,
@@ -335,6 +338,9 @@ let g:neoformat_python_black = {
     \ }
 let g:neoformat_enabled_python = ['black']
 
+" Terraform
+let g:terraform_fmt_on_save=1
+let g:terraform_align=1
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -561,7 +567,6 @@ EOF
 " Files
 """"""""""""""""""""""""""""""""
 
-
 " Bash
 if executable('shfmt')
   let &l:formatprg='shfmt -i ' . &l:shiftwidth . ' -ln posix -sr -ci -s'
@@ -607,6 +612,10 @@ au BufNewFile,BufRead *.mikrotik setfiletype routeros
 
 " Ebuild
 au BufNewFile,BufRead,BufWritePre *.ebuild let g:shfmt_extra_args = '-ci -sr -s'
+
+" Terrafrom
+autocmd BufWritePre *.tf lua vim.lsp.buf.formatting_sync()
+autocmd BufWritePre *.tfvars lua vim.lsp.buf.formatting_sync()
 
 " Automatically deletes all trailing whitespace and newlines at end of file on save.
 autocmd BufWritePre * %s/\s\+$//e
