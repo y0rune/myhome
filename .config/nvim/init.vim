@@ -114,6 +114,9 @@ call plug#begin('~/.config/nvim/plugged')
     " Terraform
     Plug 'hashivim/vim-terraform'
 
+    " GoLang
+    Plug 'fatih/vim-go'
+
     " Multiple cursors
     Plug 'terryma/vim-multiple-cursors'
 
@@ -625,6 +628,9 @@ au BufNewFile,BufRead,BufWritePre *.ebuild let g:shfmt_extra_args = '-ci -sr -s'
 " Terrafrom
 autocmd BufWritePre *.tf lua vim.lsp.buf.formatting_sync()
 autocmd BufWritePre *.tfvars lua vim.lsp.buf.formatting_sync()
+
+" GoLang
+let g:go#fmt#autosave  = v:true
 
 " Automatically deletes all trailing whitespace and newlines at end of file on save.
 autocmd BufWritePre * %s/\s\+$//e
