@@ -33,10 +33,6 @@ plugins=(rake ruby vagrant knife knife_ssh kitchen )
 ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
 
-[ -d $CONFIG/zsh ] && source $CONFIG/zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh &>> /dev/null
-[ -d $CONFIG/zsh ] && source $CONFIG/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh &>> /dev/null
-[ -d $CONFIG/zsh ] && source $CONFIG/zsh/zsh-command-time/command-time.plugin.zsh &>> /dev/null
-[ -d $CONFIG/zsh ] && source $CONFIG/zsh/aws/aws.plugin.zsh &>> /dev/null
 if [ ! -d $CONFIG/zsh/aws ]; then
     mkdir -p $CONFIG/zsh/aws
     mkdir -p $CONFIG/zsh/azure-cli
@@ -47,6 +43,10 @@ if [ ! -d $CONFIG/zsh/aws ]; then
     curl https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/aws/aws.plugin.zsh -o $CONFIG/zsh/aws/aws.plugin.zsh
     curl https://raw.githubusercontent.com/Azure/azure-cli/dev/az.completion -o $CONFIG/zsh/azure-cli/az.completion
 fi
+[ -d $CONFIG/zsh/zsh-autosuggestions ] && source $CONFIG/zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh &>> /dev/null
+[ -d $CONFIG/zsh/zsh-syntax-highlighting ] && source $CONFIG/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh &>> /dev/null
+[ -d $CONFIG/zsh/zsh-command-time ] && source $CONFIG/zsh/zsh-command-time/command-time.plugin.zsh &>> /dev/null
+[ -d $CONFIG/zsh/aws ] && source $CONFIG/zsh/aws/aws.plugin.zsh &>> /dev/null
 [ -d $CONFIG/zsh/azure-cli ] && source $CONFIG/zsh/azure-cli/az.completion &>> /dev/null
 [ -f $HOME/.password ] && source $HOME/.password
 [ ! -d $CONFIG/fzf ] && git clone https://github.com/junegunn/fzf.git $HOME/.config/fzf
