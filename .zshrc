@@ -25,6 +25,7 @@ HISTFILE=$HOME/.history_zsh
 HISTSIZE=10000000
 SAVEHIST=10000000
 autoload -U colors && colors
+autoload bashcompinit && bashcompinit
 setopt PROMPT_SUBST
 PS1='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%}%n@)%m %{$fg_bold[blue]%}%(!.%1~.%~) $(parse_git_branch)%{$reset_color%}'
 plugins=(rake ruby vagrant knife knife_ssh kitchen )
@@ -46,6 +47,7 @@ if [ ! -d $CONFIG/zsh/aws ]; then
     curl https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/aws/aws.plugin.zsh -o $CONFIG/zsh/aws/aws.plugin.zsh
     curl https://raw.githubusercontent.com/Azure/azure-cli/dev/az.completion -o $CONFIG/zsh/azure-cli/az.completion
 fi
+[ -d $CONFIG/zsh/azure-cli ] && source $CONFIG/zsh/azure-cli/az.completion &>> /dev/null
 [ -f $HOME/.password ] && source $HOME/.password
 [ ! -d $CONFIG/fzf ] && git clone https://github.com/junegunn/fzf.git $HOME/.config/fzf
 [ -f $CONFIG/fzf/shell/key-bindings.zsh ] && source $HOME/.config/fzf/shell/key-bindings.zsh
