@@ -93,6 +93,10 @@ function install_meraki_ansible() {
     pip3 install meraki --user --force
 }
 
+function install_azure_cli() {
+    pip3 install azure-cli --user --pre --force
+}
+
 function main() {
     command_start update_pip
     command_start install_pyright
@@ -103,6 +107,7 @@ function main() {
     command_start install_shellcheck
     command_start install_gopls
     command_start install_terraform
+    command_start install_azure_cli
     command_start install_black
     command_start install_ansible
     command_start install_meraki_ansible
