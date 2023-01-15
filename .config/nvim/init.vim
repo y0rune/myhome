@@ -611,6 +611,7 @@ autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<CR>
 autocmd BufRead,BufNewFile *.yaml let g:indentLine_enabled = 1
 autocmd BufRead,BufNewFile *.yaml let g:indentLine_char = '⦙'
 au BufRead,BufNewFile *.yaml,*.yml if search('hosts:\|tasks:', 'nw') | set ft=yaml.ansible | endif
+autocmd BufWritePre * silent! undojoin | Neoformat prettier
 
 " Go
 autocmd BufRead *.go set noexpandtab
