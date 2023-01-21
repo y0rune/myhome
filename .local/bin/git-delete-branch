@@ -17,13 +17,8 @@ function list_of_the_branches() {
     echo
 }
 
-BRANCH="$1"
-
-while true; do
-    [ -z "$BRANCH" ] && {
-        list_of_the_branches
-        read -p "Select branch to remove: " BRANCH
-    }
+function remove_branch() {
+    BRANCH="$1"
     echo "$BRANCH"
     read -p "Remove locally / remote / both [L/R/B]: " CHOOSE
     case $CHOOSE in
@@ -42,4 +37,16 @@ while true; do
             ;;
         *) echo "Please write good answer" ;;
     esac
-done
+}
+
+BRANCH="$1"
+
+if [ -z "$BRANCH" ]; then
+    while true; do
+        list_of_the_branches
+        read -p "Select branch to remove: " BRANCH
+        remove_branch "$BRANCH"
+    done
+else
+    remove_branch "$BRANCH"
+fi
