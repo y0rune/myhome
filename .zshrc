@@ -158,7 +158,7 @@ fi
 if [[ "$(uname)" == "Darwin" ]]; then
     # Resolve problem with GOPATH
     # https://stackoverflow.com/questions/66284870/go-get-not-downloading-to-src-folder
-    export GO111MODULE=off
+    export GO111MODULE=on
 
     # Other export
     export PATH="/usr/local/opt/openssl@3/bin:$PATH"
