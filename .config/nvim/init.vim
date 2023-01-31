@@ -616,6 +616,7 @@ au BufRead,BufNewFile *.yaml,*.yml if search('hosts:\|tasks:', 'nw') | set ft=ya
 " GoLang
 autocmd BufRead *.go set noexpandtab
 autocmd BufWritePre *.go lua go_org_imports()
+let g:go_def_mapping_enabled = 0
 let g:go#fmt#autosave  = v:true
 
 " Conf
