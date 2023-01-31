@@ -613,9 +613,10 @@ autocmd BufRead,BufNewFile *.yaml let g:indentLine_char = '⦙'
 au BufRead,BufNewFile *.yaml,*.yml if search('hosts:\|tasks:', 'nw') | set ft=yaml.ansible | endif
 " autocmd BufWritePre * silent! undojoin | Neoformat prettier
 
-" Go
+" GoLang
 autocmd BufRead *.go set noexpandtab
 autocmd BufWritePre *.go lua go_org_imports()
+let g:go#fmt#autosave  = v:true
 
 " Conf
 au BufNewFile,BufRead *.conf setfiletype conf
@@ -629,9 +630,6 @@ au BufNewFile,BufRead,BufWritePre *.ebuild let g:shfmt_extra_args = '-ci -sr -s'
 " Terrafrom
 autocmd BufWritePre *.tf lua vim.lsp.buf.formatting_sync()
 autocmd BufWritePre *.tfvars lua vim.lsp.buf.formatting_sync()
-
-" GoLang
-let g:go#fmt#autosave  = v:true
 
 " Automatically deletes all trailing whitespace and newlines at end of file on save.
 autocmd BufWritePre * %s/\s\+$//e
