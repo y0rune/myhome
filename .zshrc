@@ -188,6 +188,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     alias ls="ls -Gh"
     alias mpv="mpv --no-resume-playback"
     alias code="open -a 'Visual Studio Code'"
+    alias xclip="pbcopy"
 
     # Project
     alias meraki="cd $HOME/git/ansible_collections/cisco/meraki/"
