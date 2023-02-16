@@ -182,6 +182,8 @@ if [[ "$(uname)" == "Darwin" ]]; then
     export PATH="$(brew --prefix python@$PYTHONVERSION)/bin:$PATH"
     alias python3='/opt/homebrew/bin/python$PYTHONVERSION'
     alias pip3='/opt/homebrew/bin/pip$PYTHONVERSION'
+    alias python='/opt/homebrew/bin/python$PYTHONVERSION'
+    alias pip='/opt/homebrew/bin/pip$PYTHONVERSION'
 
     alias lsblk="diskutil list"
     alias Update="~/.config/nvim/installer.sh; brew update; brew upgrade"
