@@ -143,6 +143,14 @@ if [[ "$(uname)" == "Darwin" ]]; then
     alias meraki="cd $HOME/git/ansible_collections/cisco/meraki/"
 fi
 
+# Setting the right editor
+if which nvim > /dev/null 2>&1; then
+    export VISUAL='nvim -u $HOME/.vimrc'
+    export EDITOR='nvim -u $HOME/.vimrc'
+else
+    export VISUAL='vim -u $HOME/.vimrc-def'
+    export EDITOR='vim -u $HOME/.vimrc-def'
+fi
 
 # Aliases
 alias vimc="$EDITOR $HOME/.vimrc"
