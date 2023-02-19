@@ -84,6 +84,22 @@ alias svm="sudo nvim /etc/portage/make.conf"
 alias svr="sudo nvim /etc/portage/repos.conf"
 alias svp="sudo nvim /etc/portage/package.use"
 alias sva="sudo nvim /etc/portage/package.accept_keywords"
+
+# Declerating the PATHs
+unset PATH
+export PATH=/bin:$PATH
+export PATH=/usr/bin:$PATH
+export PATH=/usr/sbin:$PATH
+export PATH=/sbin:$PATH
+export PATH=/usr/local/bin:$PATH
+export PATH=$HOME/go/bin:$PATH
+export PATH=$HOME/golang/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/node_modules/.bin:$PATH
+export GOPATH=$HOME/golang
+export PATH=$PATH:$HOME/.gem/ruby/2.6.0/bin
+[ -d $HOME/repo/fortigate/bin ] && export PATH=$HOME/repo/fortigate/bin:$PATH
+
 alias emerge="sudo emerge"
 alias channel-check='sudo iwlist wlan0 scan | egrep -i "essid|frequency"'
 alias grep="grep"
@@ -130,24 +146,8 @@ alias update-brew="brew upgrade --cask"
 alias irc="ssh mikrus -t 'screen -r'"
 alias rsync="rsync --progress"
 
-# Cleaning-up
-unset PATH
-export PATH=/bin:$PATH
-export PATH=/usr/bin:$PATH
-export PATH=/usr/sbin:$PATH
-export PATH=/sbin:$PATH
-export PATH=/usr/local/bin:$PATH
-export PATH=$HOME/go/bin:$PATH
-export PATH=$HOME/golang/bin:$PATH
-export PATH=$HOME/.local/bin:$PATH
-export PATH=$HOME/node_modules/.bin:$PATH
-export GOPATH=$HOME/golang
-export PATH=$PATH:$HOME/.gem/ruby/2.6.0/bin
-[ -d $HOME/repo/fortigate/bin ] && export PATH=$HOME/repo/fortigate/bin:$PATH
-
 # History
 export HISTTIMEFORMAT="%F %T "
-
 
 # Export for WSL
 if [[ "$(uname -sr)" =~ "Microsoft" ]]; then
