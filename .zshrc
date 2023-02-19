@@ -214,6 +214,3 @@ export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 
 # Error with Delinea
 [ -f "/etc/ssl/certs/ca-certificates.crt" ] && export REQUESTS_CA_BUNDLE='/etc/ssl/certs/ca-certificates.crt'
-
-# Generated for envman. Do not edit.
-[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
