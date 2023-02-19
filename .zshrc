@@ -77,13 +77,6 @@ export FZF_DEFAULT_OPTS='--height 40% --layout=reverse'
 export EIX_LIMIT_COMPACT=0
 export TERMINAL="st"
 export QT_SCALE_FACTOR=1.5
-export VISUAL='nvim'
-export EDITOR='nvim'
-alias vimc="nvim $HOME/.vimrc"
-alias svm="sudo nvim /etc/portage/make.conf"
-alias svr="sudo nvim /etc/portage/repos.conf"
-alias svp="sudo nvim /etc/portage/package.use"
-alias sva="sudo nvim /etc/portage/package.accept_keywords"
 
 # Declerating the PATHs
 unset PATH
@@ -99,52 +92,6 @@ export PATH=$HOME/node_modules/.bin:$PATH
 export GOPATH=$HOME/golang
 export PATH=$PATH:$HOME/.gem/ruby/2.6.0/bin
 [ -d $HOME/repo/fortigate/bin ] && export PATH=$HOME/repo/fortigate/bin:$PATH
-
-alias emerge="sudo emerge"
-alias channel-check='sudo iwlist wlan0 scan | egrep -i "essid|frequency"'
-alias grep="grep"
-alias egrep="egrep"
-alias ls="ls -h --color=auto"
-alias ll='ls -lha'
-alias cp='cp -v'
-alias mv='mv -v'
-alias myip="curl ipinfo.io/ip"
-alias logi="journalctl -f"
-alias pl="setxkbmap pl"
-alias graphic-card="glxinfo|egrep 'OpenGL vendor|OpenGL renderer'"
-alias mylaptop-components="inxi -Fxz"
-alias r="ranger"
-alias v="nvim"
-alias feh="feh --edit --scale-down"
-alias changefont="figlet"
-alias gmaster="git checkout master"
-alias gcommit="git commit --author='Marcin Woźniak <y0rune@aol.com>' -s"
-alias gcommitw="git commit --author='Marcin Wozniak <marcin.wozniak@wundermanthompson.com>'"
-alias gdel="git push origin --delete"
-alias gadd="git add"
-alias gpush="git push"
-alias gpull="git fetch -p -q; git pull; git submodule foreach git pull origin master -q; git submodule foreach git pull origin main -q; git submodule status"
-alias gpu="git fetch -p -q; git pull; git submodule foreach git pull origin master -q; git submodule foreach git pull origin main -q; git submodule status"
-alias gch="git checkout"
-alias gstatus="git status -s"
-alias gst="git status -s"
-alias gdiff="git diff | cat"
-alias gnew="git checkout -b"
-alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches"
-alias cal="cal -3"
-alias code="vscodium-bin"
-alias tv="~/MEGA/tv/tv.sh"
-alias newswork="newsboat --url=$HOME/.config/newsboat/urlswork"
-alias vim="nvim -p"
-alias denpl="trans en:pl"
-alias dplen="trans pl:en"
-alias notes="nvim $HOME/git/notes/index.md"
-alias mpv="__NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0 __GLX_VENDOR_LIBRARY_NAME=nvidia __GL_SYNC_TO_VBLANK=0 mpv --vo=x11 --hwdec=no --ytdl-raw-options="yes-playlist=" --no-resume-playback --ytdl-format='bestvideo[height<=?1080]+bestaudio/best'"
-alias aria2c="aria2c --seed-time=0 --disable-ipv6 --max-upload-limit=1k"
-alias lg="lazygit"
-alias update-brew="brew upgrade --cask"
-alias irc="ssh mikrus -t 'screen -r'"
-alias rsync="rsync --progress"
 
 # History
 export HISTTIMEFORMAT="%F %T "
@@ -195,6 +142,60 @@ if [[ "$(uname)" == "Darwin" ]]; then
     # Project
     alias meraki="cd $HOME/git/ansible_collections/cisco/meraki/"
 fi
+
+
+# Aliases
+alias vimc="$EDITOR $HOME/.vimrc"
+alias svm="sudo $EDITOR /etc/portage/make.conf"
+alias svr="sudo $EDITOR /etc/portage/repos.conf"
+alias svp="sudo $EDITOR /etc/portage/package.use"
+alias sva="sudo $EDITOR /etc/portage/package.accept_keywords"
+alias emerge="sudo emerge"
+alias channel-check='sudo iwlist wlan0 scan | egrep -i "essid|frequency"'
+alias grep="grep"
+alias egrep="egrep"
+alias ls="ls -h --color=auto"
+alias ll='ls -lha'
+alias cp='cp -v'
+alias mv='mv -v'
+alias myip="curl ipinfo.io/ip"
+alias logi="journalctl -f"
+alias pl="setxkbmap pl"
+alias graphic-card="glxinfo|egrep 'OpenGL vendor|OpenGL renderer'"
+alias mylaptop-components="inxi -Fxz"
+alias r="ranger"
+alias v="$EDITOR -p"
+alias feh="feh --edit --scale-down"
+alias changefont="figlet"
+alias gmaster="git checkout master"
+alias gcommit="git commit --author='Marcin Woźniak <y0rune@aol.com>' -s"
+alias gcommitw="git commit --author='Marcin Wozniak <marcin.wozniak@wundermanthompson.com>'"
+alias gdel="git push origin --delete"
+alias gadd="git add"
+alias gpush="git push"
+alias gpull="git fetch -p -q; git pull; git submodule foreach git pull origin master -q; git submodule foreach git pull origin main -q; git submodule status"
+alias gpu="git fetch -p -q; git pull; git submodule foreach git pull origin master -q; git submodule foreach git pull origin main -q; git submodule status"
+alias gch="git checkout"
+alias gstatus="git status -s"
+alias gst="git status -s"
+alias gdiff="git diff | cat"
+alias gnew="git checkout -b"
+alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches"
+alias cal="cal -3"
+alias code="vscodium-bin"
+alias tv="~/MEGA/tv/tv.sh"
+alias newswork="newsboat --url=$HOME/.config/newsboat/urlswork"
+alias vim="$EDITOR -p"
+alias denpl="trans en:pl"
+alias dplen="trans pl:en"
+alias notes="$EDITOR $HOME/git/notes/index.md"
+alias mpv="__NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0 __GLX_VENDOR_LIBRARY_NAME=nvidia __GL_SYNC_TO_VBLANK=0 mpv --vo=x11 --hwdec=no --ytdl-raw-options="yes-playlist=" --no-resume-playback --ytdl-format='bestvideo[height<=?1080]+bestaudio/best'"
+alias aria2c="aria2c --seed-time=0 --disable-ipv6 --max-upload-limit=1k"
+alias lg="lazygit"
+alias update-brew="brew upgrade --cask"
+alias irc="ssh mikrus -t 'screen -r'"
+alias rsync="rsync --progress"
+
 
 # Resolve problem with
 # zsh: no matches found
