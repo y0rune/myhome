@@ -101,7 +101,20 @@ if [[ "$(uname -sr)" =~ "Microsoft" ]]; then
     export GOROOT=/usr/lib/go
 fi
 
-# Export for Mac
+# Alias and Export Gentoo
+alias svm="sudo $EDITOR /etc/portage/make.conf"
+alias svr="sudo $EDITOR /etc/portage/repos.conf"
+alias svp="sudo $EDITOR /etc/portage/package.use"
+alias sva="sudo $EDITOR /etc/portage/package.accept_keywords"
+alias emerge="sudo emerge"
+alias mpv="__NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0 __GLX_VENDOR_LIBRARY_NAME=nvidia __GL_SYNC_TO_VBLANK=0 mpv --vo=x11 --hwdec=no --ytdl-raw-options="yes-playlist=" --no-resume-playback --ytdl-format='bestvideo[height<=?1080]+bestaudio/best'"
+alias code="vscodium-bin"
+alias pl="setxkbmap pl"
+alias feh="feh --edit --scale-down"
+alias graphic-card="glxinfo|egrep 'OpenGL vendor|OpenGL renderer'"
+alias mylaptop-components="inxi -Fxz"
+
+# Alias and Export for Mac
 if [[ "$(uname)" == "Darwin" ]]; then
     # Resolve problem with GOPATH
     # https://stackoverflow.com/questions/66284870/go-get-not-downloading-to-src-folder
@@ -135,7 +148,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     alias lsblk="diskutil list"
     alias Update="~/.config/nvim/installer.sh; brew update; brew upgrade"
     alias ls="ls -Gh"
-    alias mpv="mpv --no-resume-playback"
+    alias mpv="mpv --ytdl-raw-options="yes-playlist=" --no-resume-playback --ytdl-format='bestvideo[height<=?1080]+bestaudio/best'"
     alias code="open -a 'Visual Studio Code'"
     alias xclip="pbcopy"
 
@@ -152,29 +165,26 @@ else
     export EDITOR='vim -u $HOME/.vimrc-def'
 fi
 
-# Aliases
+# Vim
 alias vimc="$EDITOR $HOME/.vimrc"
-alias svm="sudo $EDITOR /etc/portage/make.conf"
-alias svr="sudo $EDITOR /etc/portage/repos.conf"
-alias svp="sudo $EDITOR /etc/portage/package.use"
-alias sva="sudo $EDITOR /etc/portage/package.accept_keywords"
-alias emerge="sudo emerge"
-alias channel-check='sudo iwlist wlan0 scan | egrep -i "essid|frequency"'
-alias grep="grep"
-alias egrep="egrep"
+alias v="$EDITOR -p"
+alias vim="$EDITOR -p"
+
+# Commands
+alias rsync="rsync --progress"
+alias lg="lazygit"
 alias ls="ls -h --color=auto"
 alias ll='ls -lha'
+alias r="ranger"
 alias cp='cp -v'
 alias mv='mv -v'
+alias cal="cal -3"
+alias denpl="trans en:pl"
+alias dplen="trans pl:en"
 alias myip="curl ipinfo.io/ip"
-alias logi="journalctl -f"
-alias pl="setxkbmap pl"
-alias graphic-card="glxinfo|egrep 'OpenGL vendor|OpenGL renderer'"
-alias mylaptop-components="inxi -Fxz"
-alias r="ranger"
-alias v="$EDITOR -p"
-alias feh="feh --edit --scale-down"
 alias changefont="figlet"
+
+# Git
 alias gmaster="git checkout master"
 alias gcommit="git commit --author='Marcin Woźniak <y0rune@aol.com>' -s"
 alias gcommitw="git commit --author='Marcin Wozniak <marcin.wozniak@wundermanthompson.com>'"
@@ -189,28 +199,18 @@ alias gst="git status -s"
 alias gdiff="git diff | cat"
 alias gnew="git checkout -b"
 alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches"
-alias cal="cal -3"
-alias code="vscodium-bin"
-alias tv="~/MEGA/tv/tv.sh"
+
+# Others
+alias channel-check='sudo iwlist wlan0 scan | egrep -i "essid|frequency"'
 alias newswork="newsboat --url=$HOME/.config/newsboat/urlswork"
-alias vim="$EDITOR -p"
-alias denpl="trans en:pl"
-alias dplen="trans pl:en"
-alias notes="$EDITOR $HOME/git/notes/index.md"
-alias mpv="__NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0 __GLX_VENDOR_LIBRARY_NAME=nvidia __GL_SYNC_TO_VBLANK=0 mpv --vo=x11 --hwdec=no --ytdl-raw-options="yes-playlist=" --no-resume-playback --ytdl-format='bestvideo[height<=?1080]+bestaudio/best'"
 alias aria2c="aria2c --seed-time=0 --disable-ipv6 --max-upload-limit=1k"
-alias lg="lazygit"
-alias update-brew="brew upgrade --cask"
 alias irc="ssh mikrus -t 'screen -r'"
-alias rsync="rsync --progress"
 
-
-# Resolve problem with
-# zsh: no matches found
+# Resolve problem with - zsh: no matches found
 setopt +o nomatch
 
 # Error with icu
 export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 
-# Error with Delinea
+# Error with Delinea - Linux
 [ -f "/etc/ssl/certs/ca-certificates.crt" ] && export REQUESTS_CA_BUNDLE='/etc/ssl/certs/ca-certificates.crt'
