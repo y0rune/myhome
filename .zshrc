@@ -171,7 +171,7 @@ alias v="$EDITOR -p"
 alias vim="$EDITOR -p"
 
 # Commands
-alias rsync="rsync --progress"
+alias rsync="rsync -h --progress"
 alias lg="lazygit"
 alias ls="ls -h --color=auto"
 alias ll='ls -lha'
