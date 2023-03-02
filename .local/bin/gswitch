@@ -1,0 +1,6 @@
+#!/bin/bash
+BRANCH=$1
+git checkout -b "$BRANCH"
+git checkout "$BRANCH"
+git branch --set-upstream-to=origin/"$BRANCH" "$BRANCH"
+git pull
