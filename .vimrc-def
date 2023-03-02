@@ -83,6 +83,104 @@ nnoremap <F8> :tabnext<CR>
 
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
+
+""""""""""""""""""""""""""""""""
+" Keyboard shortcuts
+""""""""""""""""""""""""""""""""
+let mapleader = "\<Space>"
+nmap <leader>2 :w!<cr>
+
+" Better tab
+vnoremap <Tab> >
+vnoremap <S-Tab> <
+
+" Better word
+nmap yw vey
+
+" Select all text
+nmap <C-a> gg<S-v>G
+
+" Resize window
+nnoremap <C-L> :vertical resize +5<CR>
+nnoremap <C-H> :vertical resize -5<CR>
+nnoremap <C-J> :res -5<CR>
+nnoremap <C-K> :res +5<CR>
+
+" Split window
+nnoremap _ :vsp <CR>
+nnoremap - :split <CR>
+
+" Reload file
+nnoremap <F5> :edit <CR>
+nnoremap <Leader><F5> :edit! <CR>
+
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" Moving line up or down using alt
+nnoremap <A-Up> :m-2<CR>
+nnoremap <A-Down> :m+<CR>
+inoremap <A-Up> <Esc>:m-2<CR>
+inoremap <A-Down> <Esc>:m+<CR>
+vnoremap <A-Down> :m '>+1<CR>gv=gv
+vnoremap <A-Up> :m '<-2<CR>gv=gv
+
+nnoremap Ż :m-2<CR>
+nnoremap ∆ :m+<CR>
+vnoremap ∆ :m '>+1<CR>gv=gv
+vnoremap Ż :m '<-2<CR>gv=gv
+
+nnoremap <A-k> :m-2<CR>
+nnoremap <A-j> :m+<CR>
+inoremap <A-k> <Esc>:m-2<CR>
+inoremap <A-j> <Esc>:m+<CR>
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
+
+" Better replace
+nnoremap <Leader>s :%s//g<Left><Left>
+vnoremap <Leader>s :s//g<Left><Left>
+
+" Better adding into begging and ending line
+vnoremap F <C-v>$A
+vnoremap f <C-v>0I
+
+" Better management of tabs
+nnoremap <C-t> :tabnew<CR>
+
+nnoremap <F7> :tabprevious<CR>
+nnoremap <F8> :tabnext<CR>
+inoremap <F7>  <Esc>:tabprevious<CR>i
+inoremap <F8>  <Esc>:tabnext<CR>i
+
+nnoremap <Leader>k :tabprevious<CR>
+nnoremap <Leader>j :tabnext<CR>
+
+inoremap <C-t> <Esc>:tabnew<CR>
+
+" Better moving
+nnoremap J }
+nnoremap K {
+vnoremap J }
+vnoremap K {
+
+" Copy into system
+noremap <Leader>y "*y
+noremap <Leader>p "*p
+
+" Code
+map <Leader><Tab> Vgaip= <CR>
+
+" Others
+nnoremap <F11> :Goyo <CR>
+cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
+map <F3> :setlocal spell! spelllang=en_gb<CR>
+map <F4> :setlocal spell! spelllang=pl<CR>
+
+" Human Errors
+:command! W w
+:command! Q q
+:command! Wq wq
+
 " Automatically deletes all trailing whitespace and newlines at end of file on save.
 autocmd BufWritePre * %s/\s\+$//e
 autocmd BufWritepre * %s/\n\+\%$//e
