@@ -101,6 +101,9 @@ if [[ "$(uname -sr)" =~ "Microsoft" ]]; then
     export GOROOT=/usr/lib/go
 fi
 
+# Alias work
+alias ssh-work="ssh -i ~/.ssh/work/id_rsa"
+
 # Alias and Export Gentoo
 alias svm="sudo $EDITOR /etc/portage/make.conf"
 alias svr="sudo $EDITOR /etc/portage/repos.conf"
