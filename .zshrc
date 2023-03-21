@@ -61,8 +61,7 @@ ZSH_COMMAND_TIME_MSG="Execution time: %s sec"
 ZSH_COMMAND_TIME_EXCLUDE=(ranger git nvim fzf vim mcedit v ssh lg lazygit tmux)
 
 export GPG_TTY=$(tty)
-# export TERM=xterm-256color
-export TERM=screen-256color
+export TERM=xterm-256color
 export SHELL=/bin/bash
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus

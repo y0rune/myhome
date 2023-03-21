@@ -393,7 +393,8 @@ hi DiffChange cterm=BOLD ctermfg=NONE ctermbg=23
 hi DiffText   cterm=BOLD ctermfg=NONE ctermbg=23
 set t_ZH="\e[3m"
 set t_ZR="\e[23m"
-highlight Comment cterm=italic
+highlight Comment cterm=italic gui=italic
+highlight htmlArg gui=italic cterm=italic
 
 " columne
 set textwidth=80
