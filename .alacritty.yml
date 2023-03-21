@@ -13,7 +13,7 @@ font:
     antialias: true
   normal:
     family: Comic Code
-    style: Regular
+    style: Medium
     antialias: true
   size: 16
 
