@@ -56,6 +56,16 @@ function install_terraform() {
     fi
 }
 
+function install_terragrunt() {
+    # Install terragrunt
+    if [[ "$(uname)" == "Darwin" ]]; then
+        brew install terragrunt
+    else
+        wget https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64 -O $HOME/.local/bin/terragrunt
+        chmod +x $HOME/.local/bin/terragrunt
+    fi
+}
+
 function install_shellcheck() {
     # Install shellcheck
     if [[ "$(uname)" == "Darwin" ]]; then
@@ -119,6 +129,7 @@ function main() {
     command_start install_shellcheck
     command_start install_gopls
     command_start install_terraform
+    command_start install_terragrunt
     command_start install_azure_cli
     command_start install_black
     command_start install_ansible
