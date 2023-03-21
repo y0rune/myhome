@@ -29,6 +29,7 @@ set cmdheight=1
 set encoding=utf-8
 set undofile
 set scrolloff=8
+set termguicolors
 set t_BE=
 au BufWritePre * let &bex = '@' . strftime("%F.%H:%M")
 filetype plugin indent on
@@ -390,6 +391,9 @@ hi DiffAdd    cterm=BOLD ctermfg=NONE ctermbg=22
 hi DiffDelete cterm=BOLD ctermfg=NONE ctermbg=52
 hi DiffChange cterm=BOLD ctermfg=NONE ctermbg=23
 hi DiffText   cterm=BOLD ctermfg=NONE ctermbg=23
+set t_ZH="\e[3m"
+set t_ZR="\e[23m"
+highlight Comment cterm=italic
 
 " columne
 set textwidth=80
