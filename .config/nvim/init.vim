@@ -637,8 +637,8 @@ au BufNewFile,BufRead *.mikrotik setfiletype routeros
 au BufNewFile,BufRead,BufWritePre *.ebuild let g:shfmt_extra_args = '-ci -sr -s'
 
 " Terrafrom
-autocmd BufWritePre *.tf lua vim.lsp.buf.formatting_sync()
-autocmd BufWritePre *.tfvars lua vim.lsp.buf.formatting_sync()
+autocmd BufWritePre *.tf lua vim.lsp.buf.format()
+autocmd BufWritePre *.tfvars lua vim.lsp.buf.format()
 
 " Automatically deletes all trailing whitespace and newlines at end of file on save.
 autocmd BufWritePre * %s/\s\+$//e
