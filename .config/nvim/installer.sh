@@ -109,14 +109,15 @@ function install_awscli() {
 }
 
 function update_zsh() {
+    mkdir -p "$ZSHFOLDER/azure-cli" "$ZSHFOLDER/aws"
     for i in $(ls $HOME/.config/zsh); do
         FOLDER="$HOME/.config/zsh/$i"
-        git pull
         cd "$FOLDER" || echo "Folder is not exists"
+        git pull
     done
     ZSHFOLDER="$HOME/.config/zsh/"
-    curl https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/aws/aws.plugin.zsh -o "$ZSHFOLDER"/aws/aws.plugin.zsh
-    curl https://raw.githubusercontent.com/Azure/azure-cli/dev/az.completion -o "$ZSHFOLDER"/azure-cli/az.completion
+    curl -s https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/aws/aws.plugin.zsh -o "$ZSHFOLDER"/aws/aws.plugin.zsh
+    curl -s https://raw.githubusercontent.com/Azure/azure-cli/dev/az.completion -o "$ZSHFOLDER"/azure-cli/az.completion
 }
 
 function main() {
