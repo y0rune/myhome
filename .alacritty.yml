@@ -1,17 +1,31 @@
 font:
   bold:
-    family: Terminus (TTF)
+    family: Comic Code
     style: Bold
+    antialias: true
   bold_italic:
-    family: Terminus (TTF)
+    family: Comic Code
     style: Bold Italic
+    antialias: true
   italic:
-    family: Terminus (TTF)
+    family: Comic Code
     style: Italic
+    antialias: true
   normal:
-    family: Terminus (TTF)
-    style: Medium
-  size: 18
+    family: Comic Code
+    style: Regular
+    antialias: true
+  size: 16
+
+offset:
+  x: 0
+  y: 0
+
+glyph_offset:
+  x: 0
+  y: 0
+
+use_thin_strokes: true
 
 key_bindings:
   - { key: Return, mods: Control|Shift, action: SpawnNewInstance }
@@ -30,30 +44,33 @@ colors:
     matches:
       foreground: "#181818"
       background: "#f4bf75"
-    bar:
-      foreground: "#d0d0d0"
+    footer_bar:
       background: "#262626"
+      foreground: "#d0d0d0"
   # Default colors
   primary:
     background: "0x000000"
     foreground: "0xffffff"
-  # Normal colors
-  normal:
-    black: "0x000000"
-    red: "0xcd0000"
-    green: "0x00cd00"
-    yellow: "0xcdcd00"
-    blue: "0x0000ee"
-    magenta: "0xcd00cd"
-    cyan: "0x00cdcd"
-    white: "0xe5e5e5"
   # Bright colors:
   bright:
     black: "0x7f7f7f"
-    red: "0xff0000"
-    green: "0x00ff00"
-    yellow: "0xffff00"
     blue: "0x5c5cff"
-    magenta: "0xff00ff"
     cyan: "0x00ffff"
+    green: "0x00ff00"
+    magenta: "0xff00ff"
+    red: "0xff0000"
     white: "0xffffff"
+    yellow: "0xffff00"
+  # Normal colors
+  normal:
+    black: "0x000000"
+    blue: "0x0000ee"
+    cyan: "0x00cdcd"
+    green: "0x00cd00"
+    magenta: "0xcd00cd"
+    red: "0xcd0000"
+    white: "0xe5e5e5"
+    yellow: "0xcdcd00"
+
+import:
+  - C:\Users\marcin.wozniak\AppData\Roaming\alacritty\dracula.yml
