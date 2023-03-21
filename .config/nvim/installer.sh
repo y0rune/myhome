@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=2045,2086
 
 function timestamp() {
     echo "[+] $(date +'%F %T') [INFO] $*"
@@ -22,10 +23,6 @@ function update_pip() {
 
 function install_neovim_module_for_python() {
     pip3 install neovim --pre --user --force
-}
-
-function install_awscli() {
-    pip3 install awscli --pre --user --force
 }
 
 function install_pyright() {
@@ -97,6 +94,21 @@ function install_azure_cli() {
     pip3 install azure-cli --user --pre --force
 }
 
+function install_awscli() {
+    pip3 install awscli --pre --user --force
+}
+
+function update_zsh() {
+    for i in $(ls $HOME/.config/zsh); do
+        FOLDER="$HOME/.config/zsh/$i"
+        git pull
+        cd "$FOLDER" || echo "Folder is not exists"
+    done
+    ZSHFOLDER="$HOME/.config/zsh/"
+    curl https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/aws/aws.plugin.zsh -o "$ZSHFOLDER"/aws/aws.plugin.zsh
+    curl https://raw.githubusercontent.com/Azure/azure-cli/dev/az.completion -o "$ZSHFOLDER"/azure-cli/az.completion
+}
+
 function main() {
     command_start update_pip
     command_start install_pyright
@@ -111,6 +123,7 @@ function main() {
     command_start install_black
     command_start install_ansible
     command_start install_meraki_ansible
+    command_start update_zsh
 }
 
 main
