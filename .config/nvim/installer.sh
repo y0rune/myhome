@@ -18,10 +18,12 @@ function command_start() {
 }
 
 function update_pip() {
+    # Update the pip
     python3 -m pip install --upgrade pip --user
 }
 
 function install_neovim_module_for_python() {
+    # Python module in neovim
     pip3 install neovim --pre --user --force
 }
 
@@ -86,6 +88,7 @@ function install_black() {
 }
 
 function install_ansible() {
+    # Install Ansible
     pip3 install --pre --user ansible ansible-lint ansible-core --force
 }
 
@@ -96,15 +99,18 @@ function install_ansible-language-server() {
 }
 
 function install_meraki_ansible() {
+    # Install python, ansible module for meraki
     ansible-galaxy collection install cisco.meraki --force
     pip3 install meraki --user --force
 }
 
 function install_azure_cli() {
+    # Install azure_cli
     pip3 install azure-cli --user --pre --force
 }
 
 function install_awscli() {
+    # Install awscli
     pip3 install awscli --pre --user --force
 }
 
