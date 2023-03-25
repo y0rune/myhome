@@ -189,7 +189,8 @@ alias myip="curl ipinfo.io/ip"
 alias changefont="figlet"
 
 # Git
-alias gmaster="git checkout master"
+alias gmaster="git checkout master; git checkout main"
+alias gmain="git checkout master; git checkout main"
 alias gcommit="git commit --author='Marcin Woźniak <y0rune@aol.com>' -s"
 alias gcommitw="git commit --author='Marcin Wozniak <marcin.wozniak@wundermanthompson.com>'"
 alias gdel="git push origin --delete"
@@ -199,8 +200,9 @@ alias gpull="git fetch -p -q; git pull; git submodule foreach git pull origin ma
 alias gpu="git fetch -p -q; git pull; git submodule foreach git pull origin master -q; git submodule foreach git pull origin main -q; git submodule status"
 alias gch="git checkout"
 alias gst="git status -s"
-alias gdiff="git diff | cat"
+alias gdiff="git --no-pager diff"
 alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches"
+alias gshow="git show --color --pretty=format:%b"
 
 # Others
 alias channel-check='sudo iwlist wlan0 scan | egrep -i "essid|frequency"'
