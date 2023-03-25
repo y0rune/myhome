@@ -27,6 +27,12 @@ glyph_offset:
 
 use_thin_strokes: true
 
+mouse:
+  hints:
+    launcher:
+      program: open
+    modifiers: Command
+
 key_bindings:
   - { key: Return, mods: Control|Shift, action: SpawnNewInstance }
   - { key: F, mods: Control, action: SearchForward }
