@@ -1,18 +1,27 @@
 #!/bin/bash
 # shellcheck disable=2045,2086
 
+ZSHFOLDER=$HOME/.config/zsh
+CONFIG="$HOME/.config"
+
+# Colours
+RED='\033[0;31m'
+GREEN='\033[0;0;32m'
+NC='\033[0m'
+
 function timestamp() {
-    echo "[+] $(date +'%F %T') [INFO] $*"
+    echo -e "${GREEN}[+]${NC} $(date +'%F %T') [INFO] $*"
 }
 
 function err() {
-    echo "[-] $(date +'%F %T') [ERROR] $*" >&2
+    echo -e "${RED}[-] $(date +'%F %T') [ERROR] $*${NC}" >&2
 }
 
 function command_start() {
     timestamp "Command $* has been started."
     if ! "$*"; then
         err "Command $* went wrong."
+        exit
     fi
     timestamp "Command $* has been ended."
 }
@@ -24,22 +33,22 @@ function update_pip() {
 
 function install_neovim_module_for_python() {
     # Python module in neovim
-    pip3 install neovim --pre --user --force
+    pip3 install neovim --pre --user --force --quiet
 }
 
 function install_pyright() {
     # Install pyright
-    sudo npm -g i pyright --force
+    sudo npm -s -g i pyright --force
 }
 
 function install_bash-language-server() {
     # Install bash-language-server
-    sudo npm -g i bash-language-server --force
+    sudo npm -s -g i bash-language-server --force
 }
 
 function install_yaml-language-server() {
     # Install yaml-language-server
-    sudo npm -g i yaml-language-server --force
+    sudo npm -s -g i yaml-language-server --force
 }
 
 function install_shfmt() {
@@ -52,7 +61,7 @@ function install_terraform() {
     GO111MODULE=on go install github.com/hashicorp/terraform@latest
     GO111MODULE=on go install github.com/hashicorp/terraform-ls@latest
     if [[ "$(uname)" == "Darwin" ]]; then
-        brew install tflint
+        brew install tflint -q
     else
         curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
     fi
@@ -61,7 +70,7 @@ function install_terraform() {
 function install_terragrunt() {
     # Install terragrunt
     if [[ "$(uname)" == "Darwin" ]]; then
-        brew install terragrunt
+        brew install terragrunt -q
     else
         wget https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64 -O $HOME/.local/bin/terragrunt
         chmod +x $HOME/.local/bin/terragrunt
@@ -71,7 +80,7 @@ function install_terragrunt() {
 function install_shellcheck() {
     # Install shellcheck
     if [[ "$(uname)" == "Darwin" ]]; then
-        brew install shellcheck
+        brew install shellcheck -q
     else
         curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
     fi
@@ -84,46 +93,77 @@ function install_gopls() {
 
 function install_black() {
     # Install black
-    pip3 install black --pre --user --force
+    pip3 install black --pre --user --force --quiet
 }
 
 function install_ansible() {
     # Install Ansible
-    pip3 install --pre --user ansible ansible-lint ansible-core --force
+    pip3 install ansible ansible-lint ansible-core --pre --user --force --quiet
 }
 
 function install_ansible-language-server() {
     # Install ansible-language-server
-    sudo npm -g i @ansible/ansible-language-server --force
-    sudo npm -g i yaml-language-server --force
+    sudo npm -s -g i @ansible/ansible-language-server --force
+    sudo npm -s -g i yaml-language-server --force
 }
 
 function install_meraki_ansible() {
     # Install python, ansible module for meraki
     ansible-galaxy collection install cisco.meraki --force
-    pip3 install meraki --user --force
+    pip3 install meraki --user --force --quiet
 }
 
 function install_azure_cli() {
     # Install azure_cli
-    pip3 install azure-cli --user --pre --force
+    pip3 install azure-cli --pre --user --force --quiet
 }
 
 function install_awscli() {
     # Install awscli
-    pip3 install awscli --pre --user --force
+    pip3 install awscli --pre --user --force --quiet
 }
 
-function update_zsh() {
-    mkdir -p "$ZSHFOLDER/azure-cli" "$ZSHFOLDER/aws"
-    for i in $(ls $HOME/.config/zsh); do
-        FOLDER="$HOME/.config/zsh/$i"
-        cd "$FOLDER" || echo "Folder is not exists"
-        git pull
+function update() {
+    if [ -d $CONFIG/fzf ]; then
+        FOLDER="$CONFIG/fzf"
+        cd $FOLDER || err "Folder $FOLDER has been NOT found"
+        git pull -q && timestamp "Pulling the $FOLDER configuration"
+    else
+        FOLDER="$CONFIG/fzf"
+        git clone https://github.com/junegunn/fzf.git $FOLDER && timestamp "Cloning the FZF"
+        git pull -q && timestamp "Pulling the $FOLDER configuration"
+    fi
+
+    if [ ! -d $ZSHFOLDER/aws ]; then
+        curl -s https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/aws/aws.plugin.zsh \
+            -o "$ZSHFOLDER"/aws/aws.plugin.zsh &&
+            timestamp "Downloaded the newest version of aws plugin for zsh"
+
+        curl -s https://raw.githubusercontent.com/Azure/azure-cli/dev/az.completion \
+            -o "$ZSHFOLDER"/azure-cli/az.completion &&
+            timestamp "Downloaded the newest version of az plugin for zsh"
+
+        mkdir -p "$ZSHFOLDER/azure-cli" "$ZSHFOLDER/aws"
+        cd $ZSHFOLDER || err "Folder $ZSHFOLDER has been NOT found"
+        git clone https://github.com/popstas/zsh-command-time.git &&
+            timestamp "Cloning the zsh-command-time"
+        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git &&
+            timestamp "Cloning the zsh-syntax-highlighting"
+        git clone https://github.com/zsh-users/zsh-autosuggestions.git &&
+            timestamp "Cloning the zsh-autosuggestions"
+    fi
+
+    for i in $(ls $ZSHFOLDER); do
+        FOLDER="$ZSHFOLDER/$i"
+        if [ -d "$FOLDER/.git" ]; then
+            cd "$FOLDER" || err "Folder $FOLDER has been NOT found"
+            git pull -q && timestamp "Pulling the $FOLDER configuration"
+        fi
     done
-    ZSHFOLDER="$HOME/.config/zsh/"
-    curl -s https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/aws/aws.plugin.zsh -o "$ZSHFOLDER"/aws/aws.plugin.zsh
-    curl -s https://raw.githubusercontent.com/Azure/azure-cli/dev/az.completion -o "$ZSHFOLDER"/azure-cli/az.completion
+
+    curl -s https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/aws/aws.plugin.zsh -o "$ZSHFOLDER"/aws/aws.plugin.zsh && timestamp "Downloaded the newest version of aws plugin for zsh"
+    curl -s https://raw.githubusercontent.com/Azure/azure-cli/dev/az.completion -o "$ZSHFOLDER"/azure-cli/az.completion && timestamp "Downloaded the newest version of az plugin for zsh"
+
 }
 
 function main() {
@@ -141,7 +181,7 @@ function main() {
     command_start install_black
     command_start install_ansible
     command_start install_meraki_ansible
-    command_start update_zsh
+    command_start update
 }
 
 main
