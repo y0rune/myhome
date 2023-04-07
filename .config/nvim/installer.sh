@@ -62,6 +62,7 @@ function install_terraform() {
     GO111MODULE=on go install github.com/hashicorp/terraform-ls@latest
     if [[ "$(uname)" == "Darwin" ]]; then
         brew install tflint -q
+        brew install tfenv -q
     else
         curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
     fi
