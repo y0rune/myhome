@@ -139,7 +139,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     alias pip='/opt/homebrew/bin/pip$PYTHONVERSION'
 
     alias lsblk="diskutil list"
-    alias Update="~/.config/nvim/installer.sh; brew update; brew upgrade"
+    alias Update="~/.local/bin/Update-pkg; brew update; brew upgrade"
     alias ls="ls -Gh"
     alias mpv="mpv --ytdl-raw-options="yes-playlist=" --no-resume-playback --ytdl-format='bestvideo[height<=?1080]+bestaudio/best'"
     alias code="open -a 'Visual Studio Code'"
@@ -166,6 +166,7 @@ alias vim="$EDITOR -p"
 # Commands
 alias rsync="rsync -h --progress"
 alias lg="lazygit"
+alias ldocker="lazydocker"
 alias ls="ls -h --color=auto"
 alias ll='ls -lha'
 alias r="ranger"
