@@ -1,4 +1,4 @@
 #!/bin/bash
-TAG=latest
-docker pull ghcr.io/antonbabenko/pre-commit-terraform:$TAG
-docker run -e "USERID=$(id -u):$(id -g)" -v "$(pwd)":/lint -w /lint ghcr.io/antonbabenko/pre-commit-terraform:$TAG run -a
+TAG=v1.77.0
+docker pull --platform linux/amd64 ghcr.io/antonbabenko/pre-commit-terraform:$TAG
+docker run --platform linux/amd64 -e "USERID=$(id -u):$(id -g)" -v "$(pwd)":/lint -w /lint ghcr.io/antonbabenko/pre-commit-terraform:$TAG run -a
