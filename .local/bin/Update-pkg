@@ -93,6 +93,15 @@ function install_shellcheck() {
     fi
 }
 
+function install_go() {
+    # Install the golang
+    if [[ "$(uname)" == "Darwin" ]]; then
+        brew install golang -q
+    elif [[ "$(uname -r)" =~ "gentoo" ]]; then
+        emerge dev-lang/go
+    fi
+}
+
 function install_gopls() {
     # Install gopls
     GO111MODULE=on go install golang.org/x/tools/gopls@latest
@@ -175,6 +184,7 @@ function update() {
 
 function main() {
     command_start update_pip
+    command_start install_go
     command_start install_pyright
     command_start install_lazy
     command_start install_bash-language-server
