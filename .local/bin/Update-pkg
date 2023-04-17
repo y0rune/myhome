@@ -98,7 +98,7 @@ function install_go() {
     if [[ "$(uname)" == "Darwin" ]]; then
         brew install golang -q
     elif [[ "$(uname -r)" =~ "gentoo" ]]; then
-        emerge dev-lang/go
+        sudo emerge dev-lang/go
     fi
 }
 
