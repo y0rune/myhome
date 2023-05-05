@@ -1,0 +1,58 @@
+#!/bin/bash
+
+################################################################################
+#
+# Marcin Wozniak
+# Last edit: 2023-05-05
+#
+# shellcheck disable=1091
+################################################################################
+
+set -u
+set -e
+
+# Colours
+RED='\033[0;31m'
+GREEN='\033[0;0;32m'
+NC='\033[0m'
+
+ADDR=$1
+LOG_FILE="bgp-$ADDR-$(date -I).log"
+
+function timestamp() {
+    echo -e "${GREEN}[+]${NC} $(date +'%F %T') [INFO] $*"
+}
+
+function err() {
+    echo -e "${RED}[-] $(date +'%F %T') [ERROR] $*${NC}" >&2
+}
+
+function command_start() {
+    timestamp "Command $* has been started."
+    if ! "$@"; then
+        err "Command $* went wrong."
+        exit 0
+    fi
+    timestamp "Command $* has been ended."
+}
+
+function bgpcheck() {
+    timestamp "CHECKING BGP FOR $ADDR at RT.IR9.AMS.NL.retn.net"
+    curl --silent \
+        "https://lg.retn.net/cgi/LG.cgi?r=87&p=4&q=b&a=$ADDR" |
+        sed '/table>/d;/<link/d;/<meta/d;/tr>/d;/td>/d;/query/d;/html/d;/head/d;/title/d;/img/d;/body/d;/center/d;/h2/d;/<p>/d;/<hr /d '
+    timestamp "---------------------------------------"
+
+    timestamp "CHECKING BGP FOR $ADDR at RT.NIA.POZ.PL.retn.net"
+    curl --silent \
+        "https://lg.retn.net/cgi/LG.cgi?r=ab&p=4&q=b&a=$ADDR" |
+        sed '/table>/d;/<link/d;/<meta/d;/tr>/d;/td>/d;/query/d;/html/d;/head/d;/title/d;/img/d;/body/d;/center/d;/h2/d;/<p>/d;/<hr /d'
+    timestamp "---------------------------------------"
+
+}
+
+function main() {
+    command_start bgpcheck
+}
+
+main | tee "$LOG_FILE"
