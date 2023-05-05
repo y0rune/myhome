@@ -1,0 +1,48 @@
+#!/bin/bash
+
+################################################################################
+#
+# Marcin Wozniak
+# Last edit: 2023-05-05
+#
+# shellcheck disable=1091
+################################################################################
+
+set -u
+set -e
+
+# Colours
+RED='\033[0;31m'
+GREEN='\033[0;0;32m'
+NC='\033[0m'
+
+ADDR=$1
+LOG_FILE="pinger-$ADDR-$(date -I).log"
+
+function timestamp() {
+    echo -e "${GREEN}[+]${NC} $(date +'%F %T') [INFO] $*"
+}
+
+function err() {
+    echo -e "${RED}[-] $(date +'%F %T') [ERROR] $*${NC}" >&2
+}
+
+function command_start() {
+    timestamp "Command $* has been started."
+    if ! "$@"; then
+        err "Command $* went wrong."
+        # sendmailerr
+        exit 0
+    fi
+    timestamp "Command $* has been ended."
+}
+
+function pinger() {
+    ping "$ADDR" | while read pong; do timestamp "$pong"; done
+}
+
+function main() {
+    command_start pinger
+}
+
+main | tee "$LOG_FILE"
