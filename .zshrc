@@ -144,6 +144,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     alias mpv="mpv --ytdl-raw-options="yes-playlist=" --no-resume-playback --ytdl-format='bestvideo[height<=?1080]+bestaudio/best'"
     alias code="open -a 'Visual Studio Code'"
     alias xclip="pbcopy"
+    alias mtr="sudo /opt/homebrew/opt/mtr/sbin/mtr"
 
     # Project
     alias meraki="cd $HOME/git/ansible_collections/cisco/meraki/"
