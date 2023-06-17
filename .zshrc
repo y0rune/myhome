@@ -146,6 +146,18 @@ if [[ "$(uname)" == "Darwin" ]]; then
     alias xclip="pbcopy"
     alias mtr="sudo /opt/homebrew/opt/mtr/sbin/mtr"
 
+    # Terraform
+    export TFENV_ARCH=amd64
+    export TFENVVERSION=$(ls -la /opt/homebrew/Cellar/tfenv/ |
+        grep -iEo '[0-9]\.[0-9]\.[0-9]' |
+        sort |
+        tail -n1 )
+    export TFVERSION=$(ls -la /opt/homebrew/Cellar/tfenv/*/versions |
+        grep -iEo '[0-9]\.[0-9]\.[0-9]' |
+        sort |
+        tail -n1 )
+    export PATH=$PATH:/opt/homebrew/Cellar/tfenv/$TFENVVERSION/versions/$TFVERSION/
+
     # Project
     alias meraki="cd $HOME/git/ansible_collections/cisco/meraki/"
 fi
@@ -183,7 +195,7 @@ alias changefont="figlet"
 alias gmaster="git checkout master; git checkout main"
 alias gmain="git checkout master; git checkout main"
 alias gcommit="git commit --author='Marcin Woźniak <y0rune@aol.com>' -s"
-alias gcommitw="git commit --author='Marcin Wozniak <marcin.wozniak@wundermanthompson.com>'"
+alias gcommitw="git commit --author='Marcin Woźniak <marcin.wozniak@wundermanthompson.com>'"
 alias gdel="git push origin --delete"
 alias gadd="git add"
 alias gpush="git push"
