@@ -23,7 +23,7 @@ set tabstop=4
 set nocompatible
 set noshowmode
 set noerrorbells
-set nowrap
+set wrap
 set hidden
 set cmdheight=1
 set encoding=utf-8
