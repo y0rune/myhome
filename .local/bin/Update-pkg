@@ -64,13 +64,13 @@ function install_lazy() {
 
 function install_terraform() {
     # Install terraform and terraform-ls
-    GO111MODULE=on go install github.com/hashicorp/terraform@latest
     GO111MODULE=on go install github.com/hashicorp/terraform-ls@latest
     if [[ "$(uname)" == "Darwin" ]]; then
         brew install tflint -q
         brew install tfenv -q
         TFENV_ARCH=amd64 tfenv install latest
     else
+        GO111MODULE=on go install github.com/hashicorp/terraform@latest
         curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
     fi
 }
