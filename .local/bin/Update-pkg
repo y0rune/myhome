@@ -116,6 +116,7 @@ function install_black() {
 function install_ansible() {
     # Install Ansible
     pip3 install ansible ansible-lint ansible-core --pre --user --force --quiet
+    pip3 install ansible-parallel --pre --user --force --quiet
 }
 
 function install_ansible-language-server() {

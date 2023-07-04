@@ -662,4 +662,5 @@ function! RemoveForti()
     :%g/set comments .*/d
     :%s/edit .*/edit 0/g
     :%s/  \+//g
+    :g/^$/d
 endfunction
