@@ -177,6 +177,7 @@ alias v="$EDITOR -p"
 alias vim="$EDITOR -p"
 
 # Commands
+alias traceroute="mtr"
 alias rsync="rsync -h --progress"
 alias lg="lazygit"
 alias ldocker="lazydocker"
