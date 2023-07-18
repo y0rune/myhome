@@ -69,6 +69,12 @@ function install_terraform() {
         brew install tflint -q
         brew install tfenv -q
         TFENV_ARCH=amd64 tfenv install latest
+        TFENV_VER_ARRAY=($(tfenv list | grep -ioE ' [0-9.]+' | sed -e '1,2d'))
+        if [ "${#TFENV_VER_ARRAY[@]}" -gt "2" ]; then
+            for i in "${TFENV_VER_ARRAY[@]}"; do
+                tfenv uninstall "$i" && timestamp "Removed - terraform '$i' version"
+            done
+        fi
     else
         GO111MODULE=on go install github.com/hashicorp/terraform@latest
         curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
