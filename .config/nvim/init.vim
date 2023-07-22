@@ -599,6 +599,7 @@ let g:shfmt_opt="-ci"
 " Python
 autocmd BufRead,BufNewFile *.py set textwidth=0
 autocmd BufRead,BufNewFile *.py set fo-=t
+autocmd BufWritePre * silent! undojoin | Neoformat black
 
 " Newsboat
 autocmd BufRead,BufNewFile urls set textwidth=0
