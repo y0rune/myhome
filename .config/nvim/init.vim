@@ -660,8 +660,20 @@ set grepprg=rg\ --vimgrep
 " Custom functions "
 function! RemoveForti()
     :%g/set uuid .*/d
-    :%g/set comments .*/d
-    :%s/edit .*/edit 0/g
+    :%g/set comment .*/d
     :%s/  \+//g
+    :%s/edit \(\d\{1,}\)/edit 0/g
     :g/^$/d
+endfunction
+
+function! RemoveFortiAddresses()
+    :e!
+    :%g/set uuid .*/d
+    :%g/set comment .*/d
+    :%s/  \+//g
+    :%s/edit \(\d\{1,}\)/edit 0/g
+    :%s/next\n/set allow-routing enable\rnext\r/g
+    :g/^$/d
+    :%!uniq
+    :w!
 endfunction
