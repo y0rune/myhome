@@ -147,6 +147,16 @@ function install_awscli() {
     pip3 install awscli --pre --user --force --quiet
 }
 
+function install_ytdlp() {
+    # Install yt-dlp
+    pip3 install yt-dlp --pre --user --force --quiet
+}
+
+function install_spotifydl() {
+    # Install spotify_dl
+    pip3 install spotify_dl --pre --user --force --quiet
+}
+
 function update() {
     if [ -d $CONFIG/fzf ]; then
         FOLDER="$CONFIG/fzf"
@@ -207,6 +217,8 @@ function main() {
     command_start install_black
     command_start install_ansible
     command_start install_meraki_ansible
+    command_start install_ytdlp
+    command_start install_spotifydl
     command_start update
 }
 
