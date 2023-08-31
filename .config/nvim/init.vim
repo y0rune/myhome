@@ -677,3 +677,26 @@ function! RemoveFortiAddresses()
     :%!uniq
     :w!
 endfunction
+
+function! BlurForti()
+    :%g/set uuid .*/d
+    :%g/set description .*/d
+    :%g/set comment .*/d
+    :%g/set comments .*/d
+    :%s/username .*/username "XXXXXXXXXXXXXXXXXXXXXXX"/g
+    :%s/dn .*/dn "XXXXXXXXXXXXXXXXXXXXXXX"/g
+    :%s/psksecret ENC .*/psksecret XXXXXXXXXXXXXXXXXXXXXXX/g
+    :%s/password ENC .*/password XXXXXXXXXXXXXXXXXXXXXXX/g
+    :%s/passwd ENC .*/passwd XXXXXXXXXXXXXXXXXXXXXXX/g
+    :%s/group-name .*/group-name "XXXXXXXXXXXXXXXXXXXXXXX"/g
+    :%s/ssh-rsa .*/ssh-rsa XXXXXXXXXXXXXXXXXXXXXXX/g
+    :%s/-----BEGIN OPENSSH PRIVATE KEY.*----/-----BEGIN OPENSSH PRIVATE KEY -----\rXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/g
+    :%s/-----BEGIN CERTIFICATE.*----/-----BEGIN CERTIFICATE -----\rXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/g
+    :%s/-----BEGIN ENCRYPTED PRIVATE KEY.*----/-----BEGIN ENCRYPTED PRIVATE KEY -----\rXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/g
+    :%s/"VPN_.*"/"VPN_XXXXX"/g
+    :%s/\v(\d{1,3}\.){3}\d{1,3}/X.X.X.X/g
+endfunction
+
+function! ColoursFortiSSL()
+    :%s/next\n/set color 23\rset allow-routing enable\rnext\r/g
+endfunction
