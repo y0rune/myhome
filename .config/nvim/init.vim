@@ -166,7 +166,7 @@ call plug#begin('~/.config/nvim/plugged')
     " Mikrotik
     Plug 'zainin/vim-mikrotik'
 
-    Plug 'nvim-treesitter/nvim-treesitter'
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'nvim-treesitter/nvim-treesitter-context'
 
 call plug#end()
