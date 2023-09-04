@@ -112,6 +112,16 @@ function install_shellcheck() {
     fi
 }
 
+function install_marksman() {
+    if [[ "$(uname)" == "Darwin" ]]; then
+        brew install marksman -q
+    else
+        wget https://github.com/artempyanykh/marksman/releases/latest/download/marksman-linux-x64 -O $HOME/.local/bin/marksman
+        chmod +x $HOME/.local/bin/marksman
+    fi
+
+}
+
 function install_go() {
     # Install the golang
     if [[ "$(uname)" == "Darwin" ]]; then
@@ -221,6 +231,7 @@ function main() {
     command_start install_bash-language-server
     command_start install_yaml-language-server
     command_start install_ansible-language-server
+    command_start install_marksman
     command_start install_shfmt
     command_start install_shellcheck
     command_start install_gopls
