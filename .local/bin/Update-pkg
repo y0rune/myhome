@@ -36,7 +36,11 @@ function command_start() {
 
 function update_pip() {
     # Update the pip
-    python3 -m pip install --upgrade pip --user
+    if [[ "$(uname)" == "Darwin" ]]; then
+        python3 -m pip install --upgrade pip --user
+    elif [[ "$(uname -r)" =~ "gentoo" ]]; then
+        sudo emerge dev-python/pip
+    fi
 }
 
 function install_neovim_module_for_python() {
