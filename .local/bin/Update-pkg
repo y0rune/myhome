@@ -9,6 +9,14 @@ RED='\033[0;31m'
 GREEN='\033[0;0;32m'
 NC='\033[0m'
 
+PIPEXT="--user --force --quiet"
+PIPEXTPRE="--pre $PIPEXT"
+
+if [[ "$(uname -r)" =~ "gentoo" || "$(uname -r)" =~ "WSL2" ]]; then
+    PIPEXT="$PIPEXT --break-system-packages"
+    PIPEXTPRE="$PIPEXTPRE --break-system-packages"
+fi
+
 function timestamp() {
     echo -e "${GREEN}[+]${NC} $(date +'%F %T') [INFO] $*"
 }
@@ -33,7 +41,7 @@ function update_pip() {
 
 function install_neovim_module_for_python() {
     # Python module in neovim
-    pip3 install neovim --pre --user --force --quiet
+    pip3 install neovim $PIPEXTPRE
 }
 
 function install_pyright() {
@@ -116,13 +124,13 @@ function install_gopls() {
 
 function install_black() {
     # Install black
-    pip3 install black --pre --user --force --quiet
+    pip3 install black $PIPEXTPRE
 }
 
 function install_ansible() {
     # Install Ansible
-    pip3 install ansible ansible-lint ansible-core --pre --user --force --quiet
-    pip3 install ansible-parallel --pre --user --force --quiet
+    pip3 install ansible ansible-lint ansible-core $PIPEXTPRE
+    pip3 install ansible-parallel $PIPEXTPRE
 }
 
 function install_ansible-language-server() {
@@ -134,27 +142,27 @@ function install_ansible-language-server() {
 function install_meraki_ansible() {
     # Install python, ansible module for meraki
     ansible-galaxy collection install cisco.meraki --force
-    pip3 install meraki --user --force --quiet
+    pip3 install meraki $PIPEXT
 }
 
 function install_azure_cli() {
     # Install azure_cli
-    pip3 install azure-cli --pre --user --force --quiet
+    pip3 install azure-cli $PIPEXTPRE
 }
 
 function install_awscli() {
     # Install awscli
-    pip3 install awscli --pre --user --force --quiet
+    pip3 install awscli $PIPEXTPRE
 }
 
 function install_ytdlp() {
     # Install yt-dlp
-    pip3 install yt-dlp --pre --user --force --quiet
+    pip3 install yt-dlp $PIPEXTPRE
 }
 
 function install_spotifydl() {
     # Install spotify_dl
-    pip3 install spotify_dl --pre --user --force --quiet
+    pip3 install spotify_dl $PIPEXTPRE
 }
 
 function update() {
@@ -202,6 +210,7 @@ function update() {
 
 function main() {
     command_start update_pip
+    command_start install_neovim_module_for_python
     command_start install_go
     command_start install_pyright
     command_start install_lazy
