@@ -1,5 +1,15 @@
+refresher:
+  refreshInterval: 60
 gui:
   mainPanelSplitMode: "horizontal"
+  theme:
+    selectedLineBgColor:
+      - "#413660"
 git:
+  autoFetch: true
+  paging:
+    colorArg: always
   commit:
     signOff: true
+  pull:
+    mode: "rebase"
