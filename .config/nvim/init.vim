@@ -204,7 +204,7 @@ local handlers =  {
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', 'bashls', 'yamlls', 'ansiblels', 'gopls', 'solargraph', 'terraformls', 'tflint' }
+local servers = { 'pyright', 'bashls', 'yamlls', 'ansiblels', 'gopls', 'solargraph', 'terraformls', 'tflint', 'marksman' }
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup {
     on_attach = on_attach,
@@ -333,7 +333,6 @@ cmp.setup.cmdline('/', {
 
 require("nvim-tree").setup({
 })
-
 
 require'treesitter-context'.setup{}
 EOF
