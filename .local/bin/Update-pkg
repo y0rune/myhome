@@ -243,6 +243,7 @@ function main() {
     command_start install_meraki_ansible
     command_start install_ytdlp
     command_start install_spotifydl
+    command_start install_awscli
     command_start update
 }
 
