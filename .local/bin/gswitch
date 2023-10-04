@@ -1,5 +1,7 @@
 #!/bin/bash
 BRANCH=$1
+git checkout main
+git checkout master
 git checkout -b "$BRANCH"
 git checkout "$BRANCH"
 git branch --set-upstream-to=origin/"$BRANCH" "$BRANCH"
