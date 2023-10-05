@@ -222,6 +222,11 @@ function update() {
 
 }
 
+function install_speedtest() {
+    # Install speedtest-cli
+    pip3 install speedtest-cli $PIPEXTPRE
+}
+
 function main() {
     command_start update_pip
     command_start install_neovim_module_for_python
@@ -244,6 +249,7 @@ function main() {
     command_start install_ytdlp
     command_start install_spotifydl
     command_start install_awscli
+    command_start install_speedtest
     command_start update
 }
 
