@@ -169,6 +169,9 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'nvim-treesitter/nvim-treesitter-context'
 
+    " Autopair
+    Plug 'windwp/nvim-autopairs'
+
 call plug#end()
 
 " LUA
@@ -335,6 +338,8 @@ require("nvim-tree").setup({
 })
 
 require'treesitter-context'.setup{}
+
+require("nvim-autopairs").setup {}
 EOF
 
 " Added popout window to see diagnostic
