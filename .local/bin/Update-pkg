@@ -74,6 +74,21 @@ function install_lazy() {
     GO111MODULE=on go install github.com/jesseduffield/lazydocker@latest
 }
 
+function install_terraform_stable() {
+    # Install terraform and terraform-ls
+    GO111MODULE=on go install github.com/hashicorp/terraform-ls@latest
+
+    if [[ "$(uname)" == "Darwin" ]]; then
+        brew install tflint -q
+        brew install tfenv -q
+        TFENV_ARCH=amd64 tfenv install 1.5.5
+        tfenv use 1.5.5
+    else
+        GO111MODULE=on go install github.com/hashicorp/terraform@v1.5.5
+        curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+    fi
+}
+
 function install_terraform() {
     # Install terraform and terraform-ls
     GO111MODULE=on go install github.com/hashicorp/terraform-ls@latest
@@ -240,7 +255,8 @@ function main() {
     command_start install_shfmt
     command_start install_shellcheck
     command_start install_gopls
-    command_start install_terraform
+    # command_start install_terraform
+    command_start install_terraform_stable
     command_start install_terragrunt
     command_start install_azure_cli
     command_start install_black
