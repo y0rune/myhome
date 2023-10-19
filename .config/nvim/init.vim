@@ -563,7 +563,7 @@ nnoremap <leader>r :NvimTreeRefresh<CR>
 nnoremap <leader>n :NvimTreeFindFile<CR>
 nnoremap <F11> :Goyo <CR>
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
-map <F3> :setlocal spell! spelllang=en_gb<CR>
+map <F3> :setlocal spell! spelllang=en<CR>
 map <F4> :setlocal spell! spelllang=pl<CR>
 
 " Human Errors
@@ -648,6 +648,9 @@ au BufNewFile,BufRead,BufWritePre *.ebuild let g:shfmt_extra_args = '-ci -sr -s'
 " Terrafrom
 autocmd BufWritePre *.tf lua vim.lsp.buf.format()
 autocmd BufWritePre *.tfvars lua vim.lsp.buf.format()
+
+" Markdown
+autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_us
 
 " Automatically deletes all trailing whitespace and newlines at end of file on save.
 autocmd BufWritePre * %s/\s\+$//e
