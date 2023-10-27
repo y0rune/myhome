@@ -81,10 +81,10 @@ function install_terraform_stable() {
     if [[ "$(uname)" == "Darwin" ]]; then
         brew install tflint -q
         brew install tfenv -q
-        TFENV_ARCH=amd64 tfenv install 1.5.5
-        tfenv use 1.5.5
+        TFENV_ARCH=amd64 tfenv install 1.5.7
+        tfenv use 1.5.7
     else
-        GO111MODULE=on go install github.com/hashicorp/terraform@v1.5.5
+        GO111MODULE=on go install github.com/hashicorp/terraform@v1.5.7
         curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
     fi
 }
