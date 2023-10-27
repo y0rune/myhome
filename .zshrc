@@ -106,6 +106,7 @@ alias pl="setxkbmap pl"
 alias feh="feh --edit --scale-down"
 alias graphic-card="glxinfo|egrep 'OpenGL vendor|OpenGL renderer'"
 alias mylaptop-components="inxi -Fxz"
+alias update_time="sudo ntpdate -b -u vega.cbk.poznan.pl"
 
 # Alias and Export for Mac
 if [[ "$(uname)" == "Darwin" ]]; then
