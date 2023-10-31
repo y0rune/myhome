@@ -242,6 +242,14 @@ function install_speedtest() {
     pip3 install speedtest-cli $PIPEXTPRE
 }
 
+function install_gh_cli() {
+    if [[ "$(uname)" == "Darwin" ]]; then
+        brew install github/gh/gh
+    elif [[ "$(uname -r)" =~ "gentoo" ]]; then
+        sudo emerge dev-util/github-cli
+    fi
+}
+
 function main() {
     command_start update_pip
     command_start install_neovim_module_for_python
@@ -266,6 +274,7 @@ function main() {
     command_start install_spotifydl
     command_start install_awscli
     command_start install_speedtest
+    command_start install_gh_cli
     command_start update
 }
 
