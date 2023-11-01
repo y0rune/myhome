@@ -9,13 +9,13 @@ RED='\033[0;31m'
 GREEN='\033[0;0;32m'
 NC='\033[0m'
 
-PIPEXT="--user --force --quiet"
+PIPEXT="--user --force --quiet --break-system-packages"
 PIPEXTPRE="--pre $PIPEXT"
 
-if [[ "$(uname -r)" =~ "gentoo" || "$(uname -r)" =~ "WSL2" ]]; then
-    PIPEXT="$PIPEXT --break-system-packages"
-    PIPEXTPRE="$PIPEXTPRE --break-system-packages"
-fi
+# if [[ "$(uname -r)" =~ "gentoo" || "$(uname -r)" =~ "WSL2" ]]; then
+#     PIPEXT="$PIPEXT --break-system-packages"
+#     PIPEXTPRE="$PIPEXTPRE --break-system-packages"
+# fi
 
 function timestamp() {
     echo -e "${GREEN}[+]${NC} $(date +'%F %T') [INFO] $*"
