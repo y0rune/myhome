@@ -184,6 +184,11 @@ function install_awscli() {
     pip3 install awscli $PIPEXTPRE
 }
 
+function install_aws_adfs() {
+    # Install aws-adfs
+    pip3 install aws-adfs $PIPEXTPRE
+}
+
 function install_ytdlp() {
     # Install yt-dlp
     pip3 install yt-dlp $PIPEXTPRE
@@ -244,9 +249,19 @@ function install_speedtest() {
 
 function install_gh_cli() {
     if [[ "$(uname)" == "Darwin" ]]; then
-        brew install github/gh/gh
+        brew install gh
     elif [[ "$(uname -r)" =~ "gentoo" ]]; then
         sudo emerge dev-util/github-cli
+    fi
+}
+
+function install_kubernetes() {
+    if [[ "$(uname)" == "Darwin" ]]; then
+        wget "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/arm64/kubectl" -O $HOME/.local/bin/kubectl
+        chmod +x $HOME/.local/bin/kubectl
+    elif [[ "$(uname -r)" =~ "gentoo" ]]; then
+        wget "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" -O $HOME/.local/bin/kubectl
+        chmod +x $HOME/.local/bin/kubectl
     fi
 }
 
@@ -273,8 +288,10 @@ function main() {
     command_start install_ytdlp
     command_start install_spotifydl
     command_start install_awscli
+    command_start install_aws_adfs
     command_start install_speedtest
     command_start install_gh_cli
+    command_start install_kubernetes
     command_start update
 }
 
