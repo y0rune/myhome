@@ -11,6 +11,7 @@ NC='\033[0m'
 
 PIPEXT="--user --force --quiet --break-system-packages"
 PIPEXTPRE="--pre $PIPEXT"
+GENTOO="/etc/gentoo-release"
 
 # if [[ "$(uname -r)" =~ "gentoo" || "$(uname -r)" =~ "WSL2" ]]; then
 #     PIPEXT="$PIPEXT --break-system-packages"
@@ -38,7 +39,7 @@ function update_pip() {
     # Update the pip
     if [[ "$(uname)" == "Darwin" ]]; then
         python3 -m pip install --upgrade pip --user
-    elif [[ "$(uname -r)" =~ "gentoo" ]]; then
+    elif [[ -f $GENTOO ]]; then
         sudo emerge dev-python/pip
     fi
 }
@@ -141,7 +142,7 @@ function install_go() {
     # Install the golang
     if [[ "$(uname)" == "Darwin" ]]; then
         brew install golang -q
-    elif [[ "$(uname -r)" =~ "gentoo" ]]; then
+    elif [[ -f $GENTOO ]]; then
         sudo emerge dev-lang/go
     fi
 }
@@ -250,16 +251,17 @@ function install_speedtest() {
 function install_gh_cli() {
     if [[ "$(uname)" == "Darwin" ]]; then
         brew install gh
-    elif [[ "$(uname -r)" =~ "gentoo" ]]; then
+    elif [[ -f $GENTOO ]]; then
         sudo emerge dev-util/github-cli
     fi
 }
 
 function install_kubernetes() {
+    echo -e "$(uname -r)"
     if [[ "$(uname)" == "Darwin" ]]; then
         wget "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/arm64/kubectl" -O $HOME/.local/bin/kubectl
         chmod +x $HOME/.local/bin/kubectl
-    elif [[ "$(uname -r)" =~ "gentoo" ]]; then
+    else
         wget "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" -O $HOME/.local/bin/kubectl
         chmod +x $HOME/.local/bin/kubectl
     fi
