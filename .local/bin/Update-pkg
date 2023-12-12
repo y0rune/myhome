@@ -46,7 +46,7 @@ function update_pip() {
 
 function install_neovim_module_for_python() {
     # Python module in neovim
-    pip3 install neovim $PIPEXTPRE
+    pip3 install pynvim neovim imps $PIPEXTPRE
 }
 
 function install_pyright() {
