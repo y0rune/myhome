@@ -115,11 +115,16 @@ if [[ "$(uname)" == "Darwin" ]]; then
     export GO111MODULE=on
 
     # Other export
-    export PATH="/usr/local/opt/openssl@3/bin:$PATH"
+    export OPENSSLVER=$(ls "/opt/homebrew/Cellar/openssl@3/" |
+        sort |
+        grep -iE '[0-9]+\.[0-9]+\.' |
+        tail -n1)
+
+    export PATH="/opt/homebrew/Cellar/openssl@3/$OPENSSLVER/bin:$PATH"
     export PATH="/opt/homebrew/bin:$PATH"
-    export LDFLAGS="-L/usr/local/opt/openssl@3/lib"
-    export CPPFLAGS="-I/usr/local/opt/openssl@3/include"
-    export PKG_CONFIG_PATH="/usr/local/opt/openssl@3/lib/pkgconfig"
+    export LDFLAGS="-L/opt/homebrew/Cellar/openssl@3/$OPENSSLVER/lib"
+    export CPPFLAGS="-I/opt/homebrew/Cellar/openssl@3/$OPENSSLVER/include"
+    export PKG_CONFIG_PATH="/opt/homebrew/openssl@3/$OPENSSLVER/lib/pkgconfig"
     export GOROOT="$(brew --prefix golang)/libexec"
     export PATH=$PATH:$GOPATH/bin
     export PATH=$PATH:$GOROOT/bin
