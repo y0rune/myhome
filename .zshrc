@@ -220,6 +220,7 @@ alias channel-check='sudo iwlist wlan0 scan | egrep -i "essid|frequency"'
 alias newswork="newsboat --url=$HOME/.config/newsboat/urlswork"
 alias aria2c="aria2c --seed-time=0 --disable-ipv6 --max-upload-limit=1k"
 alias irc="ssh mikrus -t 'screen -r'"
+alias go-mod="go mod edit -go $(go version | grep -oE 'go[0-9]*\.[0-9]*\.[0-9]*' | sed 's/go//g');  go get -u; go mod verify; go get -x -v; go mod verify; go mod tidy"
 
 # Resolve problem with - zsh: no matches found
 setopt +o nomatch
