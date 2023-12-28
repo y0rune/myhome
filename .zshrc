@@ -199,6 +199,9 @@ alias myip="curl ipinfo.io/ip"
 alias changefont="figlet"
 
 # Git
+alias gwork='GIT_SSH_COMMAND="ssh -i ~/.ssh/work/id_rsa" git'
+alias gitwork=gwork
+alias gexclude="git update-index --assume-unchanged"
 alias gmaster="git checkout master; git checkout main"
 alias gmain="git checkout master; git checkout main"
 alias gcommit="git commit --author='Marcin Woźniak <y0rune@aol.com>' -s"
