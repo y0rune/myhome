@@ -89,8 +89,15 @@ if [[ "$(uname -sr)" =~ "Microsoft" ]]; then
     export GOROOT=/usr/lib/go
 fi
 
-# Alias ssh
+# Work
 alias ssh-work="ssh -i ~/.ssh/work/id_rsa"
+alias gwork='GIT_SSH_COMMAND="ssh -i ~/.ssh/work/id_rsa" git'
+alias rsyncwork="rsync -h --progress -e 'ssh -i ~/.ssh/work/id_rsa'"
+alias gcommitw="git commit --author='Marcin Woźniak <marcin.wozniak@wundermanthompson.com>'"
+alias gitwork=gwork
+alias gitcommitwork=gcommitw
+
+# Alias ssh
 alias ssh-restore="cp -rv ~/ssh-mega/config ~/.ssh/ ; ssh-permissions"
 alias ssh-backup="cp -rv ~/.ssh/config ~/ssh-mega/"
 
@@ -199,13 +206,10 @@ alias myip="curl ipinfo.io/ip"
 alias changefont="figlet"
 
 # Git
-alias gwork='GIT_SSH_COMMAND="ssh -i ~/.ssh/work/id_rsa" git'
-alias gitwork=gwork
 alias gexclude="git update-index --assume-unchanged"
 alias gmaster="git checkout master; git checkout main"
 alias gmain="git checkout master; git checkout main"
 alias gcommit="git commit --author='Marcin Woźniak <y0rune@aol.com>' -s"
-alias gcommitw="git commit --author='Marcin Woźniak <marcin.wozniak@wundermanthompson.com>'"
 alias gdel="git push origin --delete"
 alias gadd="git add"
 alias gpush="git push"
