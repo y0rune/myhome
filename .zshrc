@@ -90,12 +90,15 @@ if [[ "$(uname -sr)" =~ "Microsoft" ]]; then
 fi
 
 # Work
+alias ansible-lint-work='GIT_SSH_COMMAND="ssh -i ~/.ssh/work/id_rsa" ansible-lint'
+alias ansible-galaxy-work='GIT_SSH_COMMAND="ssh -i ~/.ssh/work/id_rsa" ansible-galaxy'
 alias ssh-work="ssh -i ~/.ssh/work/id_rsa"
 alias gwork='GIT_SSH_COMMAND="ssh -i ~/.ssh/work/id_rsa" git'
 alias rsyncwork="rsync -h --progress -e 'ssh -i ~/.ssh/work/id_rsa'"
 alias gcommitw="git commit --author='Marcin Woźniak <marcin.wozniak@wundermanthompson.com>'"
 alias gitwork=gwork
 alias gitcommitwork=gcommitw
+alias gitworkcommit=gcommitw
 
 # Alias ssh
 alias ssh-restore="cp -rv ~/ssh-mega/config ~/.ssh/ ; ssh-permissions"
