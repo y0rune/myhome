@@ -4,11 +4,11 @@ CONFIG=$HOME/.config
 
 parse_git_branch() {
     command=$(git branch \
-        2> /dev/null \
-        | sed -n -e 's/^\* \(.*\)/\1/p' \
-        | awk 'NF{print $NF}' \
-        | sed 's/)//g' \
-        2> /dev/null)
+        2>/dev/null |
+        sed -n -e 's/^\* \(.*\)/\1/p' |
+        awk 'NF{print $NF}' |
+        sed 's/)//g' \
+            2>/dev/null)
     [ -z $command ] && echo -e "$ " || echo -e "$command $ "
 }
 
@@ -28,16 +28,16 @@ autoload -U colors && colors
 autoload bashcompinit && bashcompinit
 setopt PROMPT_SUBST
 PS1='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%}%n@)%m %{$fg_bold[blue]%}%(!.%1~.%~) $(parse_git_branch)%{$reset_color%}'
-plugins=(rake ruby vagrant knife knife_ssh kitchen )
+plugins=(rake ruby vagrant knife knife_ssh kitchen)
 
 ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
 
-[ -d $CONFIG/zsh/zsh-autosuggestions ] && source $CONFIG/zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh &>> /dev/null
-[ -d $CONFIG/zsh/zsh-syntax-highlighting ] && source $CONFIG/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh &>> /dev/null
-[ -d $CONFIG/zsh/zsh-command-time ] && source $CONFIG/zsh/zsh-command-time/command-time.plugin.zsh &>> /dev/null
-[ -d $CONFIG/zsh/aws ] && source $CONFIG/zsh/aws/aws.plugin.zsh &>> /dev/null
-[ -d $CONFIG/zsh/azure-cli ] && source $CONFIG/zsh/azure-cli/az.completion &>> /dev/null
+[ -d $CONFIG/zsh/zsh-autosuggestions ] && source $CONFIG/zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh &>>/dev/null
+[ -d $CONFIG/zsh/zsh-syntax-highlighting ] && source $CONFIG/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh &>>/dev/null
+[ -d $CONFIG/zsh/zsh-command-time ] && source $CONFIG/zsh/zsh-command-time/command-time.plugin.zsh &>>/dev/null
+[ -d $CONFIG/zsh/aws ] && source $CONFIG/zsh/aws/aws.plugin.zsh &>>/dev/null
+[ -d $CONFIG/zsh/azure-cli ] && source $CONFIG/zsh/azure-cli/az.completion &>>/dev/null
 [ -f $HOME/.password ] && source $HOME/.password
 [ -f $CONFIG/fzf/shell/key-bindings.zsh ] && source $HOME/.config/fzf/shell/key-bindings.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -141,7 +141,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
 
     export PYTHONVERSION=$(ls -la /opt/homebrew/opt/ |
         grep -iEo 'python@.* ->' |
-        sed 's/ ->//g'|
+        sed 's/ ->//g' |
         sort |
         tail -n1 |
         sed 's/python@//g')
@@ -167,11 +167,11 @@ if [[ "$(uname)" == "Darwin" ]]; then
     export TFENVVERSION=$(ls -la /opt/homebrew/Cellar/tfenv/ |
         grep -iEo '[0-9]\.[0-9]\.[0-9]' |
         sort |
-        tail -n1 )
+        tail -n1)
     export TFVERSION=$(ls -la /opt/homebrew/Cellar/tfenv/*/versions |
         grep -iEo '[0-9]\.[0-9]\.[0-9]' |
         sort |
-        tail -n1 )
+        tail -n1)
     export PATH=$PATH:/opt/homebrew/Cellar/tfenv/$TFENVVERSION/versions/$TFVERSION/
 
     # Project
@@ -179,7 +179,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
 fi
 
 # Setting the right editor
-if which nvim > /dev/null 2>&1; then
+if which nvim >/dev/null 2>&1; then
     export VISUAL='nvim -u $HOME/.vimrc'
     export EDITOR='nvim -u $HOME/.vimrc'
 else
