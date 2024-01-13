@@ -1,6 +1,7 @@
 #!/bin/bash
-# shellcheck disable=2045,2086
+# shellcheck disable=2010,2045,2086,2155
 
+# Path to the zsh folder
 ZSHFOLDER=$HOME/.config/zsh
 CONFIG="$HOME/.config"
 
@@ -9,8 +10,23 @@ RED='\033[0;31m'
 GREEN='\033[0;0;32m'
 NC='\033[0m'
 
-PIPEXT="--user --force --quiet --break-system-packages"
+# Stable version
+TERRAFORM_VERSION="1.5.7"
+
+# Python
+export PYTHONVERSION=$(ls -la /opt/homebrew/opt/ |
+    grep -iEo 'python@.* ->' |
+    sed 's/ ->//g' |
+    sort |
+    tail -n1 |
+    sed 's/python@//g')
+python="/opt/homebrew/bin/python$PYTHONVERSION"
+pip="/opt/homebrew/bin/pip$PYTHONVERSION"
+
+PIPEXT="--user --force --quiet --break-system-packages --no-warn-script-location"
 PIPEXTPRE="--pre $PIPEXT"
+
+# Gentoo release
 GENTOO="/etc/gentoo-release"
 
 # if [[ "$(uname -r)" =~ "gentoo" || "$(uname -r)" =~ "WSL2" ]]; then
@@ -38,7 +54,7 @@ function command_start() {
 function update_pip() {
     # Update the pip
     if [[ "$(uname)" == "Darwin" ]]; then
-        python3 -m pip install --upgrade pip --user
+        $python -m pip install --upgrade pip --user --break-system-packages
     elif [[ -f $GENTOO ]]; then
         sudo emerge dev-python/pip
     fi
@@ -46,12 +62,13 @@ function update_pip() {
 
 function install_neovim_module_for_python() {
     # Python module in neovim
-    pip3 install pynvim neovim imps $PIPEXTPRE
+    $pip install pynvim neovim imps $PIPEXTPRE
 }
 
 function install_pyright() {
     # Install pyright
     sudo npm -s -g i pyright --force
+    $pip install black $PIPEXTPRE
 }
 
 function install_bash-language-server() {
@@ -82,10 +99,10 @@ function install_terraform_stable() {
     if [[ "$(uname)" == "Darwin" ]]; then
         brew install tflint -q
         brew install tfenv -q
-        TFENV_ARCH=amd64 tfenv install 1.5.7
-        tfenv use 1.5.7
+        TFENV_ARCH=amd64 tfenv install "$TERRAFORM_VERSION"
+        tfenv use "$TERRAFORM_VERSION"
     else
-        GO111MODULE=on go install github.com/hashicorp/terraform@v1.5.7
+        GO111MODULE=on go install github.com/hashicorp/terraform@v"$TERRAFORM_VERSION"
         curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
     fi
 }
@@ -97,7 +114,7 @@ function install_terraform() {
         brew install tflint -q
         brew install tfenv -q
         TFENV_ARCH=amd64 tfenv install latest
-        TFENV_VER_ARRAY=($(tfenv list | grep -ioE ' [0-9.]+' | sed -e '1,1d'))
+        mapfile -t TFENV_VER_ARRAY < <(tfenv list | grep -ioE ' [0-9.]+' | sed -e '1,1d')
         if [ "${#TFENV_VER_ARRAY[@]}" -gt "2" ]; then
             for i in "${TFENV_VER_ARRAY[@]}"; do
                 tfenv uninstall "$i" && timestamp "Removed - terraform '$i' version"
@@ -154,13 +171,13 @@ function install_gopls() {
 
 function install_black() {
     # Install black
-    pip3 install black $PIPEXTPRE
+    $pip install black $PIPEXTPRE
 }
 
 function install_ansible() {
     # Install Ansible
-    pip3 install ansible ansible-lint ansible-core $PIPEXTPRE
-    pip3 install ansible-parallel $PIPEXTPRE
+    $pip install ansible ansible-lint ansible-core $PIPEXTPRE
+    $pip install ansible-parallel $PIPEXTPRE
 }
 
 function install_ansible-language-server() {
@@ -172,32 +189,32 @@ function install_ansible-language-server() {
 function install_meraki_ansible() {
     # Install python, ansible module for meraki
     ansible-galaxy collection install cisco.meraki --force
-    pip3 install meraki $PIPEXT
+    $pip install meraki $PIPEXT
 }
 
 function install_azure_cli() {
     # Install azure_cli
-    pip3 install azure-cli $PIPEXTPRE
+    $pip install azure-cli $PIPEXTPRE
 }
 
 function install_awscli() {
     # Install awscli
-    pip3 install awscli $PIPEXTPRE
+    $pip install awscli $PIPEXTPRE
 }
 
 function install_aws_adfs() {
     # Install aws-adfs
-    pip3 install aws-adfs $PIPEXTPRE
+    $pip install aws-adfs $PIPEXTPRE
 }
 
 function install_ytdlp() {
     # Install yt-dlp
-    pip3 install yt-dlp $PIPEXTPRE
+    $pip install yt-dlp $PIPEXTPRE
 }
 
 function install_spotifydl() {
     # Install spotify_dl
-    pip3 install spotify_dl $PIPEXTPRE
+    $pip install spotify_dl $PIPEXTPRE
 }
 
 function update() {
@@ -245,7 +262,7 @@ function update() {
 
 function install_speedtest() {
     # Install speedtest-cli
-    pip3 install speedtest-cli $PIPEXTPRE
+    $pip install speedtest-cli $PIPEXTPRE
 }
 
 function install_gh_cli() {
