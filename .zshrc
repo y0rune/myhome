@@ -224,6 +224,7 @@ alias gdiff="git --no-pager diff"
 alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches"
 alias gshow="git --no-pager show --color --pretty=format:%b"
 alias gd=gshow
+alias guntrackfile="git update-index --assume-unchanged"
 
 # Others
 alias channel-check='sudo iwlist wlan0 scan | egrep -i "essid|frequency"'
