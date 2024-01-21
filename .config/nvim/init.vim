@@ -607,7 +607,7 @@ let g:shfmt_opt="-ci"
 " Python
 autocmd BufRead,BufNewFile *.py set textwidth=0
 autocmd BufRead,BufNewFile *.py set fo-=t
-autocmd BufWritePre * silent! undojoin | Neoformat black
+autocmd BufWritePre *.py silent! undojoin | Neoformat black
 
 " Newsboat
 autocmd BufRead,BufNewFile urls set textwidth=0
@@ -628,7 +628,7 @@ autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<CR>
 autocmd BufRead,BufNewFile *.yaml let g:indentLine_enabled = 1
 autocmd BufRead,BufNewFile *.yaml let g:indentLine_char = '⦙'
 au BufRead,BufNewFile *.yaml,*.yml if search('hosts:\|tasks:', 'nw') | set ft=yaml.ansible | endif
-autocmd BufWritePre * silent! undojoin | Neoformat prettier
+autocmd BufWritePre *.yaml silent! undojoin | Neoformat prettier
 
 " GoLang
 autocmd BufRead *.go set noexpandtab
@@ -651,6 +651,7 @@ autocmd BufWritePre *.tfvars lua vim.lsp.buf.format()
 
 " Markdown
 autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_us
+autocmd BufWritePre *.md silent! undojoin | Neoformat
 
 " Automatically deletes all trailing whitespace and newlines at end of file on save.
 autocmd BufWritePre * %s/\s\+$//e
