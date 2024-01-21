@@ -34,6 +34,25 @@ mask2cidr() {
     echo $(($number_of_bits_stripped + $number_of_bits_from_conversion_table))
 }
 
+cidr2mask() {
+    local i mask=""
+    local full_octets=$(($1 / 8))
+    local partial_octet=$(($1 % 8))
+
+    for ((i = 0; i < 4; i += 1)); do
+        if [ $i -lt $full_octets ]; then
+            mask+=255
+        elif [ $i -eq $full_octets ]; then
+            mask+=$((256 - 2 ** (8 - $partial_octet)))
+        else
+            mask+=0
+        fi
+        test $i -lt 3 && mask+=.
+    done
+
+    echo $mask
+}
+
 [ -f /etc/gentoo-release ] && export ZSH="/usr/share/zsh/site-contrib/oh-my-zsh"
 [ -f /etc/centos-release ] && export ZSH="$HOME/.oh-my-zsh"
 [ -f /etc/debian_version ] && export ZSH="$HOME/.oh-my-zsh"
