@@ -635,6 +635,8 @@ autocmd BufRead *.go set noexpandtab
 autocmd BufWritePre *.go lua go_org_imports()
 let g:go_def_mapping_enabled = 0
 let g:go#fmt#autosave  = v:true
+autocmd BufWritePre *.go silent! undojoin | Neoformat
+autocmd BufWritePre *.gomod silent! undojoin | Neoformat
 
 " Conf
 au BufNewFile,BufRead *.conf setfiletype conf
