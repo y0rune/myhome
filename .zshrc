@@ -16,43 +16,6 @@ gbranch() {
     echo -e "$(git branch "$@")"
 }
 
-mask2cidr() {
-    local mask=$1
-
-    # In RFC 4632 netmasks there's no "255." after a non-255 byte in the mask
-    local left_stripped_mask=${mask##*255.}
-    local len_mask=${#mask}
-    local len_left_stripped_mask=${#left_stripped_mask}
-
-    local conversion_table=0^^^128^192^224^240^248^252^254^
-    local number_of_bits_stripped=$((($len_mask - $len_left_stripped_mask) * 2))
-    local signifacant_octet=${left_stripped_mask%%.*}
-
-    local right_stripped_conversion_table=${conversion_table%%$signifacant_octet*}
-    local len_right_stripped_conversion_table=${#right_stripped_conversion_table}
-    local number_of_bits_from_conversion_table=$((len_right_stripped_conversion_table / 4))
-    echo $(($number_of_bits_stripped + $number_of_bits_from_conversion_table))
-}
-
-cidr2mask() {
-    local i mask=""
-    local full_octets=$(($1 / 8))
-    local partial_octet=$(($1 % 8))
-
-    for ((i = 0; i < 4; i += 1)); do
-        if [ $i -lt $full_octets ]; then
-            mask+=255
-        elif [ $i -eq $full_octets ]; then
-            mask+=$((256 - 2 ** (8 - $partial_octet)))
-        else
-            mask+=0
-        fi
-        test $i -lt 3 && mask+=.
-    done
-
-    echo $mask
-}
-
 [ -f /etc/gentoo-release ] && export ZSH="/usr/share/zsh/site-contrib/oh-my-zsh"
 [ -f /etc/centos-release ] && export ZSH="$HOME/.oh-my-zsh"
 [ -f /etc/debian_version ] && export ZSH="$HOME/.oh-my-zsh"
