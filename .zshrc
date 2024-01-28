@@ -93,10 +93,12 @@ fi
 alias ansible-lint-work='GIT_SSH_COMMAND="ssh -i ~/.ssh/work/id_rsa" ansible-lint'
 alias ansible-galaxy-work='GIT_SSH_COMMAND="ssh -i ~/.ssh/work/id_rsa" ansible-galaxy'
 alias ssh-work="ssh -i ~/.ssh/work/id_rsa"
-alias gwork='GIT_SSH_COMMAND="ssh -i ~/.ssh/work/id_rsa" git'
 alias rsyncwork="rsync -h --progress -e 'ssh -i ~/.ssh/work/id_rsa'"
-alias gcommitw="git commit --author='Marcin Woźniak <marcin.wozniak@wundermanthompson.com>'"
+alias git-work='GIT_SSH_COMMAND="ssh -i ~/.ssh/work/id_rsa" git'
+alias gwork=git-work
 alias gitwork=gwork
+alias gcommitw="git commit --author='Marcin Woźniak <marcin.wozniak@wundermanthompson.com>'"
+alias git-commit-work=gcommitw
 alias gitcommitwork=gcommitw
 alias gitworkcommit=gcommitw
 
@@ -173,9 +175,6 @@ if [[ "$(uname)" == "Darwin" ]]; then
         sort |
         tail -n1)
     export PATH=$PATH:/opt/homebrew/Cellar/tfenv/$TFENVVERSION/versions/$TFVERSION/
-
-    # Project
-    alias meraki="cd $HOME/git/ansible_collections/cisco/meraki/"
 fi
 
 # Setting the right editor
@@ -209,7 +208,8 @@ alias myip="curl ipinfo.io/ip"
 alias changefont="figlet"
 
 # Git
-alias gexclude="git update-index --assume-unchanged"
+alias git-exclude="git update-index --assume-unchanged"
+alias gexclude=git-exclude
 alias gmaster="git checkout master; git checkout main"
 alias gmain="git checkout master; git checkout main"
 alias gcommit="git commit --author='Marcin Woźniak <y0rune@aol.com>' -s"
@@ -222,15 +222,19 @@ alias gch="git checkout"
 alias gst="git status -s"
 alias gdiff="git --no-pager diff"
 alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an - %ae>%Creset' --abbrev-commit --branches"
-alias gshow="git --no-pager show --color --pretty=format:%b"
-alias gd=gshow
-alias guntrackfile="git update-index --assume-unchanged"
+alias git-show="git --no-pager show --color --pretty=format:%b"
+alias gshow=git-show
+alias gd=git-show
+alias git-untrack-file="git update-index --assume-unchanged"
+alias guntrackfile=git-untrack-file
 
 # Others
 alias channel-check='sudo iwlist wlan0 scan | egrep -i "essid|frequency"'
 alias newswork="newsboat --url=$HOME/.config/newsboat/urlswork"
 alias aria2c="aria2c --seed-time=0 --disable-ipv6 --max-upload-limit=1k"
 alias irc="ssh mikrus -t 'screen -r'"
+
+# GoLang
 alias go-mod="go mod edit -go $(go version | grep -oE 'go[0-9]*\.[0-9]*\.[0-9]*' | sed 's/go//g');  go get -u; go mod verify; go get -x -v; go mod verify; go mod tidy"
 
 # Resolve problem with - zsh: no matches found
