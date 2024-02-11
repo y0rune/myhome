@@ -163,6 +163,8 @@ if [[ "$(uname)" == "Darwin" ]]; then
     alias code="open -a 'Visual Studio Code'"
     alias xclip="pbcopy"
     alias mtr="sudo /opt/homebrew/opt/mtr/sbin/mtr"
+    alias sleep-lid-off="sudo pmset -b sleep 0; sudo pmset -b disablesleep 1"
+    alias sleep-lid-on="sudo pmset -b sleep 5; sudo pmset -b disablesleep 0"
 
     # Terraform
     export TFENV_ARCH=amd64
