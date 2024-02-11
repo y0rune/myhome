@@ -1,0 +1,11 @@
+#!/bin/bash
+/usr/local/bin/mysides remove all
+/usr/local/bin/mysides add yorune file:///Users/yorune/
+/usr/local/bin/mysides add Git file:///Users/yorune/git/
+/usr/local/bin/mysides add Linux file:///Users/yorune/MEGA/Systems/Linux/
+/usr/local/bin/mysides add Downloads file:///Users/yorune/Downloads/
+/usr/local/bin/mysides add Aplikacje file:///Applications/
+/usr/local/bin/mysides add Pictures file:///Users/yorune/Pictures/
+/usr/local/bin/mysides add Screenshots file:///Users/yorune/Screenshots/
+/usr/local/bin/mysides add Movies file:///Users/yorune/Movies/
+/usr/local/bin/mysides add Desktop file:///Users/yorune/Desktop/
