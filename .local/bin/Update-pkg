@@ -293,6 +293,14 @@ function install_kubernetes() {
     fi
 }
 
+function install_rust() {
+    if command_exists rustc; then
+        rustup update
+    else
+        curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+    fi
+}
+
 function main() {
     command_start update_pip
     command_start install_neovim_module_for_python
@@ -320,6 +328,7 @@ function main() {
     command_start install_speedtest
     command_start install_gh_cli
     command_start install_kubernetes
+    command_start install_rust
     command_start update
 }
 
