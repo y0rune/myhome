@@ -277,3 +277,4 @@ golang
 .dlv
 Cisco Packet Tracer 8.0.0
 .local/bin/kubectl
+.rustup
