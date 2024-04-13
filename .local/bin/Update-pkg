@@ -51,6 +51,15 @@ function command_start() {
     timestamp "Command $* has been ended."
 }
 
+function command_exists() {
+    if which "$1" > /dev/null 2>&1; then
+        timestamp "Command $1 has been found"
+    else
+        err "Command $1 has been NOT found"
+        exit 0
+    fi
+}
+
 function update_pip() {
     # Update the pip
     if [[ "$(uname)" == "Darwin" ]]; then
