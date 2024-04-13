@@ -79,6 +79,7 @@ export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/node_modules/.bin:$PATH
 export GOPATH=$HOME/golang
 export PATH=$PATH:$HOME/.gem/ruby/2.6.0/bin
+export PATH=$PATH:$HOME/.cargo/bin
 [ -d $HOME/repo/fortigate/bin ] && export PATH=$HOME/repo/fortigate/bin:$PATH
 
 # History
