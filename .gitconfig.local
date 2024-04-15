@@ -1,0 +1,49 @@
+[gpg]
+   program = gpg
+
+[commit]
+   gpgsign = true
+   verbose = true
+[pull]
+    rebase = false
+
+[push]
+    autoSetupRemote = true
+
+[init]
+    defaultBranch = main
+
+[alias]
+    ci = commit --verbose
+    co = checkout
+    cp = cherry-pick
+    df = !git --no-pager diff
+    dfh = !git --no-pager diff
+    diffh = !git --no-pager diff
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an - %ae>%Creset' --abbrev-commit --branches
+    prune-tags = !git tag -l | xargs git tag -d && git fetch -t
+    show = --no-pager show --color --pretty=format:%b
+    squash-all = "!f(){ git reset $(git commit-tree HEAD^{tree} \"$@\");};f"
+    st = status --ignore-submodules=dirty -s
+    untrack-file = !git update-index --assume-unchanged
+    c = commit --author='Marcin Woźniak <y0rune@aol.com> -s'
+    cw = commit --author='Marcin Woźniak <marcin.wozniak@wundermanthompson.com> -s'
+    pullwork = GIT_SSH_COMMAND='ssh -i ~/.ssh/work/id_rsa' git pull
+
+
+[url "git@github.com:"]
+    insteadOf = "https://github.com/"
+
+[credential "https://github.com"]
+    helper =
+    helper = !/usr/bin/gh auth git-credential
+
+[credential "https://gist.github.com"]
+    helper =
+    helper = !/usr/bin/gh auth git-credential
+
+[filter "lfs"]
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
