@@ -1,0 +1,8 @@
+[user]
+    name = Marcin Woźniak
+    email = y0rune@aol.com
+    signingkey = D34FB8A44F324B8A
+
+[include]
+    path = ~/.gituser.config
+    path = ~/.gitconfig.local
