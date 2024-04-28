@@ -296,6 +296,7 @@ function install_kubernetes() {
 function install_rust() {
     if command_exists rustc; then
         rustup update
+        rustup component add rust-analyzer
     else
         curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
     fi
