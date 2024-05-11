@@ -1,0 +1,2 @@
+#!/bin/bash
+yt-dlp --external-downloader ffmpeg --external-downloader-args "ffmpeg_i:-ss $1 -to $2" "${@:3}"
