@@ -4,6 +4,7 @@
 [commit]
    gpgsign = true
    verbose = true
+
 [pull]
     rebase = false
 
@@ -18,6 +19,7 @@
     co = checkout
     cp = cherry-pick
     df = !git --no-pager diff
+    br = !git branch | cat
     dfh = !git --no-pager diff
     diffh = !git --no-pager diff
     lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an - %ae>%Creset' --abbrev-commit --branches
@@ -26,10 +28,9 @@
     squash-all = "!f(){ git reset $(git commit-tree HEAD^{tree} \"$@\");};f"
     st = status --ignore-submodules=dirty -s
     untrack-file = !git update-index --assume-unchanged
+    exclude-file = !git update-index --assume-unchanged
     c = commit --author='Marcin Woźniak <y0rune@aol.com> -s'
     cw = commit --author='Marcin Woźniak <marcin.wozniak@wundermanthompson.com> -s'
-    pullwork = GIT_SSH_COMMAND='ssh -i ~/.ssh/work/id_rsa' git pull
-
 
 [url "git@github.com:"]
     insteadOf = "https://github.com/"
