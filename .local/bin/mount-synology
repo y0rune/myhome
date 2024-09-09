@@ -1,12 +1,14 @@
 #!/bin/bash
 ~/.local/bin/sidebar-restore-macos
-open -gj "smb://Synology.local/Downloads"
-open -gj "smb://Synology.local/Anime"
-open -gj "smb://Synology.local/Video"
-open -gj "smb://Synology.local/Series"
-open -gj "smb://Synology.local/Photos"
-open -gj "smb://Synology.local/Backups"
+open -gj "smb://10.0.0.14/Downloads"
+open -gj "smb://10.0.0.14/Anime"
+open -gj "smb://10.0.0.14/Video"
+open -gj "smb://10.0.0.14/Series"
+open -gj "smb://10.0.0.14/Photos"
+open -gj "smb://10.0.0.14/Backups"
+open -gj "smb://10.0.0.14/Recordings"
 
+/usr/local/bin/mysides add Synology file:///Volumes/Recordings/
 /usr/local/bin/mysides add Synology file:///Volumes/Backups/
 /usr/local/bin/mysides add Synology file:///Volumes/Downloads/
 /usr/local/bin/mysides add Synology file:///Volumes/Video/
