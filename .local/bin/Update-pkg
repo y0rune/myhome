@@ -14,14 +14,19 @@ NC='\033[0m'
 TERRAFORM_VERSION="1.5.7"
 
 # Python
-export PYTHONVERSION=$(ls -la /opt/homebrew/opt/ |
-    grep -iEo 'python@.* ->' |
-    sed 's/ ->//g' |
-    sort |
-    tail -n1 |
-    sed 's/python@//g')
-python="/opt/homebrew/bin/python$PYTHONVERSION"
-pip="/opt/homebrew/bin/pip$PYTHONVERSION"
+if which python3 > /dev/null 2>&1; then
+    python="python3"
+    pip="pip3"
+else
+    export PYTHONVERSION=$(ls -la /opt/homebrew/opt/ |
+        grep -iEo 'python@.* ->' |
+        sed 's/ ->//g' |
+        sort |
+        tail -n1 |
+        sed 's/python@//g')
+    python="/opt/homebrew/bin/python$PYTHONVERSION"
+    pip="/opt/homebrew/bin/pip$PYTHONVERSION"
+fi
 
 PIPEXT="--user --force --quiet --break-system-packages --no-warn-script-location"
 PIPEXTPRE="--pre $PIPEXT"
@@ -65,7 +70,7 @@ function update_pip() {
     if [[ "$(uname)" == "Darwin" ]]; then
         $python -m pip install --upgrade pip --user --break-system-packages
     elif [[ -f $GENTOO ]]; then
-        sudo emerge dev-python/pip
+        sudo emerge --update dev-python/pip
     fi
 }
 
@@ -140,8 +145,19 @@ function install_terragrunt() {
     if [[ "$(uname)" == "Darwin" ]]; then
         brew install terragrunt -q
     else
-        wget https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64 -O $HOME/.local/bin/terragrunt
-        chmod +x $HOME/.local/bin/terragrunt
+        TERRAGRUNT=$HOME/.local/bin/terragrunt
+        REMOTE_VERSION=$(curl -s https://api.github.com/repos/gruntwork-io/terragrunt/releases/latest | grep -iEo '"tag_name":.*' | sed 's/"tag_name"://g;s/"//g;s/,//g;s/ //g')
+
+        CURRENT_VERSION="0.0.0"
+        [ -f $TERRAGRUNT ] && CURRENT_VERSION=$($TERRAGRUNT version)
+
+        if [ "$REMOTE_VERSION" == "$CURRENT_VERSION" ]; then
+            timestamp "The current version of the TSS-SDK is the same as the newest version"
+            return 0
+        else
+            wget https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64 -O $TERRAGRUNT
+            chmod +x "$TERRAGRUNT"
+        fi
     fi
 }
 
@@ -155,6 +171,7 @@ function install_shellcheck() {
 }
 
 function install_marksman() {
+    # Install marksman
     if [[ "$(uname)" == "Darwin" ]]; then
         brew install marksman -q
     else
@@ -169,7 +186,7 @@ function install_go() {
     if [[ "$(uname)" == "Darwin" ]]; then
         brew install golang -q
     elif [[ -f $GENTOO ]]; then
-        sudo emerge dev-lang/go
+        sudo emerge --update dev-lang/go
     fi
 }
 
@@ -275,15 +292,16 @@ function install_speedtest() {
 }
 
 function install_gh_cli() {
+    # Install gh-cli
     if [[ "$(uname)" == "Darwin" ]]; then
         brew install gh
     elif [[ -f $GENTOO ]]; then
-        sudo emerge dev-util/github-cli
+        sudo emerge --update dev-util/github-cli
     fi
 }
 
 function install_kubernetes() {
-    echo -e "$(uname -r)"
+    # Install kubectl
     if [[ "$(uname)" == "Darwin" ]]; then
         wget "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/arm64/kubectl" -O $HOME/.local/bin/kubectl
         chmod +x $HOME/.local/bin/kubectl
@@ -294,12 +312,38 @@ function install_kubernetes() {
 }
 
 function install_rust() {
+    # Install rust
     if command_exists rustc; then
         rustup update
         rustup component add rust-analyzer
     else
         curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
     fi
+}
+
+function install_tss_client() {
+    # Install tss
+    CURRENT_VERSION="1.0.0"
+
+    # Example link: https://downloads.ss.thycotic.com/secretserversdk/1.5.7/secretserver-sdk-1.5.7-linux-x64.zip
+    LINK=$(curl -s -L https://docs.delinea.com/online-help/secret-server/api-scripting/sdk-devops/sdk-downloads/index.htm | grep -iEo 'href=".*-linux-x64.zip"' | sed 's/href\=//g;s/"//g' | sort -r | head -n1)
+    REMOTE_VERSION=$(echo $LINK | grep -iEo '[0-9.]+-linux' | sed 's/-linux//g')
+
+    [ -f /usr/bin/tss ] && CURRENT_VERSION=$(/usr/bin/tss version)
+
+    if [ "$REMOTE_VERSION" == "$CURRENT_VERSION" ]; then
+        timestamp "The current version of the TSS-SDK is the same as the newest version"
+        return 0
+    else
+        sudo rm -rfv /usr/bin/tss-sdk /usr/bin/tss
+        sudo mkdir /usr/bin/tss-sdk
+        sudo wget $LINK -P /usr/bin/tss-sdk
+        sudo unzip secretserver-sdk-*.zip -d /usr/bin/tss-sdk > /dev/null
+        sudo rm -rfv /usr/bin/tss-sdk/secretserver-sdk-*.zip
+        sudo ln -s /usr/bin/tss-sdk/tss /usr/bin/tss
+        sudo chmod +x /usr/bin/tss
+    fi
+
 }
 
 function main() {
@@ -330,6 +374,7 @@ function main() {
     command_start install_gh_cli
     command_start install_kubernetes
     command_start install_rust
+    command_start install_tss_client
     command_start update
 }
 
