@@ -1,2 +1,5 @@
-player=mpv --cache 2048 --no-resume-playback
+player=mpv
+twitch-disable-ads
+twitch-low-latency
+default-stream best
 player-no-close
