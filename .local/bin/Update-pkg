@@ -4,6 +4,7 @@
 # Path to the zsh folder
 ZSHFOLDER=$HOME/.config/zsh
 CONFIG="$HOME/.config"
+OHMYZSH="$HOME/.oh-my-zsh"
 
 # Colours
 RED='\033[0;31m'
@@ -34,10 +35,20 @@ PIPEXTPRE="--pre $PIPEXT"
 # Gentoo release
 GENTOO="/etc/gentoo-release"
 
-# if [[ "$(uname -r)" =~ "gentoo" || "$(uname -r)" =~ "WSL2" ]]; then
-#     PIPEXT="$PIPEXT --break-system-packages"
-#     PIPEXTPRE="$PIPEXTPRE --break-system-packages"
-# fi
+# Function for basic install
+
+install=""
+
+if [[ "$(uname)" == "Darwin" ]]; then
+    install="brew install"
+elif [[ -f $GENTOO ]]; then
+    install="sudo emerge --update"
+elif [[ -f /etc/debian_version ]]; then
+    sudo apt update
+    install="sudo apt install -y"
+elif [[ -f /etc/redhat-release ]]; then
+    install="sudo dnf install"
+fi
 
 function timestamp() {
     echo -e "${GREEN}[+]${NC} $(date +'%F %T') [INFO] $*"
@@ -70,7 +81,7 @@ function update_pip() {
     if [[ "$(uname)" == "Darwin" ]]; then
         $python -m pip install --upgrade pip --user --break-system-packages
     elif [[ -f $GENTOO ]]; then
-        sudo emerge --update dev-python/pip
+        $install dev-python/pip
     fi
 }
 
@@ -106,13 +117,17 @@ function install_lazy() {
     GO111MODULE=on go install github.com/jesseduffield/lazydocker@latest
 }
 
+function install_dlv() {
+    GO111MODULE=on go install github.com/go-delve/delve/cmd/dlv@latest
+}
+
 function install_terraform_stable() {
     # Install terraform and terraform-ls
     GO111MODULE=on go install github.com/hashicorp/terraform-ls@latest
 
     if [[ "$(uname)" == "Darwin" ]]; then
-        brew install tflint -q
-        brew install tfenv -q
+        $install tflint -q
+        $install tfenv -q
         TFENV_ARCH=amd64 tfenv install "$TERRAFORM_VERSION"
         tfenv use "$TERRAFORM_VERSION"
     else
@@ -125,8 +140,8 @@ function install_terraform() {
     # Install terraform and terraform-ls
     GO111MODULE=on go install github.com/hashicorp/terraform-ls@latest
     if [[ "$(uname)" == "Darwin" ]]; then
-        brew install tflint -q
-        brew install tfenv -q
+        $install tflint -q
+        $install tfenv -q
         TFENV_ARCH=amd64 tfenv install latest
         mapfile -t TFENV_VER_ARRAY < <(tfenv list | grep -ioE ' [0-9.]+' | sed -e '1,1d')
         if [ "${#TFENV_VER_ARRAY[@]}" -gt "2" ]; then
@@ -143,7 +158,7 @@ function install_terraform() {
 function install_terragrunt() {
     # Install terragrunt
     if [[ "$(uname)" == "Darwin" ]]; then
-        brew install terragrunt -q
+        $install terragrunt -q
     else
         TERRAGRUNT=$HOME/.local/bin/terragrunt
         REMOTE_VERSION=$(curl -s https://api.github.com/repos/gruntwork-io/terragrunt/releases/latest | grep -iEo '"tag_name":.*' | sed 's/"tag_name"://g;s/"//g;s/,//g;s/ //g')
@@ -164,7 +179,7 @@ function install_terragrunt() {
 function install_shellcheck() {
     # Install shellcheck
     if [[ "$(uname)" == "Darwin" ]]; then
-        brew install shellcheck -q
+        $install shellcheck -q
     else
         curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
     fi
@@ -173,7 +188,7 @@ function install_shellcheck() {
 function install_marksman() {
     # Install marksman
     if [[ "$(uname)" == "Darwin" ]]; then
-        brew install marksman -q
+        $install marksman -q
     else
         wget https://github.com/artempyanykh/marksman/releases/latest/download/marksman-linux-x64 -O $HOME/.local/bin/marksman
         chmod +x $HOME/.local/bin/marksman
@@ -184,9 +199,9 @@ function install_marksman() {
 function install_go() {
     # Install the golang
     if [[ "$(uname)" == "Darwin" ]]; then
-        brew install golang -q
+        $install golang -q
     elif [[ -f $GENTOO ]]; then
-        sudo emerge --update dev-lang/go
+        $install dev-lang/go
     fi
 }
 
@@ -281,6 +296,11 @@ function update() {
         fi
     done
 
+    if [ ! -d $OHMYZSH ]; then
+        cd $OHMYZSH || err "Folder $OHMYZSH has been NOT found"
+        git pull -q && timestamp "Pulling the $OHMYZSH configuration"
+    fi
+
     curl -s https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/aws/aws.plugin.zsh -o "$ZSHFOLDER"/aws/aws.plugin.zsh && timestamp "Downloaded the newest version of aws plugin for zsh"
     curl -s https://raw.githubusercontent.com/Azure/azure-cli/dev/az.completion -o "$ZSHFOLDER"/azure-cli/az.completion && timestamp "Downloaded the newest version of az plugin for zsh"
 
@@ -294,9 +314,9 @@ function install_speedtest() {
 function install_gh_cli() {
     # Install gh-cli
     if [[ "$(uname)" == "Darwin" ]]; then
-        brew install gh
+        $install gh
     elif [[ -f $GENTOO ]]; then
-        sudo emerge --update dev-util/github-cli
+        $install dev-util/github-cli
     fi
 }
 
@@ -352,6 +372,7 @@ function main() {
     command_start install_go
     command_start install_pyright
     command_start install_lazy
+    command_start install_dlv
     command_start install_bash-language-server
     command_start install_yaml-language-server
     command_start install_ansible-language-server
@@ -374,7 +395,7 @@ function main() {
     command_start install_gh_cli
     command_start install_kubernetes
     command_start install_rust
-    command_start install_tss_client
+    # command_start install_tss_client
     command_start update
 }
 
