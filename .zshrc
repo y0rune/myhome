@@ -60,7 +60,7 @@ export CCACHE_DIR="/usr/ccache"
 export LC_ALL="en_US.UTF-8"
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-export BROWSER=/home/yorune/.local/bin/browser-x
+export BROWSER=$HOME/.local/bin/browser-x
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse'
 export EIX_LIMIT_COMPACT=0
 export TERMINAL="st"
