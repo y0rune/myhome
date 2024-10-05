@@ -151,6 +151,9 @@ if [[ "$(uname)" == "Darwin" ]]; then
     alias pip3='/opt/homebrew/bin/pip$PYTHONVERSION'
     alias python='/opt/homebrew/bin/python$PYTHONVERSION'
     alias pip='/opt/homebrew/bin/pip$PYTHONVERSION'
+    alias sed='gsed'
+    alias zcat='gzcat'
+    alias date='gdate'
 
     alias lsblk="diskutil list"
     alias Update="~/.local/bin/Update-pkg; brew update; brew upgrade"
