@@ -176,6 +176,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
         sort |
         tail -n1)
     export PATH=$PATH:/opt/homebrew/Cellar/tfenv/$TFENVVERSION/versions/$TFVERSION/
+    unset BROWSER
 fi
 
 # Setting the right editor
