@@ -156,7 +156,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     alias date='gdate'
 
     alias lsblk="diskutil list"
-    alias Update="~/.local/bin/Update-pkg; brew update; brew upgrade"
+    alias Update="$HOME/.local/bin/Update-pkg; brew update; brew upgrade; sudo softwareupdate -i -a -R"
     alias ls="ls -Gh"
     alias mpv="mpv --ytdl-raw-options="yes-playlist=" --no-resume-playback --ytdl-format='bestvideo[height<=?1080]+bestaudio/best'"
     alias code="open -a 'Visual Studio Code'"
@@ -224,6 +224,9 @@ setopt +o nomatch
 
 # Error with icu
 export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
+
+# Security changes made in High Sierra that are breaking lots of Python things that use fork()
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
 # Error with Delinea - Linux
 [ -f "/etc/ssl/certs/ca-certificates.crt" ] && export REQUESTS_CA_BUNDLE='/etc/ssl/certs/ca-certificates.crt'

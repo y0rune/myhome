@@ -63,8 +63,10 @@ function err() {
 function command_start() {
     timestamp "Command $* has been started."
     if ! "$*"; then
+        err "---------"
         err "Command $* went wrong."
-        exit
+        err "---------"
+        # exit
     fi
     timestamp "Command $* has been ended."
 }
@@ -83,7 +85,7 @@ function command_exists() {
 function update_pip() {
     # Update the pip
     if [[ "$(uname)" == "Darwin" ]]; then
-        $python -m pip install --upgrade pip --user --break-system-packages
+        $python -m pip install --upgrade pip --user --no-warn-script-location --break
     elif [[ -f $GENTOO ]]; then
         $install dev-python/pip
     fi
@@ -92,6 +94,20 @@ function update_pip() {
 function install_neovim_module_for_python() {
     # Python module in neovim
     $pip install pynvim neovim imps $PIPEXTPRE
+}
+
+function install_node(){
+    if command_exists npm; then
+        timestamp "Node has been found"
+    else
+        if [[ "$(uname)" == "Darwin" ]]; then
+            sudo brew uninstall node
+            sudo rm -rf /opt/homebrew/lib/node_modules/npm/
+            $install node
+        elif [[ -f $GENTOO ]]; then
+            $install dev-lang/nodejs
+        fi
+    fi
 }
 
 function install_pyright() {
@@ -326,13 +342,26 @@ function install_gh_cli() {
 
 function install_kubernetes() {
     # Install kubectl
-    if [[ "$(uname)" == "Darwin" ]]; then
-        wget "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/arm64/kubectl" -O $HOME/.local/bin/kubectl
-        chmod +x $HOME/.local/bin/kubectl
-    else
-        wget "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" -O $HOME/.local/bin/kubectl
-        chmod +x $HOME/.local/bin/kubectl
+    LINK=""
+    CURRENT_VERSION=""
+    REMOTE_VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt)
+    KUBECTL_LOCATION="$HOME/.local/bin/kubectl"
+
+    [ -f $HOME/.local/bin/kubectl ] && CURRENT_VERSION=$($KUBECTL_LOCATION version --client | grep --color=no -iEo 'Client Version: v[0-9\.]+' | grep -ioE --color=no 'v[0-9\.]+')
+
+    if [ "$REMOTE_VERSION" == "$CURRENT_VERSION" ]; then
+        timestamp "The current version of the kubectl is the same as the newest version"
+        return 0
     fi
+
+    if [[ "$(uname)" == "Darwin" ]]; then
+        LINK="http://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/amd64/kubectl"
+    else
+        LINK="http://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    fi
+
+    wget "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" -O $KUBECTL_LOCATION
+    chmod +x $KUBECTL_LOCATION
 }
 
 function install_rust() {
@@ -347,25 +376,42 @@ function install_rust() {
 
 function install_tss_client() {
     # Install tss
-    CURRENT_VERSION="1.0.0"
+    CURRENT_VERSION="1.5.7"
 
     # Example link: https://downloads.ss.thycotic.com/secretserversdk/1.5.7/secretserver-sdk-1.5.7-linux-x64.zip
-    LINK=$(curl -s -L https://docs.delinea.com/online-help/secret-server/api-scripting/sdk-devops/sdk-downloads/index.htm | grep -iEo 'href=".*-linux-x64.zip"' | sed 's/href\=//g;s/"//g' | sort -r | head -n1)
-    REMOTE_VERSION=$(echo $LINK | grep -iEo '[0-9.]+-linux' | sed 's/-linux//g')
+    TSSDOCS="https://docs.delinea.com/online-help/secret-server/api-scripting/sdk-devops/sdk-downloads/index.htm"
+    LINK=""
+    REMOTE_VERSION=""
 
-    [ -f /usr/bin/tss ] && CURRENT_VERSION=$(/usr/bin/tss version)
+    if [ "$(uname)" == "Darwin" ]; then
+        LINK=$(curl -s -L $TSSDOCS | grep -iEo 'href=".*-osx-x64.zip"' | sed 's/href\=//g;s/"//g' | sort -r | head -n1)
+        REMOTE_VERSION=$(echo $LINK | grep -iEo '[0-9.]+-osx' | sed 's/-osx//g')
+    else
+        LINK=$(curl -s -L $TSSDOCS | grep -iEo 'href=".*-linux-x64.zip"' | sed 's/href\=//g;s/"//g' | sort -r | head -n1)
+        REMOTE_VERSION=$(echo $LINK | grep -iEo '[0-9.]+-linux' | sed 's/-linux//g')
+    fi
+
+    TSSFOLDER="$HOME/.local/tss-sdk"
+    TSSLINK="$HOME/.local/bin/tss"
+
+    [ -f $TSSLINK ] && CURRENT_VERSION=$($TSSLINK version)
+
+    timestamp "Current version of the TSS-SDK: $CURRENT_VERSION"
+    timestamp "Remote version of the TSS-SDK: $REMOTE_VERSION"
 
     if [ "$REMOTE_VERSION" == "$CURRENT_VERSION" ]; then
         timestamp "The current version of the TSS-SDK is the same as the newest version"
         return 0
     else
-        sudo rm -rfv /usr/bin/tss-sdk /usr/bin/tss
-        sudo mkdir /usr/bin/tss-sdk
-        sudo wget $LINK -P /usr/bin/tss-sdk
-        sudo unzip secretserver-sdk-*.zip -d /usr/bin/tss-sdk > /dev/null
-        sudo rm -rfv /usr/bin/tss-sdk/secretserver-sdk-*.zip
-        sudo ln -s /usr/bin/tss-sdk/tss /usr/bin/tss
-        sudo chmod +x /usr/bin/tss
+        rm -rfv $TSSFOLDER $TSSLINK
+        mkdir $TSSFOLDER
+        timestamp "Downloading the newest version of the TSS-SDK"
+        timestamp "Link: $LINK"
+        wget $LINK -P $TSSFOLDER
+        unzip $TSSFOLDER/secretserver-sdk-*.zip -d $TSSFOLDER
+        rm -rfv $TSSFOLDER/secretserver-sdk-*.zip
+        ln -s $TSSFOLDER/tss $TSSLINK
+        chmod +x $TSSLINK
     fi
 
 }
@@ -373,13 +419,13 @@ function install_tss_client() {
 function main() {
     command_start update_pip
     command_start install_neovim_module_for_python
+    command_start install_node
     command_start install_go
     command_start install_pyright
     command_start install_lazy
     command_start install_dlv
     command_start install_bash-language-server
     command_start install_yaml-language-server
-    command_start install_ansible-language-server
     command_start install_marksman
     command_start install_shfmt
     command_start install_shellcheck
@@ -391,6 +437,7 @@ function main() {
     command_start install_black
     command_start install_ansible
     command_start install_meraki_ansible
+    command_start install_ansible-language-server
     command_start install_ytdlp
     command_start install_spotifydl
     command_start install_awscli
@@ -399,7 +446,7 @@ function main() {
     command_start install_gh_cli
     command_start install_kubernetes
     command_start install_rust
-    # command_start install_tss_client
+    command_start install_tss_client
     command_start update
 }
 
