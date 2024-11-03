@@ -164,6 +164,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     alias mtr="sudo /opt/homebrew/opt/mtr/sbin/mtr"
     alias sleep-lid-off="sudo pmset -b sleep 0; sudo pmset -b disablesleep 1"
     alias sleep-lid-on="sudo pmset -b sleep 5; sudo pmset -b disablesleep 0"
+    alias restart-network-share="sudo pkill -i netauthsysagent"
 
     # Terraform
     export TFENV_ARCH=amd64
