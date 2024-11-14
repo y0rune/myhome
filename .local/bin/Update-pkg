@@ -101,7 +101,7 @@ function install_node(){
         timestamp "Node has been found"
     else
         if [[ "$(uname)" == "Darwin" ]]; then
-            sudo brew uninstall node
+            brew uninstall node --ignore-dependencies
             sudo rm -rf /opt/homebrew/lib/node_modules/npm/
             $install node
         elif [[ -f $GENTOO ]]; then
