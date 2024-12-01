@@ -260,7 +260,7 @@ function install_meraki_ansible() {
 
 function install_azure_cli() {
     # Install azure_cli
-    $pip install azure-cli $PIPEXTPRE
+    $install azure-cli
 }
 
 function install_awscli() {
