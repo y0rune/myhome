@@ -177,7 +177,12 @@ if [[ "$(uname)" == "Darwin" ]]; then
         sort |
         tail -n1)
     export PATH=$PATH:/opt/homebrew/Cellar/tfenv/$TFENVVERSION/versions/$TFVERSION/
+
+    # Unset browser
     unset BROWSER
+
+    # Docker as linux/amd64
+    export DOCKER_DEFAULT_PLATFORM=linux/amd64
 fi
 
 # Setting the right editor
