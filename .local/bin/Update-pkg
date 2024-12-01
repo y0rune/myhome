@@ -265,7 +265,7 @@ function install_azure_cli() {
 
 function install_awscli() {
     # Install awscli
-    $pip install awscli $PIPEXTPRE
+    $install awscli
 }
 
 function install_aws_adfs() {
