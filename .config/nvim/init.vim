@@ -207,7 +207,7 @@ local handlers =  {
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', 'clangd', 'bashls', 'yamlls', 'ansiblels', 'gopls', 'solargraph', 'terraformls', 'tflint', 'marksman', 'rust_analyzer' }
+local servers = { 'clangd', 'bashls', 'yamlls', 'ansiblels', 'gopls', 'solargraph', 'terraformls', 'tflint', 'marksman', 'rust_analyzer' }
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup {
     on_attach = on_attach,
@@ -218,6 +218,7 @@ for _, lsp in pairs(servers) do
     }
   }
 end
+
 
 -- Handlers when you are in the insert mode you see the errors
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
@@ -266,6 +267,9 @@ require'lspconfig'.gopls.setup {
 		},
     },
 }
+
+-- Setup Python (ruff)
+require('lspconfig').ruff.setup({})
 
 -- luasnip setup
 local luasnip = require 'luasnip'
@@ -357,12 +361,13 @@ let g:neoformat_try_formatprg = 1
 let g:neoformat_basic_format_trim = 1
 let g:neoformat_only_msg_on_error = 1
 " autocmd BufWritePre * silent! undojoin | Neoformat
-let g:neoformat_python_black = {
-    \ 'exe': 'black',
-    \ 'stdin': 1,
-    \ 'args': ['--line-length', '80', '-q', '-'],
-    \ }
-let g:neoformat_enabled_python = ['black']
+
+let g:neoformat_python_ruff = {
+     \ 'exe': 'ruff',
+     \ 'stdin': 1,
+     \ 'args': ['format', '--line-length=80', '-q', '-'],
+     \ }
+let g:neoformat_enabled_python = ['ruff']
 
 " Terraform
 let g:terraform_fmt_on_save=1
@@ -609,7 +614,7 @@ let g:shfmt_opt="-ci"
 " Python
 autocmd BufRead,BufNewFile *.py set textwidth=0
 autocmd BufRead,BufNewFile *.py set fo-=t
-autocmd BufWritePre *.py silent! undojoin | Neoformat black
+autocmd BufWritePre *.py silent! undojoin | Neoformat ruff
 
 " Newsboat
 autocmd BufRead,BufNewFile urls set textwidth=0
