@@ -116,6 +116,11 @@ function install_pyright() {
     $pip install black $PIPEXTPRE
 }
 
+function install_ruff() {
+    # Install ruff
+    $pip install ruff $PIPEXTPRE
+}
+
 function install_bash-language-server() {
     # Install bash-language-server
     sudo npm -s -g i bash-language-server --force
@@ -421,7 +426,8 @@ function main() {
     command_start install_neovim_module_for_python
     command_start install_node
     command_start install_go
-    command_start install_pyright
+    # command_start install_pyright
+    command_start install_ruff
     command_start install_lazy
     command_start install_dlv
     command_start install_bash-language-server
