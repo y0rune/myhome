@@ -116,6 +116,11 @@ function install_pyright() {
     $pip install black $PIPEXTPRE
 }
 
+function install_mdformat() {
+    # Install mdformat
+    $pip install mdformat $PIPEXTPRE
+}
+
 function install_ruff() {
     # Install ruff
     $pip install ruff $PIPEXTPRE
@@ -427,6 +432,7 @@ function main() {
     command_start install_node
     command_start install_go
     # command_start install_pyright
+    command_start install_mdformat
     command_start install_ruff
     command_start install_lazy
     command_start install_dlv
