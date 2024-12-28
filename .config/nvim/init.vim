@@ -244,27 +244,31 @@ require'lspconfig'.yamlls.setup{
 -- Setup GoLang
 require'lspconfig'.gopls.setup {
     cmd = {"gopls", "serve"},
-    filetypes = {"go", "gomod"},
+    filetypes = { "go", "gomod", "gowork", "gotmpl" },
     on_attach = on_attach,
     handlers=handlers,
     capabilities = capabilities,
     settings = {
-		gopls = {
-			analyses = {
-				unusedparams = true,
-			},
-			staticcheck = true,
-			linksInHover = false,
-			codelenses = {
-				generate = true,
-				gc_details = true,
-				regenerate_cgo = true,
-				tidy = true,
-				upgrade_depdendency = true,
-				vendor = true,
-			},
-			usePlaceholders = true,
-		},
+        gopls = {
+            analyses = {
+                unusedparams = true,
+            },
+            staticcheck = true,
+            linksInHover = false,
+            codelenses = {
+                generate = true,
+                gc_details = true,
+                regenerate_cgo = true,
+                tidy = true,
+                upgrade_depdendency = true,
+                vendor = true,
+            },
+            completeUnimported = true,
+            usePlaceholders = true,
+            analyses = {
+                unusedparams = true,
+            },
+        },
     },
 }
 
@@ -615,6 +619,7 @@ let g:shfmt_opt="-ci"
 autocmd BufRead,BufNewFile *.py set textwidth=0
 autocmd BufRead,BufNewFile *.py set fo-=t
 autocmd BufWritePre *.py silent! undojoin | Neoformat ruff
+noremap <Leader>f :silent! undojoin \| Neoformat ruff <CR> :w<CR>
 
 " Newsboat
 autocmd BufRead,BufNewFile urls set textwidth=0
