@@ -113,7 +113,6 @@ function install_node(){
 function install_pyright() {
     # Install pyright
     sudo npm -s -g i pyright --force
-    $pip install black $PIPEXTPRE
 }
 
 function install_mdformat() {
@@ -238,11 +237,6 @@ function install_go() {
 function install_gopls() {
     # Install gopls
     GO111MODULE=on go install golang.org/x/tools/gopls@latest
-}
-
-function install_black() {
-    # Install black
-    $pip install black $PIPEXTPRE
 }
 
 function install_ansible() {
@@ -451,7 +445,6 @@ function main() {
     command_start install_terraform_stable
     command_start install_terragrunt
     command_start install_azure_cli
-    command_start install_black
     command_start install_ansible
     command_start install_meraki_ansible
     command_start install_ansible-language-server
