@@ -654,6 +654,9 @@ au BufNewFile,BufRead *.mikrotik setfiletype routeros
 " Ebuild
 au BufNewFile,BufRead,BufWritePre *.ebuild let g:shfmt_extra_args = '-ci -sr -s'
 
+" TOML
+autocmd BufWritePre *.toml silent! undojoin | Neoformat taplo
+
 " Terrafrom
 autocmd BufWritePre *.tf lua vim.lsp.buf.format()
 autocmd BufWritePre *.tfvars lua vim.lsp.buf.format()
