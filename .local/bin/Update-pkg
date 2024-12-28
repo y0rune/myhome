@@ -285,7 +285,7 @@ function install_ytdlp() {
 
 function install_spotifydl() {
     # Install spotify_dl
-    $pip install spotify_dl $PIPEXTPRE
+    $pip install spotdl $PIPEXTPRE
 }
 
 function update() {
