@@ -426,6 +426,11 @@ function install_tss_client() {
 
 }
 
+function install_taplo() {
+    # Install taplo
+    $install taplo
+}
+
 function main() {
     command_start update_pip
     command_start install_neovim_module_for_python
@@ -459,6 +464,7 @@ function main() {
     command_start install_kubernetes
     command_start install_rust
     command_start install_tss_client
+    command_start install_taplo
     command_start update
 }
 
