@@ -355,9 +355,9 @@ function install_kubernetes() {
     LINK=""
     CURRENT_VERSION=""
     REMOTE_VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt)
-    KUBECTL_LOCATION="$HOME/.local/bin/kubectl"
+    KUBECTL_LOCATION="/opt/homebrew/bin/kubectl"
 
-    [ -f $HOME/.local/bin/kubectl ] && CURRENT_VERSION=$($KUBECTL_LOCATION version --client | grep --color=no -iEo 'Client Version: v[0-9\.]+' | grep -ioE --color=no 'v[0-9\.]+')
+    [ -f $KUBECTL_LOCATION ] && CURRENT_VERSION=$($KUBECTL_LOCATION version --client | grep --color=no -iEo 'Client Version: v[0-9\.]+' | grep -ioE --color=no 'v[0-9\.]+')
 
     if [ "$REMOTE_VERSION" == "$CURRENT_VERSION" ]; then
         timestamp "The current version of the kubectl is the same as the newest version"
