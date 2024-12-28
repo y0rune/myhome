@@ -425,6 +425,11 @@ function install_taplo() {
     $install taplo
 }
 
+function install_precommit(){
+    # Install pre-commit
+    $pip install pre-commit $PIPEXTPRE
+}
+
 function main() {
     command_start update_pip
     command_start install_neovim_module_for_python
@@ -458,6 +463,7 @@ function main() {
     command_start install_rust
     command_start install_tss_client
     command_start install_taplo
+    command_start install_precommit
     command_start update
 }
 
