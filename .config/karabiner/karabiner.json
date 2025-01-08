@@ -164,6 +164,12 @@
                     "manipulate_caps_lock_led": false
                 },
                 {
+                    "fn_function_keys": [
+                        {
+                            "from": { "key_code": "f1" },
+                            "to": [{ "key_code": "f1" }]
+                        }
+                    ],
                     "identifiers": {
                         "is_keyboard": true,
                         "product_id": 615,
@@ -345,14 +351,6 @@
                 },
                 {
                     "from": { "key_code": "left_command" },
-                    "to": [{ "key_code": "right_command" }]
-                },
-                {
-                    "from": { "key_code": "right_command" },
-                    "to": [{ "key_code": "right_option" }]
-                },
-                {
-                    "from": { "key_code": "right_option" },
                     "to": [{ "key_code": "right_command" }]
                 }
             ],
