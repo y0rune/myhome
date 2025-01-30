@@ -96,7 +96,7 @@ function install_neovim_module_for_python() {
     $pip install pynvim neovim imps $PIPEXTPRE
 }
 
-function install_node(){
+function install_node() {
     if command_exists npm; then
         timestamp "Node has been found"
     else
@@ -282,16 +282,21 @@ function install_spotifydl() {
     $pip install spotdl $PIPEXTPRE
 }
 
-function update() {
-    if [ -d $CONFIG/fzf ]; then
-        FOLDER="$CONFIG/fzf"
+function install_fzf() {
+    # Install fzf
+    FOLDER="$CONFIG/fzf"
+    mkdir -p $FOLDER
+
+    if [ -d $FOLDER ]; then
+        cd $CONFIG || err "Folder $CONFIG has been NOT found"
+        git clone https://github.com/junegunn/fzf.git $FOLDER && timestamp "Cloning the FZF"
         cd $FOLDER || err "Folder $FOLDER has been NOT found"
         git pull -q && timestamp "Pulling the $FOLDER configuration"
-    else
-        FOLDER="$CONFIG/fzf"
-        git clone https://github.com/junegunn/fzf.git $FOLDER && timestamp "Cloning the FZF"
-        git pull -q && timestamp "Pulling the $FOLDER configuration"
+        make install
     fi
+}
+
+function install_zsh_addons() {
 
     if [ ! -d $ZSHFOLDER/aws ]; then
         curl -s https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/aws/aws.plugin.zsh \
@@ -417,7 +422,6 @@ function install_tss_client() {
         ln -s $TSSFOLDER/tss $TSSLINK
         chmod +x $TSSLINK
     fi
-
 }
 
 function install_taplo() {
@@ -425,9 +429,52 @@ function install_taplo() {
     $install taplo
 }
 
-function install_precommit(){
+function install_precommit() {
     # Install pre-commit
     $pip install pre-commit $PIPEXTPRE
+}
+
+function install_streamlink() {
+    # Install streamlink
+    $pip install streamlink $PIPEXTPRE
+}
+
+function install_brew_programs() {
+    # Install brew programs
+    INSTALLED_PROGRAMS=$(brew list)
+    while IFS='' read -r line; do LIST_OF_PROGRAMS+=("$line"); done < <(cat "$HOME"/.brew_programs)
+    while IFS='' read -r line; do LIST_OF_PROGRAMS_CASK+=("$line"); done < <(cat "$HOME"/.brew_programs_cask)
+
+    for i in "${LIST_OF_PROGRAMS[@]}"; do
+        if [[ ! " ${INSTALLED_PROGRAMS[*]} " =~ ${i} ]]; then
+            brew install $i --force
+        fi
+    done
+
+    for i in "${LIST_OF_PROGRAMS_CASK[@]}"; do
+        if [[ ! " ${INSTALLED_PROGRAMS[*]} " =~ ${i} ]]; then
+            brew install $i --cask --force
+        fi
+    done
+
+    xattr -r -d com.apple.quarantine /Applications/Spotify.app
+    xattr -r -d com.apple.quarantine /Applications/Stats.app
+
+    xattr -r -d com.apple.quarantine /opt/homebrew/bin/mpv /Applications/mpv.app
+    duti -s io.mpv avi all
+    duti -s io.mpv mkv all
+    duti -s io.mpv mp4 all
+    duti -s io.mpv ts all
+
+    xattr -r -d com.apple.quarantine /Applications/qView.app
+    duti -s com.interversehq.qView public.jpeg all
+    duti -s com.interversehq.qView public.png all
+    duti -s com.interversehq.qView com.compuserve.gif all
+    duti -s com.interversehq.qView public.tiff all
+
+    xattr -r -d com.apple.quarantine /Applications/chatterino.app
+
+    brew cleanup --prune=all
 }
 
 function main() {
@@ -464,7 +511,10 @@ function main() {
     command_start install_tss_client
     command_start install_taplo
     command_start install_precommit
-    command_start update
+    command_start install_streamlink
+    command_start install_fzf
+    command_start install_zsh_addons
+    command_start install_brew_programs
 }
 
 main
