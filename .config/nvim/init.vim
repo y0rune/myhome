@@ -12,7 +12,7 @@ endif
 """"""""""""""""""""""""""""""""
 " Default settings nvim
 """"""""""""""""""""""""""""""""
-let g:python3_host_prog = expand('/opt/homebrew/bin/python3.12')
+let g:python3_host_prog = expand('/opt/homebrew/bin/python3.13')
 let g:loaded_python_provider = 0
 let g:python_host_prog = ''
 set autoindent
