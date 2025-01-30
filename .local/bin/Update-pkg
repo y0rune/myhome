@@ -291,7 +291,7 @@ function install_fzf() {
         cd $CONFIG || err "Folder $CONFIG has been NOT found"
         git clone https://github.com/junegunn/fzf.git $FOLDER && timestamp "Cloning the FZF"
         cd $FOLDER || err "Folder $FOLDER has been NOT found"
-        git pull -q && timestamp "Pulling the $FOLDER configuration"
+        git pull -q && timestamp "Pulled the $FOLDER configuration"
         make install
     fi
 }
