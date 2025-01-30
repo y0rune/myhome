@@ -32,10 +32,10 @@ spotdl --user-auth --keep-alive \
     --yt-dlp-args no-check-certificates
 
 # Sync to Jellyfin
-rsync -h --progress --recursive \
+rsync -h --progress --recursive --ignore-existing \
     $FOLDER_DUB/* docker-de:/mnt/HC_Volume_34966154/jellifin/media/music/Dub
 
-rsync -h --progress --recursive \
+rsync -h --progress --recursive --ignore-existing \
     $FOLDER_FAV/* docker-de:/mnt/HC_Volume_34966154/jellifin/media/music/Fav
 
 # Generate playlist
