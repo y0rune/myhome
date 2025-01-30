@@ -477,6 +477,13 @@ function install_brew_programs() {
     brew cleanup --prune=all
 }
 
+function install_winbox_old() {
+    curl -o /tmp/winbox64.exe \
+        "$(curl --silent https://mikrotik.com/download | grep -o 'https:\/\/download.*winbox64.exe')"
+    mv -v /tmp/winbox64.exe ~/Applications/winbox.exe
+    xattr -cr ~/Applications/winbox.exe
+}
+
 function main() {
     command_start update_pip
     command_start install_neovim_module_for_python
@@ -513,6 +520,7 @@ function main() {
     command_start install_precommit
     command_start install_streamlink
     command_start install_fzf
+    command_start install_winbox_old
     command_start install_zsh_addons
     command_start install_brew_programs
 }
