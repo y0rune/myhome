@@ -77,6 +77,7 @@ export PATH=$HOME/go/bin:$PATH
 export PATH=$HOME/golang/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/node_modules/.bin:$PATH
+export PATH=$CONFIG/fzf/bin:$PATH
 export GOPATH=$HOME/golang
 export PATH=$PATH:$HOME/.gem/ruby/2.6.0/bin
 export PATH=$PATH:$HOME/.cargo/bin
