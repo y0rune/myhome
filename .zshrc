@@ -116,6 +116,7 @@ alias feh="feh --edit --scale-down"
 alias graphic-card="glxinfo|egrep 'OpenGL vendor|OpenGL renderer'"
 alias mylaptop-components="inxi -Fxz"
 alias update_time="sudo ntpdate -b -u vega.cbk.poznan.pl"
+alias dn='LC_TIME=C /bin/date "+%Y%m%d%H%M%S"'
 
 # Alias and Export for Mac
 if [[ "$(uname)" == "Darwin" ]]; then
