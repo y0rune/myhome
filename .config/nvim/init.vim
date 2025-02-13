@@ -668,7 +668,7 @@ autocmd BufWritePre *.tfvars lua vim.lsp.buf.format()
 
 " Markdown
 autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_us
-autocmd BufWritePre *.md silent! undojoin | Neoformat
+autocmd BufWritePre *.md silent! undojoin | Neoformat mdformat
 
 " Automatically deletes all trailing whitespace and newlines at end of file on save.
 autocmd BufWritePre * %s/\s\+$//e
