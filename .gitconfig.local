@@ -32,6 +32,7 @@
     c = commit --author='Marcin Woźniak <y0rune@aol.com> -s'
     cw = commit --author='Marcin Woźniak <marcin.wozniak@wundermanthompson.com> -s'
     retag = "!f() { if [ -z \"$1\" ]; then echo \"No version provided. Skipping git push.\"; else git tag --delete $1 2>/dev/null; git tag -a $1 -m \"Version $1\"; git push --tags -f; git push -f; fi; }; f"
+    delete-branch = "!$HOME/.local/bin/git-delete-branch"
 
 [url "git@github.com:"]
     insteadOf = "https://github.com/"
