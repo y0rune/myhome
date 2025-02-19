@@ -484,6 +484,11 @@ function install_winbox_old() {
     xattr -cr ~/Applications/winbox.exe
 }
 
+function install_prettier(){
+    $install prettier
+    $install prettierd
+}
+
 function main() {
     command_start update_pip
     command_start install_neovim_module_for_python
@@ -521,6 +526,7 @@ function main() {
     command_start install_streamlink
     command_start install_fzf
     command_start install_winbox_old
+    command_start install_prettier
     command_start install_zsh_addons
     command_start install_brew_programs
 }
