@@ -637,10 +637,10 @@ autocmd BufRead,BufNewFile /tmp/neomutt* map ZZ :Goyo\|x!<CR>
 autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<CR>
 
 " Yaml
-autocmd BufRead,BufNewFile *.yaml let g:indentLine_enabled = 1
-autocmd BufRead,BufNewFile *.yaml let g:indentLine_char = '⦙'
+autocmd BufRead,BufNewFile *.yaml,*.yml let g:indentLine_enabled = 1
+autocmd BufRead,BufNewFile *.yaml,*.yml let g:indentLine_char = '⦙'
 au BufRead,BufNewFile *.yaml,*.yml if search('hosts:\|tasks:', 'nw') | set ft=yaml.ansible | endif
-autocmd BufWritePre *.yaml silent! undojoin | Neoformat prettier
+autocmd BufWritePre *.yaml,*.yml silent! undojoin | Neoformat prettier
 
 " GoLang
 autocmd BufRead *.go set noexpandtab
