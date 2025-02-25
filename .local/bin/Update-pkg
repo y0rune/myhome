@@ -484,9 +484,18 @@ function install_winbox_old() {
     xattr -cr ~/Applications/winbox.exe
 }
 
-function install_prettier(){
+function install_prettier() {
     $install prettier
     $install prettierd
+}
+
+function install_google_cloud_sdk() {
+    # Install google cloud sdk
+    if [[ "$(uname)" == "Darwin" ]]; then
+        $install google-cloud-sdk
+    else
+        curl -s https://sdk.cloud.google.com | bash
+    fi
 }
 
 function main() {
@@ -527,6 +536,7 @@ function main() {
     command_start install_fzf
     command_start install_winbox_old
     command_start install_prettier
+    command_start install_google_cloud_sdk
     command_start install_zsh_addons
     command_start install_brew_programs
 }
