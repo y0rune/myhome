@@ -551,6 +551,26 @@ function install_bgpreader() {
     fi
 }
 
+function install_font_terminess() {
+    local REPO="ryanoasis/nerd-fonts"
+    local REMOTE_VERSION=$(curl -s \
+        https://api.github.com/repos/$REPO/releases/latest |
+        grep -iEo '"tag_name":.*' |
+        sed 's/"tag_name"://g;s/"//g;s/,//g;s/ //g')
+    local RELEASE="Terminus.zip"
+    local DEST="/tmp/Terminess"
+
+    if [ ! -f $HOME/Library/Fonts/TerminessNerdFont-Regular.ttf ]; then
+        mkdir -p $DEST
+        cd $DEST || err "Folder $DEST has been NOT found"
+        wget https://github.com/$REPO/releases/download/$REMOTE_VERSION/$RELEASE -O $DEST/$RELEASE
+        unzip $RELEASE -d $DEST
+        mv $DEST/*.ttf ~/Library/Fonts
+        cd $HOME || err "Folder $HOME has been NOT found"
+        rm -rfv $DEST
+    fi
+}
+
 function main() {
     command_start update_pip
     command_start install_neovim_module_for_python
@@ -591,6 +611,7 @@ function main() {
     command_start install_prettier
     command_start install_google_cloud_sdk
     command_start install_bgpreader
+    command_start install_fonts_terminess
     command_start install_zsh_addons
     command_start install_brew_programs
 }
