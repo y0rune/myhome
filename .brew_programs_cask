@@ -3,10 +3,10 @@ chatterino
 dbeaver-community
 displaylink
 docker
-chromium
 firefox@nightly
 font-hack-nerd-font
 gimp
+google-chrome
 hiddenbar
 iterm2
 jordanbaird-ice
@@ -20,6 +20,7 @@ mongodb-compass
 mpv
 mysides
 obsidian
+postman
 platypus
 qbittorrent
 qview
