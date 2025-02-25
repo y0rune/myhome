@@ -498,6 +498,59 @@ function install_google_cloud_sdk() {
     fi
 }
 
+function install_lib_wandio() {
+    local REPO="LibtraceTeam/wandio"
+    local REMOTE_VERSION=$(curl -s \
+        https://api.github.com/repos/$REPO/releases/latest |
+        grep -iEo '"tag_name":.*' |
+        sed 's/"tag_name"://g;s/"//g;s/,//g;s/ //g')
+    local RELEASE="${REMOTE_VERSION}.tar.gz"
+    local DEST="/tmp/wandio-$REMOTE_VERSION.tar.gz"
+    local DEST_FOLDER="/tmp/wandio-$REMOTE_VERSION"
+
+    $install autoconf automake libtool
+    wget https://github.com/$REPO/archive/refs/tags/$RELEASE -O $DEST
+    tar -xvf $DEST -C /tmp
+    cd $DEST_FOLDER || err "Folder $DEST_FOLDER has been NOT found"
+    ./bootstrap.sh
+    ./configure
+    make -j"$(nproc)"
+    sudo make install && timestamp "Installed the newest version of the $REPO"
+    rm -rfv $DEST $DEST_FOLDER
+}
+
+function install_bgpreader() {
+    local CURRENT_VERSION="0.0.0"
+    local REPO="CAIDA/libbgpstream"
+    local NAME="${REPO##*/}"
+    local REMOTE_VERSION=$(curl -s \
+        https://api.github.com/repos/$REPO/releases/latest |
+        grep -iEo '"tag_name":.*' |
+        sed 's/"tag_name"://g;s/"//g;s/,//g;s/ //g')
+    local RELEASE="$NAME-${REMOTE_VERSION/v/}.tar.gz"
+    local DEST="/tmp/$NAME-$REMOTE_VERSION.tar.gz"
+    local DEST_FOLDER="/tmp/$NAME-$REMOTE_VERSION"
+
+    if command_exists bgpreader; then
+        CURRENT_VERSION="v$(bgpreader -v 2>&1 | grep -ioE '[0-9\.]+')"
+    fi
+
+    if [ "$CURRENT_VERSION" == "$REMOTE_VERSION" ]; then
+        timestamp "The current version of the BGPREADER is the same as the newest version"
+        return 0
+    else
+        $install autoconf automake libtool
+        command_start install_lib_wandio
+        wget https://github.com/$REPO/releases/download/$REMOTE_VERSION/$RELEASE -O $DEST
+        tar -xvf $DEST -C /tmp
+        cd /tmp/$NAME-* || err "Folder /tmp/$NAME-* has been NOT found"
+        ./configure --without-kafka
+        make -j"$(nproc)"
+        sudo make install && timestamp "Installed the newest version of the $REPO"
+        rm -rfv /tmp/$NAME-*
+    fi
+}
+
 function main() {
     command_start update_pip
     command_start install_neovim_module_for_python
@@ -537,6 +590,7 @@ function main() {
     command_start install_winbox_old
     command_start install_prettier
     command_start install_google_cloud_sdk
+    command_start install_bgpreader
     command_start install_zsh_addons
     command_start install_brew_programs
 }
