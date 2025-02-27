@@ -1,5 +1,12 @@
+default-stream "1080p60,1080p,720p60,720p"
+default-stream best
+hls-live-edge 2
+hls-segment-stream-data
+player-no-close
 player=mpv
+retry-max 100
+retry-open 10
+retry-streams 10
+stream-segment-threads=4
 twitch-disable-ads
 twitch-low-latency
-default-stream best
-player-no-close
