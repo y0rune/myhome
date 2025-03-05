@@ -5,25 +5,15 @@ TERM = "xterm-256color"
 [general]
 import = ["~/.config/alacritty/dracula.toml"]
 
-[[keyboard.bindings]]
-action = "SpawnNewInstance"
-key = "Return"
-mods = "Control|Shift"
-
-[[keyboard.bindings]]
-action = "SearchForward"
-key = "F"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "Paste"
-key = "V"
-mods = "Control|Shift"
-
-[[keyboard.bindings]]
-chars = "\u0000"
-key = "Space"
-mods = "Control"
+[keyboard]
+bindings = [
+  { key = "F", mods = "Control", action = "SearchForward" },
+  { key = "Left", mods = "Alt", chars = "\u001BB" },
+  { key = "Return", mods = "Control|Shift", action = "SpawnNewInstance" },
+  { key = "Right", mods = "Alt", chars = "\u001BF" },
+  { key = "Space", mods = "Control", chars = "\u0000" },
+  { key = "V", mods = "Control|Shift", action = "Paste" },
+]
 
 [font]
 size = 22
@@ -60,8 +50,6 @@ y = 0
 
 [selection]
 save_to_clipboard = true
-
-[keyboard]
 
 # Unused
 [colors.bright]
