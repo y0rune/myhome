@@ -642,6 +642,9 @@ autocmd BufRead,BufNewFile *.yaml,*.yml let g:indentLine_char = '⦙'
 au BufRead,BufNewFile *.yaml,*.yml if search('hosts:\|tasks:', 'nw') | set ft=yaml.ansible | endif
 autocmd BufWritePre *.yaml,*.yml silent! undojoin | Neoformat prettier
 
+" JSON
+autocmd BufWritePre *.json silent! undojoin | Neoformat prettier
+
 " GoLang
 autocmd BufRead *.go set noexpandtab
 autocmd BufWritePre *.go lua go_org_imports()
