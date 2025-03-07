@@ -2,3 +2,4 @@
 KERNEL=$(uname -sr)
 [[ $KERNEL =~ "icrosoft" ]] && $HOME/.local/bin/wsl-notify "$@"
 [[ $KERNEL =~ "gentoo" ]] && /usr/bin/notify-send "$@"
+[[ $KERNEL =~ "Darwin" ]] && osascript -e "display notification \"$*\""
