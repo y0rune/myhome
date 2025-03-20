@@ -8,13 +8,16 @@ gnu-sed
 htop
 imagemagick
 ipcalc
+iperf3
 mtr
 neovim
 newsboat
 parallel
+ranger
 ripgrep
 rsync
 tmux
 tree
 wget
+zoxide
 zsh
