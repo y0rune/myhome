@@ -4,11 +4,11 @@ CONFIG=$HOME/.config
 
 parse_git_branch() {
     command=$(git branch \
-        2>/dev/null |
+        2> /dev/null |
         sed -n -e 's/^\* \(.*\)/\1/p' |
         awk 'NF{print $NF}' |
         sed 's/)//g' \
-            2>/dev/null)
+            2> /dev/null)
     [ -z $command ] && echo -e "$ " || echo -e "$command $ "
 }
 
@@ -33,11 +33,11 @@ plugins=(rake ruby vagrant knife knife_ssh kitchen)
 ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
 
-[ -d $CONFIG/zsh/zsh-autosuggestions ] && source $CONFIG/zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh &>>/dev/null
-[ -d $CONFIG/zsh/zsh-syntax-highlighting ] && source $CONFIG/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh &>>/dev/null
-[ -d $CONFIG/zsh/zsh-command-time ] && source $CONFIG/zsh/zsh-command-time/command-time.plugin.zsh &>>/dev/null
-[ -d $CONFIG/zsh/aws ] && source $CONFIG/zsh/aws/aws.plugin.zsh &>>/dev/null
-[ -d $CONFIG/zsh/azure-cli ] && source $CONFIG/zsh/azure-cli/az.completion &>>/dev/null
+[ -d $CONFIG/zsh/zsh-autosuggestions ] && source $CONFIG/zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh &>> /dev/null
+[ -d $CONFIG/zsh/zsh-syntax-highlighting ] && source $CONFIG/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh &>> /dev/null
+[ -d $CONFIG/zsh/zsh-command-time ] && source $CONFIG/zsh/zsh-command-time/command-time.plugin.zsh &>> /dev/null
+[ -d $CONFIG/zsh/aws ] && source $CONFIG/zsh/aws/aws.plugin.zsh &>> /dev/null
+[ -d $CONFIG/zsh/azure-cli ] && source $CONFIG/zsh/azure-cli/az.completion &>> /dev/null
 [ -f $HOME/.password ] && source $HOME/.password
 [ -f $CONFIG/fzf/shell/key-bindings.zsh ] && source $HOME/.config/fzf/shell/key-bindings.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -189,7 +189,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
 fi
 
 # Setting the right editor
-if which nvim >/dev/null 2>&1; then
+if which nvim > /dev/null 2>&1; then
     export VISUAL='nvim -u $HOME/.vimrc'
     export EDITOR='nvim -u $HOME/.vimrc'
 else
@@ -224,6 +224,9 @@ alias newswork="newsboat --url=$HOME/.config/newsboat/urlswork"
 alias aria2c="aria2c --seed-time=0 --disable-ipv6 --max-upload-limit=1k"
 alias irc="ssh mikrus -t 'screen -r'"
 alias neofetch=fastfetch
+
+# Zoxide
+[ -f $(which zoxide) ] && {eval "$(zoxide init zsh)"; alias cd='z'}
 
 # GoLang
 alias go-mod="go mod edit -go $(go version | grep -oE 'go[0-9]*\.[0-9]*\.[0-9]*' | sed 's/go//g');  go get -u; go mod verify; go get -x -v; go mod verify; go mod tidy"
