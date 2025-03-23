@@ -611,7 +611,7 @@ function main() {
     command_start install_prettier
     command_start install_google_cloud_sdk
     command_start install_bgpreader
-    command_start install_fonts_terminess
+    command_start install_font_terminess
     command_start install_zsh_addons
     command_start install_brew_programs
 }
