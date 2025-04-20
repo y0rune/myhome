@@ -199,6 +199,7 @@ function install_terragrunt() {
             timestamp "The current version of the TSS-SDK is the same as the newest version"
             return 0
         else
+            brew install wget
             wget https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64 -O $TERRAGRUNT
             chmod +x "$TERRAGRUNT"
         fi
@@ -299,6 +300,8 @@ function install_fzf() {
 function install_zsh_addons() {
 
     if [ ! -d $ZSHFOLDER/aws ]; then
+        mkdir -p "$ZSHFOLDER/azure-cli" "$ZSHFOLDER/aws"
+
         curl -s https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/aws/aws.plugin.zsh \
             -o "$ZSHFOLDER"/aws/aws.plugin.zsh &&
             timestamp "Downloaded the newest version of aws plugin for zsh"
@@ -307,7 +310,6 @@ function install_zsh_addons() {
             -o "$ZSHFOLDER"/azure-cli/az.completion &&
             timestamp "Downloaded the newest version of az plugin for zsh"
 
-        mkdir -p "$ZSHFOLDER/azure-cli" "$ZSHFOLDER/aws"
         cd $ZSHFOLDER || err "Folder $ZSHFOLDER has been NOT found"
         git clone https://github.com/popstas/zsh-command-time.git &&
             timestamp "Cloning the zsh-command-time"
