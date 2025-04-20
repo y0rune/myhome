@@ -279,3 +279,4 @@ Cisco Packet Tracer 8.0.0
 .local/bin/kubectl
 .rustup
 .local/tss-sdk
+.local/bin/tss
