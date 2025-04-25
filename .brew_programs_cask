@@ -2,6 +2,7 @@ alacritty
 alfred
 chatterino
 dbeaver-community
+discord
 displaylink
 docker
 firefox@nightly
@@ -9,7 +10,6 @@ font-hack-nerd-font
 gimp
 google-chrome
 hiddenbar
-jordanbaird-ice
 karabiner-elements
 keepassxc
 macfuse
@@ -27,6 +27,7 @@ rustdesk
 scroll-reverser
 signal
 spotify
+stats
 telegram
 the-unarchiver
 todoist
