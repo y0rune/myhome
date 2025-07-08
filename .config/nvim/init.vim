@@ -357,8 +357,8 @@ set updatetime=250
 autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})
 
 " CoPilot
-imap <silent><script><expr> <F1> copilot#Accept("\<CR>")
-let g:copilot_no_tab_map = v:true
+" imap <silent><script><expr> <F1> copilot#Accept("\<CR>")
+" let g:copilot_no_tab_map = v:true
 
 " Neoformat
 let g:neoformat_try_formatprg = 1
