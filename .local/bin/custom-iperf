@@ -1,0 +1,22 @@
+#!/bin/bash
+
+SERVER="$1"
+
+if [ -z "$SERVER" ]; then
+    echo "Usage: $0 <server_ip>"
+    exit 1
+fi
+
+echo "Starting..."
+echo
+
+# Upload test (client sends data to server)
+UPLOAD=$(iperf3 -c "$SERVER" -P5 -t 30 --json | jq '.end.sum_sent.bits_per_second / 1000000')
+
+# Download test (client receives data from server)
+DOWNLOAD=$(iperf3 -c "$SERVER" -P5 -t 30 -R --json | jq '.end.sum_received.bits_per_second / 1000000')
+
+# Print summary
+echo "SERVER:   $SERVER"
+echo "UPLOAD:   $(printf "%.2f" "$UPLOAD") Mbps"
+echo "DOWNLOAD: $(printf "%.2f" "$DOWNLOAD") Mbps"
