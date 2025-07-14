@@ -446,15 +446,20 @@ function install_brew_programs() {
     INSTALLED_PROGRAMS=$(brew list)
     while IFS='' read -r line; do LIST_OF_PROGRAMS+=("$line"); done < <(cat "$HOME"/.brew_programs)
     while IFS='' read -r line; do LIST_OF_PROGRAMS_CASK+=("$line"); done < <(cat "$HOME"/.brew_programs_cask)
+    while IFS='' read -r line; do LIST_OF_PROGRAMS_DISABLE+=("$line"); done < <(cat "$HOME"/.brew_programs_disable)
 
     for i in "${LIST_OF_PROGRAMS[@]}"; do
-        if [[ ! " ${INSTALLED_PROGRAMS[*]} " =~ ${i} ]]; then
+        if [[ ! " ${INSTALLED_PROGRAMS[*]} " =~ ${i} ]] \
+            && \
+            [[ ! " ${LIST_OF_PROGRAMS_DISABLE[*]} " =~ ${i} ]]; then
             brew install $i --force
         fi
     done
 
     for i in "${LIST_OF_PROGRAMS_CASK[@]}"; do
-        if [[ ! " ${INSTALLED_PROGRAMS[*]} " =~ ${i} ]]; then
+        if [[ ! " ${INSTALLED_PROGRAMS[*]} " =~ ${i} ]] \
+            && \
+            [[ ! " ${LIST_OF_PROGRAMS_DISABLE[*]} " =~ ${i} ]]; then
             brew install $i --cask --force
         fi
     done
