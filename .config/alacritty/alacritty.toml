@@ -18,8 +18,26 @@ bindings = [
 [font]
 size = 22
 
+# [font.normal]
+# family = "Terminess Nerd Font"
+# style = "Regular"
+
+# # [font.bold]
+# # family = "Teminess Nerd Font"
+# # style = "Bold"
+
+# [font.bold_italic]
+# family = "Terminess Nerd Font"
+# style = "Bold Italic"
+
+# [font.italic]
+# family = "Terminess Nerd Font"
+# style = "Italic"
+
+
+# Comic code
 [font.normal]
-family = "Terminess Nerd Font"
+family = "Comic Code Ligatures"
 style = "Regular"
 
 # [font.bold]
@@ -27,26 +45,26 @@ style = "Regular"
 # style = "Bold"
 
 [font.bold_italic]
-family = "Terminess Nerd Font"
+family = "Comic Code"
 style = "Bold Italic"
 
 [font.italic]
-family = "Terminess Nerd Font"
+family = "Comic Code"
 style = "Italic"
+
+[font.offset]
+x = 0
+y = -6
 
 [font.glyph_offset]
 x = 0
-y = 0
+y = -2
 
 # [mouse.hints]
 # modifiers = "Command"
 
 # [mouse.hints.launcher]
 # program = "open"
-
-[font.offset]
-x = 0
-y = 0
 
 [selection]
 save_to_clipboard = true
