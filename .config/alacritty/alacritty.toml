@@ -16,7 +16,7 @@ bindings = [
 ]
 
 [font]
-size = 22
+size = 20
 
 # [font.normal]
 # family = "Terminess Nerd Font"
