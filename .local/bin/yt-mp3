@@ -1,2 +1,2 @@
 #!/bin/bash
-yt-dlp --extract-audio --audio-format mp3 $1
+yt-dlp --extract-audio --audio-format mp3 --embed-metadata --embed-thumbnail --add-metadata $1
