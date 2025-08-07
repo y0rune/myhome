@@ -4,18 +4,21 @@ FOLDER_AUDIOBOOK="/Volumes/Music/Jellyfin/Playlist-Audiobook"
 FOLDER_FAV="/Volumes/Music/Jellyfin/Playlist-Fav"
 FOLDER_DUB="/Volumes/Music/Jellyfin/Playlist-Dub"
 FOLDER_PIANO="/Volumes/Music/Jellyfin/Playlist-Piano"
+FOLDER_DUB_SETS="/Volumes/Music/Jellyfin/Playlist-Dub-Sets"
 
 # Check if folder exists
 [ ! -d $FOLDER_AUDIOBOOK ] && exit 1
 [ ! -d $FOLDER_DUB ] && exit 1
 [ ! -d $FOLDER_FAV ] && exit 1
 [ ! -d $FOLDER_PIANO ] && exit 1
+[ ! -d $FOLDER_DUB_SETS ] && exit 1
 
 # Remove old files
 rm -rfv $FOLDER_AUDIOBOOK/errors.txt
 rm -rfv $FOLDER_DUB/errors.txt
 rm -rfv $FOLDER_FAV/errors.txt
 rm -rfv $FOLDER_PIANO/errors.txt
+rm -rfv $FOLDER_DUB_SETS/errors.txt
 
 # Download new files for DUB
 cd $FOLDER_DUB || exit 1
@@ -50,6 +53,9 @@ rsync -h --progress --recursive --ignore-existing \
 rsync -h --progress --recursive --ignore-existing \
     $FOLDER_PIANO/* docker-de:/mnt/HC_Volume_34966154/jellifin/media/music/Piano
 
+rsync -h --progress --recursive --ignore-existing \
+    $FOLDER_DUB_SETS/* docker-de:/mnt/HC_Volume_34966154/jellifin/media/music/Dub-Sets
+
 # Generate playlist
 ssh docker-de -t "cd /mnt/HC_Volume_34966154/jellifin/media/music/Audiobook; find . -type f \( -name '*.mp3' -o -name '*.flac' -o -name '*.loss' -o -name '*.aiff' -o -name '*.aif' \) -printf './%P\n' | sort > playlist.m3u"
 
@@ -58,6 +64,8 @@ ssh docker-de -t "cd /mnt/HC_Volume_34966154/jellifin/media/music/Dub; find . -t
 ssh docker-de -t "cd /mnt/HC_Volume_34966154/jellifin/media/music/Fav; find . -type f \( -name '*.mp3' -o -name '*.flac' -o -name '*.loss' -o -name '*.aiff' -o -name '*.aif' \) -printf './%P\n' | sort > playlist.m3u"
 
 ssh docker-de -t "cd /mnt/HC_Volume_34966154/jellifin/media/music/Piano; find . -type f \( -name '*.mp3' -o -name '*.flac' -o -name '*.loss' -o -name '*.aiff' -o -name '*.aif' \) -printf './%P\n' | sort > playlist.m3u"
+
+ssh docker-de -t "cd /mnt/HC_Volume_34966154/jellifin/media/music/Dub-Sets; find . -type f \( -name '*.mp3' -o -name '*.flac' -o -name '*.loss' -o -name '*.aiff' -o -name '*.aif' \) -printf './%P\n' | sort > playlist.m3u"
 
 # Fix permissions
 ssh docker-de -t 'chown docker-user: /mnt/HC_Volume_34966154/jellifin -R'
