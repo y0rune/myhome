@@ -8,8 +8,8 @@ gui:
       - "#413660"
 git:
   autoFetch: true
-  paging:
-    colorArg: always
+  pagers:
+    - colorArg: always
   commit:
     signOff: true
   pull:
