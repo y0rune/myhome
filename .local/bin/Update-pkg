@@ -31,7 +31,7 @@ else
     pip="/opt/homebrew/bin/pip$PYTHONVERSION"
 fi
 
-PIPEXT="--user --force --quiet --break-system-packages --no-warn-script-location"
+PIPEXT="--user --force --quiet --no-warn-script-location"
 PIPEXTPRE="--pre $PIPEXT"
 
 # Gentoo release
@@ -85,7 +85,7 @@ function command_exists() {
 function update_pip() {
     # Update the pip
     if [[ "$(uname)" == "Darwin" ]]; then
-        $python -m pip install --upgrade pip --user --no-warn-script-location --break
+        $python -m pip install --upgrade pip --user --no-warn-script-location
     elif [[ -f $GENTOO ]]; then
         $install dev-python/pip
     fi
