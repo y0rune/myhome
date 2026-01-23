@@ -1,6 +1,5 @@
-akiflow
 alacritty
-alfred
+brave
 chatterino
 dbeaver-community
 discord
@@ -9,7 +8,6 @@ docker
 firefox@nightly
 font-hack-nerd-font
 gimp
-google-chrome
 hiddenbar
 karabiner-elements
 keepassxc
@@ -33,6 +31,6 @@ transfer
 twingate
 visual-studio-code
 vlc
+whatsapp
 winbox
-wine-crossover
 wireshark

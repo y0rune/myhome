@@ -162,7 +162,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     alias ls="ls -Gh"
     alias mpv="mpv --ytdl-raw-options="yes-playlist=" --no-resume-playback --ytdl-format='bestvideo+bestaudio/best'"
     alias code="open -a 'Visual Studio Code'"
-    alias xclip="pbcopy"
+    alias xclip="sed $'s,\x1b\\[[0-9;]*[a-zA-Z],,g' | pbcopy"
     alias mtr="sudo /opt/homebrew/opt/mtr/sbin/mtr"
     alias sleep-lid-off="sudo pmset -b sleep 0; sudo pmset -b disablesleep 1"
     alias sleep-lid-on="sudo pmset -b sleep 5; sudo pmset -b disablesleep 0"
@@ -172,13 +172,13 @@ if [[ "$(uname)" == "Darwin" ]]; then
     # Terraform
     export TFENV_ARCH=amd64
     export TFENVVERSION=$(ls -la /opt/homebrew/Cellar/tfenv/ |
-        grep -iEo '[0-9]\.[0-9]\.[0-9]' |
+        grep -iEo '[0-9]+\.[0-9]+\.[0-9]+' |
         sort |
-        tail -n1)
+        head -n1)
     export TFVERSION=$(ls -la /opt/homebrew/Cellar/tfenv/*/versions |
-        grep -iEo '[0-9]\.[0-9]\.[0-9]' |
+        grep -iEo '[0-9]+\.[0-9]+\.[0-9]+' |
         sort |
-        tail -n1)
+        head -n1)
     export PATH=$PATH:/opt/homebrew/Cellar/tfenv/$TFENVVERSION/versions/$TFVERSION/
 
     # Unset browser
@@ -229,7 +229,7 @@ alias neofetch=fastfetch
 [ -f $(which zoxide) ] && {eval "$(zoxide init zsh)"; alias cd='z'}
 
 # GoLang
-alias go-mod="go mod edit -go $(go version | grep -oE 'go[0-9]*\.[0-9]*\.[0-9]*' | sed 's/go//g');  go get -u; go mod verify; go get -x -v; go mod verify; go mod tidy"
+alias go-mod="go mod edit -go=$(go version | grep -oE 'go[0-9]*\.[0-9]*\.[0-9]*' | sed 's/go//g');  go get -u; go mod verify; go get -x -v; go mod verify; go mod tidy"
 
 # Resolve problem with - zsh: no matches found
 setopt +o nomatch

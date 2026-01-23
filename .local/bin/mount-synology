@@ -1,13 +1,23 @@
 #!/bin/bash
 ~/.local/bin/sidebar-restore-macos
 open -gj "afp://10.0.0.14/Downloads"
+sleep 10
 open -gj "afp://10.0.0.14/Anime"
+sleep 2
 open -gj "afp://10.0.0.14/Music"
+sleep 2
 open -gj "afp://10.0.0.14/Video"
+sleep 2
 open -gj "afp://10.0.0.14/Series"
+sleep 2
 open -gj "afp://10.0.0.14/Photos"
+sleep 2
 open -gj "afp://10.0.0.14/Backups"
+sleep 2
 open -gj "afp://10.0.0.14/Recordings"
+sleep 2
+open -gj "afp://10.0.0.14/Work"
+sleep 2
 
 /usr/local/bin/mysides add Synology file:///Volumes/Recordings/
 /usr/local/bin/mysides add Synology file:///Volumes/Backups/
@@ -17,3 +27,4 @@ open -gj "afp://10.0.0.14/Recordings"
 /usr/local/bin/mysides add Synology file:///Volumes/Series/
 /usr/local/bin/mysides add Synology file:///Volumes/Photos/
 /usr/local/bin/mysides add Synology file:///Volumes/Anime/
+/usr/local/bin/mysides add Synology file:///Volumes/Work
