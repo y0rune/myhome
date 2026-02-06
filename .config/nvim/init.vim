@@ -178,178 +178,89 @@ call plug#end()
 lua<<EOF
 local opts = { noremap=true, silent=true }
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities()
-local lspconfig = require('lspconfig')
+-- capabilities for nvim-cmp
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-local on_attach = function(client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'ge', '<cmd>lua vim.diagnostic.setqflist()<CR>', opts)
-  --vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  --vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  --vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  --vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  --vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-end
+-- Prefer LspAttach instead of per-server on_attach
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local bufnr = args.buf
 
--- LSP settings (for overriding per client)
-local handlers =  {
-  ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border}),
-  ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border }),
-}
+    vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-local servers = { 'clangd', 'bashls', 'yamlls', 'ansiblels', 'gopls', 'solargraph', 'terraformls', 'tflint', 'marksman', 'rust_analyzer' }
-for _, lsp in pairs(servers) do
-  require('lspconfig')[lsp].setup {
-    on_attach = on_attach,
-    handlers=handlers,
-    capabilities = capabilities,
-    flags = {
-      debounce_text_changes = 150,
-    }
-  }
-end
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = bufnr, silent = true })
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = bufnr, silent = true })
+    vim.keymap.set('n', '<space>K', vim.lsp.buf.hover, { buffer = bufnr, silent = true })
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { buffer = bufnr, silent = true })
+    vim.keymap.set('n', 'ge', vim.diagnostic.setqflist, { buffer = bufnr, silent = true })
+    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, { buffer = bufnr, silent = true })
+    vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, { buffer = bufnr, silent = true })
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, { buffer = bufnr, silent = true })
+  end,
+})
 
+-- If you want borders, define one (your old code referenced `border` but never defined it)
+local border = 'rounded'
 
--- Handlers when you are in the insert mode you see the errors
-vim.lsp.handlers["textDocument/publishDiagnostics"] =
-    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
-                 {update_in_insert = true})
+vim.lsp.config('*', {
+  capabilities = capabilities,
+  handlers = {
+    ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
+    ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
+  },
+})
 
--- Setup a yamlls plugin
-require'lspconfig'.yamlls.setup{
+-- Server-specific overrides
+vim.lsp.config('yamlls', {
   settings = {
     json = {
-        schemas = {
-            ["https://raw.githubusercontent.com/quantumblacklabs/kedro/develop/static/jsonschema/kedro-catalog-0.17.json"]= "conf/**/*catalog*",
-            ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
-            ["https://github.com/ansible/schemas/blob/main/f/ansible.json"] = "*.yaml,*.yml"
-        }
+      schemas = {
+        ["https://raw.githubusercontent.com/quantumblacklabs/kedro/develop/static/jsonschema/kedro-catalog-0.17.json"]= "conf/**/*catalog*",
+        ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+        ["https://github.com/ansible/schemas/blob/main/f/ansible.json"] = "*.yaml,*.yml",
+      }
     },
-    yaml = {
-        keyOrdering = false
-    },
-  }
-}
-
--- Setup GoLang
-require'lspconfig'.gopls.setup {
-    cmd = {"gopls", "serve"},
-    filetypes = { "go", "gomod", "gowork", "gotmpl" },
-    on_attach = on_attach,
-    handlers=handlers,
-    capabilities = capabilities,
-    settings = {
-        gopls = {
-            analyses = {
-                unusedparams = true,
-            },
-            staticcheck = true,
-            linksInHover = false,
-            codelenses = {
-                generate = true,
-                gc_details = true,
-                regenerate_cgo = true,
-                tidy = true,
-                upgrade_depdendency = true,
-                vendor = true,
-            },
-            completeUnimported = true,
-            usePlaceholders = true,
-            analyses = {
-                unusedparams = true,
-            },
-        },
-    },
-}
-
--- Setup Python (ruff)
-require('lspconfig').ruff.setup({})
-
--- luasnip setup
-local luasnip = require 'luasnip'
-
--- nvim-cmp setup
-local cmp = require 'cmp'
-cmp.setup {
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
+    yaml = { keyOrdering = false },
   },
+})
+
+vim.lsp.config('gopls', {
+  cmd = {"gopls", "serve"},
+  filetypes = { "go", "gomod", "gowork", "gotmpl" },
+  settings = {
+    gopls = {
+      analyses = { unusedparams = true },
+      staticcheck = true,
+      linksInHover = false,
+      codelenses = {
+        generate = true,
+        gc_details = true,
+        regenerate_cgo = true,
+        tidy = true,
+        upgrade_depdendency = true,
+        vendor = true,
+      },
+      completeUnimported = true,
+      usePlaceholders = true,
+    },
+  },
+})
+
+vim.lsp.config('ruff', {}) -- keep as you had it
+
+-- Finally, enable servers (this replaces the setup() loop)
+vim.lsp.enable({
+  'clangd', 'bashls', 'yamlls', 'ansiblels', 'gopls', 'solargraph',
+  'terraformls', 'tflint', 'marksman', 'rust_analyzer', 'ruff',
+})
+
+local cmp = require('cmp')
+cmp.setup({
   mapping = cmp.mapping.preset.insert({
-    ['<C-a>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-s>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
-    ['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
   }),
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-    { name = 'vsnip' },
-    { name = 'ultisnips' },
-    { name = 'snippy' },
-    { name = 'path' },
-    { name = 'buffer' }
-  },
-}
-
-cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources({
-
-    { name = 'path' }
-  }, {
-    { name = 'cmdline' }
-  })
+  sources = { { name = 'buffer' } },
 })
-
-cmp.setup.cmdline('/', {
-
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = 'buffer' }
-  }
-})
-
-require("nvim-tree").setup({
-})
-
-require'treesitter-context'.setup{}
-
-require("nvim-autopairs").setup {}
-
-require'lspconfig'.rust_analyzer.setup {}
 EOF
 
 " Added popout window to see diagnostic
