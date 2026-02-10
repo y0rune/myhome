@@ -1,0 +1,42 @@
+################################################################################
+#
+# Marcin Wozniak
+#
+# shellcheck disable=1091
+################################################################################
+
+# Colours
+RED='\033[0;31m'
+GREEN='\033[0;0;32m'
+NC='\033[0m'
+
+function timestamp() {
+    echo -e "${GREEN}[+]${NC} $(date +'%F %T') [INFO] $*"
+}
+
+function err() {
+    echo -e "${RED}[-] $(date +'%F %T') [ERROR] $*${NC}" >&2
+    exit 0
+}
+
+function removelogs() {
+    find "$DIR/logs" -mindepth 1 -mtime +365 -delete
+}
+
+function command_start() {
+    timestamp "Command $* has been started."
+    if ! "$@"; then
+        err "Command $* went wrong."
+        # sendmailerr
+    fi
+    timestamp "Command $* has been ended."
+}
+
+function command_exists() {
+    if command -v "$1" > /dev/null 2>&1; then
+        timestamp "Command $1 has been found"
+    else
+        err "Command $1 has been NOT found"
+        # sendmailerr
+    fi
+}

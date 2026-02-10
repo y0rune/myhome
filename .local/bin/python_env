@@ -1,0 +1,20 @@
+#!/bin/bash
+
+source "$HOME"/.local/bin/functions
+
+# Function for creating a python env
+python_env(){
+
+    [ -z "$PYTHONVERSION" ] && err "Python version is not set"
+
+    command_exists virtualenv
+
+    timestamp "Creating Python environment with version $PYTHONVERSION"
+    rm -rf .venv .env && timestamp "Old Python environment has been removed"
+    virtualenv -p "$PYTHONVERSION" .venv
+
+    .venv/bin/python -m pip install --upgrade pip
+    .venv/bin/pip install -r requirements.txt --break --force
+}
+
+python_env "$@"
