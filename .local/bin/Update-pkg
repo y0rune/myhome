@@ -17,18 +17,18 @@ NC='\033[0m'
 TERRAFORM_VERSION="1.5.7"
 
 # Python
-if which python3 >/dev/null 2>&1; then
-	python="python3"
-	pip="pip3"
+if which python3 > /dev/null 2>&1; then
+    python="python3"
+    pip="pip3"
 else
-	export PYTHONVERSION=$(ls -la /opt/homebrew/opt/ |
-		grep -iEo 'python@.* ->' |
-		sed 's/ ->//g' |
-		sort |
-		tail -n1 |
-		sed 's/python@//g')
-	python="/opt/homebrew/bin/python$PYTHONVERSION"
-	pip="/opt/homebrew/bin/pip$PYTHONVERSION"
+    export PYTHONVERSION=$(ls -la /opt/homebrew/opt/ |
+        grep -iEo 'python@.* ->' |
+        sed 's/ ->//g' |
+        sort |
+        tail -n1 |
+        sed 's/python@//g')
+    python="/opt/homebrew/bin/python$PYTHONVERSION"
+    pip="/opt/homebrew/bin/pip$PYTHONVERSION"
 fi
 
 PIPEXT="--user --force --quiet --no-warn-script-location"
@@ -42,594 +42,600 @@ GENTOO="/etc/gentoo-release"
 install=""
 
 if [[ "$(uname)" == "Darwin" ]]; then
-	install="brew install"
+    install="brew install"
 elif [[ -f $GENTOO ]]; then
-	install="sudo emerge --update"
+    install="sudo emerge --update"
 elif [[ -f /etc/debian_version ]]; then
-	sudo apt update
-	install="sudo apt install -y"
+    sudo apt update
+    install="sudo apt install -y"
 elif [[ -f /etc/redhat-release ]]; then
-	install="sudo dnf install"
+    install="sudo dnf install"
 fi
 
 function timestamp() {
-	echo -e "${GREEN}[+]${NC} $(date +'%F %T') [INFO] $*"
+    echo -e "${GREEN}[+]${NC} $(date +'%F %T') [INFO] $*"
 }
 
 function err() {
-	echo -e "${RED}[-] $(date +'%F %T') [ERROR] $*${NC}" >&2
+    echo -e "${RED}[-] $(date +'%F %T') [ERROR] $*${NC}" >&2
 }
 
 function command_start() {
-	timestamp "Command $* has been started."
-	if ! "$@"; then
-		err "---------"
-		err "Command $* went wrong."
-		err "---------"
-		# exit
-	fi
-	timestamp "Command $* has been ended."
+    timestamp "Command $* has been started."
+    if ! "$@"; then
+        err "---------"
+        err "Command $* went wrong."
+        err "---------"
+        # exit
+    fi
+    timestamp "Command $* has been ended."
 }
 
 function command_exists() {
-	if command -v "$1" >/dev/null 2>&1; then
-		timestamp "Command $1 has been found"
-	else
-		err "Command $1 has been NOT found"
+    if command -v "$1" > /dev/null 2>&1; then
+        timestamp "Command $1 has been found"
+    else
+        err "Command $1 has been NOT found"
 
-		# Return false
-		return 1
-	fi
+        # Return false
+        return 1
+    fi
 }
 
 function update_pip() {
-	# Update the pip
-	if [[ "$(uname)" == "Darwin" ]]; then
-		$python -m pip install --upgrade pip --user --no-warn-script-location
-	elif [[ -f $GENTOO ]]; then
-		$install dev-python/pip
-	fi
+    # Update the pip
+    if [[ "$(uname)" == "Darwin" ]]; then
+        $python -m pip install --upgrade pip --user --no-warn-script-location
+    elif [[ -f $GENTOO ]]; then
+        $install dev-python/pip
+    fi
 }
 
 function install_neovim_module_for_python() {
-	# Python module in neovim
-	$pip install pynvim neovim imps $PIPEXTPRE
+    # Python module in neovim
+    $pip install pynvim neovim imps $PIPEXTPRE
+
+    # Ruby module for neovim
+    gem install solargraph
+
+    # Node module for neovim
+    npm install @github/copilot-language-server -g --force
+    npm install tree-sitter-cli -g --force
 }
 
 function install_node() {
-	if command_exists npm; then
-		timestamp "Node has been found"
-	else
-		if [[ "$(uname)" == "Darwin" ]]; then
-			brew uninstall node --ignore-dependencies
-			sudo rm -rf /opt/homebrew/lib/node_modules/npm/
-			$install node
-		elif [[ -f $GENTOO ]]; then
-			$install dev-lang/nodejs
-		fi
-	fi
+    if command_exists npm; then
+        timestamp "Node has been found"
+    else
+        if [[ "$(uname)" == "Darwin" ]]; then
+            brew uninstall node --ignore-dependencies
+            sudo rm -rf /opt/homebrew/lib/node_modules/npm/
+            $install node
+        elif [[ -f $GENTOO ]]; then
+            $install dev-lang/nodejs
+        fi
+    fi
 }
 
 function install_pyright() {
-	# Install pyright
-	sudo npm -s -g i pyright --force
+    # Install pyright
+    sudo npm -s -g i pyright --force
 }
 
 function install_mdformat() {
-	# Install mdformat
-	$pip install mdformat $PIPEXTPRE
+    # Install mdformat
+    $pip install mdformat $PIPEXTPRE
 }
 
 function install_ruff() {
-	# Install ruff
-	$pip install ruff $PIPEXTPRE
+    # Install ruff
+    $pip install ruff $PIPEXTPRE
 }
 
 function install_bash-language-server() {
-	# Install bash-language-server
-	sudo npm -s -g i bash-language-server --force
+    # Install bash-language-server
+    sudo npm -s -g i bash-language-server --force
 }
 
 function install_yaml-language-server() {
-	# Install yaml-language-server
-	sudo npm -s -g i yaml-language-server --force
+    # Install yaml-language-server
+    sudo npm -s -g i yaml-language-server --force
 }
 
 function install_shfmt() {
-	# Install shfmt
-	GO111MODULE=on go install mvdan.cc/sh/v3/cmd/shfmt@latest
+    # Install shfmt
+    GO111MODULE=on go install mvdan.cc/sh/v3/cmd/shfmt@latest
 }
 
 function install_lazy() {
-	# Install shfmt
-	GO111MODULE=on go install github.com/jesseduffield/lazygit@latest
-	GO111MODULE=on go install github.com/jesseduffield/lazydocker@latest
+    # Install shfmt
+    GO111MODULE=on go install github.com/jesseduffield/lazygit@latest
+    GO111MODULE=on go install github.com/jesseduffield/lazydocker@latest
 }
 
 function install_dlv() {
-	GO111MODULE=on go install github.com/go-delve/delve/cmd/dlv@latest
+    GO111MODULE=on go install github.com/go-delve/delve/cmd/dlv@latest
 }
 
 function install_terraform_stable() {
-	# Install terraform and terraform-ls
-	GO111MODULE=on go install github.com/hashicorp/terraform-ls@latest
+    # Install terraform and terraform-ls
+    GO111MODULE=on go install github.com/hashicorp/terraform-ls@latest
 
-	if [[ "$(uname)" == "Darwin" ]]; then
-		$install tflint -q
-		$install tfenv -q
-		TFENV_ARCH=amd64 tfenv install "$TERRAFORM_VERSION"
-		tfenv use "$TERRAFORM_VERSION"
-	else
-		GO111MODULE=on go install github.com/hashicorp/terraform@v"$TERRAFORM_VERSION"
-		curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
-	fi
+    if [[ "$(uname)" == "Darwin" ]]; then
+        $install tflint -q
+        $install tfenv -q
+        TFENV_ARCH=amd64 tfenv install "$TERRAFORM_VERSION"
+        tfenv use "$TERRAFORM_VERSION"
+    else
+        GO111MODULE=on go install github.com/hashicorp/terraform@v"$TERRAFORM_VERSION"
+        curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+    fi
 }
 
 function install_terraform() {
-	# Install terraform and terraform-ls
-	GO111MODULE=on go install github.com/hashicorp/terraform-ls@latest
-	if [[ "$(uname)" == "Darwin" ]]; then
-		$install tflint -q
-		$install tfenv -q
-		TFENV_ARCH=amd64 tfenv install latest
-		mapfile -t TFENV_VER_ARRAY < <(tfenv list | grep -ioE ' [0-9.]+' | sed -e '1,1d')
-		if [ "${#TFENV_VER_ARRAY[@]}" -gt "2" ]; then
-			for i in "${TFENV_VER_ARRAY[@]}"; do
-				tfenv uninstall "$i" && timestamp "Removed - terraform '$i' version"
-			done
-		fi
-	else
-		GO111MODULE=on go install github.com/hashicorp/terraform@latest
-		curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
-	fi
+    # Install terraform and terraform-ls
+    GO111MODULE=on go install github.com/hashicorp/terraform-ls@latest
+    if [[ "$(uname)" == "Darwin" ]]; then
+        $install tflint -q
+        $install tfenv -q
+        TFENV_ARCH=amd64 tfenv install latest
+        mapfile -t TFENV_VER_ARRAY < <(tfenv list | grep -ioE ' [0-9.]+' | sed -e '1,1d')
+        if [ "${#TFENV_VER_ARRAY[@]}" -gt "2" ]; then
+            for i in "${TFENV_VER_ARRAY[@]}"; do
+                tfenv uninstall "$i" && timestamp "Removed - terraform '$i' version"
+            done
+        fi
+    else
+        GO111MODULE=on go install github.com/hashicorp/terraform@latest
+        curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+    fi
 }
 
 function install_terragrunt() {
-	# Install terragrunt
-	if [[ "$(uname)" == "Darwin" ]]; then
-		$install terragrunt -q
-	else
-		TERRAGRUNT=$HOME/.local/bin/terragrunt
-		REMOTE_VERSION=$(curl -s https://api.github.com/repos/gruntwork-io/terragrunt/releases/latest | grep -iEo '"tag_name":.*' | sed 's/"tag_name"://g;s/"//g;s/,//g;s/ //g')
+    # Install terragrunt
+    if [[ "$(uname)" == "Darwin" ]]; then
+        $install terragrunt -q
+    else
+        TERRAGRUNT=$HOME/.local/bin/terragrunt
+        REMOTE_VERSION=$(curl -s https://api.github.com/repos/gruntwork-io/terragrunt/releases/latest | grep -iEo '"tag_name":.*' | sed 's/"tag_name"://g;s/"//g;s/,//g;s/ //g')
 
-		CURRENT_VERSION="0.0.0"
-		[ -f $TERRAGRUNT ] && CURRENT_VERSION=$($TERRAGRUNT version)
+        CURRENT_VERSION="0.0.0"
+        [ -f $TERRAGRUNT ] && CURRENT_VERSION=$($TERRAGRUNT version)
 
-		if [ "$REMOTE_VERSION" == "$CURRENT_VERSION" ]; then
-			timestamp "The current version of the TSS-SDK is the same as the newest version"
-			return 0
-		else
-			brew install wget
-			wget https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64 -O $TERRAGRUNT
-			chmod +x "$TERRAGRUNT"
-		fi
-	fi
+        if [ "$REMOTE_VERSION" == "$CURRENT_VERSION" ]; then
+            timestamp "The current version of the TSS-SDK is the same as the newest version"
+            return 0
+        else
+            brew install wget
+            wget https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64 -O $TERRAGRUNT
+            chmod +x "$TERRAGRUNT"
+        fi
+    fi
 }
 
 function install_shellcheck() {
-	# Install shellcheck
-	if [[ "$(uname)" == "Darwin" ]]; then
-		$install shellcheck -q
-	else
-		curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
-	fi
+    # Install shellcheck
+    if [[ "$(uname)" == "Darwin" ]]; then
+        $install shellcheck -q
+    else
+        curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+    fi
 }
 
 function install_marksman() {
-	# Install marksman
-	if [[ "$(uname)" == "Darwin" ]]; then
-		$install marksman -q
-	else
-		wget https://github.com/artempyanykh/marksman/releases/latest/download/marksman-linux-x64 -O $HOME/.local/bin/marksman
-		chmod +x $HOME/.local/bin/marksman
-	fi
+    # Install marksman
+    if [[ "$(uname)" == "Darwin" ]]; then
+        $install marksman -q
+    else
+        wget https://github.com/artempyanykh/marksman/releases/latest/download/marksman-linux-x64 -O $HOME/.local/bin/marksman
+        chmod +x $HOME/.local/bin/marksman
+    fi
 
 }
 
 function install_go() {
-	# Install the golang
-	if [[ "$(uname)" == "Darwin" ]]; then
-		$install golang -q
-	elif [[ -f $GENTOO ]]; then
-		$install dev-lang/go
-	fi
+    # Install the golang
+    if [[ "$(uname)" == "Darwin" ]]; then
+        $install golang -q
+    elif [[ -f $GENTOO ]]; then
+        $install dev-lang/go
+    fi
 }
 
 function install_gopls() {
-	# Install gopls
-	GO111MODULE=on go install golang.org/x/tools/gopls@latest
+    # Install gopls
+    GO111MODULE=on go install golang.org/x/tools/gopls@latest
 }
 
 function install_ansible() {
-	# Install Ansible
-	$pip install ansible ansible-lint ansible-core $PIPEXTPRE
-	$pip install ansible-parallel $PIPEXTPRE
+    # Install Ansible
+    $pip install ansible ansible-lint ansible-core $PIPEXTPRE
+    $pip install ansible-parallel $PIPEXTPRE
 }
 
 function install_ansible-language-server() {
-	# Install ansible-language-server
-	sudo npm -s -g i @ansible/ansible-language-server --force
-	sudo npm -s -g i yaml-language-server --force
+    # Install ansible-language-server
+    sudo npm -s -g i @ansible/ansible-language-server --force
+    sudo npm -s -g i yaml-language-server --force
 }
 
 function install_meraki_ansible() {
-	# Install python, ansible module for meraki
-	ansible-galaxy collection install cisco.meraki --force
-	$pip install meraki $PIPEXT
+    # Install python, ansible module for meraki
+    ansible-galaxy collection install cisco.meraki --force
+    $pip install meraki $PIPEXT
 }
 
 function install_azure_cli() {
-	# Install azure_cli
-	$install azure-cli
+    # Install azure_cli
+    $install azure-cli
 }
 
 function install_awscli() {
-	# Install awscli
-	$install awscli
+    # Install awscli
+    $install awscli
 }
 
 function install_aws_adfs() {
-	# Install aws-adfs
-	$pip install aws-adfs $PIPEXTPRE
+    # Install aws-adfs
+    $pip install aws-adfs $PIPEXTPRE
 }
 
 function install_ytdlp() {
-	# Install yt-dlp
-	$pip install yt-dlp $PIPEXTPRE
+    # Install yt-dlp
+    $pip install yt-dlp $PIPEXTPRE
 }
 
 function install_spotifydl() {
-	# Install spotify_dl
-	$pip install spotdl $PIPEXTPRE
+    # Install spotify_dl
+    $pip install spotdl $PIPEXTPRE
 }
 
 function install_fzf() {
-	# Install fzf
-	FOLDER="$CONFIG/fzf"
-	mkdir -p $FOLDER
+    # Install fzf
+    FOLDER="$CONFIG/fzf"
+    mkdir -p $FOLDER
 
-	if [ -d $FOLDER ]; then
-		cd $CONFIG || err "Folder $CONFIG has been NOT found"
-		git clone https://github.com/junegunn/fzf.git $FOLDER && timestamp "Cloning the FZF"
-		cd $FOLDER || err "Folder $FOLDER has been NOT found"
-		git pull -q && timestamp "Pulled the $FOLDER configuration"
-		make install
-	fi
+    if [ -d $FOLDER ]; then
+        cd $CONFIG || err "Folder $CONFIG has been NOT found"
+        git clone https://github.com/junegunn/fzf.git $FOLDER && timestamp "Cloning the FZF"
+        cd $FOLDER || err "Folder $FOLDER has been NOT found"
+        git pull -q && timestamp "Pulled the $FOLDER configuration"
+        make install
+    fi
 }
 
 function install_zsh_addons() {
 
-	if [ ! -d $ZSHFOLDER/aws ]; then
-		mkdir -p "$ZSHFOLDER/azure-cli" "$ZSHFOLDER/aws"
+    if [ ! -d $ZSHFOLDER/aws ]; then
+        mkdir -p "$ZSHFOLDER/azure-cli" "$ZSHFOLDER/aws"
 
-		curl -s https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/aws/aws.plugin.zsh \
-			-o "$ZSHFOLDER"/aws/aws.plugin.zsh &&
-			timestamp "Downloaded the newest version of aws plugin for zsh"
+        curl -s https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/aws/aws.plugin.zsh \
+            -o "$ZSHFOLDER"/aws/aws.plugin.zsh &&
+            timestamp "Downloaded the newest version of aws plugin for zsh"
 
-		curl -s https://raw.githubusercontent.com/Azure/azure-cli/dev/az.completion \
-			-o "$ZSHFOLDER"/azure-cli/az.completion &&
-			timestamp "Downloaded the newest version of az plugin for zsh"
+        curl -s https://raw.githubusercontent.com/Azure/azure-cli/dev/az.completion \
+            -o "$ZSHFOLDER"/azure-cli/az.completion &&
+            timestamp "Downloaded the newest version of az plugin for zsh"
 
-		cd $ZSHFOLDER || err "Folder $ZSHFOLDER has been NOT found"
-		git clone https://github.com/popstas/zsh-command-time.git &&
-			timestamp "Cloning the zsh-command-time"
-		git clone https://github.com/zsh-users/zsh-syntax-highlighting.git &&
-			timestamp "Cloning the zsh-syntax-highlighting"
-		git clone https://github.com/zsh-users/zsh-autosuggestions.git &&
-			timestamp "Cloning the zsh-autosuggestions"
-	fi
+        cd $ZSHFOLDER || err "Folder $ZSHFOLDER has been NOT found"
+        git clone https://github.com/popstas/zsh-command-time.git &&
+            timestamp "Cloning the zsh-command-time"
+        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git &&
+            timestamp "Cloning the zsh-syntax-highlighting"
+        git clone https://github.com/zsh-users/zsh-autosuggestions.git &&
+            timestamp "Cloning the zsh-autosuggestions"
+    fi
 
-	for i in $(ls $ZSHFOLDER); do
-		FOLDER="$ZSHFOLDER/$i"
-		if [ -d "$FOLDER/.git" ]; then
-			cd "$FOLDER" || err "Folder $FOLDER has been NOT found"
-			git pull -q && timestamp "Pulling the $FOLDER configuration"
-		fi
-	done
+    for i in $(ls $ZSHFOLDER); do
+        FOLDER="$ZSHFOLDER/$i"
+        if [ -d "$FOLDER/.git" ]; then
+            cd "$FOLDER" || err "Folder $FOLDER has been NOT found"
+            git pull -q && timestamp "Pulling the $FOLDER configuration"
+        fi
+    done
 
-	if [ ! -d $OHMYZSH ]; then
-		cd $OHMYZSH || err "Folder $OHMYZSH has been NOT found"
-		git pull -q && timestamp "Pulling the $OHMYZSH configuration"
-	fi
+    if [ ! -d $OHMYZSH ]; then
+        cd $OHMYZSH || err "Folder $OHMYZSH has been NOT found"
+        git pull -q && timestamp "Pulling the $OHMYZSH configuration"
+    fi
 
-	curl -s https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/aws/aws.plugin.zsh -o "$ZSHFOLDER"/aws/aws.plugin.zsh && timestamp "Downloaded the newest version of aws plugin for zsh"
-	curl -s https://raw.githubusercontent.com/Azure/azure-cli/dev/az.completion -o "$ZSHFOLDER"/azure-cli/az.completion && timestamp "Downloaded the newest version of az plugin for zsh"
+    curl -s https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/aws/aws.plugin.zsh -o "$ZSHFOLDER"/aws/aws.plugin.zsh && timestamp "Downloaded the newest version of aws plugin for zsh"
+    curl -s https://raw.githubusercontent.com/Azure/azure-cli/dev/az.completion -o "$ZSHFOLDER"/azure-cli/az.completion && timestamp "Downloaded the newest version of az plugin for zsh"
 
 }
 
 function install_speedtest() {
-	# Install speedtest-cli
-	$pip install speedtest-cli $PIPEXTPRE
+    # Install speedtest-cli
+    $pip install speedtest-cli $PIPEXTPRE
 }
 
 function install_gh_cli() {
-	# Install gh-cli
-	if [[ "$(uname)" == "Darwin" ]]; then
-		$install gh
-	elif [[ -f $GENTOO ]]; then
-		$install dev-util/github-cli
-	fi
+    # Install gh-cli
+    if [[ "$(uname)" == "Darwin" ]]; then
+        $install gh
+    elif [[ -f $GENTOO ]]; then
+        $install dev-util/github-cli
+    fi
 }
 
 function install_kubernetes() {
-	# Install kubectl
-	LINK=""
-	CURRENT_VERSION=""
-	REMOTE_VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt)
-	KUBECTL_LOCATION="/opt/homebrew/bin/kubectl"
+    # Install kubectl
+    LINK=""
+    CURRENT_VERSION=""
+    REMOTE_VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt)
+    KUBECTL_LOCATION="/opt/homebrew/bin/kubectl"
 
-	[ -f $KUBECTL_LOCATION ] && CURRENT_VERSION=$($KUBECTL_LOCATION version --client | grep --color=no -iEo 'Client Version: v[0-9\.]+' | grep -ioE --color=no 'v[0-9\.]+')
+    [ -f $KUBECTL_LOCATION ] && CURRENT_VERSION=$($KUBECTL_LOCATION version --client | grep --color=no -iEo 'Client Version: v[0-9\.]+' | grep -ioE --color=no 'v[0-9\.]+')
 
-	if [ "$REMOTE_VERSION" == "$CURRENT_VERSION" ]; then
-		timestamp "The current version of the kubectl is the same as the newest version"
-		return 0
-	fi
+    if [ "$REMOTE_VERSION" == "$CURRENT_VERSION" ]; then
+        timestamp "The current version of the kubectl is the same as the newest version"
+        return 0
+    fi
 
-	if [[ "$(uname)" == "Darwin" ]]; then
-		LINK="http://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/amd64/kubectl"
-	else
-		LINK="http://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-	fi
+    if [[ "$(uname)" == "Darwin" ]]; then
+        LINK="http://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/amd64/kubectl"
+    else
+        LINK="http://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    fi
 
-	wget "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" -O $KUBECTL_LOCATION
-	chmod +x $KUBECTL_LOCATION
+    wget "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" -O $KUBECTL_LOCATION
+    chmod +x $KUBECTL_LOCATION
 }
 
 function install_rust() {
-	# Install rust
-	if command_exists rustc; then
-		rustup update
-		rustup component add rust-analyzer
-	else
-		curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
-	fi
+    # Install rust
+    if command_exists rustc; then
+        rustup update
+        rustup component add rust-analyzer
+    else
+        curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+    fi
 }
 
 function install_tss_client() {
-	# Install tss
-	TSS_VERSION_STABLE="$1"
-	CURRENT_VERSION="1.5.7"
+    # Install tss
+    TSS_VERSION_STABLE="$1"
+    CURRENT_VERSION="1.5.7"
 
-	if [ -z "$TSS_VERSION_STABLE" ]; then
-		TSS_VERSION_STABLE=""
-		timestamp "TSS_VERSION_STABLE variable is empty, the latest version will be installed"
-	fi
+    if [ -z "$TSS_VERSION_STABLE" ]; then
+        TSS_VERSION_STABLE=""
+        timestamp "TSS_VERSION_STABLE variable is empty, the latest version will be installed"
+    fi
 
-	# Example link: https://downloads.ss.thycotic.com/secretserversdk/1.5.7/secretserver-sdk-1.5.7-linux-x64.zip
-	TSSDOCS="https://docs.delinea.com/online-help/secret-server/api-scripting/sdk-devops/sdk-downloads/index.htm"
-	LINK=""
-	REMOTE_VERSION=""
+    # Example link: https://downloads.ss.thycotic.com/secretserversdk/1.5.7/secretserver-sdk-1.5.7-linux-x64.zip
+    TSSDOCS="https://docs.delinea.com/online-help/secret-server/api-scripting/sdk-devops/sdk-downloads/index.htm"
+    LINK=""
+    REMOTE_VERSION=""
 
-	if [ "$(uname)" == "Darwin" ]; then
-		if [ -n "$TSS_VERSION_STABLE" ]; then
-			LINK="https://downloads.ss.thycotic.com/secretserversdk/$TSS_VERSION_STABLE/secretserver-sdk-$TSS_VERSION_STABLE-osx-x64.zip"
-			REMOTE_VERSION=$TSS_VERSION
-		else
-			LINK=$(curl -s -L $TSSDOCS | grep -iEo 'href=".*-osx-x64.zip"' | sed 's/href\=//g;s/"//g' | sort -r | head -n1)
-			REMOTE_VERSION=$(echo $LINK | grep -iEo '[0-9.]+-osx' | sed 's/-osx//g')
-		fi
-	else
-		LINK=$(curl -s -L $TSSDOCS | grep -iEo 'href=".*-linux-x64.zip"' | sed 's/href\=//g;s/"//g' | sort -r | head -n1)
-		REMOTE_VERSION=$(echo $LINK | grep -iEo '[0-9.]+-linux' | sed 's/-linux//g')
-	fi
+    if [ "$(uname)" == "Darwin" ]; then
+        if [ -n "$TSS_VERSION_STABLE" ]; then
+            LINK="https://downloads.ss.thycotic.com/secretserversdk/$TSS_VERSION_STABLE/secretserver-sdk-$TSS_VERSION_STABLE-osx-x64.zip"
+            REMOTE_VERSION=$TSS_VERSION
+        else
+            LINK=$(curl -s -L $TSSDOCS | grep -iEo 'href=".*-osx-x64.zip"' | sed 's/href\=//g;s/"//g' | sort -r | head -n1)
+            REMOTE_VERSION=$(echo $LINK | grep -iEo '[0-9.]+-osx' | sed 's/-osx//g')
+        fi
+    else
+        LINK=$(curl -s -L $TSSDOCS | grep -iEo 'href=".*-linux-x64.zip"' | sed 's/href\=//g;s/"//g' | sort -r | head -n1)
+        REMOTE_VERSION=$(echo $LINK | grep -iEo '[0-9.]+-linux' | sed 's/-linux//g')
+    fi
 
-	TSSFOLDER="$HOME/.local/tss-sdk"
-	TSSLINK="$HOME/.local/bin/tss"
+    TSSFOLDER="$HOME/.local/tss-sdk"
+    TSSLINK="$HOME/.local/bin/tss"
 
-	[ -f $TSSLINK ] && CURRENT_VERSION=$($TSSLINK version)
+    [ -f $TSSLINK ] && CURRENT_VERSION=$($TSSLINK version)
 
-	timestamp "Current version of the TSS-SDK: $CURRENT_VERSION"
-	timestamp "Remote version of the TSS-SDK: $REMOTE_VERSION"
+    timestamp "Current version of the TSS-SDK: $CURRENT_VERSION"
+    timestamp "Remote version of the TSS-SDK: $REMOTE_VERSION"
 
-	if [ "$REMOTE_VERSION" == "$CURRENT_VERSION" ]; then
-		timestamp "The current version of the TSS-SDK is the same as the newest version"
-		return 0
-	else
-		rm -rfv $TSSFOLDER $TSSLINK
-		mkdir $TSSFOLDER
-		timestamp "Downloading the newest version of the TSS-SDK"
-		timestamp "Link: $LINK"
-		wget $LINK -P $TSSFOLDER
-		unzip $TSSFOLDER/secretserver-sdk-*.zip -d $TSSFOLDER
-		rm -rfv $TSSFOLDER/secretserver-sdk-*.zip
-		ln -s $TSSFOLDER/tss $TSSLINK
-		chmod +x $TSSLINK
-	fi
+    if [ "$REMOTE_VERSION" == "$CURRENT_VERSION" ]; then
+        timestamp "The current version of the TSS-SDK is the same as the newest version"
+        return 0
+    else
+        rm -rfv $TSSFOLDER $TSSLINK
+        mkdir $TSSFOLDER
+        timestamp "Downloading the newest version of the TSS-SDK"
+        timestamp "Link: $LINK"
+        wget $LINK -P $TSSFOLDER
+        unzip $TSSFOLDER/secretserver-sdk-*.zip -d $TSSFOLDER
+        rm -rfv $TSSFOLDER/secretserver-sdk-*.zip
+        ln -s $TSSFOLDER/tss $TSSLINK
+        chmod +x $TSSLINK
+    fi
 }
 
 function install_taplo() {
-	# Install taplo
-	$install taplo
+    # Install taplo
+    $install taplo
 }
 
 function install_precommit() {
-	# Install pre-commit
-	$pip install pre-commit $PIPEXTPRE
+    # Install pre-commit
+    $pip install pre-commit $PIPEXTPRE
 }
 
 function install_streamlink() {
-	# Install streamlink
-	$pip install streamlink $PIPEXTPRE
+    # Install streamlink
+    $pip install streamlink $PIPEXTPRE
 }
 
 function install_brew_programs() {
-	# Install brew programs
-	INSTALLED_PROGRAMS=$(brew list)
-	while IFS='' read -r line; do LIST_OF_PROGRAMS+=("$line"); done < <(cat "$HOME"/.brew_programs)
-	while IFS='' read -r line; do LIST_OF_PROGRAMS_CASK+=("$line"); done < <(cat "$HOME"/.brew_programs_cask)
-	while IFS='' read -r line; do LIST_OF_PROGRAMS_DISABLE+=("$line"); done < <(cat "$HOME"/.brew_programs_disable)
+    # Install brew programs
+    INSTALLED_PROGRAMS=$(brew list)
+    while IFS='' read -r line; do LIST_OF_PROGRAMS+=("$line"); done < <(cat "$HOME"/.brew_programs)
+    while IFS='' read -r line; do LIST_OF_PROGRAMS_CASK+=("$line"); done < <(cat "$HOME"/.brew_programs_cask)
+    while IFS='' read -r line; do LIST_OF_PROGRAMS_DISABLE+=("$line"); done < <(cat "$HOME"/.brew_programs_disable)
 
-	for i in "${LIST_OF_PROGRAMS[@]}"; do
-		if [[ ! " ${INSTALLED_PROGRAMS[*]} " =~ ${i} ]] &&
-			[[ ! " ${LIST_OF_PROGRAMS_DISABLE[*]} " =~ ${i} ]]; then
-			brew install $i --force
-		fi
-	done
+    timestamp "Installing brew programs"
 
-	for i in "${LIST_OF_PROGRAMS_CASK[@]}"; do
-		if [[ ! " ${INSTALLED_PROGRAMS[*]} " =~ ${i} ]] &&
-			[[ ! " ${LIST_OF_PROGRAMS_DISABLE[*]} " =~ ${i} ]]; then
-			brew install $i --cask --force
-		fi
-	done
+    for i in "${LIST_OF_PROGRAMS[@]}"; do
+        if [[ ! " ${INSTALLED_PROGRAMS[*]} " =~ ${i} ]] &&
+            [[ ! " ${LIST_OF_PROGRAMS_DISABLE[*]} " =~ ${i} ]]; then
+            timestamp "Installing the $i brew program"
+            brew install $i --force
+            if $? -ne 0; then
+                err "Failed to install the $i brew program"
+            fi
+        fi
+    done
 
-	xattr -r -d com.apple.quarantine /Applications/Spotify.app
-	xattr -r -d com.apple.quarantine /Applications/Stats.app
+    timestamp "Installing brew cask programs"
 
-	xattr -r -d com.apple.quarantine /opt/homebrew/bin/mpv /Applications/mpv.app
-	duti -s io.mpv avi all
-	duti -s io.mpv mkv all
-	duti -s io.mpv mp4 all
-	duti -s io.mpv ts all
+    for i in "${LIST_OF_PROGRAMS_CASK[@]}"; do
+        if [[ ! " ${INSTALLED_PROGRAMS[*]} " =~ ${i} ]] &&
+            [[ ! " ${LIST_OF_PROGRAMS_DISABLE[*]} " =~ ${i} ]]; then
+            timestamp "Installing the $i brew cask program"
+            brew install $i --cask --force
+        fi
+    done
 
-	xattr -r -d com.apple.quarantine /Applications/qView.app
-	duti -s com.interversehq.qView public.jpeg all
-	duti -s com.interversehq.qView public.png all
-	duti -s com.interversehq.qView com.compuserve.gif all
-	duti -s com.interversehq.qView public.tiff all
+    xattr -r -d com.apple.quarantine /Applications/Spotify.app
+    xattr -r -d com.apple.quarantine /opt/homebrew/bin/mpv /Applications/mpv.app
 
-	xattr -r -d com.apple.quarantine /Applications/chatterino.app
+    duti -s io.mpv avi all
+    duti -s io.mpv mkv all
+    duti -s io.mpv mp4 all
+    duti -s io.mpv ts all
 
-	brew cleanup --prune=all
-}
+    xattr -r -d com.apple.quarantine /Applications/chatterino.app
 
-function install_winbox_old() {
-	curl -o /tmp/winbox64.exe \
-		"$(curl --silent https://mikrotik.com/download | grep -o 'https:\/\/download.*winbox64.exe')"
-	mv -v /tmp/winbox64.exe ~/Applications/winbox.exe
-	xattr -cr ~/Applications/winbox.exe
+    brew cleanup --prune=all
 }
 
 function install_prettier() {
-	$install prettier
-	$install prettierd
+    $install prettier
+    $install prettierd
 }
 
 function install_google_cloud_sdk() {
-	# Install google cloud sdk
-	if [[ "$(uname)" == "Darwin" ]]; then
-		$install google-cloud-sdk
-	else
-		curl -s https://sdk.cloud.google.com | bash
-	fi
+    # Install google cloud sdk
+    if [[ "$(uname)" == "Darwin" ]]; then
+        $install google-cloud-sdk
+    else
+        curl -s https://sdk.cloud.google.com | bash
+    fi
 }
 
 function install_lib_wandio() {
-	local REPO="LibtraceTeam/wandio"
-	local REMOTE_VERSION=$(curl -s \
-		https://api.github.com/repos/$REPO/releases/latest |
-		grep -iEo '"tag_name":.*' |
-		sed 's/"tag_name"://g;s/"//g;s/,//g;s/ //g')
-	local RELEASE="${REMOTE_VERSION}.tar.gz"
-	local DEST="/tmp/wandio-$REMOTE_VERSION.tar.gz"
-	local DEST_FOLDER="/tmp/wandio-$REMOTE_VERSION"
+    local REPO="LibtraceTeam/wandio"
+    local REMOTE_VERSION=$(curl -s \
+        https://api.github.com/repos/$REPO/releases/latest |
+        grep -iEo '"tag_name":.*' |
+        sed 's/"tag_name"://g;s/"//g;s/,//g;s/ //g')
+    local RELEASE="${REMOTE_VERSION}.tar.gz"
+    local DEST="/tmp/wandio-$REMOTE_VERSION.tar.gz"
+    local DEST_FOLDER="/tmp/wandio-$REMOTE_VERSION"
 
-	$install autoconf automake libtool
-	wget https://github.com/$REPO/archive/refs/tags/$RELEASE -O $DEST
-	tar -xvf $DEST -C /tmp
-	cd $DEST_FOLDER || err "Folder $DEST_FOLDER has been NOT found"
-	./bootstrap.sh
-	./configure
-	make -j"$(nproc)"
-	sudo make install && timestamp "Installed the newest version of the $REPO"
-	rm -rfv $DEST $DEST_FOLDER
+    $install autoconf automake libtool
+    wget https://github.com/$REPO/archive/refs/tags/$RELEASE -O $DEST
+    tar -xvf $DEST -C /tmp
+    cd $DEST_FOLDER || err "Folder $DEST_FOLDER has been NOT found"
+    ./bootstrap.sh
+    ./configure
+    make -j"$(nproc)"
+    sudo make install && timestamp "Installed the newest version of the $REPO"
+    rm -rfv $DEST $DEST_FOLDER
 }
 
 function install_bgpreader() {
-	local CURRENT_VERSION="0.0.0"
-	local REPO="CAIDA/libbgpstream"
-	local NAME="${REPO##*/}"
-	local REMOTE_VERSION=$(curl -s \
-		https://api.github.com/repos/$REPO/releases/latest |
-		grep -iEo '"tag_name":.*' |
-		sed 's/"tag_name"://g;s/"//g;s/,//g;s/ //g')
-	local RELEASE="$NAME-${REMOTE_VERSION/v/}.tar.gz"
-	local DEST="/tmp/$NAME-$REMOTE_VERSION.tar.gz"
-	local DEST_FOLDER="/tmp/$NAME-$REMOTE_VERSION"
+    local CURRENT_VERSION="0.0.0"
+    local REPO="CAIDA/libbgpstream"
+    local NAME="${REPO##*/}"
+    local REMOTE_VERSION=$(curl -s \
+        https://api.github.com/repos/$REPO/releases/latest |
+        grep -iEo '"tag_name":.*' |
+        sed 's/"tag_name"://g;s/"//g;s/,//g;s/ //g')
+    local RELEASE="$NAME-${REMOTE_VERSION/v/}.tar.gz"
+    local DEST="/tmp/$NAME-$REMOTE_VERSION.tar.gz"
+    local DEST_FOLDER="/tmp/$NAME-$REMOTE_VERSION"
 
-	if command_exists bgpreader; then
-		CURRENT_VERSION="v$(bgpreader -v 2>&1 | grep -ioE '[0-9\.]+')"
-	fi
+    if command_exists bgpreader; then
+        CURRENT_VERSION="v$(bgpreader -v 2>&1 | grep -ioE '[0-9\.]+')"
+    fi
 
-	if [ "$CURRENT_VERSION" == "$REMOTE_VERSION" ]; then
-		timestamp "The current version of the BGPREADER is the same as the newest version"
-		return 0
-	else
-		$install autoconf automake libtool
-		command_start install_lib_wandio
-		wget https://github.com/$REPO/releases/download/$REMOTE_VERSION/$RELEASE -O $DEST
-		tar -xvf $DEST -C /tmp
-		cd /tmp/$NAME-* || err "Folder /tmp/$NAME-* has been NOT found"
-		./configure --without-kafka
-		make -j"$(nproc)"
-		sudo make install && timestamp "Installed the newest version of the $REPO"
-		rm -rfv /tmp/$NAME-*
-	fi
+    if [ "$CURRENT_VERSION" == "$REMOTE_VERSION" ]; then
+        timestamp "The current version of the BGPREADER is the same as the newest version"
+        return 0
+    else
+        $install autoconf automake libtool
+        command_start install_lib_wandio
+        wget https://github.com/$REPO/releases/download/$REMOTE_VERSION/$RELEASE -O $DEST
+        tar -xvf $DEST -C /tmp
+        cd /tmp/$NAME-* || err "Folder /tmp/$NAME-* has been NOT found"
+        ./configure --without-kafka
+        make -j"$(nproc)"
+        sudo make install && timestamp "Installed the newest version of the $REPO"
+        rm -rfv /tmp/$NAME-*
+    fi
 }
 
 function install_font_terminess() {
-	local REPO="ryanoasis/nerd-fonts"
-	local REMOTE_VERSION=$(curl -s \
-		https://api.github.com/repos/$REPO/releases/latest |
-		grep -iEo '"tag_name":.*' |
-		sed 's/"tag_name"://g;s/"//g;s/,//g;s/ //g')
-	local RELEASE="Terminus.zip"
-	local DEST="/tmp/Terminess"
+    local REPO="ryanoasis/nerd-fonts"
+    local REMOTE_VERSION=$(curl -s \
+        https://api.github.com/repos/$REPO/releases/latest |
+        grep -iEo '"tag_name":.*' |
+        sed 's/"tag_name"://g;s/"//g;s/,//g;s/ //g')
+    local RELEASE="Terminus.zip"
+    local DEST="/tmp/Terminess"
 
-	if [ ! -f $HOME/Library/Fonts/TerminessNerdFont-Regular.ttf ]; then
-		mkdir -p $DEST
-		cd $DEST || err "Folder $DEST has been NOT found"
-		wget https://github.com/$REPO/releases/download/$REMOTE_VERSION/$RELEASE -O $DEST/$RELEASE
-		unzip $RELEASE -d $DEST
-		mv $DEST/*.ttf ~/Library/Fonts
-		cd $HOME || err "Folder $HOME has been NOT found"
-		rm -rfv $DEST
-	fi
+    if [ ! -f $HOME/Library/Fonts/TerminessNerdFont-Regular.ttf ]; then
+        mkdir -p $DEST
+        cd $DEST || err "Folder $DEST has been NOT found"
+        wget https://github.com/$REPO/releases/download/$REMOTE_VERSION/$RELEASE -O $DEST/$RELEASE
+        unzip $RELEASE -d $DEST
+        mv $DEST/*.ttf ~/Library/Fonts
+        cd $HOME || err "Folder $HOME has been NOT found"
+        rm -rfv $DEST
+    fi
+}
+
+function update_zsh() {
+    omz update
 }
 
 function main() {
-	# command_start update_pip
-	# command_start install_neovim_module_for_python
-	# command_start install_node
-	# command_start install_go
-	# # command_start install_pyright
-	# command_start install_mdformat
-	# command_start install_ruff
-	# command_start install_lazy
-	# command_start install_dlv
-	# command_start install_bash-language-server
-	# command_start install_yaml-language-server
-	# command_start install_marksman
-	# command_start install_shfmt
-	# command_start install_shellcheck
-	# command_start install_gopls
-	# # command_start install_terraform
-	command_start install_terraform_stable
-	command_start install_terragrunt
-	command_start install_azure_cli
-	command_start install_ansible
-	command_start install_meraki_ansible
-	command_start install_ansible-language-server
-	command_start install_ytdlp
-	command_start install_spotifydl
-	command_start install_awscli
-	command_start install_aws_adfs
-	command_start install_speedtest
-	command_start install_gh_cli
-	command_start install_kubernetes
-	command_start install_rust
-	command_start install_tss_client "1.5.9"
-	command_start install_taplo
-	command_start install_precommit
-	command_start install_streamlink
-	command_start install_fzf
-	command_start install_winbox_old
-	command_start install_prettier
-	command_start install_google_cloud_sdk
-	command_start install_bgpreader
-	command_start install_font_terminess
-	command_start install_zsh_addons
-	command_start install_brew_programs
+    command_start update_pip
+    command_start install_neovim_module_for_python
+    command_start install_node
+    command_start install_go
+    # command_start install_pyright
+    command_start install_mdformat
+    command_start install_ruff
+    command_start install_lazy
+    command_start install_dlv
+    command_start install_bash-language-server
+    command_start install_yaml-language-server
+    command_start install_marksman
+    command_start install_shfmt
+    command_start install_shellcheck
+    command_start install_gopls
+    # command_start install_terraform
+    command_start install_terraform_stable
+    command_start install_terragrunt
+    command_start install_azure_cli
+    command_start install_ansible
+    command_start install_meraki_ansible
+    command_start install_ansible-language-server
+    command_start install_ytdlp
+    command_start install_spotifydl
+    command_start install_awscli
+    command_start install_aws_adfs
+    command_start install_speedtest
+    command_start install_gh_cli
+    command_start install_kubernetes
+    command_start install_rust
+    command_start install_tss_client "1.5.9"
+    command_start install_taplo
+    command_start install_precommit
+    command_start install_streamlink
+    command_start install_fzf
+    command_start install_prettier
+    command_start install_google_cloud_sdk
+    command_start install_bgpreader
+    command_start install_font_terminess
+    command_start install_zsh_addons
+    command_start install_brew_programs
+    command_start update_zsh
 }
 
 main
