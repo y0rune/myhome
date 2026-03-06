@@ -172,11 +172,30 @@ call plug#begin('~/.config/nvim/plugged')
     " Autopair
     Plug 'windwp/nvim-autopairs'
 
+    " AI
+    Plug 'folke/snacks.nvim'
+    Plug 'coder/claudecode.nvim'
+
 call plug#end()
 
 " LUA
 lua<<EOF
-local opts = { noremap=true, silent=true }
+vim.filetype.add({
+  -- Ansible
+  pattern = {
+    [".*playbooks/.*%.ya?ml"] = "yaml.ansible",
+    [".*tasks/.*%.ya?ml"] = "yaml.ansible",
+    [".*handlers/.*%.ya?ml"] = "yaml.ansible",
+    [".*roles/.*/.*%.ya?ml"] = "yaml.ansible",
+  },
+  -- Docker Compose + GitLab CI (merged into one filename table)
+  filename = {
+    ["docker-compose.yml"] = "yaml.docker-compose",
+    ["docker-compose.yaml"] = "yaml.docker-compose",
+    [".gitlab-ci.yml"] = "yaml.gitlab",
+    [".gitlab-ci.yaml"] = "yaml.gitlab",
+  },
+})
 
 -- capabilities for nvim-cmp
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -199,7 +218,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
--- If you want borders, define one (your old code referenced `border` but never defined it)
 local border = 'rounded'
 
 vim.lsp.config('*', {
@@ -246,30 +264,66 @@ vim.lsp.config('gopls', {
   },
 })
 
-vim.lsp.config('ruff', {}) -- keep as you had it
+vim.lsp.config('ruff', {})
 
--- Finally, enable servers (this replaces the setup() loop)
+-- Enable servers (remove 'solargraph' if not using Ruby)
 vim.lsp.enable({
   'clangd', 'bashls', 'yamlls', 'ansiblels', 'gopls', 'solargraph',
   'terraformls', 'tflint', 'marksman', 'rust_analyzer', 'ruff',
 })
 
+-- nvim-cmp setup with Tab support
 local cmp = require('cmp')
 cmp.setup({
   mapping = cmp.mapping.preset.insert({
     ['<C-Space>'] = cmp.mapping.complete(),
+
+    -- Tab: indent on empty/whitespace-only lines, trigger completion elsewhere
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif vim.fn["copilot#GetDisplayedSuggestion"]().text ~= "" then
+        vim.fn.feedkeys(vim.fn["copilot#Accept"](""), "n")
+      elseif vim.api.nvim_get_current_line():match("^%s*$") then
+        fallback()
+      else
+        cmp.complete()
+      end
+    end, { 'i', 's' }),
+
+    -- Shift-Tab: go to previous completion item or fallback
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+
+    -- Enter to confirm selection
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
   }),
-  sources = { { name = 'buffer' } },
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+    { name = 'buffer' },
+    { name = 'path' },
+  }),
 })
+
+vim.keymap.set("t", "<C-w>h", "<C-\\><C-n><C-w>h", { desc = "Move to left window" })
+vim.keymap.set("t", "<C-w>l", "<C-\\><C-n><C-w>l", { desc = "Move to right window" })
+vim.keymap.set("t", "<C-w>p", "<C-\\><C-n><C-w>p", { desc = "Focus previous window" })
+
+require("claudecode").setup()
 EOF
 
 " Added popout window to see diagnostic
 set updatetime=250
 autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})
 
-" CoPilot
-" imap <silent><script><expr> <F1> copilot#Accept("\<CR>")
-" let g:copilot_no_tab_map = v:true
+" Copilot
+let g:copilot_no_tab_map = v:true
 
 " Neoformat
 let g:neoformat_try_formatprg = 1
@@ -294,7 +348,7 @@ function! s:check_back_space() abort
 endfunction
 
 " Enable show hidden in NerdTree
-let NERDTreeShowHidden=1
+let g:NERDTreeShowHidden=1
 
 " latex
 let g:tex_flavor = "latex"
@@ -306,13 +360,13 @@ let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-go', 'CodeLLDB', 'vscode
 """"""""""""""""""""""""""""""""
 " Theme
 """"""""""""""""""""""""""""""""
-"colorscheme gruvbox
-"colorscheme default
+" colorscheme gruvbox
+" colorscheme default
 colorscheme dracula
 let g:gruvbox_invert_selection='0'
 let g:gruvbox_contrast_dark = 'hard'
 set background=dark
-"hi Normal ctermbg=NONE
+" hi Normal ctermbg=NONE
 hi Pmenu      ctermfg=NONE ctermbg=236 cterm=NONE guifg=NONE guibg=#64666d gui=NONE
 hi PmenuSel   ctermfg=NONE ctermbg=246 cterm=NONE guifg=NONE guibg=#204a87 gui=NONE
 hi CursorLine cterm=NONE   term=NONE   ctermbg=NONE    guibg=NONE
@@ -326,7 +380,7 @@ set t_ZR="\e[23m"
 highlight Comment cterm=italic gui=italic
 highlight htmlArg gui=italic cterm=italic
 
-" columne
+" column
 set textwidth=80
 set colorcolumn=80
 highlight ColorColumn ctermbg=236
@@ -381,7 +435,7 @@ nmap <C-_> <Plug>Commentary
 omap <C-_> <Plug>Commentary
 nmap <C-_> <Plug>CommentaryLine
 
-" Better tab
+" Better tab (visual mode only - insert mode Tab is handled by nvim-cmp above)
 vnoremap <Tab> >
 vnoremap <S-Tab> <
 
@@ -399,10 +453,10 @@ nmap <Leader>g <cmd>Telescope git_branches<cr>
 nmap <Leader>a <cmd>Telescope diagnostics<cr>
 
 " Resize window
-nnoremap <C-L> :vertical resize +5<CR>
-nnoremap <C-H> :vertical resize -5<CR>
-nnoremap <C-J> :res -5<CR>
-nnoremap <C-K> :res +5<CR>
+nnoremap Ó :vertical resize -5<CR>
+nnoremap Ô :res -5<CR>
+nnoremap ū :res +5<CR>
+nnoremap Ł :vertical resize +5<CR>
 
 " Split window
 nnoremap _ :vsp <CR>
@@ -438,7 +492,7 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 nnoremap <Leader>s :%s//g<Left><Left>
 vnoremap <Leader>s :s//g<Left><Left>
 
-" Better adding into begging and ending line
+" Better adding into beginning and ending line
 vnoremap F <C-v>$A
 vnoremap f <C-v>0I
 
@@ -460,6 +514,14 @@ nnoremap J }
 nnoremap K {
 vnoremap J }
 vnoremap K {
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
 
 " Copy into system
 noremap <Leader>y "*y
@@ -492,6 +554,7 @@ map <F4> :setlocal spell! spelllang=pl<CR>
 :command! W w
 :command! Q q
 :command! Wq wq
+:command! X x
 
 """"""""""""""""""""""""""""""""
 " Custom functions
@@ -511,7 +574,6 @@ lua <<EOF
     end
   end
 EOF
-
 
 """"""""""""""""""""""""""""""""
 " Files
@@ -550,7 +612,6 @@ autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<CR>
 " Yaml
 autocmd BufRead,BufNewFile *.yaml,*.yml let g:indentLine_enabled = 1
 autocmd BufRead,BufNewFile *.yaml,*.yml let g:indentLine_char = '⦙'
-au BufRead,BufNewFile *.yaml,*.yml if search('hosts:\|tasks:', 'nw') | set ft=yaml.ansible | endif
 autocmd BufWritePre *.yaml,*.yml silent! undojoin | Neoformat prettier
 
 " JSON
@@ -576,7 +637,7 @@ au BufNewFile,BufRead,BufWritePre *.ebuild let g:shfmt_extra_args = '-ci -sr -s'
 " TOML
 autocmd BufWritePre *.toml silent! undojoin | Neoformat taplo
 
-" Terrafrom
+" Terraform
 autocmd BufWritePre *.tf lua vim.lsp.buf.format()
 autocmd BufWritePre *.tfvars lua vim.lsp.buf.format()
 
@@ -588,7 +649,6 @@ autocmd BufWritePre *.md silent! undojoin | Neoformat mdformat
 autocmd BufWritePre * %s/\s\+$//e
 autocmd BufWritepre * %s/\n\+\%$//e
 
-" Source: https://vi.stackexchange.com/questions/20077/automatically-highlight-all-occurrences-of-the-selected-text-in-visual-mode
 " highlight the visual selection after pressing enter.
 xnoremap <silent> <cr> "*y:silent! let searchTerm = '\V'.substitute(escape(@*, '\/'), "\n", '\\n', "g") <bar> let @/ = searchTerm <bar> echo '/'.@/ <bar> call histadd("search", searchTerm) <bar> set hls<cr>
 
