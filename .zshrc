@@ -16,6 +16,10 @@ gbranch() {
     echo -e "$(git branch "$@")"
 }
 
+dt() {
+    date +"%Y%m%d%H%M%S"
+}
+
 [ -f /etc/gentoo-release ] && export ZSH="/usr/share/zsh/site-contrib/oh-my-zsh"
 [ -f /etc/centos-release ] && export ZSH="$HOME/.oh-my-zsh"
 [ -f /etc/debian_version ] && export ZSH="$HOME/.oh-my-zsh"
@@ -168,6 +172,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     alias sleep-lid-on="sudo pmset -b sleep 5; sudo pmset -b disablesleep 0"
     alias restart-network-share="sudo pkill -i netauthsysagent"
     alias streamlink="streamlink --config $HOME/.config/streamlink/config"
+    alias powershell="pwsh"
 
     # Terraform
     export TFENV_ARCH=amd64
@@ -229,7 +234,7 @@ alias neofetch=fastfetch
 [ -f $(which zoxide) ] && {eval "$(zoxide init zsh)"; alias cd='z'}
 
 # GoLang
-alias go-mod="go mod edit -go=$(go version | grep -oE 'go[0-9]*\.[0-9]*\.[0-9]*' | sed 's/go//g');  go get -u; go mod verify; go get -x -v; go mod verify; go mod tidy"
+alias go-mod="go mod edit -go=$(go version | grep -oE 'go[0-9]*\.[0-9]*\.[0-9]*' | sed 's/go//g'); go get -u ./... ; go mod verify; go get -x -v; go mod verify; go mod tidy"
 
 # Resolve problem with - zsh: no matches found
 setopt +o nomatch
