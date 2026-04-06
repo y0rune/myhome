@@ -413,7 +413,7 @@ set laststatus=3
 lua <<EOF
 vim.o.statusline = table.concat({
   "%#IncSearch#",
-  "%{&filetype!=#''?'  ['.&filetype..'] ':'\\ '}",
+  "%{&filetype!=#''?'  ['.&filetype..'] ':' '}",
   "%{&modified?'[+] ':''}",
   "%#CursorLineNr#",
   " %F",

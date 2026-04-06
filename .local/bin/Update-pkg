@@ -589,10 +589,6 @@ function install_font_terminess() {
     fi
 }
 
-function update_zsh() {
-    omz update
-}
-
 function main() {
     command_start update_pip
     command_start install_neovim_module_for_python

@@ -4,7 +4,7 @@
 /usr/local/bin/mysides add Git file://"$HOME"/git/
 /usr/local/bin/mysides add Linux file://"$HOME"/MEGA/Systems/Linux/
 /usr/local/bin/mysides add Downloads file://"$HOME"/Downloads/
-# /usr/local/bin/mysides add Aplications file:///Applications/
-# /usr/local/bin/mysides add Aplications file:///"$HOME"/Applications/
+/usr/local/bin/mysides add Aplications file:///Applications/
+/usr/local/bin/mysides add Aplications file:///"$HOME"/Applications/
 /usr/local/bin/mysides add Screenshots file://"$HOME"/Screenshots/
 /usr/local/bin/mysides add Desktop file://"$HOME"/Desktop/
