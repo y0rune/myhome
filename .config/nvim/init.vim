@@ -56,7 +56,6 @@ let g:indentLine_char_list = ['│', '│', '│', '│']
 runtime! macros/matchit.vim
 
 " visual feedback
-set laststatus=2
 set showmode
 set showcmd
 
@@ -222,11 +221,23 @@ local border = 'rounded'
 
 vim.lsp.config('*', {
   capabilities = capabilities,
-  handlers = {
-    ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
-    ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
-  },
 })
+
+vim.diagnostic.config({
+  float = { border = border },
+})
+
+vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
+  config = config or {}
+  config.border = border
+  return vim.lsp.handlers.hover(err, result, ctx, config)
+end
+
+vim.lsp.handlers["textDocument/signatureHelp"] = function(err, result, ctx, config)
+  config = config or {}
+  config.border = border
+  return vim.lsp.handlers.signature_help(err, result, ctx, config)
+end
 
 -- Server-specific overrides
 vim.lsp.config('yamlls', {
@@ -397,18 +408,23 @@ function! StatuslineGit()
     return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
 endfunction
 
-set statusline=
-set statusline+=%#IncSearch#
-set statusline+=%{&filetype!=#''?'\ \ ['.&filetype.']\ ':'\ '}
-set statusline+=%{&modified?'[+]\ ':''}
-set statusline+=%#CursorLineNr#
-set statusline+=\ %F
-set statusline+=%= "Right side settings
-set statusline+=%#CursorLineNr#
-set statusline+=%{StatuslineGit()}
-set statusline+=%#Search#
-set statusline+=\ %l/%L
-set statusline+=\ [%c]
+set laststatus=3
+
+lua <<EOF
+vim.o.statusline = table.concat({
+  "%#IncSearch#",
+  "%{&filetype!=#''?'  ['.&filetype..'] ':'\\ '}",
+  "%{&modified?'[+] ':''}",
+  "%#CursorLineNr#",
+  " %F",
+  "%=",
+  "%#CursorLineNr#",
+  "%{StatuslineGit()}",
+  "%#Search#",
+  " %l/%L",
+  " [%c]",
+})
+EOF
 
 " Disable godoc keys
 let g:go_doc_keywordprg_enabled = 0
