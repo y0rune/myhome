@@ -438,10 +438,6 @@
                 {
                     "from": { "key_code": "caps_lock" },
                     "to": [{ "key_code": "escape" }]
-                },
-                {
-                    "from": { "key_code": "left_command" },
-                    "to": [{ "key_code": "right_command" }]
                 }
             ],
             "virtual_hid_keyboard": {
