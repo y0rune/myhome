@@ -2,8 +2,8 @@
 
 source "$HOME"/.local/bin/functions
 
-# Function for creating a python env
-python_env(){
+# Base function for creating a python venv
+python_env_base() {
 
     [ -z "$PYTHONVERSION" ] && err "Python version is not set"
 
@@ -14,7 +14,49 @@ python_env(){
     virtualenv -p "$PYTHONVERSION" .venv
 
     .venv/bin/python -m pip install --upgrade pip
-    .venv/bin/pip install -r requirements.txt --break --force
+    .venv/bin/pip install pre-commit --break --force
 }
 
-python_env "$@"
+# Default python env with requirements.txt
+python_env() {
+    python_env_base
+    if [ -f requirements.txt ]; then
+        .venv/bin/pip install -r requirements.txt --break --force
+        timestamp "Installing Python packages from requirements.txt"
+    fi
+}
+
+# Ansible python env
+python_env_ansible() {
+    python_env_base
+    timestamp "Installing Ansible packages"
+    .venv/bin/pip install \
+        ansible \
+        ansible-core \
+        ansible-lint \
+        ansible-parallel \
+        passlib \
+        python-tss-sdk \
+        --break --force
+
+    export ANSIBLE_COLLECTIONS_PATH=".venv/collections"
+    export ANSIBLE_ROLES_PATH=".venv/roles"
+
+    timestamp "Installing Ansible Galaxy collections to .venv/collections"
+    .venv/bin/ansible-galaxy collection install community.general -p .venv/collections --upgrade
+
+    timestamp "Installing Ansible Galaxy roles from requirements.yml files to .venv/roles"
+    find . -maxdepth 3 -name "requirements.yml" -path "*/roles/*" -not -path "./.venv/*" -print0 | while IFS= read -r -d '' req; do
+        timestamp "Found requirements: $req"
+        .venv/bin/ansible-galaxy install --force -r "$req" -p .venv/roles
+    done
+}
+
+case "$1" in
+ansible)
+    python_env_ansible
+    ;;
+*)
+    python_env
+    ;;
+esac
