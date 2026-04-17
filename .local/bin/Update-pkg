@@ -259,12 +259,6 @@ function install_ansible-language-server() {
     sudo npm -s -g i yaml-language-server --force
 }
 
-function install_meraki_ansible() {
-    # Install python, ansible module for meraki
-    ansible-galaxy collection install cisco.meraki --force
-    $pip install meraki $PIPEXT
-}
-
 function install_azure_cli() {
     # Install azure_cli
     $install azure-cli
@@ -273,11 +267,6 @@ function install_azure_cli() {
 function install_awscli() {
     # Install awscli
     $install awscli
-}
-
-function install_aws_adfs() {
-    # Install aws-adfs
-    $pip install aws-adfs $PIPEXTPRE
 }
 
 function install_ytdlp() {
@@ -444,11 +433,6 @@ function install_tss_client() {
     fi
 }
 
-function install_taplo() {
-    # Install taplo
-    $install taplo
-}
-
 function install_precommit() {
     # Install pre-commit
     $pip install pre-commit $PIPEXTPRE
@@ -610,18 +594,15 @@ function main() {
     command_start install_terragrunt
     command_start install_azure_cli
     command_start install_ansible
-    command_start install_meraki_ansible
     command_start install_ansible-language-server
     command_start install_ytdlp
     command_start install_spotifydl
     command_start install_awscli
-    command_start install_aws_adfs
     command_start install_speedtest
     command_start install_gh_cli
     command_start install_kubernetes
     command_start install_rust
     command_start install_tss_client "1.5.9"
-    command_start install_taplo
     command_start install_precommit
     command_start install_streamlink
     command_start install_fzf
@@ -631,7 +612,6 @@ function main() {
     command_start install_font_terminess
     command_start install_zsh_addons
     command_start install_brew_programs
-    command_start update_zsh
 }
 
 main

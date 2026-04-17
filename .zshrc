@@ -16,10 +16,6 @@ gbranch() {
     echo -e "$(git branch "$@")"
 }
 
-dt() {
-    date +"%Y%m%d%H%M%S"
-}
-
 [ -f /etc/gentoo-release ] && export ZSH="/usr/share/zsh/site-contrib/oh-my-zsh"
 [ -f /etc/centos-release ] && export ZSH="$HOME/.oh-my-zsh"
 [ -f /etc/debian_version ] && export ZSH="$HOME/.oh-my-zsh"
@@ -90,22 +86,11 @@ export PATH=$PATH:$HOME/.cargo/bin
 # History
 export HISTTIMEFORMAT="%F %T "
 
-# Export for WSL
-if [[ "$(uname -sr)" =~ "Microsoft" ]]; then
-    export GOROOT=/usr/lib/go
-fi
-
 # Work
-alias ansible-lint-work='GIT_SSH_COMMAND="ssh -i ~/.ssh/work/id_rsa" ansible-lint'
-alias ansible-galaxy-work='GIT_SSH_COMMAND="ssh -i ~/.ssh/work/id_rsa" ansible-galaxy'
 alias ssh-work="ssh -i ~/.ssh/work/id_rsa"
 alias rsyncwork="rsync -h --progress -e 'ssh -i ~/.ssh/work/id_rsa'"
 alias git-work='GIT_SSH_COMMAND="ssh -i ~/.ssh/work/id_rsa" git'
-alias git-commit-work="git commit --author='Marcin Woźniak <marcin.wozniak@wundermanthompson.com>'"
-
-# Alias ssh
-alias ssh-restore="cp -rv ~/ssh-mega/config ~/.ssh/ ; ssh-permissions"
-alias ssh-backup="cp -rv ~/.ssh/config ~/ssh-mega/"
+alias git-commit-work="git commit --author='Marcin Woźniak <marcin.wozniak@vml.com>'"
 
 # Alias and Export Gentoo
 alias svm="sudo $EDITOR /etc/portage/make.conf"
@@ -120,7 +105,7 @@ alias feh="feh --edit --scale-down"
 alias graphic-card="glxinfo|egrep 'OpenGL vendor|OpenGL renderer'"
 alias mylaptop-components="inxi -Fxz"
 alias update_time="sudo ntpdate -b -u vega.cbk.poznan.pl"
-alias dn='LC_TIME=C /bin/date "+%Y%m%d%H%M%S"'
+alias dt='LC_TIME=C /bin/date "+%Y%m%d%H%M%S"'
 
 # Alias and Export for Mac
 if [[ "$(uname)" == "Darwin" ]]; then
