@@ -603,7 +603,6 @@ function main() {
     command_start install_kubernetes
     command_start install_rust
     command_start install_tss_client "1.5.9"
-    command_start install_taplo
     command_start install_precommit
     command_start install_streamlink
     command_start install_fzf
