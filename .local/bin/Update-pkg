@@ -469,7 +469,7 @@ function install_brew_programs() {
         if [[ ! " ${INSTALLED_PROGRAMS[*]} " =~ ${i} ]] &&
             [[ ! " ${LIST_OF_PROGRAMS_DISABLE[*]} " =~ ${i} ]]; then
             timestamp "Installing the $i brew cask program"
-            brew install $i --cask --force
+            brew install $i --cask --appdir=~/Applications --force
         fi
     done
 

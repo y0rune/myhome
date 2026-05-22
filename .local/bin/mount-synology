@@ -10,13 +10,15 @@ open -gj "afp://10.0.0.14/Video"
 sleep 2
 open -gj "afp://10.0.0.14/Series"
 sleep 2
-open -gj "afp://10.0.0.14/Photos"
+open -gj "afp://10.0.0.14/photo"
 sleep 2
 open -gj "afp://10.0.0.14/Backups"
 sleep 2
 open -gj "afp://10.0.0.14/Recordings"
 sleep 2
 open -gj "afp://10.0.0.14/Work"
+sleep 2
+open -gj "afp://10.0.0.14/Dokumenty"
 sleep 2
 
 /usr/local/bin/mysides add Synology file:///Volumes/Recordings/
@@ -25,6 +27,7 @@ sleep 2
 /usr/local/bin/mysides add Synology file:///Volumes/Music/
 /usr/local/bin/mysides add Synology file:///Volumes/Video/
 /usr/local/bin/mysides add Synology file:///Volumes/Series/
-/usr/local/bin/mysides add Synology file:///Volumes/Photos/
+/usr/local/bin/mysides add Synology file:///Volumes/photo/
 /usr/local/bin/mysides add Synology file:///Volumes/Anime/
-/usr/local/bin/mysides add Synology file:///Volumes/Work
+/usr/local/bin/mysides add Synology file:///Volumes/Work/
+/usr/local/bin/mysides add Synology file:///Volumes/Dokumenty/
