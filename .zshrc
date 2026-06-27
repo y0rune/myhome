@@ -109,6 +109,11 @@ alias dt='LC_TIME=C /bin/date "+%Y%m%d%H%M%S"'
 
 # Alias and Export for Mac
 if [[ "$(uname)" == "Darwin" ]]; then
+    # Enabling a HOMEBREW in preview versions of MacOS
+    export HOMEBREW_DEVELOPER=1
+    export HOMEBREW_NO_REQUIRE_TAP_TRUST=1
+    export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
+
     # Resolve problem with GOPATH
     # https://stackoverflow.com/questions/66284870/go-get-not-downloading-to-src-folder
     export GO111MODULE=on
@@ -147,7 +152,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     alias date='gdate'
 
     alias lsblk="diskutil list"
-    alias Update="$HOME/.local/bin/Update-pkg; brew update; brew upgrade; brew upgrade --greedy; sudo softwareupdate -i -a -R"
+    alias Update="$HOME/.local/bin/Update-pkg; yes | brew update; yes | brew upgrade; yes | brew upgrade --greedy; yes | sudo softwareupdate -i -a -R"
     alias ls="ls -Gh"
     alias mpv="mpv --ytdl-raw-options="yes-playlist=" --no-resume-playback --ytdl-format='bestvideo+bestaudio/best'"
     alias code="open -a 'Visual Studio Code'"
