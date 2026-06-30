@@ -57,7 +57,6 @@ export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
 export _JAVA_AWT_WM_NONREPARENTING=1
 export CCACHE_DIR="/usr/ccache"
-export LC_ALL="en_US.UTF-8"
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export BROWSER=$HOME/.local/bin/browser-x
@@ -109,6 +108,17 @@ alias dt='LC_TIME=C /bin/date "+%Y%m%d%H%M%S"'
 
 # Alias and Export for Mac
 if [[ "$(uname)" == "Darwin" ]]; then
+    # Unsetting LANGs and settings it
+    unset LANG LC_ALL
+
+    export LC_ALL=C.UTF-8
+    export LANG=C.UTF-8
+
+    # Enabling a HOMEBREW in preview versions of MacOS
+    export HOMEBREW_DEVELOPER=1
+    export HOMEBREW_NO_REQUIRE_TAP_TRUST=1
+    export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
+
     # Resolve problem with GOPATH
     # https://stackoverflow.com/questions/66284870/go-get-not-downloading-to-src-folder
     export GO111MODULE=on
@@ -147,7 +157,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     alias date='gdate'
 
     alias lsblk="diskutil list"
-    alias Update="$HOME/.local/bin/Update-pkg; brew update; brew upgrade; brew upgrade --greedy; sudo softwareupdate -i -a -R"
+    alias Update="$HOME/.local/bin/Update-pkg; yes | brew update; yes | brew upgrade; yes | brew upgrade --greedy; yes | sudo softwareupdate -i -a -R"
     alias ls="ls -Gh"
     alias mpv="mpv --ytdl-raw-options="yes-playlist=" --no-resume-playback --ytdl-format='bestvideo+bestaudio/best'"
     alias code="open -a 'Visual Studio Code'"
@@ -158,6 +168,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     alias restart-network-share="sudo pkill -i netauthsysagent"
     alias streamlink="streamlink --config $HOME/.config/streamlink/config"
     alias powershell="pwsh"
+    alias finder="open -a Finder ."
 
     # Terraform
     export TFENV_ARCH=amd64
