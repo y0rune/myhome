@@ -176,7 +176,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
         grep -iEo '[0-9]+\.[0-9]+\.[0-9]+' |
         sort |
         head -n1)
-    export TFVERSION=$(ls -la /opt/homebrew/Cellar/tfenv/*/versions |
+    export TFVERSION=$(ls -la /opt/homebrew/Cellar/tfenv |
         grep -iEo '[0-9]+\.[0-9]+\.[0-9]+' |
         sort |
         head -n1)
