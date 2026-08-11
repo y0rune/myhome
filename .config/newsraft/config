@@ -1,0 +1,38 @@
+# Newsraft configuration for IT Ops / Security
+# macOS-friendly defaults; Newsraft already auto-detects `open` on macOS.
+
+# Interface
+scrolloff 3
+scrollwrap true
+menu-item-sorting time-desc
+menu-feed-sorting unread-desc
+menu-section-sorting alphabet-asc
+list-entry-date-format "%d %b %H:%M"
+sections-menu-paramount-explore true
+feeds-menu-paramount-explore true
+status-show-menu-path true
+
+# Keep the local database useful without becoming huge.
+database-analyze-on-startup true
+database-clean-on-startup false
+database-batch-transactions true
+
+# Network
+download-timeout 30
+respect-ttl-element true
+respect-expires-header true
+send-if-none-match-header true
+send-if-modified-since-header true
+
+# Reading
+mark-item-read-on-hover false
+read-on-arrival false
+mark-item-unread-on-change false
+
+# Open article in browser and immediately mark it read.
+bind o open-in-browser; mark-read
+
+# Handy shortcuts.
+bind R reload-all
+bind q quit
+bind Q quit-hard

@@ -19,10 +19,35 @@ bindings = [
 opacity = 0.95
 
 [font]
-size = 20
+size = 25
 
+##############################
+# Terminess Nerd Font
+
+[font.normal]
+family = "Terminess Nerd Font"
+style = "Regular"
+
+[font.bold_italic]
+family = "Terminess Nerd Font"
+style = "Bold Italic"
+
+[font.italic]
+family = "Terminess Nerd Font"
+style = "Italic"
+
+[font.offset]
+x = 0
+y = 0
+
+[font.glyph_offset]
+x = 0
+y = 0
+
+##############################
+# Comic code
 # [font.normal]
-# family = "Terminess Nerd Font"
+# family = "Comic Code Ligatures"
 # style = "Regular"
 
 # # [font.bold]
@@ -30,38 +55,21 @@ size = 20
 # # style = "Bold"
 
 # [font.bold_italic]
-# family = "Terminess Nerd Font"
+# family = "Comic Code"
 # style = "Bold Italic"
 
 # [font.italic]
-# family = "Terminess Nerd Font"
+# family = "Comic Code"
 # style = "Italic"
 
+# [font.offset]
+# x = 0
+# y = -6
 
-# Comic code
-[font.normal]
-family = "Comic Code Ligatures"
-style = "Regular"
-
-# [font.bold]
-# family = "Teminess Nerd Font"
-# style = "Bold"
-
-[font.bold_italic]
-family = "Comic Code"
-style = "Bold Italic"
-
-[font.italic]
-family = "Comic Code"
-style = "Italic"
-
-[font.offset]
-x = 0
-y = -6
-
-[font.glyph_offset]
-x = 0
-y = -2
+# [font.glyph_offset]
+# x = 0
+# y = -2
+##############################
 
 # [mouse.hints]
 # modifiers = "Command"

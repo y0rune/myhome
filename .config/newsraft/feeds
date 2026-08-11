@@ -1,0 +1,48 @@
+# Newsraft IT Ops / Security feed collection
+# Sections are organised for a sysadmin / cloud / security workflow.
+# Newsraft syntax: @ Section, then URL "Feed name" < settings
+
+@ Polska < reload-period 60; item-limit 100
+https://www.rmf24.pl/feed "RMF24 — Najważniejsze" < reload-period 30; item-limit 100
+https://samorzad.pap.pl/rss.xml "PAP — Samorząd" < reload-period 120; item-limit 50
+
+@ Polska Security < reload-period 60; item-limit 100
+https://cert.pl/rss/ "CERT Polska" < reload-period 30; item-limit 100
+https://sekurak.pl/feed/ "Sekurak" < reload-period 60; item-limit 100
+https://feeds.feedburner.com/niebezpiecznik/ "Niebezpiecznik" < reload-period 60; item-limit 100
+https://zaufanatrzeciastrona.pl/feed "Zaufana Trzecia Strona" < reload-period 60; item-limit 100
+
+@ DevOps / SRE < reload-period 120; item-limit 100
+https://thenewstack.io/feed/ "The New Stack" < reload-period 120; item-limit 100
+https://feed.infoq.com/ "InfoQ" < reload-period 120; item-limit 100
+https://devops.com/feed/ "DevOps.com" < reload-period 120; item-limit 100
+https://sreweekly.com/feed/ "SRE Weekly" < reload-period 360; item-limit 50
+https://www.lastweekinaws.com/feed/ "Last Week in AWS" < reload-period 360; item-limit 50
+
+@ Linux / Open Source < reload-period 180; item-limit 100
+https://www.phoronix.com/rss.php "Phoronix" < reload-period 120; item-limit 100
+https://www.kernel.org/feeds/kdist.xml "Linux Kernel Releases" < reload-period 360; item-limit 50
+https://www.omgubuntu.co.uk/feed "OMG! Ubuntu" < reload-period 180; item-limit 75
+https://www.redhat.com/en/rss/blog/channel/red-hat-enterprise-linux "Red Hat Enterprise Linux" < reload-period 180; item-limit 75
+
+@ Proxmox / Virtualisation < reload-period 180; item-limit 100
+https://shop.proxmox.com/index.php?rp=/announcements&rss=1 "Proxmox Announcements" < reload-period 120; item-limit 100
+https://forum.proxmox.com/forums/proxmox-virtual-environment.19/index.rss "Proxmox VE Forum" < reload-period 120; item-limit 100
+
+@ Security < reload-period 60; item-limit 100
+https://www.cisa.gov/cybersecurity-advisories/all.xml "CISA Cybersecurity Advisories" < reload-period 30; item-limit 100
+https://cvefeed.io/rssfeed/severity/high.xml "CVEFeed — High / Critical" < reload-period 15; item-limit 50
+https://cvefeed.io/rssfeed/latest.xml "CVEFeed — Latest CVEs" < reload-period 15; item-limit 50
+https://krebsonsecurity.com/feed/ "Krebs on Security" < reload-period 120; item-limit 100
+https://www.schneier.com/feed/atom/ "Schneier on Security" < reload-period 180; item-limit 75
+https://feeds.feedburner.com/TheHackersNews "The Hacker News" < reload-period 60; item-limit 100
+https://isc.sans.edu/rssfeed_full.xml "SANS Internet Storm Center" < reload-period 60; item-limit 100
+
+@ Networking / Edge < reload-period 180; item-limit 100
+https://blog.cloudflare.com/rss/ "Cloudflare Blog" < reload-period 120; item-limit 100
+https://blog.mikrotik.com/?feed=rss2 "MikroTik Blog" < reload-period 180; item-limit 75
+https://labs.ripe.net/feed/ "RIPE Labs" < reload-period 180; item-limit 75
+
+@ GitHub < reload-period 120; item-limit 100
+https://github.blog/changelog/feed/ "GitHub Changelog" < reload-period 60; item-limit 100
+https://github.blog/engineering/feed/ "GitHub Engineering" < reload-period 180; item-limit 75
