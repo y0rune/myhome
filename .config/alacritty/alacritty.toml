@@ -1,9 +1,8 @@
-# use_thin_strokes = true
 [env]
 TERM = "xterm-256color"
 
-[general]
-import = ["~/.config/alacritty/dracula.toml"]
+# [general]
+# import = ["~/.config/alacritty/dracula.toml"]
 
 [keyboard]
 bindings = [
@@ -16,13 +15,13 @@ bindings = [
 ]
 
 [window]
-opacity = 0.95
-
-[font]
-size = 25
+opacity = 1.0
+decorations = "Buttonless"
 
 ##############################
 # Terminess Nerd Font
+[font]
+size = 22
 
 [font.normal]
 family = "Terminess Nerd Font"
@@ -46,6 +45,9 @@ y = 0
 
 ##############################
 # Comic code
+# [font]
+# size = 18
+
 # [font.normal]
 # family = "Comic Code Ligatures"
 # style = "Regular"
@@ -69,6 +71,7 @@ y = 0
 # [font.glyph_offset]
 # x = 0
 # y = -2
+
 ##############################
 
 # [mouse.hints]
@@ -80,39 +83,26 @@ y = 0
 [selection]
 save_to_clipboard = true
 
-# Unused
-[colors.bright]
-black = "0x7f7f7f"
-blue = "0x5c5cff"
-cyan = "0x00ffff"
-green = "0x00ff00"
-magenta = "0xff00ff"
-red = "0xff0000"
-white = "0xffffff"
-yellow = "0xffff00"
+[colors.primary]
+foreground = "#cccccc"
+background = "#000000"
 
 [colors.normal]
-black = "0x000000"
-blue = "0x0000ee"
-cyan = "0x00cdcd"
-green = "0x00cd00"
-magenta = "0xcd00cd"
-red = "0xcd0000"
-white = "0xe5e5e5"
-yellow = "0xcdcd00"
+black = "#000000"
+red = "#cd0000"
+green = "#00cd00"
+yellow = "#cdcd00"
+blue = "#0000ee"
+magenta = "#cd00cd"
+cyan = "#00cdcd"
+white = "#e5e5e5"
 
-[colors.primary]
-background = "0x000000"
-foreground = "0xffffff"
-
-[colors.search.focused_match]
-background = "#ab4642"
-foreground = "#181818"
-
-# [colors.search.footer_bar]
-# background = "#262626"
-# foreground = "#d0d0d0"
-
-[colors.search.matches]
-background = "#f4bf75"
-foreground = "#181818"
+[colors.bright]
+black = "#808080"
+red = "#ff0000"
+green = "#00ff00"
+yellow = "#ffff00"
+blue = "#5c5cff"
+magenta = "#ff00ff"
+cyan = "#00ffff"
+white = "#ffffff"
