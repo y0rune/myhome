@@ -47,7 +47,7 @@ FPATH=/usr/local/share/zsh/site-functions:$FPATH
 # If command execution time above min. time, plugins will not output time.
 ZSH_COMMAND_TIME_MIN_SECONDS=10
 ZSH_COMMAND_TIME_MSG="Execution time: %s sec"
-ZSH_COMMAND_TIME_EXCLUDE=(ranger git nvim fzf vim mcedit v ssh lg lazygit tmux)
+ZSH_COMMAND_TIME_EXCLUDE=(git nvim fzf vim mcedit v ssh lg lazygit tmux lf newsraft)
 
 export GPG_TTY=$(tty)
 export TERM=xterm-256color
@@ -111,12 +111,13 @@ if [[ "$(uname)" == "Darwin" ]]; then
     # Unsetting LANGs and settings it
     unset LANG LC_ALL
 
+    # Unsetting HOMEBREW_NO_REQUIRE_TAP_TRUST
+    unset HOMEBREW_NO_REQUIRE_TAP_TRUST
+
     export LC_ALL=C.UTF-8
     export LANG=C.UTF-8
 
     # Enabling a HOMEBREW in preview versions of MacOS
-    export HOMEBREW_DEVELOPER=1
-    export HOMEBREW_NO_REQUIRE_TAP_TRUST=1
     export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 
     # Resolve problem with GOPATH
@@ -210,7 +211,6 @@ alias lg="lazygit"
 alias ldocker="lazydocker"
 alias ls="ls -h --color=auto"
 alias ll='ls -lha'
-alias r="ranger"
 alias cp='cp -v'
 alias mv='mv -v'
 alias cal="cal -3"
@@ -221,7 +221,6 @@ alias changefont="figlet"
 
 # Others
 alias channel-check='sudo iwlist wlan0 scan | egrep -i "essid|frequency"'
-alias newswork="newsboat --url=$HOME/.config/newsboat/urlswork"
 alias aria2c="aria2c --seed-time=0 --disable-ipv6 --max-upload-limit=1k"
 alias irc="ssh mikrus -t 'screen -r'"
 alias neofetch=fastfetch
