@@ -8,8 +8,9 @@ gui:
       - "#413660"
 git:
   autoFetch: true
-  pagers:
+  diffRenderers:
     - colorArg: always
+      type: rawGit
   commit:
     signOff: true
   pull:
