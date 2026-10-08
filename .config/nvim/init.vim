@@ -12,9 +12,9 @@ endif
 """"""""""""""""""""""""""""""""
 " Default settings nvim
 """"""""""""""""""""""""""""""""
-let g:python3_host_prog = expand('/opt/homebrew/bin/python3.13')
 let g:loaded_python_provider = 0
 let g:python_host_prog = ''
+let g:plug_threads = 4
 set autoindent
 set expandtab
 set softtabstop=4
@@ -165,9 +165,6 @@ call plug#begin('~/.config/nvim/plugged')
     " Mikrotik
     Plug 'zainin/vim-mikrotik'
 
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-    Plug 'nvim-treesitter/nvim-treesitter-context'
-
     " Autopair
     Plug 'windwp/nvim-autopairs'
 
@@ -227,17 +224,10 @@ vim.diagnostic.config({
   float = { border = border },
 })
 
-vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
-  config = config or {}
-  config.border = border
-  return vim.lsp.handlers.hover(err, result, ctx, config)
-end
 
-vim.lsp.handlers["textDocument/signatureHelp"] = function(err, result, ctx, config)
-  config = config or {}
-  config.border = border
-  return vim.lsp.handlers.signature_help(err, result, ctx, config)
-end
+local border = 'rounded'
+vim.diagnostic.config({ float = { border = border } })
+vim.o.winborder = 'rounded'
 
 -- Server-specific overrides
 vim.lsp.config('yamlls', {
@@ -275,12 +265,62 @@ vim.lsp.config('gopls', {
   },
 })
 
-vim.lsp.config('ruff', {})
+vim.lsp.config('ruff', {
+  before_init = function(_, config)
+    local root = config.root_dir
+    if not root then return end
+    local venv_ruff = root .. '/.venv/bin/ruff'
+    if vim.fn.executable(venv_ruff) == 1 then
+      config.cmd = { venv_ruff, 'server' }
+    end
+  end,
+})
+
+vim.lsp.config('ty', {
+  settings = { ty = {} },
+  before_init = function(_, config)
+    local root = config.root_dir
+    if not root then return end
+    -- nearest .venv in the project root or any parent (e.g. git submodules)
+    local venv = vim.fs.find('.venv', { path = root, upward = true, type = 'directory' })[1]
+    if venv then
+      config.settings.ty.configuration = { environment = { python = venv } }
+    end
+  end,
+})
+
+vim.lsp.config('ansiblels', {
+  cmd = { 'ansible-language-server', '--stdio' },
+  filetypes = { 'yaml.ansible' },
+  root_markers = { 'ansible.cfg', '.ansible-lint', '.git' },
+  settings = {
+    ansible = {
+      ansible = { path = 'ansible' },
+      python = { interpreterPath = 'python3' },
+      validation = {
+        enabled = true,
+        lint = { enabled = true, path = 'ansible-lint' },
+      },
+      executionEnvironment = { enabled = false },
+    },
+  },
+  before_init = function(_, config)
+    vim.notify('ansiblels root: ' .. tostring(config.root_dir))
+    local root = config.root_dir
+    if not root then return end
+    local venv = root .. '/.venv'
+    if vim.fn.executable(venv .. '/bin/ansible-lint') == 1 then
+      config.settings.ansible.python.interpreterPath = venv .. '/bin/python'
+      config.settings.ansible.validation.lint.path = venv .. '/bin/ansible-lint'
+      config.settings.ansible.ansible.path = venv .. '/bin/ansible'
+    end
+  end,
+})
 
 -- Enable servers (remove 'solargraph' if not using Ruby)
 vim.lsp.enable({
   'clangd', 'bashls', 'yamlls', 'ansiblels', 'gopls', 'solargraph',
-  'terraformls', 'tflint', 'marksman', 'rust_analyzer', 'ruff',
+  'terraformls', 'tflint', 'marksman', 'rust_analyzer', 'ruff', 'ty'
 })
 
 -- nvim-cmp setup with Tab support
@@ -347,19 +387,16 @@ let g:neoformat_python_ruff = {
      \ 'stdin': 1,
      \ 'args': ['format', '--line-length=80', '-q', '-'],
      \ }
+let g:neoformat_python_ruff_org = {
+     \ 'exe': 'ruff',
+     \ 'stdin': 1,
+     \ 'args': ['check', '--select=I', '--fix', '-'],
+     \ }
 let g:neoformat_enabled_python = ['ruff']
 
 " Terraform
 let g:terraform_fmt_on_save=1
 let g:terraform_align=1
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Enable show hidden in NerdTree
-let g:NERDTreeShowHidden=1
 
 " latex
 let g:tex_flavor = "latex"
@@ -481,8 +518,6 @@ nnoremap - :split <CR>
 " Reload file
 nnoremap <F5> :edit <CR>
 nnoremap <Leader><F5> :edit! <CR>
-
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " Moving line up or down using alt
 nnoremap <A-Up> :m-2<CR>
@@ -608,7 +643,8 @@ let g:shfmt_opt="-ci"
 autocmd BufRead,BufNewFile *.py set textwidth=0
 autocmd BufRead,BufNewFile *.py set fo-=t
 autocmd BufWritePre *.py silent! undojoin | Neoformat ruff
-noremap <Leader>f :silent! undojoin \| Neoformat ruff <CR> :w<CR>
+autocmd BufWritePre *.py silent! undojoin | Neoformat ruff_org
+
 
 " Newsboat
 autocmd BufRead,BufNewFile urls set textwidth=0
@@ -628,7 +664,7 @@ autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<CR>
 " Yaml
 autocmd BufRead,BufNewFile *.yaml,*.yml let g:indentLine_enabled = 1
 autocmd BufRead,BufNewFile *.yaml,*.yml let g:indentLine_char = '⦙'
-autocmd BufWritePre *.yaml,*.yml silent! undojoin | Neoformat prettier
+autocmd BufWritePre *.yaml,*.yml if &filetype ==# 'yaml' | silent! undojoin | Neoformat prettier | endif
 
 " JSON
 autocmd BufWritePre *.json silent! undojoin | Neoformat prettier
@@ -659,7 +695,7 @@ autocmd BufWritePre *.tfvars lua vim.lsp.buf.format()
 
 " Markdown
 autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_us
-autocmd BufWritePre *.md silent! undojoin | Neoformat mdformat
+" autocmd BufWritePre *.md silent! undojoin | Neoformat mdformat
 
 " Automatically deletes all trailing whitespace and newlines at end of file on save.
 autocmd BufWritePre * %s/\s\+$//e
