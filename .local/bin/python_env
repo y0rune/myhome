@@ -14,7 +14,10 @@ python_env_base() {
     virtualenv -p "$PYTHONVERSION" .venv
 
     .venv/bin/python -m pip install --upgrade pip
-    .venv/bin/pip install pre-commit --break --force
+    .venv/bin/pip install \
+        pre-commit \
+        ruff \
+        --break --force
 }
 
 # Default python env with requirements.txt
