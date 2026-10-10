@@ -1,7 +1,7 @@
 refresher:
   refreshInterval: 60
 gui:
-  useHunkModeInStagingView: false
+  useHunkModeInDiffView: false
   mainPanelSplitMode: "horizontal"
   theme:
     selectedLineBgColor:

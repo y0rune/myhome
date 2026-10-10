@@ -16,7 +16,7 @@ bindings = [
 
 [window]
 opacity = 1.0
-decorations = "Buttonless"
+# decorations = "Buttonless"
 
 ##############################
 # Terminess Nerd Font
