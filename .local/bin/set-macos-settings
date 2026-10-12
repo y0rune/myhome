@@ -6,8 +6,9 @@ set -e
 # macOS defaults
 # ============================================================
 
-# Quit System Preferences
+# Quit System Preferences / System Settings
 osascript -e 'tell application "System Preferences" to quit' 2> /dev/null || true
+osascript -e 'tell application "System Settings" to quit' 2> /dev/null || true
 
 # ============================================================
 # Language and appearance
@@ -19,29 +20,34 @@ defaults write NSGlobalDomain AppleLanguages -array 'en-GB' 'pl-PL'
 # Light appearance
 defaults write NSGlobalDomain AppleInterfaceStyle -string Light
 
-# Disable Reduce Motion
-defaults write com.apple.universalaccess reduceMotion -bool false
+# Enable Reduce Motion
+defaults write com.apple.universalaccess reduceMotion -bool true
 
 # ============================================================
 # Menu bar clock
 # ============================================================
 
-defaults write com.apple.menuextra.clock DateFormat -string 'HH:mm'
+# Digital clock, time only, 24-hour format
+defaults write com.apple.menuextra.clock IsAnalog -bool false
+defaults write com.apple.menuextra.clock ShowDate -int 2
 defaults write com.apple.menuextra.clock ShowDayOfWeek -bool false
-defaults write com.apple.menuextra.clock ShowDate -bool false
+defaults write com.apple.menuextra.clock ShowDayOfMonth -bool false
+defaults write com.apple.menuextra.clock Show24Hour -bool true
+defaults write com.apple.menuextra.clock ShowAMPM -bool false
+defaults write com.apple.menuextra.clock DateFormat -string 'HH:mm'
 
 # ============================================================
 # Dock
 # ============================================================
 
 # Position and auto-hide
-defaults write com.apple.dock orientation -string left
+defaults write com.apple.dock orientation -string bottom
 defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock autohide-delay -float 0
 defaults write com.apple.dock autohide-time-modifier -float 0
 
 # Size and magnification
-defaults write com.apple.dock tilesize -int 36
+defaults write com.apple.dock tilesize -int 40
 defaults write com.apple.dock magnification -bool false
 
 # Behaviour
@@ -53,8 +59,8 @@ defaults write com.apple.dock mineffect -string scale
 defaults write com.apple.dock expose-animation-duration -float 0
 defaults write com.apple.dock expose-group-by-app -bool true
 
-# Restart Dock
-killall Dock
+# Workspace edge delay
+defaults write com.apple.dock workspaces-edge-delay -float 0.1
 
 # ============================================================
 # Window management
@@ -96,12 +102,21 @@ defaults write com.apple.finder WarnOnEmptyTrash -bool false
 defaults write com.apple.finder QuitMenuItem -bool true
 defaults write com.apple.finder ShowRecentTags -bool false
 
+# Disable Finder interface sounds
+defaults write com.apple.finder FinderSounds -bool false
+
+# Search current folder by default
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+
+# Open new Finder windows in the home directory
+defaults write com.apple.finder NewWindowTarget -string PfHm
+
 # Sidebar and table sizing
 defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2
 defaults write com.apple.finder SidebarWidth -int 175
 
-# Restart Finder
-killall Finder
+# Show scroll bars only while scrolling
+defaults write NSGlobalDomain AppleShowScrollBars -string WhenScrolling
 
 # ============================================================
 # File dialogs
@@ -123,12 +138,24 @@ defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
 
 # Reset mouse tracking and scrolling preferences to defaults
 defaults delete -g com.apple.mouse.scaling 2> /dev/null || true
-defaults delete com.apple.driver.AppleBluetoothMultitouch.mouse MouseButtonMode 2> /dev/null || true
+defaults delete com.apple.driver.AppleBluetoothMultitouch.mouse \
+    MouseButtonMode 2> /dev/null || true
 defaults delete -g com.apple.scrollwheel.scaling 2> /dev/null || true
 defaults delete -g com.apple.swipescrolldirection 2> /dev/null || true
 
 # Trackpad tracking speed
 defaults write -g com.apple.trackpad.scaling -float 1.5
+
+# ============================================================
+# Keyboard responsiveness
+# ============================================================
+
+# Faster key repeat
+defaults write NSGlobalDomain KeyRepeat -int 2
+defaults write NSGlobalDomain InitialKeyRepeat -int 15
+
+# Repeat keys instead of showing accent menu
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
 # ============================================================
 # Display
@@ -154,9 +181,6 @@ defaults write com.apple.controlcenter \
 defaults write com.apple.controlcenter \
     "NSStatusItem Visible NowPlaying" -bool false
 
-# Restart Control Centre
-killall ControlCenter
-
 # ============================================================
 # Safari and privacy
 # ============================================================
@@ -165,8 +189,7 @@ killall ControlCenter
 defaults write com.apple.Safari UniversalSearchEnabled -bool false
 defaults write com.apple.Safari SuppressSearchSuggestions -bool true
 
-# Disable quarantine metadata for downloaded applications
-# WARNING: Reduces macOS security protections.
+# WARNING: Disabling quarantine metadata reduces macOS security.
 defaults write com.apple.LaunchServices LSQuarantine -bool false
 
 # ============================================================
@@ -181,6 +204,9 @@ defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
 
 # Avoid .DS_Store files on network volumes
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+
+# Show user Library directory
+chflags nohidden "${HOME}/Library"
 
 # ============================================================
 # TextEdit
@@ -198,55 +224,158 @@ defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
 # ============================================================
 
 # Quit the printer app after print jobs finish
-defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
+defaults write com.apple.print.PrintingPrefs \
+    "Quit When Finished" -bool true
 
 # ============================================================
-# Window management and desktop animations
+# Terminus Nerd Font
 # ============================================================
 
-# Disable margins around tiled windows
-defaults write com.apple.WindowManager TileWindowsHaveMargins -bool false
+FONT_VERSION="v3.3.0"
+FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/${FONT_VERSION}/Terminus.zip"
+FONT_DIR="${HOME}/Library/Fonts"
 
-# Speed up Mission Control animations
-defaults write com.apple.dock expose-animation-duration -float 0
+# Check whether Terminus Nerd Font is already installed
+if find "${FONT_DIR}" -maxdepth 1 -type f \
+    -iname 'TerminessNerdFont*.ttf' -print -quit 2> /dev/null |
+    grep -q .; then
 
-# Reduce delay when moving windows to screen edges
-defaults write com.apple.dock workspaces-edge-delay -float 0.1
+    echo "Terminus Nerd Font already installed. Skipping download."
 
-# Restart Dock to apply changes
-killall Dock
+else
+    echo "Installing Terminus Nerd Font ${FONT_VERSION}..."
+
+    FONT_TMP="$(mktemp -d /tmp/Terminus.XXXXXX)"
+    trap 'rm -rf "${FONT_TMP:-}"' EXIT
+
+    mkdir -p "${FONT_DIR}"
+
+    # Download archive
+    curl -fL --retry 3 "${FONT_URL}" -o "${FONT_TMP}/Terminus.zip"
+
+    # Extract archive
+    unzip -o -q "${FONT_TMP}/Terminus.zip" -d "${FONT_TMP}"
+
+    # Install TTF files
+    find "${FONT_TMP}" -type f -name '*.ttf' \
+        -exec mv -f {} "${FONT_DIR}/" \;
+
+    # Remove temporary files
+    rm -rf "${FONT_TMP}"
+    trap - EXIT
+
+    echo "Terminus Nerd Font installed."
+fi
 
 # ============================================================
-# Refresh system UI
+# Keyboard mapping: swap grave/tilde and non-US key
 # ============================================================
 
-killall SystemUIServer
+TILDE_SCRIPT="${HOME}/.tilde-switch"
+PLIST_PATH="/Library/LaunchDaemons/org.custom.tilde-switch.plist"
+
+echo "Configuring keyboard mapping..."
+
+# Create persistent mapping script
+cat > "${TILDE_SCRIPT}" << 'EOF'
+#!/usr/bin/env bash
+/usr/bin/hidutil property --set '{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000035,"HIDKeyboardModifierMappingDst":0x700000064},{"HIDKeyboardModifierMappingSrc":0x700000064,"HIDKeyboardModifierMappingDst":0x700000035}]}'
+EOF
+
+chmod 755 "${TILDE_SCRIPT}"
+
+# Apply mapping immediately
+"${TILDE_SCRIPT}"
+
+# ============================================================
+# Persistent keyboard mapping at startup
+# ============================================================
+
+echo "Installing keyboard mapping LaunchDaemon..."
+
+sudo tee "${PLIST_PATH}" > /dev/null << EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>org.custom.tilde-switch</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>${TILDE_SCRIPT}</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <false/>
+</dict>
+</plist>
+EOF
+
+# Set ownership and permissions
+sudo chown root:wheel "${PLIST_PATH}"
+sudo chmod 644 "${PLIST_PATH}"
+
+# Validate plist
+plutil -lint "${PLIST_PATH}"
+
+# Reload LaunchDaemon
+sudo launchctl bootout system "${PLIST_PATH}" 2> /dev/null || true
+sudo launchctl bootstrap system "${PLIST_PATH}"
+
+echo "Keyboard mapping LaunchDaemon installed."
+
+# ============================================================
+# Apply changes
+# ============================================================
+
+echo "Refreshing macOS UI..."
+
+killall Dock 2> /dev/null || true
+killall Finder 2> /dev/null || true
+killall ControlCenter 2> /dev/null || true
+killall SystemUIServer 2> /dev/null || true
 
 # ============================================================
 # Summary
 # ============================================================
 
 echo ""
-echo "macOS preferences applied:"
+echo "============================================================"
+echo " macOS configuration completed"
+echo "============================================================"
 echo "  - Language: English (UK), Polish"
 echo "  - Appearance: Light mode"
-echo "  - Menu bar clock: HH:mm, no date or weekday"
-echo "  - Dock: left side, auto-hide enabled"
+echo "  - Reduce Motion: enabled"
+echo "  - Menu bar clock: HH:mm, date and weekday hidden"
+echo "  - Dock: bottom, auto-hide enabled"
 echo "  - Dock hover delay: 0 ms"
-echo "  - Dock show/hide animation: 0 ms"
-echo "  - Dock icon size: 36 px, magnification disabled"
+echo "  - Dock animations: disabled"
+echo "  - Dock icon size: 40 px"
 echo "  - Recent applications in Dock: disabled"
-echo "  - Mission Control animation duration: 0 ms"
+echo "  - Mission Control animations: disabled"
 echo "  - Window tiling margins: disabled"
-echo "  - Workspace edge delay: 100 ms"
 echo "  - Finder: hidden files and extensions visible"
-echo "  - Finder: path bar, status bar and list view enabled"
+echo "  - Finder: path bar and status bar enabled"
 echo "  - Finder: folders sorted first"
-echo "  - File dialogs: expanded by default"
-echo "  - TextEdit: plain text and UTF-8"
+echo "  - Finder: new windows open in home directory"
+echo "  - Finder: searches current folder by default"
+echo "  - Finder: interface sounds disabled"
+echo "  - Finder: scroll bars appear while scrolling"
+echo "  - File dialogs: expanded"
+echo "  - Keyboard: faster key repeat and no accent popup"
+echo "  - Trackpad tracking speed: 1.5"
+echo "  - Automatic display brightness: disabled (if supported)"
 echo "  - Control Centre: Bluetooth, AirDrop and Now Playing hidden"
 echo "  - Safari: search suggestions disabled"
 echo "  - Software updates: daily schedule"
+echo "  - TextEdit: plain text and UTF-8"
+echo "  - User Library directory: visible"
+echo "  - Terminus Nerd Font: installed or already present"
+echo "  - Keyboard mapping: applied and configured at startup"
 echo ""
-echo "Note: Desktop swipe animations may still be present."
-echo "All requested preference commands have been executed."
+echo "NOTE:"
+echo "  - Some settings may require logging out or restarting."
+echo "  - Disabling quarantine metadata reduces macOS security."
+echo "  - Keyboard mapping behaviour depends on macOS and the keyboard."
+echo "============================================================"
