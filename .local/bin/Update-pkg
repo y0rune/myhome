@@ -196,8 +196,16 @@ function install_terragrunt() {
     if [[ "$(uname)" == "Darwin" ]]; then
         $install terragrunt -q
     else
-        TERRAGRUNT=$HOME/.local/bin/terragrunt
-        REMOTE_VERSION=$(curl -s https://api.github.com/repos/gruntwork-io/terragrunt/releases/latest | grep -iEo '"tag_name":.*' | sed 's/"tag_name"://g;s/"//g;s/,//g;s/ //g')
+        local REPO="gruntwork-io/terragrunt"
+        local REPO_API=$(curl -s \
+            https://api.github.com/repos/$REPO/releases/latest)
+        local REMOTE_VERSION=$(echo -e "$REPO_API" |
+            grep -iEo '"tag_name":.*' |
+            sed 's/"tag_name"://g;s/"//g;s/,//g;s/ //g')
+        local REMOTE_RELEASE=$(echo -e "$REPO_API" |
+            grep -iEo '"browser_download_url":.*terragrunt_linux_amd64"' |
+            sed 's/"browser_download_url"://g;s/"//g;s/,//g;s/ //g')
+        local TERRAGRUNT=$HOME/.local/bin/terragrunt
 
         CURRENT_VERSION="0.0.0"
         [ -f $TERRAGRUNT ] && CURRENT_VERSION=$($TERRAGRUNT version)
@@ -207,7 +215,7 @@ function install_terragrunt() {
             return 0
         else
             brew install wget
-            wget https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64 -O $TERRAGRUNT
+            wget $REMOTE_RELEASE -O $TERRAGRUNT
             chmod +x "$TERRAGRUNT"
         fi
     fi
@@ -227,8 +235,16 @@ function install_marksman() {
     if [[ "$(uname)" == "Darwin" ]]; then
         $install marksman -q
     else
-        wget https://github.com/artempyanykh/marksman/releases/latest/download/marksman-linux-x64 -O $HOME/.local/bin/marksman
-        chmod +x $HOME/.local/bin/marksman
+        local REPO="artempyanykh/marksman"
+        local REPO_API=$(curl -s \
+            https://api.github.com/repos/$REPO/releases/latest)
+        local REMOTE_RELEASE=$(echo -e "$REPO_API" |
+            grep -iEo '"browser_download_url":.*marksman-linux-x64"' |
+            sed 's/"browser_download_url"://g;s/"//g;s/,//g;s/ //g')
+        local MARKSMAN=$HOME/.local/bin/marksman
+
+        wget $REMOTE_RELEASE -O $MARKSMAN
+        chmod +x $MARKSMAN
     fi
 
 }
@@ -281,15 +297,42 @@ function install_spotifydl() {
 
 function install_fzf() {
     # Install fzf
-    FOLDER="$CONFIG/fzf"
-    mkdir -p $FOLDER
+    local CURRENT_VERSION="0.0.0"
+    local REPO="junegunn/fzf"
+    local REPO_API=$(curl -s \
+        https://api.github.com/repos/$REPO/releases/latest)
+    local REMOTE_VERSION=$(echo -e "$REPO_API" |
+        grep -iEo '"tag_name":.*' |
+        sed 's/"tag_name"://g;s/"//g;s/,//g;s/ //g')
+    local OS=$(uname -s | tr '[:upper:]' '[:lower:]')
+    local ARCH=$(uname -m | sed 's/x86_64/amd64/g;s/aarch64/arm64/g')
+    local REMOTE_RELEASE=$(echo -e "$REPO_API" |
+        grep -iEo "\"browser_download_url\":.*-${OS}_${ARCH}.tar.gz" |
+        sed 's/"browser_download_url"://g;s/"//g;s/,//g;s/ //g')
+    local REMOTE_SOURCE=$(echo -e "$REPO_API" |
+        grep -iEo '"tarball_url":.*' |
+        sed 's/"tarball_url"://g;s/"//g;s/,//g;s/ //g')
+    local RELEASE="fzf.tar.gz"
+    local SOURCE="fzf-source.tar.gz"
+    local DEST="/tmp/fzf"
+    local FOLDER="$CONFIG/fzf"
 
-    if [ -d $FOLDER ]; then
-        cd $CONFIG || err "Folder $CONFIG has been NOT found"
-        git clone https://github.com/junegunn/fzf.git $FOLDER && timestamp "Cloning the FZF"
-        cd $FOLDER || err "Folder $FOLDER has been NOT found"
-        git pull -q && timestamp "Pulled the $FOLDER configuration"
-        make install
+    if [ -x $FOLDER/bin/fzf ]; then
+        CURRENT_VERSION="v$($FOLDER/bin/fzf --version | grep -ioE '^[0-9\.]+')"
+    fi
+
+    if [ "$CURRENT_VERSION" == "$REMOTE_VERSION" ]; then
+        timestamp "The current version of the FZF is the same as the newest version"
+        return 0
+    else
+        mkdir -p $DEST $FOLDER/bin
+        cd $DEST || err "Folder $DEST has been NOT found"
+        wget $REMOTE_SOURCE -O $DEST/$SOURCE
+        wget $REMOTE_RELEASE -O $DEST/$RELEASE
+        tar -xf $SOURCE -C $FOLDER --strip-components=1
+        tar -xf $RELEASE -C $FOLDER/bin
+        cd $HOME || err "Folder $HOME has been NOT found"
+        rm -rfv $DEST
     fi
 }
 
@@ -473,15 +516,15 @@ function install_brew_programs() {
         fi
     done
 
-    xattr -r -d com.apple.quarantine /Applications/Spotify.app
-    xattr -r -d com.apple.quarantine /opt/homebrew/bin/mpv /Applications/mpv.app
+    xattr -r -d com.apple.quarantine ~/Applications/Spotify.app
+    xattr -r -d com.apple.quarantine /opt/homebrew/bin/mpv ~/Applications/mpv.app
 
     duti -s io.mpv avi all
     duti -s io.mpv mkv all
     duti -s io.mpv mp4 all
     duti -s io.mpv ts all
 
-    xattr -r -d com.apple.quarantine /Applications/chatterino.app
+    xattr -r -d com.apple.quarantine ~/Applications/chatterino.app
 
     brew cleanup --prune=all
 }
@@ -502,17 +545,21 @@ function install_google_cloud_sdk() {
 
 function install_lib_wandio() {
     local REPO="LibtraceTeam/wandio"
-    local REMOTE_VERSION=$(curl -s \
-        https://api.github.com/repos/$REPO/releases/latest |
+    local REPO_API=$(curl -s \
+        https://api.github.com/repos/$REPO/releases/latest)
+    local REMOTE_VERSION=$(echo -e "$REPO_API" |
         grep -iEo '"tag_name":.*' |
         sed 's/"tag_name"://g;s/"//g;s/,//g;s/ //g')
-    local RELEASE="${REMOTE_VERSION}.tar.gz"
+    local REMOTE_RELEASE=$(echo -e "$REPO_API" |
+        grep -iEo '"tarball_url":.*' |
+        sed 's/"tarball_url"://g;s/"//g;s/,//g;s/ //g')
     local DEST="/tmp/wandio-$REMOTE_VERSION.tar.gz"
     local DEST_FOLDER="/tmp/wandio-$REMOTE_VERSION"
 
     $install autoconf automake libtool
-    wget https://github.com/$REPO/archive/refs/tags/$RELEASE -O $DEST
-    tar -xvf $DEST -C /tmp
+    mkdir -p $DEST_FOLDER
+    wget $REMOTE_RELEASE -O $DEST
+    tar -xvf $DEST -C $DEST_FOLDER --strip-components=1
     cd $DEST_FOLDER || err "Folder $DEST_FOLDER has been NOT found"
     ./bootstrap.sh
     ./configure
@@ -525,11 +572,14 @@ function install_bgpreader() {
     local CURRENT_VERSION="0.0.0"
     local REPO="CAIDA/libbgpstream"
     local NAME="${REPO##*/}"
-    local REMOTE_VERSION=$(curl -s \
-        https://api.github.com/repos/$REPO/releases/latest |
+    local REPO_API=$(curl -s \
+        https://api.github.com/repos/$REPO/releases/latest)
+    local REMOTE_VERSION=$(echo -e "$REPO_API" |
         grep -iEo '"tag_name":.*' |
         sed 's/"tag_name"://g;s/"//g;s/,//g;s/ //g')
-    local RELEASE="$NAME-${REMOTE_VERSION/v/}.tar.gz"
+    local REMOTE_RELEASE=$(echo -e "$REPO_API" |
+        grep -iEo '"browser_download_url":.*.tar.gz' |
+        sed 's/"browser_download_url"://g;s/"//g;s/,//g;s/ //g')
     local DEST="/tmp/$NAME-$REMOTE_VERSION.tar.gz"
     local DEST_FOLDER="/tmp/$NAME-$REMOTE_VERSION"
 
@@ -543,7 +593,7 @@ function install_bgpreader() {
     else
         $install autoconf automake libtool
         command_start install_lib_wandio
-        wget https://github.com/$REPO/releases/download/$REMOTE_VERSION/$RELEASE -O $DEST
+        wget $REMOTE_RELEASE -O $DEST
         tar -xvf $DEST -C /tmp
         cd /tmp/$NAME-* || err "Folder /tmp/$NAME-* has been NOT found"
         ./configure --without-kafka
@@ -555,19 +605,48 @@ function install_bgpreader() {
 
 function install_font_terminess() {
     local REPO="ryanoasis/nerd-fonts"
-    local REMOTE_VERSION=$(curl -s \
-        https://api.github.com/repos/$REPO/releases/latest |
+    local REPO_API=$(curl -s \
+        https://api.github.com/repos/$REPO/releases/latest)
+    local REMOTE_VERSION=$(echo -e "$REPO_API" |
         grep -iEo '"tag_name":.*' |
         sed 's/"tag_name"://g;s/"//g;s/,//g;s/ //g')
     local RELEASE="Terminus.zip"
+    local REMOTE_RELEASE=$(echo -e "$REPO_API" |
+        grep -iEo "\"browser_download_url\":.*/$RELEASE" |
+        sed 's/"browser_download_url"://g;s/"//g;s/,//g;s/ //g')
     local DEST="/tmp/Terminess"
 
     if [ ! -f $HOME/Library/Fonts/TerminessNerdFont-Regular.ttf ]; then
         mkdir -p $DEST
         cd $DEST || err "Folder $DEST has been NOT found"
-        wget https://github.com/$REPO/releases/download/$REMOTE_VERSION/$RELEASE -O $DEST/$RELEASE
+        wget $REMOTE_RELEASE -O $DEST/$RELEASE
         unzip $RELEASE -d $DEST
         mv $DEST/*.ttf ~/Library/Fonts
+        cd $HOME || err "Folder $HOME has been NOT found"
+        rm -rfv $DEST
+    fi
+}
+
+function install_wireguard() {
+    local REPO="vaardan/wireguard-macos-app"
+    local REPO_API=$(curl -s \
+        https://api.github.com/repos/$REPO/releases/latest)
+    local REMOTE_VERSION=$(echo -e "$REPO_API" |
+        grep -iEo '"tag_name":.*' |
+        sed 's/"tag_name"://g;s/"//g;s/,//g;s/ //g')
+    local REMOTE_RELEASE=$(echo -e "$REPO_API" |
+        grep -iEo '"browser_download_url":.*.zip' |
+        sed 's/"browser_download_url"://g;s/"//g;s/,//g;s/ //g')
+    local RELEASE="wireguard.zip"
+    local DEST="/tmp/wireguard"
+    local HOMEAPP="$HOME/Applications"
+
+    if [ ! -e $HOMEAPP/WireGuard.app ]; then
+        mkdir -p $DEST
+        cd $DEST || err "Folder $DEST has been NOT found"
+        wget $REMOTE_RELEASE -O $DEST/$RELEASE
+        unzip $RELEASE -d $DEST
+        mv $DEST/*.app $HOMEAPP
         cd $HOME || err "Folder $HOME has been NOT found"
         rm -rfv $DEST
     fi
@@ -593,7 +672,7 @@ function main() {
     command_start install_terraform_stable
     command_start install_terragrunt
     command_start install_azure_cli
-    command_start install_ansible
+    # command_start install_ansible
     command_start install_ansible-language-server
     command_start install_ytdlp
     command_start install_spotifydl
@@ -612,6 +691,7 @@ function main() {
     command_start install_font_terminess
     command_start install_zsh_addons
     command_start install_brew_programs
+    command_start install_wireguard
 }
 
 main
