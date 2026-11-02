@@ -143,6 +143,9 @@ defaults delete com.apple.driver.AppleBluetoothMultitouch.mouse \
 defaults delete -g com.apple.scrollwheel.scaling 2> /dev/null || true
 defaults delete -g com.apple.swipescrolldirection 2> /dev/null || true
 
+# Enable Universal Clipboard
+defaults write ~/Library/Preferences/com.apple.coreservices.useractivityd.plist ClipboardSharingEnabled 1
+
 # Trackpad tracking speed
 defaults write -g com.apple.trackpad.scaling -float 1.5
 
