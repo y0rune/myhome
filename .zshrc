@@ -120,6 +120,9 @@ if [[ "$(uname)" == "Darwin" ]]; then
     # Enabling a HOMEBREW in preview versions of MacOS
     export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 
+    # Homebrew asks before install/upgrade by default, Update runs unattended
+    export HOMEBREW_NO_ASK=1
+
     # Resolve problem with GOPATH
     # https://stackoverflow.com/questions/66284870/go-get-not-downloading-to-src-folder
     export GO111MODULE=on
