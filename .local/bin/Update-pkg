@@ -404,13 +404,11 @@ function install_kubernetes() {
         return 0
     fi
 
-    if [[ "$(uname)" == "Darwin" ]]; then
-        LINK="http://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/amd64/kubectl"
-    else
-        LINK="http://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-    fi
+    local OS=$(uname -s | tr '[:upper:]' '[:lower:]')
+    local ARCH=$(uname -m | sed 's/x86_64/amd64/g;s/aarch64/arm64/g')
+    LINK="https://dl.k8s.io/release/$REMOTE_VERSION/bin/$OS/$ARCH/kubectl"
 
-    wget "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" -O $KUBECTL_LOCATION
+    wget "$LINK" -O $KUBECTL_LOCATION
     chmod +x $KUBECTL_LOCATION
 }
 
