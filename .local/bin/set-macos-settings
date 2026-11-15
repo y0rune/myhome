@@ -2,6 +2,15 @@
 
 set -e
 
+# Safari and TextEdit prefs live in sandbox containers: writing them needs Full Disk Access
+# for the terminal app. macOS lets only the user grant it, so open the pane and stop.
+if ! ls ~/Library/Safari > /dev/null 2>&1; then
+    echo "ERROR: the terminal app has no Full Disk Access."
+    echo "Enable it in Privacy & Security > Full Disk Access, restart the terminal, rerun."
+    open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
+    exit 1
+fi
+
 # ============================================================
 # macOS defaults
 # ============================================================
@@ -17,8 +26,8 @@ osascript -e 'tell application "System Settings" to quit' 2> /dev/null || true
 # Preferred languages
 defaults write NSGlobalDomain AppleLanguages -array 'en-GB' 'pl-PL'
 
-# Light appearance
-defaults write NSGlobalDomain AppleInterfaceStyle -string Light
+# Dark appearance
+defaults write NSGlobalDomain AppleInterfaceStyle -string Dark
 
 # Enable Reduce Motion
 defaults write com.apple.universalaccess reduceMotion -bool true
@@ -41,8 +50,8 @@ defaults write com.apple.menuextra.clock DateFormat -string 'HH:mm'
 # ============================================================
 
 # Position and auto-hide
-defaults write com.apple.dock orientation -string bottom
-defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock orientation -string left
+defaults write com.apple.dock autohide -bool false
 defaults write com.apple.dock autohide-delay -float 0
 defaults write com.apple.dock autohide-time-modifier -float 0
 
@@ -348,10 +357,10 @@ echo "============================================================"
 echo " macOS configuration completed"
 echo "============================================================"
 echo "  - Language: English (UK), Polish"
-echo "  - Appearance: Light mode"
+echo "  - Appearance: Dark mode"
 echo "  - Reduce Motion: enabled"
 echo "  - Menu bar clock: HH:mm, date and weekday hidden"
-echo "  - Dock: bottom, auto-hide enabled"
+echo "  - Dock: left, auto-hide disabled"
 echo "  - Dock hover delay: 0 ms"
 echo "  - Dock animations: disabled"
 echo "  - Dock icon size: 40 px"
