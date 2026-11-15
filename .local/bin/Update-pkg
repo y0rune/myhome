@@ -515,13 +515,6 @@ function install_brew_programs() {
     done
 
     xattr -r -d com.apple.quarantine ~/Applications/Spotify.app
-    xattr -r -d com.apple.quarantine /opt/homebrew/bin/mpv ~/Applications/mpv.app
-
-    duti -s io.mpv avi all
-    duti -s io.mpv mkv all
-    duti -s io.mpv mp4 all
-    duti -s io.mpv ts all
-
     xattr -r -d com.apple.quarantine ~/Applications/chatterino.app
 
     brew cleanup --prune=all
@@ -650,6 +643,108 @@ function install_wireguard() {
     fi
 }
 
+function install_alacritty() {
+    # Install alacritty from GitHub (the brew cask is disabled: fails the Gatekeeper check)
+    [[ "$(uname)" == "Darwin" ]] || return 0
+    local REPO="alacritty/alacritty"
+    local REPO_API=$(curl -s \
+        https://api.github.com/repos/$REPO/releases/latest)
+    local REMOTE_VERSION=$(echo -e "$REPO_API" |
+        grep -iEo '"tag_name":.*' |
+        sed 's/"tag_name"://g;s/"//g;s/,//g;s/ //g;s/^v//')
+    local REMOTE_RELEASE=$(echo -e "$REPO_API" |
+        grep -iEo '"browser_download_url":.*\.dmg"' |
+        sed 's/"browser_download_url"://g;s/"//g;s/,//g;s/ //g')
+    local DEST="/tmp/alacritty"
+    local APP="$HOME/Applications/Alacritty.app"
+
+    if [ -z "$REMOTE_RELEASE" ]; then
+        err "Alacritty release has been NOT found (GitHub API rate limit?)"
+        return 1
+    fi
+
+    local CURRENT_VERSION="0.0.0"
+    [ -e $APP ] && CURRENT_VERSION=$(defaults read $APP/Contents/Info.plist CFBundleShortVersionString)
+
+    if [ "$REMOTE_VERSION" == "$CURRENT_VERSION" ]; then
+        timestamp "The current version of Alacritty is the same as the newest version"
+        return 0
+    fi
+
+    mkdir -p $DEST
+    wget $REMOTE_RELEASE -O $DEST/alacritty.dmg &&
+        hdiutil attach -nobrowse -quiet -mountpoint $DEST/mnt $DEST/alacritty.dmg || return 1
+    # Copy first, swap after: a failed copy must not leave the old app deleted
+    cp -R $DEST/mnt/Alacritty.app $DEST/Alacritty.app
+    hdiutil detach -quiet $DEST/mnt
+    if [ -e $DEST/Alacritty.app ]; then
+        rm -rf $APP
+        mv $DEST/Alacritty.app $APP
+        # Use the macOS Terminal icon; changing the bundle breaks its signature, so re-sign ad-hoc
+        cp /System/Applications/Utilities/Terminal.app/Contents/Resources/Terminal.icns \
+            $APP/Contents/Resources/alacritty.icns
+        codesign --force --deep -s - $APP
+        touch $APP
+        xattr -r -d com.apple.quarantine $APP
+        timestamp "Alacritty $REMOTE_VERSION has been installed"
+    fi
+    rm -rfv $DEST
+}
+
+function install_mpv() {
+    # Install mpv.app from GitHub (the brew cask is disabled, the formula has no .app for duti)
+    [[ "$(uname)" == "Darwin" ]] || return 0
+    local REPO="mpv-player/mpv"
+    local ARCH="intel"
+    [[ "$(uname -m)" == "arm64" ]] && ARCH="arm"
+    local MACOS=$(sw_vers -productVersion | cut -d. -f1)
+    local REPO_API=$(curl -s \
+        https://api.github.com/repos/$REPO/releases/latest)
+    local REMOTE_VERSION=$(echo -e "$REPO_API" |
+        grep -iEo '"tag_name":.*' |
+        sed 's/"tag_name"://g;s/"//g;s/,//g;s/ //g;s/^v//')
+    # Newest build for a macOS version not newer than this one
+    local REMOTE_RELEASE=$(echo -e "$REPO_API" |
+        grep -iEo "\"browser_download_url\":.*macos-[0-9]+-$ARCH\.zip\"" |
+        sed 's/"browser_download_url"://g;s/"//g;s/,//g;s/ //g' |
+        awk -v m=$MACOS '{split($0, a, "macos-"); v = a[2] + 0; if (v <= m) print v, $0}' |
+        sort -n | tail -1 | cut -d' ' -f2)
+    local DEST="/tmp/mpv"
+    local APP="$HOME/Applications/mpv.app"
+
+    if [ -z "$REMOTE_RELEASE" ]; then
+        err "mpv release has been NOT found (GitHub API rate limit?)"
+        return 1
+    fi
+
+    local CURRENT_VERSION="0.0.0"
+    [ -e $APP ] && CURRENT_VERSION=$(defaults read $APP/Contents/Info.plist CFBundleShortVersionString)
+
+    if [ "$REMOTE_VERSION" == "$CURRENT_VERSION" ]; then
+        timestamp "The current version of mpv is the same as the newest version"
+    else
+        mkdir -p $DEST
+        # The zip holds mpv.tar.gz with mpv.app inside
+        wget $REMOTE_RELEASE -O $DEST/mpv.zip &&
+            unzip -oq $DEST/mpv.zip -d $DEST &&
+            tar xzf $DEST/mpv.tar.gz -C $DEST || return 1
+        if [ -e $DEST/mpv.app ]; then
+            rm -rf $APP
+            mv $DEST/mpv.app $APP
+            timestamp "mpv $REMOTE_VERSION has been installed"
+        fi
+        rm -rfv $DEST
+    fi
+
+    [ -e $APP ] || return 1
+    # Register the app so duti can find io.mpv
+    /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f $APP
+    duti -s io.mpv avi all
+    duti -s io.mpv mkv all
+    duti -s io.mpv mp4 all
+    duti -s io.mpv ts all
+}
+
 function main() {
     command_start update_pip
     command_start install_neovim_module_for_python
@@ -689,6 +784,8 @@ function main() {
     command_start install_font_terminess
     command_start install_zsh_addons
     command_start install_brew_programs
+    command_start install_alacritty
+    command_start install_mpv
     command_start install_wireguard
 }
 
