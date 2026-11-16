@@ -43,13 +43,17 @@ install=""
 
 if [[ "$(uname)" == "Darwin" ]]; then
     install="brew install"
+    sudo=""  # Homebrew prefix is user-owned, npm -g needs no root
 elif [[ -f $GENTOO ]]; then
     install="sudo emerge --update"
+    sudo="sudo"
 elif [[ -f /etc/debian_version ]]; then
     sudo apt update
     install="sudo apt install -y"
+    sudo="sudo"
 elif [[ -f /etc/redhat-release ]]; then
     install="sudo dnf install"
+    sudo="sudo"
 fi
 
 function timestamp() {
@@ -109,7 +113,7 @@ function install_node() {
     else
         if [[ "$(uname)" == "Darwin" ]]; then
             brew uninstall node --ignore-dependencies
-            sudo rm -rf /opt/homebrew/lib/node_modules/npm/
+            rm -rf /opt/homebrew/lib/node_modules/npm/
             $install node
         elif [[ -f $GENTOO ]]; then
             $install dev-lang/nodejs
@@ -119,7 +123,7 @@ function install_node() {
 
 function install_pyright() {
     # Install pyright
-    sudo npm -s -g i pyright --force
+    $sudo npm -s -g i pyright --force
 }
 
 function install_mdformat() {
@@ -134,12 +138,12 @@ function install_ruff() {
 
 function install_bash-language-server() {
     # Install bash-language-server
-    sudo npm -s -g i bash-language-server --force
+    $sudo npm -s -g i bash-language-server --force
 }
 
 function install_yaml-language-server() {
     # Install yaml-language-server
-    sudo npm -s -g i yaml-language-server --force
+    $sudo npm -s -g i yaml-language-server --force
 }
 
 function install_shfmt() {
@@ -271,8 +275,8 @@ function install_ansible() {
 
 function install_ansible-language-server() {
     # Install ansible-language-server
-    sudo npm -s -g i @ansible/ansible-language-server --force
-    sudo npm -s -g i yaml-language-server --force
+    $sudo npm -s -g i @ansible/ansible-language-server --force
+    $sudo npm -s -g i yaml-language-server --force
 }
 
 function install_azure_cli() {
@@ -553,9 +557,9 @@ function install_lib_wandio() {
     tar -xvf $DEST -C $DEST_FOLDER --strip-components=1
     cd $DEST_FOLDER || err "Folder $DEST_FOLDER has been NOT found"
     ./bootstrap.sh
-    ./configure
+    ./configure --prefix="$HOME/.local"
     make -j"$(nproc)"
-    sudo make install && timestamp "Installed the newest version of the $REPO"
+    make install && timestamp "Installed the newest version of the $REPO"
     rm -rfv $DEST $DEST_FOLDER
 }
 
@@ -587,9 +591,9 @@ function install_bgpreader() {
         wget $REMOTE_RELEASE -O $DEST
         tar -xvf $DEST -C /tmp
         cd /tmp/$NAME-* || err "Folder /tmp/$NAME-* has been NOT found"
-        ./configure --without-kafka
+        ./configure --prefix="$HOME/.local" --without-kafka CPPFLAGS="-I$HOME/.local/include" LDFLAGS="-L$HOME/.local/lib"
         make -j"$(nproc)"
-        sudo make install && timestamp "Installed the newest version of the $REPO"
+        make install && timestamp "Installed the newest version of the $REPO"
         rm -rfv /tmp/$NAME-*
     fi
 }
