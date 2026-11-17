@@ -32,6 +32,10 @@ plugins=(rake ruby vagrant knife knife_ssh kitchen)
 
 ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
+# empty hosts style = no known_hosts//etc/hosts; _ssh_hosts still adds ~/.ssh/config (+ Include)
+zstyle ':completion:*:(ssh|scp|sftp|rsync):*' hosts
+# only Host aliases, not HostName IPs: patch the stock _ssh_hosts matcher
+autoload -Uz +X _ssh_hosts && functions[_ssh_hosts]=${functions[_ssh_hosts]//'(#i)host(|name)'/'(#i)host'}
 
 [ -d $CONFIG/zsh/zsh-autosuggestions ] && source $CONFIG/zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh &>> /dev/null
 [ -d $CONFIG/zsh/zsh-syntax-highlighting ] && source $CONFIG/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh &>> /dev/null
