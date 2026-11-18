@@ -11,6 +11,16 @@ if ! ls ~/Library/Safari > /dev/null 2>&1; then
     exit 1
 fi
 
+# Screenshots from the terminal (screencapture) need Screen Recording. Alacritty is ad-hoc
+# signed, so macOS drops its grants after every update by Update-pkg: re-enable them then.
+if ! screencapture -x /tmp/.screen-check.png 2> /dev/null; then
+    echo "ERROR: the terminal app has no Screen Recording access."
+    echo "Enable it in Privacy & Security > Screen & System Audio Recording, restart the terminal, rerun."
+    open "x-apple.systempreferences:com.apple.preference.security?Privacy_ScreenCapture"
+    exit 1
+fi
+rm -f /tmp/.screen-check.png
+
 # ============================================================
 # macOS defaults
 # ============================================================
