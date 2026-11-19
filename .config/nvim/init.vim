@@ -269,7 +269,7 @@ vim.lsp.config('ruff', {
   before_init = function(_, config)
     local root = config.root_dir
     if not root then return end
-    local venv_ruff = root .. '/.venv/bin/ruff'
+    local venv_ruff = root .. '.venv/bin/ruff'
     if vim.fn.executable(venv_ruff) == 1 then
       config.cmd = { venv_ruff, 'server' }
     end
@@ -377,6 +377,8 @@ autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=fals
 let g:copilot_no_tab_map = v:true
 
 " Neoformat
+" formatters (ruff, ...) live in Mason's bin; appended so an activated venv still wins
+let $PATH .= ':' . expand('~/.local/share/nvim/mason/bin')
 let g:neoformat_try_formatprg = 1
 let g:neoformat_basic_format_trim = 1
 let g:neoformat_only_msg_on_error = 1
@@ -642,6 +644,15 @@ let g:shfmt_opt="-ci"
 " Python
 autocmd BufRead,BufNewFile *.py set textwidth=0
 autocmd BufRead,BufNewFile *.py set fo-=t
+" use the project's .venv ruff (same as the LSP), else whatever ruff is on PATH
+function! s:SetRuffExe() abort
+  let l:venv = finddir('.venv', expand('%:p:h') . ';')
+  let l:ruff = empty(l:venv) ? '' : fnamemodify(l:venv, ':p') . 'bin/ruff'
+  let l:exe = executable(l:ruff) ? l:ruff : 'ruff'
+  let g:neoformat_python_ruff.exe = l:exe
+  let g:neoformat_python_ruff_org.exe = l:exe
+endfunction
+autocmd BufWritePre *.py call s:SetRuffExe()
 autocmd BufWritePre *.py silent! undojoin | Neoformat ruff
 autocmd BufWritePre *.py silent! undojoin | Neoformat ruff_org
 
