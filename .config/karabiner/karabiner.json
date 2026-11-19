@@ -108,6 +108,10 @@
                             "to": [{ "pointing_button": "button32" }]
                         },
                         {
+                            "from": { "key_code": "escape" },
+                            "to": [{ "key_code": "non_us_backslash" }]
+                        },
+                        {
                             "from": { "key_code": "left_arrow" },
                             "to": [{ "pointing_button": "button32" }]
                         },
@@ -130,10 +134,6 @@
                         {
                             "from": { "key_code": "up_arrow" },
                             "to": [{ "pointing_button": "button32" }]
-                        },
-                        {
-                            "from": { "key_code": "escape" },
-                            "to": [{ "key_code": "non_us_backslash" }]
                         }
                     ]
                 },
@@ -372,14 +372,11 @@
                         "product_id": 785,
                         "vendor_id": 13364
                     },
+                    "ignore": false,
                     "simple_modifications": [
                         {
-                            "from": { "key_code": "grave_accent_and_tilde" },
-                            "to": [{ "key_code": "non_us_backslash" }]
-                        },
-                        {
                             "from": { "key_code": "right_control" },
-                            "to": [{ "key_code": "grave_accent_and_tilde" }]
+                            "to": [{ "key_code": "non_us_backslash" }]
                         }
                     ]
                 },
@@ -416,6 +413,16 @@
                         "vendor_id": 1452
                     },
                     "ignore": true
+                },
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": true,
+                        "product_id": 785,
+                        "vendor_id": 13364
+                    },
+                    "ignore": true,
+                    "treat_as_built_in_keyboard": true
                 }
             ],
             "fn_function_keys": [
@@ -438,6 +445,14 @@
                 {
                     "from": { "key_code": "caps_lock" },
                     "to": [{ "key_code": "escape" }]
+                },
+                {
+                    "from": { "key_code": "grave_accent_and_tilde" },
+                    "to": [{ "key_code": "non_us_backslash" }]
+                },
+                {
+                    "from": { "key_code": "non_us_backslash" },
+                    "to": [{ "key_code": "grave_accent_and_tilde" }]
                 }
             ],
             "virtual_hid_keyboard": {
