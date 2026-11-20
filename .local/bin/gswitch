@@ -1,9 +1,7 @@
 #!/bin/bash
 BRANCH=$1
-git checkout main
-git checkout master
-git checkout -b "$BRANCH"
-git checkout "$BRANCH"
-git branch --set-upstream-to=origin/"$BRANCH" "$BRANCH"
-git pull
-git reset --hard origin/"$BRANCH"
+git fetch origin
+git switch main 2>/dev/null || git switch master
+# Existing local branch, or a new one (tracks origin/$BRANCH if it exists)
+git switch "$BRANCH" 2>/dev/null || git switch -c "$BRANCH"
+git rev-parse --abbrev-ref '@{u}' >/dev/null 2>&1 && git pull --ff-only
