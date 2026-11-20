@@ -31,7 +31,7 @@ else
     pip="/opt/homebrew/bin/pip$PYTHONVERSION"
 fi
 
-PIPEXT="--user --force --quiet --no-warn-script-location"
+PIPEXT="--user --upgrade --quiet --no-warn-script-location"
 PIPEXTPRE="--pre $PIPEXT"
 
 # Gentoo release
@@ -100,11 +100,11 @@ function install_neovim_module_for_python() {
     $pip install pynvim neovim imps $PIPEXTPRE
 
     # Ruby module for neovim
-    gem install solargraph
+    gem install --user-install solargraph
 
     # Node module for neovim
-    npm install @github/copilot-language-server -g --force
-    npm install tree-sitter-cli -g --force
+    npm install @github/copilot-language-server -g
+    npm install tree-sitter-cli -g
 }
 
 function install_node() {
@@ -123,7 +123,7 @@ function install_node() {
 
 function install_pyright() {
     # Install pyright
-    $sudo npm -s -g i pyright --force
+    $sudo npm -s -g i pyright
 }
 
 function install_mdformat() {
@@ -138,12 +138,12 @@ function install_ruff() {
 
 function install_bash-language-server() {
     # Install bash-language-server
-    $sudo npm -s -g i bash-language-server --force
+    $sudo npm -s -g i bash-language-server
 }
 
 function install_yaml-language-server() {
     # Install yaml-language-server
-    $sudo npm -s -g i yaml-language-server --force
+    $sudo npm -s -g i yaml-language-server
 }
 
 function install_shfmt() {
@@ -275,8 +275,8 @@ function install_ansible() {
 
 function install_ansible-language-server() {
     # Install ansible-language-server
-    $sudo npm -s -g i @ansible/ansible-language-server --force
-    $sudo npm -s -g i yaml-language-server --force
+    $sudo npm -s -g i @ansible/ansible-language-server
+    $sudo npm -s -g i yaml-language-server
 }
 
 function install_azure_cli() {
@@ -444,7 +444,7 @@ function install_tss_client() {
     if [ "$(uname)" == "Darwin" ]; then
         if [ -n "$TSS_VERSION_STABLE" ]; then
             LINK="https://downloads.ss.thycotic.com/secretserversdk/$TSS_VERSION_STABLE/secretserver-sdk-$TSS_VERSION_STABLE-osx-x64.zip"
-            REMOTE_VERSION=$TSS_VERSION
+            REMOTE_VERSION=$TSS_VERSION_STABLE
         else
             LINK=$(curl -s -L $TSSDOCS | grep -iEo 'href=".*-osx-x64.zip"' | sed 's/href\=//g;s/"//g' | sort -r | head -n1)
             REMOTE_VERSION=$(echo $LINK | grep -iEo '[0-9.]+-osx' | sed 's/-osx//g')
@@ -489,37 +489,32 @@ function install_streamlink() {
 }
 
 function install_brew_programs() {
-    # Install brew programs
-    INSTALLED_PROGRAMS=$(brew list)
-    while IFS='' read -r line; do LIST_OF_PROGRAMS+=("$line"); done < <(cat "$HOME"/.brew_programs)
-    while IFS='' read -r line; do LIST_OF_PROGRAMS_CASK+=("$line"); done < <(cat "$HOME"/.brew_programs_cask)
-    while IFS='' read -r line; do LIST_OF_PROGRAMS_DISABLE+=("$line"); done < <(cat "$HOME"/.brew_programs_disable)
+    # Install brew programs; ~/.brew_programs_disable lists what this machine skips
+    local INSTALLED DISABLED
+    INSTALLED=$(brew list -1)
+    DISABLED=$(cat "$HOME"/.brew_programs_disable 2>/dev/null)
 
     timestamp "Installing brew programs"
-
-    for i in "${LIST_OF_PROGRAMS[@]}"; do
-        if [[ ! " ${INSTALLED_PROGRAMS[*]} " =~ ${i} ]] &&
-            [[ ! " ${LIST_OF_PROGRAMS_DISABLE[*]} " =~ ${i} ]]; then
-            timestamp "Installing the $i brew program"
-            brew install $i --force
-            if $? -ne 0; then
-                err "Failed to install the $i brew program"
-            fi
-        fi
-    done
+    while IFS='' read -r i; do
+        [ -z "$i" ] && continue
+        grep -qxF "$i" <<<"$INSTALLED" && continue
+        grep -qxF "$i" <<<"$DISABLED" && continue
+        timestamp "Installing the $i brew program"
+        brew install "$i" --force || err "Failed to install the $i brew program"
+    done <"$HOME"/.brew_programs
 
     timestamp "Installing brew cask programs"
+    while IFS='' read -r i; do
+        [ -z "$i" ] && continue
+        grep -qxF "$i" <<<"$INSTALLED" && continue
+        grep -qxF "$i" <<<"$DISABLED" && continue
+        timestamp "Installing the $i brew cask program"
+        brew install "$i" --cask --appdir=~/Applications --force || err "Failed to install the $i brew cask program"
+    done <"$HOME"/.brew_programs_cask
 
-    for i in "${LIST_OF_PROGRAMS_CASK[@]}"; do
-        if [[ ! " ${INSTALLED_PROGRAMS[*]} " =~ ${i} ]] &&
-            [[ ! " ${LIST_OF_PROGRAMS_DISABLE[*]} " =~ ${i} ]]; then
-            timestamp "Installing the $i brew cask program"
-            brew install $i --cask --appdir=~/Applications --force
-        fi
+    for app in ~/Applications/Spotify.app ~/Applications/chatterino.app; do
+        [ -e "$app" ] && xattr -r -d com.apple.quarantine "$app"
     done
-
-    xattr -r -d com.apple.quarantine ~/Applications/Spotify.app
-    xattr -r -d com.apple.quarantine ~/Applications/chatterino.app
 
     brew cleanup --prune=all
 }
@@ -595,6 +590,8 @@ function install_bgpreader() {
         make -j"$(nproc)"
         make install && timestamp "Installed the newest version of the $REPO"
         rm -rfv /tmp/$NAME-*
+        # build-only tools; libtool stays (imagemagick needs it)
+        [[ "$(uname)" == "Darwin" ]] && brew uninstall autoconf automake
     fi
 }
 
