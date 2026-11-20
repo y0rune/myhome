@@ -1,12 +1,12 @@
 schema_version = 11
-selected_device = "unit:ca9d0b68"
+selected_device = "unit:a379e1aa"
 
 [app_settings]
 launch_at_login = true
 check_for_updates = true
 update_prompt_seen = true
 show_in_menu_bar = false
-auto_install_updates = false
+auto_install_updates = true
 capture_mouse_events = true
 smooth_scroll = false
 vertical_scroll_sensitivity = 14
@@ -22,6 +22,7 @@ theme_light = "OpenLogi Light"
 low_battery_notifications = true
 lock_key_notifications = true
 animate_desktop_switch = true
+update_channel = "beta"
 
 [app_settings.momentum_scrolling]
 enabled = false
@@ -35,6 +36,7 @@ repeat_boost = 135
 
 [devices."unit:a379e1aa"]
 dpi = 2000
+invert_scroll = true
 
 [devices."unit:a379e1aa".identity]
 display_name = "MX Vertical"
@@ -84,6 +86,10 @@ disable_keys = false
 onboard_profiles = false
 button_spy = false
 sidetone = false
+g_keys = false
+m_keys = false
+macro_record = false
+change_host = true
 
 [devices."unit:a379e1aa".links."direct:046d:b020".capabilities]
 buttons = true
@@ -107,10 +113,17 @@ disable_keys = false
 onboard_profiles = false
 button_spy = false
 sidetone = false
+g_keys = false
+m_keys = false
+macro_record = false
+change_host = true
 
 [devices."unit:a379e1aa".bindings]
 Forward = "PreviousDesktop"
 Back = "NextDesktop"
+
+[devices."unit:ca9d0b68"]
+invert_scroll = true
 
 [devices."unit:ca9d0b68".identity]
 display_name = "MX Ergo"
@@ -162,6 +175,10 @@ disable_keys = false
 onboard_profiles = false
 button_spy = false
 sidetone = false
+g_keys = false
+m_keys = false
+macro_record = false
+change_host = true
 
 [devices."unit:ca9d0b68".bindings]
 Forward = "PreviousDesktop"
@@ -189,3 +206,7 @@ disable_keys = false
 onboard_profiles = false
 button_spy = false
 sidetone = false
+g_keys = false
+m_keys = false
+macro_record = false
+change_host = true
