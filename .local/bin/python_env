@@ -49,7 +49,7 @@ python_env_ansible() {
     .venv/bin/ansible-galaxy collection install community.general -p .venv/collections --upgrade
 
     timestamp "Installing Ansible Galaxy roles from requirements.yml files to .venv/roles"
-    find . -maxdepth 3 -name "requirements.yml" -path "*/roles/*" -not -path "./.venv/*" -print0 | while IFS= read -r -d '' req; do
+    find . -maxdepth 3 -name "requirements.yml" \( -path "./requirements.yml" -o -path "*/roles/*" \) -not -path "./.venv/*" -print0 | while IFS= read -r -d '' req; do
         timestamp "Found requirements: $req"
         .venv/bin/ansible-galaxy install --force -r "$req" -p .venv/roles
     done
