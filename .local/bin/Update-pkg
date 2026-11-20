@@ -100,7 +100,12 @@ function install_neovim_module_for_python() {
     $pip install pynvim neovim imps $PIPEXTPRE
 
     # Ruby module for neovim
-    gem install --user-install solargraph
+    # system ruby (2.6) is too old for solargraph, use brew ruby
+    if [[ "$(uname)" == "Darwin" ]]; then
+        $install ruby -q && /opt/homebrew/opt/ruby/bin/gem install --bindir ~/.local/share/gem/bin solargraph
+    else
+        gem install --user-install solargraph
+    fi
 
     # Node module for neovim
     npm install @github/copilot-language-server -g
