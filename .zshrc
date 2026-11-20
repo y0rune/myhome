@@ -139,12 +139,12 @@ if [[ "$(uname)" == "Darwin" ]]; then
 
     export PATH="/opt/homebrew/Cellar/openssl@3/$OPENSSLVER/bin:$PATH"
     export PATH="/opt/homebrew/bin:$PATH"
+    export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+    export PATH="$PATH:$HOME/.local/share/gem/bin"
     export LDFLAGS="-L/opt/homebrew/Cellar/openssl@3/$OPENSSLVER/lib"
     export CPPFLAGS="-I/opt/homebrew/Cellar/openssl@3/$OPENSSLVER/include"
     export PKG_CONFIG_PATH="/opt/homebrew/openssl@3/$OPENSSLVER/lib/pkgconfig"
-    export GOROOT="$(brew --prefix golang)/libexec"
     export PATH=$PATH:$GOPATH/bin
-    export PATH=$PATH:$GOROOT/bin
 
     export PYTHONVERSION=$(ls -la /opt/homebrew/opt/ |
         grep -iEo 'python@.* ->' |
