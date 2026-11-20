@@ -165,7 +165,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     alias date='gdate'
 
     alias lsblk="diskutil list"
-    alias Update="$HOME/.local/bin/Update-pkg; brew update --force; brew upgrade --force --greedy -y; brew cleanup --prune=all -s; yes | sudo softwareupdate -i -a -R"
+    alias Update="$HOME/.local/bin/Update-pkg; brew update --force; brew upgrade --force -y; brew cleanup --prune=all -s; yes | sudo softwareupdate -i -a -R"
     alias ls="ls -Gh"
     alias mpv="mpv --ytdl-raw-options="yes-playlist=" --no-resume-playback --ytdl-format='bestvideo+bestaudio/best'"
     alias code="open -a 'Visual Studio Code'"
